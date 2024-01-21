@@ -1,0 +1,29 @@
+.body {
+
+    background-color: #1a1a1a;
+}
+
+.carousel {
+    border-radius: 15px;
+    margin-top: 2vh;
+    margin-left: 75vh;
+    width: 75vh;
+    height: 95vh;
+}
+
+.carousel-inner {
+    border-radius: 15px;
+    height: 95vh;
+}
+
+.carousel-inner > .carousel-item > .img {
+    width: 65vh;
+    height: 95vh;
+    margin-left: 5vh;
+    border-radius: 15px;
+}
+
+.carousel-indicators{
+position: absolute;
+    top: 3vh;
+}

@@ -1,0 +1,206 @@
+* {
+    background-color: black;
+}
+
+body {
+    background-color: black;
+    overflow-x: hidden;
+
+}
+
+
+.profile_photo {
+    margin-left: 67vh;
+    margin-top: 4vh;
+}
+
+.profile_photo>img {
+    border-radius: 100%;
+
+    width: 27vh;
+    height: 27vh;
+}
+
+
+
+.container-small {
+
+    display: flex;
+    margin-top: 6vh;
+
+    margin-left: -75vh;
+
+}
+
+.container-small>.username {
+    color: white;
+    margin-top: 8px;
+    margin-left: -15px;
+    font-size: 3vh;
+
+}
+.container-small>.btn {
+    background-color: grey;
+    color: white;
+    font-weight: 500;
+    height: 6vh;
+    border-radius: 10px;
+    margin-left: 2vh;
+
+}
+.container-small>.follow>.btn {
+    background-color: grey;
+    color: white;
+    font-weight: 500;
+    height: 6vh;
+    border-radius: 10px;
+    margin-left: 2vh;
+
+}
+.container-small>.follow>.form>.btn {
+    background-color: grey;
+    color: white;
+    font-weight: 500;
+    height: 6vh;
+    border-radius: 10px;
+    margin-left: 2vh;
+
+}
+
+.container-small>.follow>form>.btn {
+    background-color: grey;
+    color: white;
+    font-weight: 500;
+    height: 6vh;
+    border-radius: 10px;
+    margin-left: 2vh;
+
+}
+.container-small>.btn-img {
+    height: 4vh;
+    margin-left: 2.5vh;
+}
+
+.container-small>.btn-img>img {
+    width: 4vh;
+}
+
+.container-small>.info {
+    display: flex;
+
+}
+
+
+
+.container-small>.info>.post {
+    color: white;
+    margin-top: 10vh;
+}
+
+.container-small>.info>.one {
+    margin-left: -55vh;
+}
+
+
+.container-small>.info>.two {
+    margin-left: 5vh;
+}
+
+.container-small>.info>.three {
+    margin-left: 6vh;
+}
+
+.username2 {
+
+    color: white;
+    margin-top: 16vh;
+    margin-left: -55vh;
+}
+
+.textArea {
+    width: 285px;
+    color: white;
+    margin-top: 23vh;
+    margin-left: -7.5vh;
+
+}
+
+.stories {
+    display: flex;
+}
+
+.btn-storie {
+    margin-left: 63vh;
+    margin-top: 6vh;
+
+}
+
+
+
+
+.stories>.btn-storie>img {
+    width: 15vh;
+}
+
+
+.stories>.two {
+
+    margin-left: 8vh;
+
+}
+
+.stories>.add {
+    margin-left: 8vh;
+}
+
+.p-stories {
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 2vh;
+}
+
+.p-stories.add {
+    margin-left: 5.5vh;
+
+}
+
+
+.stories>.hrMid {
+    background-color: rgb(146, 147, 148);
+    width: 152vh;
+    margin-top: 35vh;
+    margin-left: -66vh;
+}
+
+.postArea>.row {
+
+    background-color: rgb(0, 0, 0);
+    height: 50vh;
+    width: 150vh;
+    margin-left: 63vh;
+
+
+}
+
+.row>img {
+
+    background-color: rgb(0, 0, 0);
+    width: 50vh;
+    height: 50vh;
+    border: 1px solid grey;
+}
+
+.modal{
+color: rgb(59, 58, 58);
+    background-color: rgba(240, 248, 255, 0.103);
+    margin-top: 25vh;
+}
+.modal-title{
+color: aliceblue;
+text-align: center;
+}
+.modal-body>.btn{
+border: 1px solid grey;
+
+}

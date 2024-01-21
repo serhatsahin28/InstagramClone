@@ -1,0 +1,115 @@
+.content {
+    margin-left: 48vh;
+    position: absolute;
+    display: flex;
+    font-size: 18px;
+    margin-top: -12vh;
+    font-weight: bolder;
+}
+
+.content>.button {
+    color: rgb(255, 255, 255);
+    margin-left: 15px;
+    text-decoration: none;
+
+}
+
+a:active {
+    color: rgb(255, 6, 6);
+    /* Tıklanan bağlantıyı gri olarak belirle */
+}
+
+.hr {
+    background-color: rgb(255, 255, 255);
+    margin-left: -40vh;
+    margin-top: 6vh;
+    width: 103vh;
+}
+
+.owl-carousel {
+    margin-left: 47vh;
+    margin-top: 17vh;
+    display: flex;
+    /* Flexbox kullanarak yatay hizalama */
+}
+
+.am-next {
+    background-color: rgba(255, 255, 255, 0.494);
+    margin-left: 105vh;
+    /* Piksel değerine ayarlandı */
+    margin-top: -25vh;
+    /* Piksel değerine ayarlandı */
+    color: #fafafa6c;
+}
+
+.am-prev {
+    border-radius: 55px;
+    background-color: #ffffff7e;
+    color: #c0afaf;
+    margin-top: -15vh;
+    /* Piksel değerine ayarlandı */
+    margin-left: -5vh;
+}
+
+.post>.card {
+    margin-left: 75vh;
+    margin-top: 4vh;
+    width: 45vh;
+    background-color: #000000;
+    border: 1px solid rgb(59, 59, 61);
+
+}
+
+.card>.card-img-top {
+    width: 6vh;
+    height: 6vh;
+    border-radius: 100%;
+    background-color: #ffffff;
+    margin-left: 3vh;
+
+
+}
+
+
+.card>a {
+    color: white;
+    font-size: 15px;
+    margin-left: 11vh;
+    margin-top: -5vh;
+    text-decoration: none;
+}
+
+.card-post {
+
+
+    background-color: #ffffff;
+    margin-left: -13px;
+}
+
+.postIcon {
+    width: 4vh;
+    margin-left: -4vh;
+
+}
+
+#postIcon4 {
+
+    margin-left: 18vh;
+
+}
+
+.icon {
+    width: 50vh;
+
+}
+
+
+#item>a>.img {
+
+
+    background-color: red;
+    width:10vh;
+    height: 10vh;
+    border-radius: 100%;
+    border: #d07814 solid 2px;
+}

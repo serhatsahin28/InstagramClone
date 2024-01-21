@@ -1,0 +1,123 @@
+body {
+
+    background-color: #f9f9f9ea;
+}
+
+
+
+.img1 {
+    background-color: black;
+    border-radius: 30px;
+    padding: 10px;
+    margin-top: 5vh;
+    margin-left: 30vh;
+    background-repeat: no-repeat;
+}
+
+.img2 {
+    background-color: black;
+    border-radius: 30px;
+    padding: 10px;
+    margin-top: 8vh;
+    margin-left: -30vh;
+    background-repeat: no-repeat;
+
+}
+
+.card {
+
+    background-color: #f9f9f9ea;
+    width: 60vh;
+    height: 65vh;
+    border-radius: 0;
+    margin-top: 8vh;
+    margin-left: 4vh;
+
+
+}
+
+.card>img {
+
+    height: 19vh;
+    width: 35vh;
+
+    margin-left: 10vh;
+    margin-top: 4vh;
+}
+
+
+.card>form>.userName {
+
+    height: 6vh;
+    width: 46vh;
+    background-color: rgba(231, 227, 227, 0.658);
+    border-radius: 2px;
+    border-width: 0.1px;
+    border-color: rgba(201, 199, 199, 0.342);
+    margin-left: 4vh;
+}
+
+.card>form>.password {
+    height: 6vh;
+    width: 46vh;
+    background-color: rgba(231, 227, 227, 0.658);
+    border-radius: 2px;
+    border-width: 0.1px;
+    border-color: rgba(231, 227, 227, 0.548);
+    margin-left: 4vh;
+    margin-top: 2vh;
+}
+
+.card>form>.btn {
+    margin-top: 3vh;
+    height: 6vh;
+    width: 46vh;
+    margin-left: 4vh;
+    background-color: #4cb5f9;
+    text-align: center;
+    color: aliceblue;
+
+}
+
+input::placeholder {
+    font-size: 2vh;
+    color: rgb(189, 195, 199)9
+}
+
+
+.card>.hr1 {
+    width: 18vh;
+    margin-left: 4vh;
+}
+
+
+.card>.hr2 {
+    width: 18vh;
+    margin-left: 32vh;
+    margin-top: -3vh;
+}
+
+
+.card>h6{
+font-size: 2vh;
+color: rgb(179, 174, 174);
+margin-left: 24vh;
+margin-top: -4vh;
+
+}
+
+@media (max-width: 1228px) {
+
+    /* Örnek: Bir div'e tam genişlik verme */
+    .img1 {
+        display: none;
+    }
+
+.img2{
+    display: none;
+}
+
+}
+
+
+

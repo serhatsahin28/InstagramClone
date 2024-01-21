@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/story.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+
+<body class="body">
+    <div id="carouselExampleIndicators" class="carousel slide ">
+        <div class="carousel-indicators">
+            <% let number="" ; storySelected.forEach(function(a, index) { %>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= index %>"
+                    class="<%= index === 0 ? 'active' : '' %>" aria-current="<%= index === 0 %>"
+                    aria-label="Slide <%= index + 1 %>"></button>
+                <% number++; }); %>
+                    <!-- EJS sayfası -->
+                    <div id="number" data-number="<%= number %>"></div>
+
+
+
+        </div>
+        <div class="carousel-inner">
+            <% storySelected.forEach(function(a, index) { %>
+                <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                    <img src="/users_profile/<%= a.storie %>" class="d-block img" alt="/users_profile/image1.jpg">
+                </div>
+                <% }); %>
+        </div>
+
+        <button class="carousel-control-prev" id="customPrevButton" type="button"
+            data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+
+        <button class="carousel-control-next" id="customNextButton" type="button"
+            data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+
+    <div id="myObject" data-myObject='<%= JSON.stringify(allStory) %>'></div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const myObjectElement = document.getElementById("myObject");
+            const myObjectString = myObjectElement.getAttribute("data-myObject");
+            const myObject = JSON.parse(myObjectString);
+            let s = "<%=selectedNumber%>";
+            let intNumber = parseInt(s);
+            const i = intNumber + 1;
+            /*
+           - id'si myObject olan veriye controllerdan gelen tüm hikaye bilgilerini atadım. 
+           -myObjectElement ile bu veriyi aldım
+           -myObjectString  bu veri ile objeyi aldım
+           -myObject bununlada parse ettim
+           -s ile selectedNumber(tüm hikayelerin olduğu veride kaçıncı dize sırasında  olduğu bilgisi )
+           */
+            
+            console.log(myObject[i]);
+
+
+            const number = document.getElementById("number").dataset.number;
+
+            var customNextButton = document.getElementById('customNextButton');
+            var customPrevButton = document.getElementById('customPrevButton');
+
+            let prevClick = 2;
+            let nextClick = 1;
+
+            customPrevButton.addEventListener('click', function () {
+                console.log('Prev button clicked');
+                console.log("PrevNumber:" + prevClick);
+
+                if (number == prevClick) {
+
+                }
+                prevClick++;
+                nextClick--;
+
+            });
+
+            customNextButton.addEventListener('click', function () {
+                console.log('Next button clicked');
+                console.log("NextNumber:" + nextClick);
+
+                if (nextClick >= number) {
+
+                    window.location.href = "/stories/alex_21/659aa6707f66c3799ad763f2";
+
+
+
+                }
+                nextClick++;
+                prevClick--;
+
+
+            });
+
+
+
+
+
+
+
+        });
+
+
+
+
+
+    </script>
+
+
+
+</body>
+
+</html>
