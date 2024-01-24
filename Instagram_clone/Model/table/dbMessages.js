@@ -1,39 +1,58 @@
-
 const mongoose = require("mongoose");
+
 mongoose.connect("mongodb+srv://serhat:123@cluster0.e6a3vn3.mongodb.net/instagram").then(() => {
     console.log("MongoDB'ye bağlanıldı");
 }).catch((err) => {
     console.error("MongoDB'ye bağlanırken hata oluştu:", err);
 });
-const Schema = mongoose.Schema
-const user = new Schema({
-    username: {
+
+const Schema = mongoose.Schema;
+
+const message = new Schema({
+    senderId: {
         type: String,
         require: true
 
     },
-    password: {
+    senderUser: {
         type: String,
         require: true
 
     },
-    profilePicture: {
+    senderImage: {
+        type: String,
+        require: true
+
+
+    },
+    message: {
         type: String,
         require: true
 
     },
-    description: {
+    sentUserId: {
         type: String,
         require: true
 
     },
-    profileName: {
+    sentUsername: {
+
+        type: String,
+        require: true
+
+    },
+
+    sentUserImage: {
         type: String,
         require: true
 
     }
 
-})
-const users = mongoose.model("users", user, "users");
 
-module.exports = users;
+
+
+});
+
+
+const messages = mongoose.model("messages", message, "messages");
+module.exports = messages;

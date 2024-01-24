@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sidebar Örneği</title>
+    <link rel="stylesheet" href="/sidebar2.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Owl Carousel CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+
+    <!-- Owl Carousel JS -->
+</head>
+
+<body class="body">
+    <%-include("sidebar2")%>
+        <div class="row messageBox">
+
+            <div class="profile">
+                username
+            </div>
+            <div id="sidebarMessageBox">
+                <% newDirectInbox.forEach(function(a){ if(a.senderUser==sessionUserName){ %>
+                    <a href="/direct/<%=a.sentUserId%>">
+                        <div id="user">
+                            <img id="messageImg" src="/users_profile/<%=a.sentUserImage%>"></img>
+                            <div id="profileName">
+                                <%=a.sentUsername%>
+                            </div>
+                            <div id="lastMessage">Nasılsın bro</div>
+
+                        </div>
+                    </a>
+                    <br>
+                    <% } else if(a.sentUsername==sessionUserName){ %>
+                        <br>
+                        <a href="/direct/<%=a.senderId%>">
+                            <div id="user">
+                                <img id="messageImg" src="/users_profile/<%=a.senderImage%>"></img>
+                                <div id="profileName">
+                                    <%=a.senderUser%>
+
+                                </div>
+                                <div id="lastMessage">Nasılsın bro</div>
+
+                            </div>
+                        </a>
+                        <br>
+
+
+
+
+
+
+
+                        <%}});%>
+            </div>
+        </div>
+
+        <!--Mesajların geleceği alan-->
+        <% if (typeof messagesInfo !=='undefined' && messagesInfo !==null && messagesInfo !=="" ) { %>
+            <div class="row" id="messagesBox2">
+                <div id="profileInfo"><img id="profileInfoImage" src="/users_profile/image2.jpg">
+                    <h1 id="h1Profile">Username</h1>
+                    </img>
+                    <div id="IconMessage">
+                        <img src="/Icons/user.png">
+                        <img src="/Icons/user.png">
+                        <img src="/Icons/user.png">
+
+
+                    </div>
+                </div>
+                <div id="profileMessages">
+
+                    <div id="messagesArea" class="row">
+                        <% messagesInfo.forEach(function(a, index) { if (a.senderUser !=sessionUserName) { %>
+                            <div class="otherUserMessages" id="otherUserMessages_<%= index %>">
+                                <img class="message1Img" id="message1Img_<%= index %>"
+                                    src="/users_profile/<%= a.sentUserImage %>">
+                                <div id="otherMessageText1" class="otherMessageText1">
+                                    <%= a.message %>
+                                </div>
+                                <br>
+                            </div>
+                            <% } else { %>
+                                <div class="sessionUserMessages" id="sessionUserMessages_<%= index %>">
+                                    <div id="messageText" class="messageText">
+                                        <%= a.message %>
+                                    </div>
+                                </div>
+                                <% } }); %>
+                    </div>
+
+
+                    <form id="form">
+                        <input id="username" type="hidden" name="userName" value="<%=messagesUser.username%>">
+                        <input id="sessionUserName" type="hidden" name="sessionUserName" value="<%=sessionUserName%>">
+                        <input id="sessionPicture" type="hidden" name="sessionPicture" value="<%=sessionPicture%>">
+
+
+
+                        <input id="input" type="text">
+                        <button type="button" id="button" onclick="submitForm()">Gönder</button>
+                    </form>
+
+                </div>
+
+            </div>
+
+            <% }%>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js"></script>
+                <script>
+                    var socket = io();
+                    function submitForm() {
+                        const username = document.getElementById("username").value;
+                        const sessionUserName = document.getElementById("sessionUserName").value;
+                        const message = document.getElementById("input").value;
+                        const sessionPicture = document.getElementById("sessionPicture").value;
+                        const formData = {
+                            "username": username,
+                            "sessionUserName": sessionUserName,
+                            "message": message,
+                            "sessionPicture": sessionPicture,
+
+                        }
+                        socket.emit("submitForm", formData);
+                    };
+
+                    function appendMessageOtherUser(newForm) {
+                        const messagesArea = document.getElementById("messagesArea");
+
+                        // Create the main message container
+                        const newMessageDiv = document.createElement("div");
+                        newMessageDiv.className = "otherUserMessages";
+
+                        // Generate a unique ID for the message
+                        const messageId = messagesArea.children.length;
+                        newMessageDiv.id = `message_${messageId}`;
+
+                        // Create and append the image element
+                        const userImage = document.createElement("img");
+                        userImage.id = `message_${messageId}Img`;
+                        userImage.src = `/users_profile/${newForm.sessionPicture}`;
+                        userImage.className = "message1Img";
+                        newMessageDiv.appendChild(userImage);
+
+                        // Create and append the message text element
+                        const messageTextDiv = document.createElement("div");
+                        messageTextDiv.id = `otherMessageText${messageId}`;
+                        messageTextDiv.className = "otherMessageText1";
+                        messageTextDiv.textContent = newForm.message;
+                        newMessageDiv.appendChild(messageTextDiv);
+
+                        // Append the new message to the bottom of the messagesArea
+                        messagesArea.appendChild(newMessageDiv);
+
+                        // Scroll to the bottom of the messagesArea
+                        messagesArea.scrollTop = messagesArea.scrollHeight;
+                    }
+
+
+                    function appendMessageSessionUser(message) {
+
+                        console.log("appendMessageSessionUser");
+                        const messagesArea = document.getElementById("messagesArea");
+
+                        const newMessageDiv = document.createElement("div");
+                        newMessageDiv.className = "sessionUserMessages";
+
+                        const messageId = messagesArea.children.length;
+                        newMessageDiv.id = `message_${messageId}`;
+
+                        const messageTextDiv = document.createElement("div");
+                        messageTextDiv.className = "messageText";
+                        messageTextDiv.textContent = message;
+
+                        newMessageDiv.appendChild(messageTextDiv);
+
+                        messagesArea.appendChild(newMessageDiv);
+
+
+                        var scrollHeight = messagesArea.scrollHeight;
+
+                        messagesArea.scrollTop = scrollHeight;
+                    }
+
+
+
+
+
+                    socket.on("submitForm2", (newForm) => {
+                        const isUser = newForm.sessionUserName;
+                        const sessionUserName = document.getElementById("sessionUserName").value;
+                        console.log(newForm);
+                        if (sessionUserName == isUser) {
+                            appendMessageSessionUser(newForm.message);
+
+                        }
+
+                        else {
+                            appendMessageOtherUser(newForm);
+                        }
+                    });
+
+
+
+                    // Mesaj alanını seç
+                    var messagesArea = document.getElementById("messagesArea");
+
+                    // Mesaj alanının yüksekliğini al
+                    var scrollHeight = messagesArea.scrollHeight;
+
+                    // Kaydırma çubuğunu en alta ayarla
+                    messagesArea.scrollTop = scrollHeight;
+
+                </script>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.4/socket.io.js"></script>

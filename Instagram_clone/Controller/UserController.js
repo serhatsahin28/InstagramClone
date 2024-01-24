@@ -10,12 +10,14 @@ class UserController {
 
                 const a = result[0].toObject();
                 const profileName = a.profileName;
-                req.session.user = { username, password, profileName };
+                const profilePicture = a.profilePicture;
+
+                req.session.user = { username, password, profileName,profilePicture };
                 const userName = req.session.user.username;
                 const stories = await UserModel.findAllStories(userName);
                 const posts = await UserModel.findAllPosts();
 
-                console.log(stories);
+                // console.log(stories);
                 res.render("home", { userName, result, post: posts,stories});
             } else {
                 res.render("login");

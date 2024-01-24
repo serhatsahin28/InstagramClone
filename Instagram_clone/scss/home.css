@@ -2,7 +2,7 @@
     margin-left: 48vh;
     position: absolute;
     display: flex;
-    font-size: 18px;
+    font-size: 15px;
     margin-top: -12vh;
     font-weight: bolder;
 }
@@ -20,7 +20,7 @@ a:active {
 }
 
 .hr {
-    background-color: rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0.245);
     margin-left: -40vh;
     margin-top: 6vh;
     width: 103vh;
@@ -52,12 +52,12 @@ a:active {
 }
 
 .post>.card {
-    margin-left: 75vh;
-    margin-top: 4vh;
-    width: 45vh;
+    margin-left: 66vh;
+    margin-top: 10vh;
+    width: 67vh;
     background-color: #000000;
     border: 1px solid rgb(59, 59, 61);
-
+    height: 120vh;
 }
 
 .card>.card-img-top {
@@ -71,6 +71,7 @@ a:active {
 }
 
 
+
 .card>a {
     color: white;
     font-size: 15px;
@@ -81,9 +82,8 @@ a:active {
 
 .card-post {
 
-
+    height: 10vh;
     background-color: #ffffff;
-    margin-left: -13px;
 }
 
 .postIcon {
@@ -108,7 +108,7 @@ a:active {
 
 
     background-color: red;
-    width:10vh;
+    width: 10vh;
     height: 10vh;
     border-radius: 100%;
     border: #d07814 solid 2px;
