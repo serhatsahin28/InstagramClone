@@ -18,6 +18,7 @@ const UserController = require("./Controller/UserController");
 const Profile = require("./Controller/profileController");
 const User = require("./Model/table/dbUsers");
 const storyController = require("./Controller/storyController");
+const messageController = require("./Controller/messageController");
 
 const { log } = require("console");
 app.set('view engine', 'ejs');
@@ -56,8 +57,7 @@ io.on("connection", (socket) => {
 
 
     socket.on("unfollow", (formData) => {
-        // formData içinde gelen veriyi kullanarak gerekli işlemleri gerçekleştirin
-        // console.log("Unfollow request for:", formData);
+
         const userName = formData.userSessionName;
         const a = new Profile();
         a.unfollowProfile(userName, formData);
@@ -65,6 +65,20 @@ io.on("connection", (socket) => {
         io.emit("unFollow", { IsFollowed });
 
     });
+
+    socket.on("submitForm", (formData) => {
+        const visitedUsername = formData.username;
+        const sessionUserName = formData.sessionUserName;
+        const newMessage = formData.message;
+        const profilePicture = formData.profilePicture;
+        const a = new messageController();
+        a.messageSent(visitedUsername, sessionUserName, newMessage)
+
+       
+        io.emit("submitForm2", formData);
+
+    });
+
 
 
 
@@ -162,8 +176,25 @@ app.get("/stories/:username/:id", (req, res) => {
 
 
     const a = new storyController();
-    a.story(req, res, sessionUserName,visitUsername, visitId);
+    a.story(req, res, sessionUserName, visitUsername, visitId);
 
+});
+
+
+
+
+app.get("/direct/inbox", (req, res) => {
+    const a = new messageController();
+    const sessionUserName = req.session.user.username;
+    const b = a.messageInbox(req, res, sessionUserName);
+});
+
+
+app.get("/direct/:id/", (req, res) => {
+    const a = new messageController();
+    const userId = req.params.id;
+    const sessionUserName = req.session.user.username;
+    const b = a.messageUser(req, res, sessionUserName, userId);
 });
 
 
@@ -174,3 +205,6 @@ app.get("/stories/:username/:id", (req, res) => {
 server.listen(PORT, () => {//App yerine burada server kullanmamız gerekiyor.(Socket.io çalışması için)
     console.log("port dinleniyor");
 });
+
+
+

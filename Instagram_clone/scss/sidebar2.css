@@ -1,0 +1,266 @@
+body {
+    margin: 0;
+    text-decoration: none;
+    overflow-y: hidden;
+    overflow-x: hidden;
+
+}
+
+.body {
+    background-color: black;
+    text-decoration: none;
+
+
+}
+
+.sidebar {
+    text-decoration: none;
+
+    height: 100%;
+    width: 60px;
+    background-color: #000000;
+    position: fixed;
+    top: 0;
+    border-right: 0.1px solid rgba(156, 150, 150, 0.658);
+}
+
+.a {
+    color: white;
+
+    width: 120%;
+    height: 5%;
+    border-radius: 10px;
+    margin-left: -25%;
+    text-decoration: none;
+
+}
+
+
+
+.subtitle {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+
+    margin-left: 4vh;
+}
+
+
+.sidebarIcon {
+
+    color: rgb(245, 245, 245);
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+    margin-top: 5px;
+    text-decoration: none;
+
+}
+
+.a:hover {
+    background-color: rgba(121, 124, 126, 0.233);
+    color: white;
+    text-decoration: none;
+}
+
+
+
+.title {
+
+    height: 4vh;
+    margin-left: 3vh;
+    margin-top: 2vh;
+    text-decoration: none;
+
+}
+
+a {
+    color: white;
+    text-decoration: none;
+
+}
+
+a:hover {
+    color: white !important;
+    text-decoration: none !important;
+}
+
+.More {
+
+    margin-left: 5vh;
+    width: 50vh;
+    background-color: #fff8f834;
+}
+
+
+.messageBox {
+    border: 1px solid #333;
+    width: 67vh;
+    height: 90vh;
+    margin-left: 12vh;
+}
+
+#sidebarMessageBox {
+    width: 55vh;
+    margin-top: 16vh;
+    overflow-y: scroll;
+    height: 74vh;
+    border: 1px solid #333;
+
+
+}
+
+
+#messageImg {
+
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    margin-left: 5vh;
+
+}
+
+#profileName {
+
+    color: antiquewhite;
+    margin-top: -8vh;
+    margin-left: 15vh;
+}
+
+#lastMessage {
+    color: white;
+    font-size: 12px;
+    margin-left: 15vh;
+}
+
+#messagesBox2 {
+    z-index: 1000;
+    /* Uygun bir değer seçin */
+    margin-left: 64.5vh;
+    width: 164vh;
+    height: 90vh;
+    margin-top: -90vh;
+
+}
+
+#profileInfo {
+    border: 1px solid rgb(117, 116, 116);
+    height: 10vh;
+    width: 100%;
+
+}
+
+#profileMessages {
+    height: 80vh;
+    width: 100%;
+}
+
+
+
+
+
+#profileInfoImage {
+
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    margin-left: 3vh;
+}
+
+#h1Profile {
+
+    color: #ffffff;
+    font-size: 15px;
+    margin-left: 13vh;
+    margin-top: -5vh;
+}
+
+#IconMessage {
+
+    margin-top: -5vh;
+    margin-left: 135vh;
+}
+
+#IconMessage>img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+
+
+}
+
+#form {
+    margin-left: 10vh;
+    margin-top: 0vh;
+}
+
+#input {
+    border: 1px solid #a49c9c;
+    width: 90%;
+    height: 50px;
+    background-color: #000000;
+    border-radius: 25px;
+    color: #ffffff;
+}
+
+#button {
+    border-radius: 50px;
+    margin-left: -15vh;
+    margin-top: -55px;
+    background-color: #000000;
+    color: rgb(63, 76, 197);
+    border: 0;
+    font-weight: bold;
+}
+
+
+.message1Img {
+
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    margin-left: -6vh;
+    margin-top: 2vh;
+
+}
+
+.otherUserMessages {
+    height: 8vh;
+    color: #ffffff;
+    border-radius: 15px;
+    margin-left: 7vh;
+    margin-top: 5vh;
+
+}
+
+.otherMessageText1 {
+    background-color: #333;
+    margin-top: -7vh;
+    width: 95vh;
+    border-radius: 15px;
+    height: 10vh;
+    position: relative;
+
+}
+
+
+.sessionUserMessages {
+    height: 10vh;
+    color: #ffffff;
+    background-color: #4101a0;
+    border-radius: 15px;
+    width: 75vh;
+    margin-left: 85vh;
+    margin-top: 5vh;
+    position: relative;
+
+}
+
+
+#messagesArea {
+    height: 100%;
+    width: 163vh;
+    margin-left: 0px;
+    background-color: rgb(255, 0, 0);
+    overflow-y: scroll;
+
+}
