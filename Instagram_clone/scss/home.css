@@ -52,15 +52,31 @@ a:active {
 }
 
 .post>.card {
-    margin-left: 66vh;
+    margin-left: 62vh;
     margin-top: 10vh;
     width: 67vh;
     background-color: #000000;
-    border: 1px solid rgb(59, 59, 61);
-    height: 120vh;
+    height: 90vh;
 }
 
-.card>.card-img-top {
+#postImage {
+    width: 70vh;
+    height: 70vh;
+    border-radius: 5px;
+    margin-top: 0vh;
+    margin-left: -4vh;
+    border: 1px solid grey;
+
+}
+
+
+#card-body {
+    margin-top: -7vh;
+    margin-left: 4vh;
+    
+}
+
+#card-img-top {
     width: 6vh;
     height: 6vh;
     border-radius: 100%;
@@ -72,36 +88,62 @@ a:active {
 
 
 
-.card>a {
+#headerUserName {
     color: white;
     font-size: 15px;
-    margin-left: 11vh;
     margin-top: -5vh;
     text-decoration: none;
 }
 
-.card-post {
+#threeDot {
+    width: 15px;
+    height: 15px;
+    margin-left: 70vh;
+    margin-top: -11vh;
 
+}
+
+.card-post {
+    width: 50px;
     height: 10vh;
     background-color: #ffffff;
 }
 
 .postIcon {
     width: 4vh;
+    margin-top: 10vh;
     margin-left: -4vh;
 
 }
 
 #postIcon4 {
-
-    margin-left: 18vh;
+margin-top: -15vh;
+    margin-left: 62vh;
 
 }
 
-.icon {
+
+#postHr{
+background-color: #9a9a9a64;
+width: 70vh;
+margin-left: 65vh;
+}
+
+
+
+.card-header {
     width: 50vh;
-
+    background-color: red;
+    margin-left: -3vh;
 }
+
+#card-footer {
+    width: 50vh;
+    margin-left: 15px;
+    position: relative;
+    margin-top: -15vh;
+}
+
 
 
 #item>a>.img {
@@ -112,4 +154,60 @@ a:active {
     height: 10vh;
     border-radius: 100%;
     border: #d07814 solid 2px;
+}
+
+
+
+
+#searchDivNav {
+    color: white;
+    background-color: rgb(0, 0, 0);
+    margin-top: -5vh;
+    height: 100vh;
+    width: 65vh;
+    margin-left: -20vh;
+    position: fixed;
+    z-index: 999;
+    /* En ön planda olmasını sağlayacak bir değer */
+
+}
+
+#modal-body2 {
+    margin-left: 5px;
+    width: 65vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+}
+
+#UserInfo:hover {
+
+    background-color: #ffdfdf59;
+
+}
+
+#searchUser {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+
+}
+
+#userNickName {
+    color: white;
+    margin-top: -41px;
+    margin-left: 50px;
+    width: 70vh;
+
+
+}
+
+
+#userProfileName {
+    font-size: 13px;
+    font-weight: 600;
+    color: #9a9a9a;
+    margin-left: 50px;
+    margin-top: -21px;
+
 }

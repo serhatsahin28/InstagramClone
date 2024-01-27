@@ -18,7 +18,22 @@
 
 <body class="body">
     <%-include("sidebar")%>
+    
         <div class="content">
+            <div id="searchDivNav" class="searchDivNav">
+                <div class="modal-body row">
+                    <p class="col-2">Ara:</p>
+                    <form class="col-6">
+                        <input id="inputField" class="form-control col text-light bg-dark"
+                            placeholder="Ara.." type="text">
+                    </form>
+                </div>
+                <div id="modal-body2" class="modal-body2 row">
+                    <div class="col-11 UserInfo" id="UserInfo">
+                    </div>
+                </div>
+
+        </div>
             <a href="/" id="button1" class="button">Senin için</a>
             <a href="/" id="button2" class="button">Takip ettiklerin</a>
             <br>
@@ -56,21 +71,25 @@
                 <button class="btn am-next ">Next</button>
        
 
-        <div class="post">
+        <div class="post ">
             <%post.forEach(function(a){ //POST bilgileri içeren döngü 
                 const username=a.toJSON(); //username değerini json'a çevirip aldık
                  const photo=username;
                   const photo1=photo.photos[0].photo1;
                 %>
                 <div class="card ">
-                    <img class="card-img-top " src="/users_profile/<%=username.profilePhoto%>" alt="Card image cap">
-                    <a href="/<%=username.username%>" class="username">
+                    <div class="card-header" id="card-header">
+                    <img class="card-img-top " id="card-img-top" src="/users_profile/<%=username.profilePhoto%>" alt="Card image cap">
+                    <a href="/<%=username.username%>" class="username" id="headerUserName">
                         <%=photo.username%>
                     </a>
-                    <div class="card-body ">
-                        <img class="card-post w-100 h-100" src="/posts/<%=photo1 %>" alt="Card image cap">
+                    <img class="threeDot" id="threeDot" src="/Icons/more.png">
+                    </div>
+                    <div class="card-body " id="card-body">
+                        <img class="card-post " id="postImage" src="/posts/<%=photo1 %>" alt="Card image cap">
+                    </div>
+                    <div class="card-footer" id="card-footer">
 
-                        <div class="icon">
                             <div class="btn"> <img class="postIcon" id="postIcon1" src="/Icons/heart.png" alt=""
                                     srcset="">
                             </div>
@@ -89,10 +108,15 @@
                             </div>
 
 
-                        </div>
-
                     </div>
                 </div>
+
+
+
+                <div id="postHrDiv">
+                    <hr id="postHr" class="hr">
+                </div>
+
                 <%});%>
 
         </div>
@@ -150,6 +174,81 @@
            navText: [$('.am-prev'),$('.am-next')],
         });
     });
+
+    $("#searchDivNav").hide();
+
+    $(document).ready(function(){
+    // Başlangıçta #searchDivNav gizli olsun
+    $("#searchDivNav").hide();
+
+    // Butona tıklandığında #searchDivNav elementini göster veya gizle
+    $("#myLink").click(function(event){
+        event.preventDefault(); // Sayfanın yenilenmesini engelle
+        $("#searchDivNav").toggle(); // #searchDivNav elementini göster veya gizle
+    });
+});
+const inputElement = document.getElementById('inputField');
+
+// Input değeri değiştiğinde çalışacak olan fonksiyon
+inputElement.addEventListener('input', function () {
+    const formUser = inputElement.value;
+    const sessionUserName = "<%=userName%>";
+    const formData = {
+        formUser: formUser,
+        sessionUserName: sessionUserName
+
+    }
+    socket.emit("searchUser", formData);
+
+    socket.on("searchUser2", (users) => {
+        // console.log("users:" + JSON.stringify(users));
+        const modalBody = document.getElementById('modal-body2');
+        modalBody.class = "modal-body2 row";
+        modalBody.innerHTML = ''; // Önceki içeriği temizle
+        // <p class="col-2">Kime:</p>
+
+
+        users.forEach(user => {
+            const userInfoDiv = document.createElement('div');
+            userInfoDiv.class = 'col-12 UserInfo';
+            userInfoDiv.id = "UserInfo";
+            const img = document.createElement('img');
+            img.id = "searchUser";
+            img.class = 'col bg-secondary';
+            img.src = '/users_profile/' + user.profilePicture; // Kullanıcının profil resmi yolunu ekleyin
+
+            const nickNameParagraph = document.createElement('p');
+            nickNameParagraph.class = 'userNickName';
+            nickNameParagraph.id = "userNickName";
+
+            nickNameParagraph.textContent = user.username;
+
+            const profileNameParagraph = document.createElement('p');
+            profileNameParagraph.class = 'userProfileName';
+            profileNameParagraph.id = "userProfileName";
+
+            profileNameParagraph.textContent = user.profileName;
+
+            // Oluşturulan elemanları ana div içine ekleyin
+            const link = document.createElement('a');
+            link.href = "/direct/" + user._id;
+            link.appendChild(userInfoDiv);
+            userInfoDiv.appendChild(img);
+            userInfoDiv.appendChild(nickNameParagraph);
+            userInfoDiv.appendChild(profileNameParagraph);
+
+            // Ana div'i modal-body2 içine ekleyin
+            modalBody.appendChild(link);
+
+
+        });
+    });
+
+});
+
+
+
+
 </script>
 </body>
 

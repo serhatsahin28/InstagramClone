@@ -14,6 +14,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("images"));//Define the img folder
 
 app.use(express.static("scss"));
+
+
 const UserController = require("./Controller/UserController");
 const Profile = require("./Controller/profileController");
 const User = require("./Model/table/dbUsers");
@@ -74,13 +76,29 @@ io.on("connection", (socket) => {
         const a = new messageController();
         a.messageSent(visitedUsername, sessionUserName, newMessage)
 
-       
+
         io.emit("submitForm2", formData);
 
     });
 
+    socket.on('searchUser', async (searchTerm) => {
+        try {
+            // MongoDB'den kullanıcıları bul
+                const users = await User.find({
+                    username: { 
+                        $regex: new RegExp(searchTerm.formUser, 'i'), // Arama terimine uygun olanları bul
+                        $ne: searchTerm.sessionUserName // sessionUserName'a eşit olmayanları al
+                    }
+                });
+                
+                io.emit("searchUser2", users);
 
-
+            
+            // Bulunan kullanıcıları istemciye gönder
+        } catch (error) {
+            console.error(error);
+        }
+    });
 
 
 });
