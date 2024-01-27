@@ -68,7 +68,7 @@ body {
 
     height: 4vh;
     margin-left: 3vh;
-    margin-top: 2vh;
+    margin-top: 4vh;
     text-decoration: none;
 
 }
@@ -82,6 +82,51 @@ a {
 a:hover {
     color: white !important;
     text-decoration: none !important;
+}
+
+#modal-body2 {
+    margin-left: 5px;
+    overflow-y: scroll;
+
+}
+
+#modal-content {
+    background-color: #262626;
+    height: 75vh;
+
+}
+
+#userNickName {
+    color: white;
+    margin-top: -41px;
+    margin-left: 50px;
+    width: 70vh;
+
+}
+
+#userProfileName {
+    font-size: 13px;
+    font-weight: 600;
+    color: #9a9a9a;
+    margin-left: 50px;
+    margin-top: -21px;
+
+}
+
+
+
+#UserInfo:hover {
+
+    background-color: #ffdfdf59;
+
+}
+
+
+#searchUser {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+
 }
 
 .More {
@@ -101,7 +146,8 @@ a:hover {
 
 #sidebarMessageBox {
     width: 55vh;
-    margin-top: 16vh;
+    margin-top: 0;
+    margin-left: 12vh;
     overflow-y: scroll;
     height: 74vh;
     border: 1px solid #333;
@@ -119,6 +165,25 @@ a:hover {
 
 }
 
+
+#sessionName {
+    color: #ffffff;
+    font-weight: 700;
+    margin-left: 17vh;
+    margin-top: 5vh;
+}
+
+
+#createChat {
+
+    width: 30px;
+    height: 30px;
+
+    margin-left: 57vh;
+    margin-top: -13vh;
+}
+
+
 #profileName {
 
     color: antiquewhite;
@@ -134,7 +199,6 @@ a:hover {
 
 #messagesBox2 {
     z-index: 1000;
-    /* Uygun bir değer seçin */
     margin-left: 64.5vh;
     width: 164vh;
     height: 90vh;
@@ -246,7 +310,7 @@ a:hover {
 .sessionUserMessages {
     height: 10vh;
     color: #ffffff;
-    background-color: #4101a0;
+    background-color:#3797f0;
     border-radius: 15px;
     width: 75vh;
     margin-left: 85vh;
@@ -260,7 +324,6 @@ a:hover {
     height: 100%;
     width: 163vh;
     margin-left: 0px;
-    background-color: rgb(255, 0, 0);
     overflow-y: scroll;
 
 }

@@ -13,10 +13,10 @@ class messageController {
 
         const newDirectInbox = directInbox.reduce((result, current) => {
             const key = [current.sentUsername, current.senderUser].sort().join('-');
-        
+
             if (!uniqueUserMap.has(key)) {
                 uniqueUserMap.set(key, true);
-        
+
                 result.push({
                     _id: current._id,
                     senderId: current.senderId,
@@ -29,7 +29,7 @@ class messageController {
             }
             return result;
         }, []);
-        
+
 
         console.log("Mapped Direct messageInbox Inbox:", newDirectInbox);
 
@@ -44,17 +44,17 @@ class messageController {
             const directInbox = await a.directInBox(sessionUserName);
             let messagesInfo = await a.directUserMessages(sessionUserName, userId);
             let messagesUser = await a.messagesUser(userId);
-
+            console.log("messagesUser: " + messagesUser);
             // console.log(directInbox);
             const uniqueUserMap = new Map();
 
 
             const newDirectInbox = directInbox.reduce((result, current) => {
                 const key = [current.sentUsername, current.senderUser].sort().join('-');
-            
+
                 if (!uniqueUserMap.has(key)) {
                     uniqueUserMap.set(key, true);
-            
+
                     result.push({
                         _id: current._id,
                         senderId: current.senderId,
@@ -68,9 +68,20 @@ class messageController {
                 return result;
             }, []);
 
-            console.log(messagesInfo);
+
+            const otherUser = {
+                otherUserId:messagesUser._id,
+                otherUsername: messagesUser.username,
+                otherUserImage: messagesUser.profilePicture
+            };
+
+
+
+
+              
+           
             const sessionPicture = req.session.user.profilePicture;
-            res.render("messages", { newDirectInbox, sessionUserName, messagesInfo, messagesUser, sessionPicture });
+            res.render("messages", { newDirectInbox, sessionUserName, messagesInfo, messagesUser, sessionPicture, otherUser });
 
 
         }
