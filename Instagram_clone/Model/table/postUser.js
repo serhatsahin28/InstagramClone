@@ -7,6 +7,12 @@ mongoose.connect("mongodb+srv://serhat:123@cluster0.e6a3vn3.mongodb.net/instagra
 });
 const Schema = mongoose.Schema
 const posts = new Schema({
+    
+    user_id: {
+        type: String,
+        require: true
+
+    },
     description: {
         type: String,
         require: true
@@ -14,28 +20,37 @@ const posts = new Schema({
     },
 
     photos: [{
-        "0": {
+        "photo1": {
             type: String,
             require: true
 
         },
-        "1": {
+        "photo2": {
             type: String,
             require: true
 
         },
-        "2": {
+        "photo3": {
             type: String,
             require: true
 
         },
-        "3": {
+        "photo4": {
             type: String,
             require: true
 
         }
-    }]
+    }],
+    username: {
+        type: String,
+        require: true
 
+    },
+    profilePhoto: {
+        type: String,
+        require: true
+
+    },
 })
 const post = mongoose.model("posts", posts, "posts");
 

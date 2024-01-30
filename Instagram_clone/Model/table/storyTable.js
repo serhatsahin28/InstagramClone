@@ -7,7 +7,7 @@ mongoose.connect("mongodb+srv://serhat:123@cluster0.e6a3vn3.mongodb.net/instagra
 
 
 
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 const stories = new Schema({
 
     user_id: {

@@ -7,7 +7,7 @@ mongoose.connect("mongodb+srv://serhat:123@cluster0.e6a3vn3.mongodb.net/instagra
 });
 const Schema = mongoose.Schema
 const user = new Schema({
-   
+
     username: {
         type: String,
         require: true
@@ -32,6 +32,10 @@ const user = new Schema({
         type: String,
         require: true
 
+    },
+    isPrivate: {
+        type: Boolean,
+        require: true
     }
 
 })

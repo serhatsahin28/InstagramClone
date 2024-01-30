@@ -43,7 +43,6 @@ body {
 
 
 .sidebarIcon {
-
     color: rgb(245, 245, 245);
     width: 20px;
     height: 20px;
@@ -53,8 +52,16 @@ body {
 
 }
 
+
+
+
+#profilePhoto {
+    border-radius: 100%;
+
+}
+
 .a:hover {
-background-color: rgba(121, 124, 126, 0.233);
+    background-color: rgba(121, 124, 126, 0.233);
     color: white;
     text-decoration: none;
 }
@@ -81,10 +88,21 @@ a:hover {
     text-decoration: none !important;
 }
 
-.More{
+.More {
 
-margin-left:5vh;
-width: 50vh;
-background-color: #fff8f834;
+    margin-left: 5vh;
+    width: 50vh;
+    background-color: #fff8f834;
 }
 
+.moreDivArea {
+    position: fixed;
+    top: 50vh;
+    left: 20px;
+    width: 50vh;
+    border-radius: 15px;
+    z-index: 9999; /* Diğer içeriklerin üzerinde görünmesini sağlar */
+    background-color: #665e5e; /* Arka plan rengi */
+    padding: 10px; /* İçeriği kenarlardan uzaklaştırır */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Gölge efekti */
+}

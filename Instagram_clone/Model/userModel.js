@@ -71,11 +71,22 @@ class UserModel {
         }
     }
 
+    static async findAllFollowersTrue(userName) {
+        try {
+
+            const posts = await follow.find({
+                "followed.username": userName,
+                "followed.situation":true
+            });
+            return posts;
+        } catch (err) {
+            throw err;
+        }
+    }
 
 
 
-
-    static async followSend(sessionUserName, otherUserId, sessionUserProfile, otherUserName, situation, profileName, profilePicture) {
+    static async followSend(sessionUserName, otherUserId, sessionUserProfile, otherUserName, profileName, profilePicture, userSessionPicture,sessionProfileName) {
         try {
             const result = await follow.find({
                 "userName": sessionUserName,
@@ -88,11 +99,12 @@ class UserModel {
                 const addNewResult = await follow.create({
 
                     "userName": sessionUserName,
-                    "userProfileName": profileName,
+                    "userProfilePicture": userSessionPicture,
+                    "userProfileName": sessionProfileName,
                     "followed": [{
                         "user_id": otherUserId,
                         "username": otherUserName,
-                        "situation": situation,
+                        "situation": true,
                         "profileName": profileName,
                         "profilePicture": profilePicture
                     }]
@@ -108,6 +120,54 @@ class UserModel {
         }
 
     }
+
+
+
+
+
+    static async followRequest(sessionUserName, otherUserId, sessionUserProfile, otherUserName, profileName, profilePicture, userSessionPicture,sessionProfileName) {
+        try {
+            const result = await follow.find({
+                "userName": sessionUserName,
+                "followed.username": otherUserName
+            });
+            if (result == null || result == "") {
+
+
+
+                const addNewResult = await follow.create({
+
+                    "userName": sessionUserName,
+                    "userProfilePicture": userSessionPicture,
+                    "userProfileName": sessionProfileName,
+                    "followed": [{
+                        "user_id": otherUserId,
+                        "username": otherUserName,
+                        "situation": false,
+                        "profileName": profileName,
+                        "profilePicture": profilePicture
+                    }]
+
+                });
+
+            }
+
+        }
+        catch (err) {
+            throw err;
+
+        }
+
+    }
+
+
+
+
+
+
+
+
+
 
 
     static async unFollowed(profileName, sessionUserProfile) {
@@ -159,7 +219,26 @@ class UserModel {
 
 
     }
+    static async findFollowSend(userName) {
 
+        try {
+
+            const a = await follow.find({
+                "followed.username":userName,
+                "followed.situation": false
+
+            });
+
+            return a;
+
+
+
+
+        } catch (error) {
+            console.log("UserModel.js sayfası içerisinde findFolloSend Fonksiyonu içerisinde: " + error);
+        }
+
+    }
 
 
 

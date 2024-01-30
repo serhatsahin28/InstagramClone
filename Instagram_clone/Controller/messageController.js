@@ -8,7 +8,7 @@ class messageController {
 
     async messageInbox(req, res, sessionUserName) {
         const directInbox = await a.directInBox(sessionUserName);
-
+        const profilePicture = req.session.user.profilePicture;
         const uniqueUserMap = new Map();
 
         const newDirectInbox = directInbox.reduce((result, current) => {
@@ -33,7 +33,7 @@ class messageController {
 
         console.log("Mapped Direct messageInbox Inbox:", newDirectInbox);
 
-        res.render("messages", { newDirectInbox, sessionUserName });
+        res.render("messages", { newDirectInbox, sessionUserName,profilePicture });
     }
 
 
@@ -47,6 +47,7 @@ class messageController {
             console.log("messagesUser: " + messagesUser);
             // console.log(directInbox);
             const uniqueUserMap = new Map();
+            const profilePicture = req.session.user.profilePicture;
 
 
             const newDirectInbox = directInbox.reduce((result, current) => {
@@ -70,7 +71,7 @@ class messageController {
 
 
             const otherUser = {
-                otherUserId:messagesUser._id,
+                otherUserId: messagesUser._id,
                 otherUsername: messagesUser.username,
                 otherUserImage: messagesUser.profilePicture
             };
@@ -78,10 +79,10 @@ class messageController {
 
 
 
-              
-           
+
+
             const sessionPicture = req.session.user.profilePicture;
-            res.render("messages", { newDirectInbox, sessionUserName, messagesInfo, messagesUser, sessionPicture, otherUser });
+            res.render("messages", { newDirectInbox, sessionUserName, messagesInfo, messagesUser, sessionPicture, otherUser ,profilePicture});
 
 
         }

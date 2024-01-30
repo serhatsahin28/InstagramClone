@@ -13,9 +13,13 @@ const followSchema  = new Schema({
         type: String,
         required: true
     },
-    userProfileName: {
+    userProfilePicture: {
         type: String,
         required: true
+    },
+    userProfileName: {
+        type: String,
+        require: true
     },
     followed: [
         {
@@ -51,7 +55,6 @@ const followSchema  = new Schema({
 
 
 })
-
 
 const follows = mongoose.model("follow", followSchema, "follow");
 

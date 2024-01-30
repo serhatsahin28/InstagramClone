@@ -13,15 +13,25 @@
 
 <%-include("sidebar")%>
 
-    <body>
+    <body class="body">
+        <div class="content">
+            <div id="searchDivNav" class="searchDivNav">
+                <div class="modal-body row">
+                    <p class="col-2">Ara:</p>
+                    <form class="col-6">
+                        <input id="inputField" class="form-control col text-light bg-dark"
+                            placeholder="Ara.." type="text">
+                    </form>
+                </div>
+                <div id="modal-body2" class="modal-body2 row">
+                    <div class="col-11 UserInfo" id="UserInfo">
+                    </div>
+                </div>
 
+        </div>
         <div class="row">
 
-            <% result.forEach(function(a){ const newResult=a.toJSON(); posts.forEach(function(p){ const
-                newPost=p.toJSON(); const postPhoto1=newPost.photos[0].photo1; console.log(postPhoto1); 
-
-
-                %>
+            <% result.forEach(function(a){ const newResult=a.toJSON(); %>
 
                 <div class="col profile_photo" data-toggle="modal" data-target="#exampleModal">
                     <img src="/users_profile/<%=newResult.profilePicture%>">
@@ -61,55 +71,262 @@
             <hr class="hrMid">
 
         </div>
-        <div class="postArea ">
-            <div class="row">
-                <img src="/users_profile/<%=postPhoto1%>">
 
+        <div class="postArea ">
+
+            <div class="row">
+                <%posts.forEach(function(p){ const newPost=p.toJSON(); const postPhoto1=newPost.photos[0].photo1;
+                    console.log(postPhoto1); %>
+                    <a href="/p/<%=newPost._id%>"><img id="imgPost" src="/posts/<%=postPhoto1%>"></a>
+
+                    <%});%>
 
 
             </div>
             <br><br><br>
 
         </div>
+
         <%});%>
 
-            <%});%>
 
-
-                <!-- Modals -->
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Profil Fotoğrafını Değiştir</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body bg-danger">
-                                <div class="btn col-12 bg-primary">Fotoğraf yükle</div><br>
-                                <div class="btn col-12  bg-primary">Resmi kaldır</div>
-                                <div class="btn  col-12  bg-primary" data-dismiss="modal"> İptal
-                                </div>
-
+            <!-- Modal Edit-->
+            <div id="modalEdit" class="modal fade " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Profil Fotoğrafını Değiştir</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body bg-danger">
+                            <div class="btn col-12 bg-primary">Fotoğraf yükle</div><br>
+                            <div class="btn col-12  bg-primary">Resmi kaldır</div>
+                            <div class="btn  col-12  bg-primary" data-dismiss="modal"> İptal
                             </div>
 
                         </div>
+
                     </div>
                 </div>
+            </div>
 
-                <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-                    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-                    crossorigin="anonymous"></script>
-                <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-                    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-                    crossorigin="anonymous"></script>
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-                    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-                    crossorigin="anonymous"></script>
+
+
+
+<!--PostAdd modal-->
+
+<div class="modal fade More " id="postAdd" tabindex="-1" role="dialog" aria-labelledby="MoreLabel" aria-hidden="true">
+    <div class="modal-dialog " id="photoUpload" role="document">
+            <div class="modal-content " id="photoUploadContent">
+                    <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Profil Fotoğrafı Ekle</h5>
+                         
+                    </div>
+                    <div id="photoUploadBody" class="modal-body ">
+                            <form action="/upload" method="post" enctype="multipart/form-data">
+                                    <input type="file" name="photos" accept="image/*" multiple>
+                                    <div id="selectedImages"></div>
+                                    <textarea name="textArea" id="textArea" cols="50" rows="5"></textarea>
+                                    <button type="submit">Yükle</button>
+                                </form>
+                            <br>
+                            <div class="btn  col-12" data-dismiss="modal"> İptal
+                            </div>
+
+                    </div>
+
+            </div>
+    </div>
+</div>
+<!-- More -->
+<div class="moreDivArea" id="moreDivArea">
+  
+    <div class="modal-body ">
+        <form class="col" action="/logout" method="post">
+                <button type="submit" class="btn col-12 bg-primary">Çıkış</button>
+        </form>
+        <br>
+       
+    
+    </div>
+    </div>
+    
+
+
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const imageInput = document.querySelector('input[type="file"]');
+        const selectedImagesContainer = document.getElementById('selectedImages');
+
+        // Resim seçildiğinde işlenmesi gereken fonksiyon
+        imageInput.addEventListener('change', function(event) {
+            selectedImagesContainer.innerHTML = ''; // Seçilen resimlerin listesini temizle
+
+            const files = event.target.files;
+            Array.from(files).forEach(function(file) {
+                const imageElement = document.createElement('img');
+                imageElement.src = URL.createObjectURL(file);
+                imageElement.style.width = '100px';
+                imageElement.style.height = '100px';
+                selectedImagesContainer.appendChild(imageElement);
+            });
+        });
+
+        // Form submit edildiğinde işlenmesi gereken fonksiyon
+        const form = document.querySelector('form');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Form submit işlemini engelle
+
+            // Seçilen resimleri ve diğer form verilerini sunucuya göndermek için gerekli işlemleri gerçekleştirin
+
+            // Örnek olarak, form verilerini konsola yazdırabilirsiniz
+            const formData = new FormData(form);
+            for (var pair of formData.entries()) {
+                console.log(pair[0]+ ', ' + pair[1]); 
+            }
+        });
+    });
+
+
+</script>
+
+
+
+
+
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+                integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+                crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                crossorigin="anonymous"></script>
 
     </body>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.4/socket.io.js"></script>
+
+          
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+                const socket = io();
+
+     
+
+
+
+
+    //search div tag call start
+    $("#searchDivNav").hide();
+    $("#noticeDivNav").hide();
+    $("#moreDivArea").hide();
+
+    $(document).ready(function(){
+    // Başlangıçta #searchDivNav gizli olsun
+    $("#searchDivNav").hide();
+
+    // Butona tıklandığında #searchDivNav elementini göster veya gizle
+    $("#myLink").click(function(event){
+        event.preventDefault(); // Sayfanın yenilenmesini engelle
+    $("#noticeDivNav").hide();
+
+        $("#searchDivNav").toggle(); // #searchDivNav elementini göster veya gizle
+    });
+
+
+  //notice  div tag call start
+                    // Başlangıçta #noticeDivNav gizli olsun
+                    $("#noticeDivNav").hide();
+
+                    // Butona tıklandığında #searchDivNav elementini göster veya gizle
+                    $("#myNotice").click(function (event) {
+                        event.preventDefault(); // Sayfanın yenilenmesini engelle
+                  $("#searchDivNav").hide();
+
+                        $("#noticeDivNav").toggle(); // #searchDivNav elementini göster veya gizle
+                    });
+
+
+
+      //moreDiv  div tag call start
+                    // Başlangıçta #noticeDivNav gizli olsun
+                    $("#moreDivArea").hide();
+
+                    // Butona tıklandığında #searchDivNav elementini göster veya gizle
+                    $("#moreDiv").click(function (event) {
+                        event.preventDefault(); // Sayfanın yenilenmesini engelle
+
+                        $("#moreDivArea").toggle(); // #searchDivNav elementini göster veya gizle
+                    });
+
     
+    
+});
+
+const inputElement = document.getElementById('inputField');
+
+// Input değeri değiştiğinde çalışacak olan fonksiyon
+inputElement.addEventListener('input', function () {
+    const formUser = inputElement.value;
+    const sessionUserName = "<%=userName%>";
+    const formData = {
+        formUser: formUser,
+        sessionUserName: sessionUserName
+
+    }
+    socket.emit("searchUser", formData);
+
+    socket.on("searchUser2", (users) => {
+        // console.log("users:" + JSON.stringify(users));
+        const modalBody = document.getElementById('modal-body2');
+        modalBody.class = "modal-body2 row";
+        modalBody.innerHTML = ''; // Önceki içeriği temizle
+        // <p class="col-2">Kime:</p>
+
+
+        users.forEach(user => {
+            const userInfoDiv = document.createElement('div');
+            userInfoDiv.class = 'col-12 UserInfo';
+            userInfoDiv.id = "UserInfo";
+            const img = document.createElement('img');
+            img.id = "searchUser";
+            img.class = 'col bg-secondary';
+            img.src = '/users_profile/' + user.profilePicture; // Kullanıcının profil resmi yolunu ekleyin
+
+            const nickNameParagraph = document.createElement('p');
+            nickNameParagraph.class = 'userNickName';
+            nickNameParagraph.id = "userNickName";
+
+            nickNameParagraph.textContent = user.username;
+
+            const profileNameParagraph = document.createElement('p');
+            profileNameParagraph.class = 'userProfileName';
+            profileNameParagraph.id = "userProfileName";
+
+            profileNameParagraph.textContent = user.profileName;
+
+            // Oluşturulan elemanları ana div içine ekleyin
+            const link = document.createElement('a');
+            link.href = "/" + user.username;
+            link.appendChild(userInfoDiv);
+            userInfoDiv.appendChild(img);
+            userInfoDiv.appendChild(nickNameParagraph);
+            userInfoDiv.appendChild(profileNameParagraph);
+
+            // Ana div'i modal-body2 içine ekleyin
+            modalBody.appendChild(link);
+
+
+        });
+    });
+
+});
+    </script>

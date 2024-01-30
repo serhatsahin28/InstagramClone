@@ -9,20 +9,26 @@ const mongoose = require("mongoose");
 const socketio = require("socket.io");
 const server = http.createServer(app);
 const io = socketio(server);
+const multer = require('multer')
+
 app.set('views', path.join(__dirname, 'View'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("images"));//Define the img folder
 
 app.use(express.static("scss"));
 
-
+const User = require("./Model/table/dbUsers");
+const likePost = require("./Model/table/likePost");
 const UserController = require("./Controller/UserController");
 const Profile = require("./Controller/profileController");
-const User = require("./Model/table/dbUsers");
 const storyController = require("./Controller/storyController");
 const messageController = require("./Controller/messageController");
+const postController = require("./Controller/postController");
+const noticeController = require("./Controller/noticeController");
+
 
 const { log } = require("console");
+const post = require("./Model/table/postUser");
 app.set('view engine', 'ejs');
 app.use(session({
     secret: 'a',
@@ -30,7 +36,18 @@ app.use(session({
     saveUninitialized: false
 }));
 
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'images/posts'); // Dosyaların nereye kaydedileceğini belirtin
+    },
+    filename: function (req, file, cb) {
+        // Dosyanın adını belirleyin
+        // Örneğin, her dosyanın orijinal adı yerine farklı bir adlandırma yapabilirsiniz
+        cb(null, file.originalname);
+    }
+});
 
+const upload = multer({ storage: storage });
 
 
 io.on("connection", (socket) => {
@@ -56,6 +73,20 @@ io.on("connection", (socket) => {
         // io.emit("aaa", { IsFollowed });
 
     });
+
+    socket.on("sentFollow", (data) => {
+
+        //  console.log(data);
+        const userName = data.userSessionName;
+        const a = new Profile();
+        a.followRequest(userName, data);
+        // const IsFollowed = "false";
+        // io.emit("aaa", { IsFollowed });
+
+    });
+
+
+
 
 
     socket.on("unfollow", (formData) => {
@@ -84,21 +115,64 @@ io.on("connection", (socket) => {
     socket.on('searchUser', async (searchTerm) => {
         try {
             // MongoDB'den kullanıcıları bul
-                const users = await User.find({
-                    username: { 
-                        $regex: new RegExp(searchTerm.formUser, 'i'), // Arama terimine uygun olanları bul
-                        $ne: searchTerm.sessionUserName // sessionUserName'a eşit olmayanları al
-                    }
-                });
-                
-                io.emit("searchUser2", users);
+            const users = await User.find({
+                username: {
+                    $regex: new RegExp(searchTerm.formUser, 'i'), // Arama terimine uygun olanları bul
+                    $ne: searchTerm.sessionUserName // sessionUserName'a eşit olmayanları al
+                }
+            });
 
-            
+            io.emit("searchUser2", users);
+
+
             // Bulunan kullanıcıları istemciye gönder
         } catch (error) {
             console.error(error);
         }
     });
+
+
+
+    socket.on("acceptFollow", (data) => {
+
+        const a = new noticeController();
+        a.acceptFollow(data);
+    });
+
+    socket.on("deleteFollow", (data) => {
+        // console.log("noticeFollow: " + followId);
+        const a = new noticeController();
+        a.deleteFollow(data);
+    });
+
+
+
+    socket.on("like", (data) => {
+        const a = new postController();
+        a.likePhoto(data);
+
+    });
+
+
+    socket.on("unlike", (data) => {
+        const a = new postController();
+        a.deleteLikePhoto(data);
+
+    });
+
+
+    socket.on("likeSee", async (data) => {
+        try {
+            const a = await likePost.find({post_id:data});
+            io.emit("likeSeeReturn",a);
+        } catch (error) {
+            console.error(error);
+        }
+    });
+    
+
+
+
 
 
 });
@@ -121,11 +195,16 @@ app.get('/', (req, res) => {
 
 
 
-app.post("/logout", (req, res) => {
+app.get("/logout", (req, res) => {
     const userControllerInstance = new UserController();
     userControllerInstance.logout(req, res); // UserController'ın login metodunu çağırıyoruz
 });
 
+
+app.post("/logout", (req, res) => {
+    const userControllerInstance = new UserController();
+    userControllerInstance.logout(req, res); // UserController'ın login metodunu çağırıyoruz
+});
 
 
 
@@ -216,7 +295,14 @@ app.get("/direct/:id/", (req, res) => {
 });
 
 
+app.post("/upload/", upload.array('photos', 4), (req, res) => {
+    console.log("upload fonksiyonunda");
+    const a = new postController();
+    const photos = req.files;
+    const sessionUserName = req.session.user.username;
 
+    a.uploadPhoto(req, res, photos, sessionUserName);
+});
 
 
 
