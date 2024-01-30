@@ -7,7 +7,7 @@ mongoose.connect("mongodb+srv://REDACTED:REDACTED@REDACTED/instagram").then(() =
 
 
 
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 const stories = new Schema({
 
     user_id: {

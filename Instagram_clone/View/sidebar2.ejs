@@ -5,7 +5,7 @@
     <div class="a"><a class="subtitle" href="/"><img class="sidebarIcon" src="/Icons/home.png" alt="" srcset=""></a>
     </div>
     <br>
-    <div class="a"><a class="subtitle" href="#ara"><img class="sidebarIcon" src="/Icons/search.png" alt=""
+    <div class="a" id="myLink"><a class="subtitle" href="#ara"><img class="sidebarIcon" src="/Icons/search.png" alt=""
                 srcset=""></a>
     </div>
     <br>
@@ -19,43 +19,20 @@
     <div class="a"><a class="subtitle" href="#mesajlar"><img class="sidebarIcon" src="/Icons/chat.png" alt=""
                 srcset=""></a> </div>
     <br>
-    <div class="a"><a class="subtitle" href="#bildirimler"><img class="sidebarIcon" src="/Icons/heart.png" alt=""
+    <div class="a" id="myNotice"><a class="subtitle" href="#bildirimler"><img class="sidebarIcon" src="/Icons/heart.png" alt=""
                 srcset=""></a> </div>
     <br>
-    <div class="a"><a class="subtitle" href="#oluştur"><img class="sidebarIcon" src="/Icons/instagram-post.png" alt=""
+    <div class="a"><a class="subtitle" data-toggle="modal"   data-target="#postAdd" href="#" ><img class="sidebarIcon" src="/Icons/instagramPost.png" alt=""
                 srcset=""></a> </div>
     <br>
     <div class="a"><a class="subtitle"
-        href="/"><img class="sidebarIcon" src="/Icons/user.png" alt="" srcset=""></a>
+        href="/"><img id="profilePhoto"  class="sidebarIcon" src="/users_profile/<%=profilePicture%>" alt="" srcset=""></a>
     </div>
     <br>
-    <div class="a" data-toggle="modal" data-target="#More" href="#daha"><a class="subtitle" href="#daha"></a><img class="sidebarIcon" src="/Icons/menu.png" alt=""
+    <div class="a" id="moreDiv" href="#daha"><a class="subtitle" href="#daha"></a><img class="sidebarIcon" src="/Icons/menu.png" alt=""
             srcset=""></a> </div>
 
     <br>
 
 
-</div>
-<!-- Modal -->
-<div class="modal fade More" id="More" tabindex="-1" role="dialog" aria-labelledby="MoreLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Profil Fotoğrafını Değiştir</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body ">
-                <form action="/logout" method="POST">
-                    <button type="submit" class="btn col-12 bg-primary">Çıkış</button>
-                </form>
-                <br>
-                <div class="btn  col-12" data-dismiss="modal"> İptal
-                </div>
-
-            </div>
-
-        </div>
-    </div>
 </div>

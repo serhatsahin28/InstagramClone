@@ -56,6 +56,13 @@ body {
 
 }
 
+
+#profilePhoto{
+    border-radius: 100%;
+    
+    }
+
+
 .a:hover {
     background-color: rgba(121, 124, 126, 0.233);
     color: white;
@@ -91,7 +98,7 @@ a:hover {
 }
 
 #modal-content {
-    background-color: #262626;
+    background-color: #a91616;
     height: 75vh;
 
 }
@@ -133,7 +140,7 @@ a:hover {
 
     margin-left: 5vh;
     width: 50vh;
-    background-color: #fff8f834;
+    background-color: #fff8f8ef;
 }
 
 
@@ -326,4 +333,67 @@ a:hover {
     margin-left: 0px;
     overflow-y: scroll;
 
+}
+
+#postAdd {
+    margin-top: 10vh;
+    width: 70vh;
+    height: 70vh;
+    border-radius: 15px;
+    margin-left: 70vh;
+
+}
+
+
+#photoUploadContent {
+    background-color: #262626;
+    color: white;
+    width: 70vh;
+    height: 60vh;
+
+}
+
+.More {
+
+    margin-left: 5vh;
+    width: 50vh;
+    background-color: #fff8f834;
+}
+.moreDivArea {
+    position: fixed;
+    top: 50vh;
+    left: 20px;
+    width: 50vh;
+    border-radius: 15px;
+    z-index: 9999; /* Diğer içeriklerin üzerinde görünmesini sağlar */
+    background-color: #665e5e; /* Arka plan rengi */
+    padding: 10px; /* İçeriği kenarlardan uzaklaştırır */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Gölge efekti */
+}
+
+
+
+#searchDivNav {
+    color: white;
+    background-color: rgb(0, 0, 0);
+    margin-top: -1vh;
+    height: 100vh;
+    width: 65vh;
+    margin-left: 10vh;
+    position: fixed;
+    z-index: 999;
+    /* En ön planda olmasını sağlayacak bir değer */
+
+}
+
+
+#noticeDivNav {
+    color: white;
+    background-color: #262626;
+    height: 100vh;
+    width: 65vh;
+    position: fixed;
+    top: 0;
+    left: 40vh;
+    z-index: 999;
 }

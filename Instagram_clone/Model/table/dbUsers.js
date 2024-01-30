@@ -7,7 +7,7 @@ mongoose.connect("mongodb+srv://REDACTED:REDACTED@REDACTED/instagram").then(() =
 });
 const Schema = mongoose.Schema
 const user = new Schema({
-   
+
     username: {
         type: String,
         require: true
@@ -32,6 +32,10 @@ const user = new Schema({
         type: String,
         require: true
 
+    },
+    isPrivate: {
+        type: Boolean,
+        require: true
     }
 
 })

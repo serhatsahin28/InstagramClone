@@ -18,6 +18,22 @@
 
 <body class="body">
     <%-include("sidebar2")%>
+    
+    <div class="content">
+        <div id="searchDivNav" class="searchDivNav">
+            <div class="modal-body row">
+                <p class="col-2">Ara:</p>
+                <form class="col-6">
+                    <input id="inputField" class="form-control col text-light bg-dark"
+                        placeholder="Ara.." type="text">
+                </form>
+            </div>
+            <div id="modal-body2" class="modal-body2 row">
+                <div class="col-11 UserInfo" id="UserInfo">
+                </div>
+            </div>
+
+    </div>
         <div class="row messageBox">
 
             <div class="profile ">
@@ -163,8 +179,136 @@
 
 
 
+                <!--PostAdd modal-->
+
+                <div class="modal fade More" id="postAdd" tabindex="-1" role="dialog" aria-labelledby="MoreLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog" id="photoUpload" role="document">
+                        <div class="modal-content" id="photoUploadContent">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Profil Fotoğrafı Ekle</h5>
+
+                            </div>
+                            <div id="photoUploadBody" class="modal-body ">
+                                <form action="/upload" method="post" enctype="multipart/form-data">
+                                    <input type="file" name="photos" accept="image/*" multiple>
+                                    <div id="selectedImages"></div>
+                                    <textarea name="textArea" id="textArea" cols="50" rows="5"></textarea>
+                                    <button type="submit">Yükle</button>
+                                </form>
+                                <br>
+                                <div class="btn  col-12" data-dismiss="modal"> İptal
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
 
 
+<!-- More -->
+<div class="moreDivArea" id="moreDivArea">
+  
+    <div class="modal-body ">
+        <form class="col" action="/logout" method="post">
+                <button type="submit" class="btn col-12 bg-primary">Çıkış</button>
+        </form>
+        <br>
+       
+    
+    </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+<script>
+
+    //search div tag call start
+    $("#searchDivNav").hide();
+    $("#noticeDivNav").hide();
+    $("#moreDivArea").hide();
+
+    $(document).ready(function(){
+    // Başlangıçta #searchDivNav gizli olsun
+    $("#searchDivNav").hide();
+
+    // Butona tıklandığında #searchDivNav elementini göster veya gizle
+    $("#myLink").click(function(event){
+        event.preventDefault(); // Sayfanın yenilenmesini engelle
+    $("#noticeDivNav").hide();
+
+        $("#searchDivNav").toggle(); // #searchDivNav elementini göster veya gizle
+    });
+
+
+  //notice  div tag call start
+                    // Başlangıçta #noticeDivNav gizli olsun
+                    $("#noticeDivNav").hide();
+
+                    // Butona tıklandığında #searchDivNav elementini göster veya gizle
+                    $("#myNotice").click(function (event) {
+                        event.preventDefault(); // Sayfanın yenilenmesini engelle
+                  $("#searchDivNav").hide();
+
+                        $("#noticeDivNav").toggle(); // #searchDivNav elementini göster veya gizle
+                    });
+
+
+
+      //moreDiv  div tag call start
+                    // Başlangıçta #noticeDivNav gizli olsun
+                    $("#moreDivArea").hide();
+
+                    // Butona tıklandığında #searchDivNav elementini göster veya gizle
+                    $("#moreDiv").click(function (event) {
+                        event.preventDefault(); // Sayfanın yenilenmesini engelle
+
+                        $("#moreDivArea").toggle(); // #searchDivNav elementini göster veya gizle
+                    });
+
+    
+    
+});    
+</script>
+
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        const imageInput = document.querySelector('input[type="file"]');
+                        const selectedImagesContainer = document.getElementById('selectedImages');
+                
+                        // Resim seçildiğinde işlenmesi gereken fonksiyon
+                        imageInput.addEventListener('change', function(event) {
+                            selectedImagesContainer.innerHTML = ''; // Seçilen resimlerin listesini temizle
+                
+                            const files = event.target.files;
+                            Array.from(files).forEach(function(file) {
+                                const imageElement = document.createElement('img');
+                                imageElement.src = URL.createObjectURL(file);
+                                imageElement.style.width = '100px';
+                                imageElement.style.height = '100px';
+                                selectedImagesContainer.appendChild(imageElement);
+                            });
+                        });
+                
+                        // Form submit edildiğinde işlenmesi gereken fonksiyon
+                        const form = document.querySelector('form');
+                        form.addEventListener('submit', function(event) {
+                            event.preventDefault(); // Form submit işlemini engelle
+                
+                            // Seçilen resimleri ve diğer form verilerini sunucuya göndermek için gerekli işlemleri gerçekleştirin
+                
+                            // Örnek olarak, form verilerini konsola yazdırabilirsiniz
+                            const formData = new FormData(form);
+                            for (var pair of formData.entries()) {
+                                console.log(pair[0]+ ', ' + pair[1]); 
+                            }
+                        });
+                    });
+                
+                
+                </script>
 
 
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js"></script>
@@ -304,10 +448,10 @@
                         socket.emit("searchUser", formData);
 
                         socket.on("searchUser2", (users) => {
-                             console.log("users:" + JSON.stringify(users));
+                            console.log("users:" + JSON.stringify(users));
                             const modalBody = document.getElementById('modal-body2');
                             modalBody.class = "modal-body2 row";
-                            modalBody.innerHTML = ''; 
+                            modalBody.innerHTML = '';
 
 
                             users.forEach(user => {
@@ -353,6 +497,7 @@
 
 
 
+
                 </script>
 </body>
 
@@ -362,9 +507,9 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
     integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
     crossorigin="anonymous"></script>
-<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script> -->
+    crossorigin="anonymous"></script>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"

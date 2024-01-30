@@ -1,4 +1,5 @@
 const UserModel = require('../Model/userModel');
+const postUser = require('../Model/postUser');
 
 class UserController {
     // ...constructor ve diğer metodlar...
@@ -12,13 +13,16 @@ class UserController {
                 const profileName = a.profileName;
                 const profilePicture = a.profilePicture;
 
-                req.session.user = { username, password, profileName,profilePicture };
+                req.session.user = { username, password, profileName, profilePicture };
                 const userName = req.session.user.username;
                 const stories = await UserModel.findAllStories(userName);
                 const posts = await UserModel.findAllPosts();
-
-                // console.log(stories);
-                res.render("home", { userName, result, post: posts,stories});
+                const followersTrue = await UserModel.findAllFollowersTrue(userName);
+                const noticeFollow = await UserModel.findFollowSend(userName);
+                // const allLikePostUser = await postUser.likePosts();
+                const userLikePostUser=await postUser.userLikePosts(userName);
+                const sessionProfilePicture = req.session.user.profilePicture;
+                res.render("home", { userName, result, post: posts, stories, sessionProfilePicture, noticeFollow, followersTrue,userLikePostUser });
             } else {
                 res.render("login");
             }

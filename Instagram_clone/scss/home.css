@@ -51,17 +51,10 @@ a:active {
     margin-left: -5vh;
 }
 
-.post>.card {
-    margin-left: 62vh;
-    margin-top: 10vh;
-    width: 67vh;
-    background-color: #000000;
-    height: 90vh;
-}
 
 #postImage {
-    width: 70vh;
-    height: 70vh;
+    width: 100vh;
+    height: 100vh;
     border-radius: 5px;
     margin-top: 0vh;
     margin-left: -4vh;
@@ -70,10 +63,23 @@ a:active {
 }
 
 
+
+
+
+#card {
+    margin-left: 62vh;
+    margin-top: 30vh;
+    width: 67vh;
+    background-color: #000000;
+    height: 90vh;
+}
+
+
 #card-body {
-    margin-top: -7vh;
-    margin-left: 4vh;
-    
+    width: 90vh;
+    margin-top: -8vh;
+    margin-left: -2vh;
+
 }
 
 #card-img-top {
@@ -81,7 +87,8 @@ a:active {
     height: 6vh;
     border-radius: 100%;
     background-color: #ffffff;
-    margin-left: 3vh;
+    margin-left: 1vh;
+    margin-top: 0vh;
 
 
 }
@@ -89,16 +96,16 @@ a:active {
 
 
 #headerUserName {
+    margin-top: -25vh;
     color: white;
     font-size: 15px;
-    margin-top: -5vh;
     text-decoration: none;
 }
 
 #threeDot {
     width: 15px;
     height: 15px;
-    margin-left: 70vh;
+    margin-left: 80vh;
     margin-top: -11vh;
 
 }
@@ -106,35 +113,49 @@ a:active {
 .card-post {
     width: 50px;
     height: 10vh;
-    background-color: #ffffff;
 }
 
 .postIcon {
     width: 4vh;
     margin-top: 10vh;
-    margin-left: -4vh;
+    margin-left: -2vh;
 
 }
 
+.postIconA {
+    width: 4vh;
+    margin-top: 10vh;
+    margin-left: -2vh;
+
+}
+
+#postIcon2 {
+    margin-left: -1vh;
+}
+
+#postIcon3 {
+    margin-left: -3vh;
+}
+
 #postIcon4 {
-margin-top: -15vh;
+    margin-top: -15vh;
     margin-left: 62vh;
 
 }
 
 
-#postHr{
-background-color: #9a9a9a64;
-width: 70vh;
-margin-left: 65vh;
+#postHr {
+    background-color: #9a9a9a64;
+    width: 70vh;
+    margin-left: 65vh;
 }
 
 
 
 .card-header {
     width: 50vh;
-    background-color: red;
     margin-left: -3vh;
+    margin-top: -25vh;
 }
 
 #card-footer {
@@ -171,6 +192,22 @@ margin-left: 65vh;
     /* En ön planda olmasını sağlayacak bir değer */
 
 }
+
+
+#noticeDivNav {
+    color: white;
+    background-color: #262626;
+    height: 100vh;
+    width: 65vh;
+    position: fixed;
+    top: 0;
+    left: 40vh;
+    z-index: 999;
+}
+
+
+
+
 
 #modal-body2 {
     margin-left: 5px;
@@ -211,3 +248,108 @@ margin-left: 65vh;
     margin-top: -21px;
 
 }
+
+#postAdd {
+    margin-top: 10vh;
+    width: 70vh;
+    height: 70vh;
+    border-radius: 15px;
+    margin-left: 70vh;
+
+}
+
+
+#photoUploadContent {
+    background-color: #262626;
+    color: white;
+    width: 70vh;
+    height: 60vh;
+
+}
+
+
+#userNotice {
+
+    margin-top: -7vh;
+    margin-left: 10vh;
+}
+
+
+#Notice-img {
+    width: 12vh;
+    height: 8vh;
+    border-radius: 100%;
+    margin-left: 1vh;
+    margin-top: 2vh;
+
+
+}
+
+
+#accept {
+
+    margin-left: 35vh;
+    margin-top: -12vh;
+}
+
+#delete {
+
+    margin-left: 50vh;
+    margin-top: -19vh;
+}
+
+#userNoticeFollowers {
+
+    margin-left: 10vh;
+    margin-top: -6vh;
+}
+
+#whoLikes {
+
+    color: white;
+    text-decoration: none;
+    margin-left: -5vh;
+    margin-top:-5vh;
+
+}
+
+#whoLikesInA-tag{
+color: white;
+
+}
+
+#modal-content{
+background-color: #262626;
+border-radius: 10px;
+width: 75vh;
+height: 75vh;
+}
+#likesModalBody{
+
+    overflow-y: scroll;
+}
+
+#modal-title-likes{
+    color: white;
+}
+
+#modalLike{
+
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+}
+
+#modalLikeName{
+color: white;
+margin-top:-8vh;
+margin-left:10vh;
+}
+
+#modalLikeUserName{
+    color:white;
+margin-top:-3vh;
+margin-left:10vh;
+font-size: 12px;
+}
+
