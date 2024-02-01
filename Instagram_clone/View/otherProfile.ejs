@@ -21,8 +21,8 @@
                 <div class="modal-body row">
                     <p class="col-2">Ara:</p>
                     <form class="col-6">
-                        <input id="inputField" class="form-control col text-light bg-dark"
-                            placeholder="Ara.." type="text">
+                        <input id="inputField" class="form-control col text-light bg-dark" placeholder="Ara.."
+                            type="text">
                     </form>
                 </div>
                 <div id="modal-body2" class="modal-body2 row">
@@ -30,103 +30,153 @@
                     </div>
                 </div>
 
-        </div>
-        <div class="row">
+            </div>
+            <div class="row">
 
 
-            <% 
-            
-            let target="" ; let durum="" ; result.forEach(function(a){ const newResult=a.toJSON(); 
-            console.log("newResult değeri: "+result);
-                  const profilePicture=newResult.profilePicture; if(followData=="undefined" ){ durum="Takip et" ; }
-                if(followData.Isfollowed==true){ durum="Takip ediyorsun" ; } else if(followData.Isfollowed==false){
-                durum="Takip isteği gönderildi" ; } else if(followData.Isfollowed=='' ){ durum="Takip et" ; } if
-                (followData==undefined || followData=="" ) { durum="Takip et" ; }
-                if(followData.Isfollowed==true||followData.Isfollowed==false && followData!==undefined&&followData!==""
-                ) { target="#follow" ; } %>
-                
-                <div class="col profile_photo">
-                    <img src="/users_profile/<%=profilePicture%>">
+                <% let target="" ; let durum="" ; let visitedUserName="" ; result.forEach(function(a){ const
+                    newResult=a.toJSON(); console.log("newResult değeri: "+result);
+                  const profilePicture=newResult.profilePicture; if(followData==" undefined" ){ durum="Takip et" ; }
+                    if(followData.Isfollowed==true){ durum="Takip ediyorsun" ; } else if(followData.Isfollowed==false){
+                    durum="Takip isteği gönderildi" ; } else if(followData.Isfollowed=='' ){ durum="Takip et" ; } if
+                    (followData==undefined || followData=="" ) { durum="Takip et" ; }
+                    if(followData.Isfollowed==true||followData.Isfollowed==false &&
+                    followData!==undefined&&followData!=="" ) { target="#follow" ; } visitedUserName=newResult.username;
+                    %>
+                    <div class="col profile_photo">
+                        <img src="/users_profile/<%=profilePicture%>">
+                    </div>
+                    <div class="col container-small">
+                        <div class="username">
+                            <%=newResult.username%>
+                        </div>
+                        <div id="followArea" class="follow">
+                            <% if(followData.Isfollowed==undefined ){ %>
+
+                                <form id="myForm">
+
+                                    <input type="hidden" name="_id" value="<%=newResult._id%>">
+                                    <input type="hidden" name="username" value="<%=newResult.username%>">
+                                    <input type="hidden" name="userSessionName" value="<%=userName%>">
+                                    <input type="hidden" name="userSessionProfile" value="<%=sessionProfileName%>">
+                                    <input type="hidden" name="sessionProfileName" value="<%=profileName%>">
+                                    <input type="hidden" name="userSessionPicture" value="<%=sessionProfilePicture%>">
+                                    <input type="hidden" name="profilePicture" value="<%=newResult.profilePicture%>">
+                                    <input type="hidden" name="profileName" value="<%=newResult.profileName%>">
+                                    <input type="hidden" name="situation" value="false">
+
+                                    <button id="followStatus" class="btn">
+                                        <%=durum%>
+                                    </button>
+                                </form>
+                                <%}else{ %>
+                                    <button class="btn" data-toggle="modal" data-target="<%=target%>">
+                                        <%=durum%>
+
+                                    </button>
+
+                                    <% } %>
+
+
+                        </div>
+
+                        <button class="btn bg-grey">Mesaj Gönder</button>
+                        <div class="btn-img"><img src="/Icons/more.png"></div>
+                        <div class="info">
+                            <div class="post one">
+                                <%=findProfilePosts%> gönderi
+                            </div>
+                            <div class="post two" data-bs-toggle="modal" data-bs-target="#followersModal">
+                                <%=followedProfile%> takipçi
+                            </div>
+                            <div class="post three" data-bs-toggle="modal" data-bs-target="#followedModal">
+                                <%=followersProfile%> takip
+                            </div>
+                        </div><br>
+                        <div class="username2">
+                            <%=newResult.profileName%>
+                        </div>
+                        <div class="textArea">
+                            <%=newResult.description%>
+                        </div>
+                    </div>
+
+            </div>
+
+            <div class="stories">
+
+                <div class="btn-storie one"><img src="/Icons/user.png">
+                    <p class="p-stories one">Önde çıkanlar</p>
                 </div>
-                <div class="col container-small">
-                    <div class="username">
-                        <%=newResult.username%>
-                    </div>
-                    <div id="followArea" class="follow">
-                        <% console.log(followData.Isfollowed);
-                         if(followData.Isfollowed==undefined ){ %>
-                            
-                            <form id="myForm">
-
-                                <input type="hidden" name="_id" value="<%=newResult._id%>">
-                                <input type="hidden" name="username" value="<%=newResult.username%>">
-                                <input type="hidden" name="userSessionName" value="<%=userName%>">
-                                <input type="hidden" name="userSessionProfile" value="<%=sessionProfileName%>">
-                                <input type="hidden" name="sessionProfileName" value="<%=profileName%>">
-                                <input type="hidden" name="userSessionPicture" value="<%=sessionProfilePicture%>">
-                                <input type="hidden" name="profilePicture" value="<%=newResult.profilePicture%>">
-                                <input type="hidden" name="profileName" value="<%=newResult.profileName%>">
-                                <input type="hidden" name="situation" value="false">
-
-                                <button id="followStatus" class="btn">
-                                    <%=durum%>
-                                </button>
-                            </form>
-                            <%}else{ %>
-                                <button class="btn" data-toggle="modal" data-target="<%=target%>">
-                                    <%=durum%>
-
-                                </button>
-
-                                <% } %>
-
-
-                    </div>
-
-                    <button class="btn bg-grey">Mesaj Gönder</button>
-                    <div class="btn-img"><img src="/Icons/more.png"></div>
-                    <div class="info">
-                        <div class="post one">0 gönderi</div>
-                        <div class="post two">0 gönderi</div>
-                        <div class="post three">0 gönderi</div>
-                    </div><br>
-                    <div class="username2">
-                        <%=newResult.profileName%>
-                    </div>
-                    <div class="textArea">
-                        <%=newResult.description%>
-                    </div>
+                <div class="btn-storie two"><img src="/Icons/user.png">
+                    <p class="p-stories two">Önde çıkanlar</p>
+                </div>
+                <div class="btn-storie add"><img src="/Icons/user.png">
+                    <p class="p-stories add">Yeni</p>
                 </div>
 
-        </div>
+                <hr class="hrMid">
 
-        <div class="stories">
-
-            <div class="btn-storie one"><img src="/Icons/user.png">
-                <p class="p-stories one">Önde çıkanlar</p>
             </div>
-            <div class="btn-storie two"><img src="/Icons/user.png">
-                <p class="p-stories two">Önde çıkanlar</p>
+            <div class="rowOtherProfile">
+                <%posts.forEach(function(p){ const newPost=p.toJSON(); const postPhoto1=newPost.photos[0].photo1; %>
+                    <a class="commentModalButton" id="<%=p._id%>" data-bs-toggle="modal"
+                        data-bs-target="#commentModalPost"><img id="imgPost" src="/posts/<%=postPhoto1%>"> <input
+                            name="usernameInPost" id="<%=newResult.profileName%>" type="hidden">
+                        <input name="userPhotoInPost" id="<%=newResult.profilePicture%>%>" type="hidden">
+                    </a>
+
+                    <%});%>
+
+
             </div>
-            <div class="btn-storie add"><img src="/Icons/user.png">
-                <p class="p-stories add">Yeni</p>
+            <br><br><br>
+
+
+
+
+            <!--followersModal-->
+            <div class="modal fade" id="followersModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content" id="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="modal-title-likes">Takipçiler</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="followersModalBody">
+                            <div class="area">
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <hr class="hrMid">
-
-        </div>
-        <div class="rowOtherProfile">
-            <%posts.forEach(function(p){ const newPost=p.toJSON(); const postPhoto1=newPost.photos[0].photo1;
-                console.log(postPhoto1); %>
-                <a href="/p/<%=newPost._id%>"><img id="imgPost" src="/posts/<%=postPhoto1%>"></a>
-
-                <%});%>
+            <!--followersModal Finished-->
 
 
-        </div>
-        <br><br><br>
+            <!--followedModal-->
+            <div class="modal fade" id="followedModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content" id="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="modal-title-likes">Takip Edilenler</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="followedModalBody">
+                            <div class="area">
 
+                            </div>
 
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--followedModal Finished-->
 
 
 
@@ -162,55 +212,107 @@
                     </div>
                 </div>
             </div>
-                <%});%>
-         
-
-
-<%%>
+            <%});%>
 
 
 
+                <%%>
 
 
-<!--PostAdd modal-->
 
-<div class="modal fade More" id="postAdd" tabindex="-1" role="dialog" aria-labelledby="MoreLabel" aria-hidden="true">
-    <div class="modal-dialog" id="photoUpload" role="document">
-            <div class="modal-content" id="photoUploadContent">
-                    <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Profil Fotoğrafı Ekle</h5>
-                         
-                    </div>
-                    <div id="photoUploadBody" class="modal-body ">
-                            <form action="/upload" method="post" enctype="multipart/form-data">
-                                    <input type="file" name="photos" accept="image/*" multiple>
-                                    <div id="selectedImages"></div>
-                                    <textarea name="textArea" id="textArea" cols="50" rows="5"></textarea>
-                                    <button type="submit">Yükle</button>
-                                </form>
-                            <br>
-                            <div class="btn  col-12" data-dismiss="modal"> İptal
+
+
+                    <!--PostAdd modal-->
+
+                    <div class="modal fade More" id="postAdd" tabindex="-1" role="dialog" aria-labelledby="MoreLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog" id="photoUpload" role="document">
+                            <div class="modal-content" id="photoUploadContent">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Profil Fotoğrafı Ekle</h5>
+
+                                </div>
+                                <div id="photoUploadBody" class="modal-body ">
+                                    <form action="/upload" method="post" enctype="multipart/form-data">
+                                        <input type="file" name="photos" accept="image/*" multiple>
+                                        <div id="selectedImages"></div>
+                                        <textarea name="textArea" id="textArea" cols="50" rows="5"></textarea>
+                                        <button type="submit">Yükle</button>
+                                    </form>
+                                    <br>
+                                    <div class="btn  col-12" data-dismiss="modal"> İptal
+                                    </div>
+
+                                </div>
+
                             </div>
-
+                        </div>
                     </div>
 
-            </div>
-    </div>
-</div>
+
+                    <!-- More -->
+                    <div class="moreDivArea" id="moreDivArea">
+
+                        <div class="modal-body ">
+                            <form class="col" action="/logout" method="post">
+                                <button type="submit" class="btn col-12 bg-primary">Çıkış</button>
+                            </form>
+                            <br>
 
 
-<!-- More -->
-<div class="moreDivArea" id="moreDivArea">
-  
-    <div class="modal-body ">
-        <form class="col" action="/logout" method="post">
-                <button type="submit" class="btn col-12 bg-primary">Çıkış</button>
-        </form>
-        <br>
-       
-    
-    </div>
-    </div>
+                        </div>
+                    </div>
+
+
+
+                    <!--commentModal-->
+                    <div class="modal fade" id="commentModalPost" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog" id="commentDialog">
+                            <div class="modal-content " id="modal-content-comment">
+                                <div class="imgComment " id="imgComment">
+                                </div>
+                                <div class="commentsScreen" id="commentsScreen">
+                                    <div class="commentHeader" id="commentHeader">
+
+                                    </div>
+                                    <div class="commentArea" id="commentArea">
+
+                                    </div>
+                                    <div class="commentFooter" id="commentFooter">
+                                        <div class="commentFooter2" id="commentFooter2">
+
+                                            <img src="/Icons/chat.png" id="chatIconComment" class="commentIcons">
+                                            <img src="/Icons/direct-instagram.png" id="directIconComment"
+                                                class="commentIcons">
+                                            <img src="/Icons/bookmark.png" id="saveIconComment" class="commentIcons">
+                                            <br>
+                                            <a data-bs-toggle="modal" data-bs-target="#likesModal" href="#"
+                                                id="likesWhoInCommentTag">
+                                                <p id="likesWhoInComment">Beğenmeleri görüntüle</p>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <form class="commentForm" id="commentForm">
+                                        <textarea id="commentFormText">
+
+</textarea>
+                                        <input type="submit" onclick="submitForm();" id="commentFormButton">
+                                    </form>
+
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+        </div>
+
+
+
+
+
 
 
     </body>
@@ -224,88 +326,89 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js"></script>
 
 
-    
+
     <script>
-            var socket = io();
+        var socket = io();
 
-            const myFormResult = document.getElementById("myForm");
-            const unfollowFormResult = document.getElementById("unfollowForm");
+        const myFormResult = document.getElementById("myForm");
+        const unfollowFormResult = document.getElementById("unfollowForm");
 
 
-            /* Takip isteği gönderme*/
-            
+        /* Takip isteği gönderme*/
 
-            document.getElementById("followArea").addEventListener("submit", (event) => {
-                event.preventDefault();
 
+        document.getElementById("followArea").addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            const newResult = {
+                _id: document.querySelector('input[name="_id"]').value,
+                username: document.querySelector('input[name="username"]').value,
+                userSessionName: document.querySelector('input[name="userSessionName"]').value,
+                userSessionProfile: document.querySelector('input[name="userSessionProfile"]').value,
+                sessionProfileName: document.querySelector('input[name="sessionProfileName"]').value,
+                userSessionPicture: document.querySelector('input[name="userSessionPicture"]').value,
+                profilePicture: document.querySelector('input[name="profilePicture"]').value,
+                profileName: document.querySelector('input[name="profileName"]').value,
+                situation: document.querySelector('input[name="situation"]').value,
+            };
+
+
+            /* Socket'e mesaj gönder*/
+            socket.emit("messageFromClient", newResult);
+
+
+            document.getElementById("followArea").innerHTML = `
+        <button  class="btn" data-toggle="modal" data-target="#follow">
+            Takip Ediyorsun
+        </button> `;
+
+        });
+
+
+
+
+
+
+
+
+
+
+        /*Modal>form*/
+
+
+        document.getElementById("unfollowForm").addEventListener("submit", (event) => {
+            //  event.preventDefault();
+
+            /* event.preventDefault() sayfanın  yenilenmesini önler */
+
+            const formData = {
+                profileName: document.querySelector('input[name="username"]').value,
+                userSessionName: document.querySelector('input[name="userSessionName"]').value,
+            };
+
+
+
+            /* Socket üzerinden veriyi gönder*/
+            socket.emit("unfollow", formData);
+            function updateFollowArea2() {
                 const newResult = {
                     _id: document.querySelector('input[name="_id"]').value,
                     username: document.querySelector('input[name="username"]').value,
                     userSessionName: document.querySelector('input[name="userSessionName"]').value,
-                    userSessionProfile: document.querySelector('input[name="userSessionProfile"]').value,
-                    sessionProfileName: document.querySelector('input[name="sessionProfileName"]').value,
                     userSessionPicture: document.querySelector('input[name="userSessionPicture"]').value,
+                    sessionProfileName: document.querySelector('input[name="sessionProfileName"]').value,
+                    userSessionProfile: document.querySelector('input[name="userSessionProfile"]').value,
                     profilePicture: document.querySelector('input[name="profilePicture"]').value,
                     profileName: document.querySelector('input[name="profileName"]').value,
                     situation: document.querySelector('input[name="situation"]').value,
                 };
 
-
-                /* Socket'e mesaj gönder*/
-                socket.emit("messageFromClient", newResult);
-
-
-                document.getElementById("followArea").innerHTML = `
-        <button  class="btn" data-toggle="modal" data-target="#follow">
-            Takip Ediyorsun
-        </button> `;
-
-            });
-
-
-
-
-
-
-
-
-
-
-            /*Modal>form*/
-
-
-            document.getElementById("unfollowForm").addEventListener("submit", (event) => {
-                //  event.preventDefault();
-
-                /* event.preventDefault() sayfanın  yenilenmesini önler */
-
-                const formData = {
-                    profileName: document.querySelector('input[name="username"]').value,
-                    userSessionName: document.querySelector('input[name="userSessionName"]').value,
-                };
-
-
-
-                /* Socket üzerinden veriyi gönder*/
-                socket.emit("unfollow", formData);
-                function updateFollowArea2() {
-                    const newResult = {
-                        _id: document.querySelector('input[name="_id"]').value,
-                        username: document.querySelector('input[name="username"]').value,
-                        userSessionName: document.querySelector('input[name="userSessionName"]').value,
-                        userSessionPicture: document.querySelector('input[name="userSessionPicture"]').value,
-                        sessionProfileName: document.querySelector('input[name="sessionProfileName"]').value,
-                        userSessionProfile: document.querySelector('input[name="userSessionProfile"]').value,
-                        profilePicture: document.querySelector('input[name="profilePicture"]').value,
-                        profileName: document.querySelector('input[name="profileName"]').value,
-                        situation: document.querySelector('input[name="situation"]').value,
-                    };
-
-                    document.getElementById("followArea").innerHTML = `<form id="myForm">
+                document.getElementById("followArea").innerHTML = `<form id="myForm">
             <input type="hidden" name="_id" value="${newResult._id}">
             <input type="hidden" name="username" value="${newResult.username}">
             <input type="hidden" name="userSessionName" value="${newResult.userSessionName}">
@@ -317,8 +420,8 @@
             <button id="followStatus" class="btn">Takip et</button>
 
         </form>`;
-                }
-            });
+            }
+        });
 
 
 
@@ -329,125 +432,445 @@
 
         const inputElement = document.getElementById('inputField');
 
-// Input değeri değiştiğinde çalışacak olan fonksiyon
-inputElement.addEventListener('input', function () {
-    const formUser = inputElement.value;
-    const sessionUserName = "<%=userName%>";
-    const formData = {
-        formUser: formUser,
-        sessionUserName: sessionUserName
+        // Input değeri değiştiğinde çalışacak olan fonksiyon
+        inputElement.addEventListener('input', function () {
+            const formUser = inputElement.value;
+            const sessionUserName = "<%=userName%>";
+            const formData = {
+                formUser: formUser,
+                sessionUserName: sessionUserName
 
-    }
-    socket.emit("searchUser", formData);
+            }
+            socket.emit("searchUser", formData);
 
-    socket.on("searchUser2", (users) => {
-        // console.log("users:" + JSON.stringify(users));
-        const modalBody = document.getElementById('modal-body2');
-        modalBody.class = "modal-body2 row";
-        modalBody.innerHTML = ''; // Önceki içeriği temizle
-        // <p class="col-2">Kime:</p>
+            socket.on("searchUser2", (users) => {
+                // console.log("users:" + JSON.stringify(users));
+                const modalBody = document.getElementById('modal-body2');
+                modalBody.class = "modal-body2 row";
+                modalBody.innerHTML = ''; // Önceki içeriği temizle
+                // <p class="col-2">Kime:</p>
 
 
-        users.forEach(user => {
-            const userInfoDiv = document.createElement('div');
-            userInfoDiv.class = 'col-12 UserInfo';
-            userInfoDiv.id = "UserInfo";
-            const img = document.createElement('img');
-            img.id = "searchUser";
-            img.class = 'col bg-secondary';
-            img.src = '/users_profile/' + user.profilePicture; // Kullanıcının profil resmi yolunu ekleyin
+                users.forEach(user => {
+                    const userInfoDiv = document.createElement('div');
+                    userInfoDiv.class = 'col-12 UserInfo';
+                    userInfoDiv.id = "UserInfo";
+                    const img = document.createElement('img');
+                    img.id = "searchUser";
+                    img.class = 'col bg-secondary';
+                    img.src = '/users_profile/' + user.profilePicture; // Kullanıcının profil resmi yolunu ekleyin
 
-            const nickNameParagraph = document.createElement('p');
-            nickNameParagraph.class = 'userNickName';
-            nickNameParagraph.id = "userNickName";
+                    const nickNameParagraph = document.createElement('p');
+                    nickNameParagraph.class = 'userNickName';
+                    nickNameParagraph.id = "userNickName";
 
-            nickNameParagraph.textContent = user.username;
+                    nickNameParagraph.textContent = user.username;
 
-            const profileNameParagraph = document.createElement('p');
-            profileNameParagraph.class = 'userProfileName';
-            profileNameParagraph.id = "userProfileName";
+                    const profileNameParagraph = document.createElement('p');
+                    profileNameParagraph.class = 'userProfileName';
+                    profileNameParagraph.id = "userProfileName";
 
-            profileNameParagraph.textContent = user.profileName;
+                    profileNameParagraph.textContent = user.profileName;
 
-            // Oluşturulan elemanları ana div içine ekleyin
-            const link = document.createElement('a');
-            link.href = "/" + user.username;
-            link.appendChild(userInfoDiv);
-            userInfoDiv.appendChild(img);
-            userInfoDiv.appendChild(nickNameParagraph);
-            userInfoDiv.appendChild(profileNameParagraph);
+                    // Oluşturulan elemanları ana div içine ekleyin
+                    const link = document.createElement('a');
+                    link.href = "/" + user.username;
+                    link.appendChild(userInfoDiv);
+                    userInfoDiv.appendChild(img);
+                    userInfoDiv.appendChild(nickNameParagraph);
+                    userInfoDiv.appendChild(profileNameParagraph);
 
-            // Ana div'i modal-body2 içine ekleyin
-            modalBody.appendChild(link);
+                    // Ana div'i modal-body2 içine ekleyin
+                    modalBody.appendChild(link);
+
+
+                });
+            });
+
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //search div tag call start
+        $("#searchDivNav").hide();
+        $("#noticeDivNav").hide();
+        $("#moreDivArea").hide();
+
+        $(document).ready(function () {
+            // Başlangıçta #searchDivNav gizli olsun
+            $("#searchDivNav").hide();
+
+            // Butona tıklandığında #searchDivNav elementini göster veya gizle
+            $("#myLink").click(function (event) {
+                event.preventDefault(); // Sayfanın yenilenmesini engelle
+                $("#noticeDivNav").hide();
+
+                $("#searchDivNav").toggle(); // #searchDivNav elementini göster veya gizle
+            });
+
+
+            //notice  div tag call start
+            // Başlangıçta #noticeDivNav gizli olsun
+            $("#noticeDivNav").hide();
+
+            // Butona tıklandığında #searchDivNav elementini göster veya gizle
+            $("#myNotice").click(function (event) {
+                event.preventDefault(); // Sayfanın yenilenmesini engelle
+                $("#searchDivNav").hide();
+
+                $("#noticeDivNav").toggle(); // #searchDivNav elementini göster veya gizle
+            });
+
+
+
+            //moreDiv  div tag call start
+            // Başlangıçta #noticeDivNav gizli olsun
+            $("#moreDivArea").hide();
+
+            // Butona tıklandığında #searchDivNav elementini göster veya gizle
+            $("#moreDiv").click(function (event) {
+                event.preventDefault(); // Sayfanın yenilenmesini engelle
+
+                $("#moreDivArea").toggle(); // #searchDivNav elementini göster veya gizle
+            });
+
 
 
         });
-    });
 
-});
+        var usernameInput2 = "";
 
-
-
-
-
-
-
-
-
-
-
-
+        var imgId = "";
+        var commentButtons = document.querySelectorAll(".commentModalButton");
+        commentButtons.forEach(function (button) {
+            button.addEventListener("click", function (event) {
+                imgId = button.id;
+                var sessionUserName = "<%=userName%>";
+                const data = {
+                    sessionUserName: sessionUserName,
+                    imgId: imgId
+                }
 
 
-        
+                var parentDiv = button.closest(".commentModalButton");  // Tıklama yapılan butonun üst div'ini bul
+                var usernameInput = parentDiv.querySelector("input[name='usernameInPost']");
+                var userPhotoInput = parentDiv.querySelector("input[name='userPhotoInPost']");
+                usernameInput2 = usernameInput.id;
+                var userPhoto = userPhotoInput.id;
+
+                const commentHeader = document.getElementById("commentHeader");
+
+                socket.emit("commentPost", { data, sessionUserName });
 
 
-    //search div tag call start
-    $("#searchDivNav").hide();
-    $("#noticeDivNav").hide();
-    $("#moreDivArea").hide();
+                const commentFooter2 = document.getElementById("commentFooter2");
 
-    $(document).ready(function(){
-    // Başlangıçta #searchDivNav gizli olsun
-    $("#searchDivNav").hide();
+                socket.on("commentPostReturn", ({ query, IslikedSession2 }) => {
 
-    // Butona tıklandığında #searchDivNav elementini göster veya gizle
-    $("#myLink").click(function(event){
-        event.preventDefault(); // Sayfanın yenilenmesini engelle
-    $("#noticeDivNav").hide();
+                    const LikePhotoEx = document.getElementById("likeIconComment");
 
-        $("#searchDivNav").toggle(); // #searchDivNav elementini göster veya gizle
-    });
+                    if (LikePhotoEx != undefined) {
+                        console.log("içerde");
+                        LikePhotoEx.src = IslikedSession2;
+                    }
+                    else {
 
 
-  //notice  div tag call start
-                    // Başlangıçta #noticeDivNav gizli olsun
-                    $("#noticeDivNav").hide();
+                        const LikePhotoResult = document.createElement("img");
+                        LikePhotoResult.src = IslikedSession2;
+                        LikePhotoResult.id = "likeIconComment";
+                        LikePhotoResult.classList.add("commentFooter2");
 
-                    // Butona tıklandığında #searchDivNav elementini göster veya gizle
-                    $("#myNotice").click(function (event) {
-                        event.preventDefault(); // Sayfanın yenilenmesini engelle
-                  $("#searchDivNav").hide();
+                        commentFooter2.appendChild(LikePhotoResult);
 
-                        $("#noticeDivNav").toggle(); // #searchDivNav elementini göster veya gizle
-                    });
+
+                    }
 
 
 
-      //moreDiv  div tag call start
-                    // Başlangıçta #noticeDivNav gizli olsun
-                    $("#moreDivArea").hide();
 
-                    // Butona tıklandığında #searchDivNav elementini göster veya gizle
-                    $("#moreDiv").click(function (event) {
-                        event.preventDefault(); // Sayfanın yenilenmesini engelle
+                    const commentArea = document.getElementById("commentArea");
+                    document.getElementById("commentHeader").innerHTML = "";
 
-                        $("#moreDivArea").toggle(); // #searchDivNav elementini göster veya gizle
-                    });
+                    var postUserOwner = document.createElement("img");
+                    postUserOwner.id = "imageCommentHeader";
+                    postUserOwner.src = "/users_profile/" + userPhoto;
 
-    
-    
-});
+                    var postUserOwnerP = document.createElement("p");
+                    postUserOwnerP.classList.add("commentP");
+                    postUserOwnerP.id = "commentP";
+                    postUserOwnerP.textContent = usernameInput2;
+
+                    var postUserMore = document.createElement("img");
+                    postUserMore.id = "imageCommentHeader2";
+                    postUserMore.src = "/Icons/more.png";
+
+                    var lastClassComment = document.createElement("div");
+                    lastClassComment.classList.add("hrF");
+                    commentHeader.appendChild(postUserOwner);
+                    commentHeader.appendChild(postUserOwnerP);
+                    commentHeader.appendChild(postUserMore);
+                    commentHeader.appendChild(lastClassComment);
+
+
+                    document.getElementById("commentArea").innerHTML = "";
+
+
+                    for (let i = 0; i < query.length; i++) {
+                        const userLike2 = query[i];
+
+
+                        var commentUserArea = document.createElement("div");
+                        commentUserArea.id = "commentUserArea";
+                        commentUserArea.classList.add("commentUserArea");
+
+
+                        var imageCommentHeader = document.createElement("img");
+                        imageCommentHeader.id = "imageCommentHeader";
+                        imageCommentHeader.src = "/users_profile/" + userLike2.userWhoComment[0].userPicture;
+
+                        var commentP = document.createElement("p");
+                        commentP.classList.add("commentP");
+                        commentP.id = "commentP";
+                        commentP.textContent = userLike2.userWhoComment[0].username;
+
+                        var commentTextP = document.createElement("p");
+                        commentTextP.id = "commentTextP";
+                        commentTextP.classList.add("commentTextP");
+                        commentTextP.textContent = userLike2.userWhoComment[0].userComment;
+
+
+
+
+                        commentUserArea.appendChild(imageCommentHeader);
+                        commentUserArea.appendChild(commentP);
+                        commentUserArea.appendChild(commentTextP);
+
+                        commentArea.appendChild(commentUserArea);
+
+                    }
+
+                });
+
+
+            });
+        });
+
+        var usernameInput2 = "";
+
+        var imgId = "";
+        var commentButtons = document.querySelectorAll(".commentModalButton");
+        commentButtons.forEach(function (button) {
+            button.addEventListener("click", function (event) {
+                imgId = button.id;
+                var sessionUserName = "<%=userName%>";
+                const data = {
+                    sessionUserName: sessionUserName,
+                    imgId: imgId
+                }
+
+                var parentAnchor = event.currentTarget;
+
+                // Parent node içindeki img elementini bul
+
+                // Img elementinin src özelliğine eriş
+
+
+                var parentDiv = button.closest(".commentModalButton");  // Tıklama yapılan butonun üst div'ini bul
+                var usernameInput = parentDiv.querySelector("input[name='usernameInPost']");
+                var userPhotoInput = parentDiv.querySelector("input[name='userPhotoInPost']");
+                usernameInput2 = usernameInput.id;
+                var userPhoto = userPhotoInput.id;
+
+                var imgElement = parentAnchor.querySelector("img");
+                var imgSrc = imgElement.src;
+                var url = new URL(imgSrc);
+                var newImgSrc = url.pathname;
+
+
+
+
+                const imgComment = document.getElementById("imgComment");
+                document.getElementById("imgComment").innerHTML = "";
+                const imgPost = document.getElementById("imgPost");
+                const commentBigPhoto = document.createElement("img");
+                commentBigPhoto.id = "imageComment";
+                commentBigPhoto.src = newImgSrc;
+                imgComment.appendChild(commentBigPhoto);
+
+
+
+
+                var sessionUserName = "<%=visitedUserName%>";
+                socket.emit("follower", (sessionUserName));
+                socket.on("followerReturn", (usersInfo) => {
+                    document.getElementById("followersModalBody").innerHTML = "";
+                    document.getElementById("followersModalBody").textContent = "";
+
+                    const likesModalBody = document.getElementById("followersModalBody");
+                    const likesModalArea = document.createElement("div");
+                    likesModalArea.classList.add("area");
+
+                    for (let i = 0; i < usersInfo.length; i++) {
+                        const userLike = usersInfo[i];
+                        const img = document.createElement("img");
+                        img.id = "modalLike";
+                        img.src = "/users_profile/" + userLike.userProfilePicture;
+
+                        const aLink = document.createElement("a");
+                        aLink.id = "aLink";
+                        aLink.href = "/";
+                        const p = document.createElement("p");
+                        p.id = "modalLikeName";
+                        p.textContent = userLike.userName;
+                        aLink.textContent = p.textContent;
+                        aLink.href = p.textContent;
+
+                        const p2 = document.createElement("p");
+                        p2.id = "modalLikeUserName";
+                        p2.textContent = userLike.userProfileName;
+
+                        // Append elements to the user area
+                        likesModalArea.appendChild(img);
+                        likesModalArea.appendChild(aLink);
+                        likesModalArea.appendChild(p2);
+
+                        // Append the user area to the modal body
+                        likesModalBody.appendChild(likesModalArea);
+
+
+                    }
+
+
+
+                });
+
+
+
+                socket.emit("followed", (sessionUserName));
+                socket.on("followedReturn", (usersInfo) => {
+                    document.getElementById("followedModalBody").innerHTML = "";
+                    document.getElementById("followedModalBody").textContent = "";
+
+                    const likesModalBody = document.getElementById("followedModalBody");
+                    const likesModalArea = document.createElement("div");
+                    likesModalArea.classList.add("area");
+
+                    for (let i = 0; i < usersInfo.length; i++) {
+                        const userLike = usersInfo[i];
+                        const img = document.createElement("img");
+                        img.id = "modalLike";
+                        img.src = "/users_profile/" + userLike.followed[0].profilePicture;
+
+                        const aLink = document.createElement("a");
+                        aLink.id = "aLink";
+                        aLink.href = "/";
+                        const p = document.createElement("p");
+                        p.id = "modalLikeName";
+                        p.textContent = userLike.followed[0].username;
+                        aLink.textContent = p.textContent;
+                        aLink.href = p.textContent;
+
+                        const p2 = document.createElement("p");
+                        p2.id = "modalLikeUserName";
+                        p2.textContent = userLike.followed[0].profileName;
+
+                        // Append elements to the user area
+                        likesModalArea.appendChild(img);
+                        likesModalArea.appendChild(aLink);
+                        likesModalArea.appendChild(p2);
+
+                        // Append the user area to the modal body
+                        likesModalBody.appendChild(likesModalArea);
+
+
+                    }
+
+
+
+                });
+
+
+            });
+        });
+
+
+
+        function submitForm() {
+            event.preventDefault();
+            const commentFormText = document.getElementById("commentFormText").value.trim();
+            const sessionUserPicture = "<%=sessionProfilePicture%>";
+            const sessionUserName = "<%=userName%>";
+            const newCommentData = {
+                "sessionUserName": sessionUserName,
+                "imgId": imgId,
+                "newComment": commentFormText,
+                "usernamePostOwner": usernameInput2,
+                "sessionUserPicture": sessionUserPicture,
+
+            }
+
+            socket.emit("commentMessageAdd", newCommentData);
+            const commentArea = document.getElementById("commentArea");
+
+            socket.on("commentPostReturn2", newCommentData2 => {
+                document.getElementById("commentArea").innerHTML = "";
+
+
+                for (let i = 0; i < newCommentData2.length; i++) {
+                    const userLike2 = newCommentData2[i];
+
+
+                    var commentUserArea = document.createElement("div");
+                    commentUserArea.id = "commentUserArea";
+                    commentUserArea.classList.add("commentUserArea");
+
+
+                    var imageCommentHeader = document.createElement("img");
+                    imageCommentHeader.id = "imageCommentHeader";
+                    imageCommentHeader.src = "/users_profile/" + userLike2.userWhoComment[0].userPicture;
+
+                    var commentP = document.createElement("p");
+                    commentP.classList.add("commentP");
+                    commentP.id = "commentP";
+                    commentP.textContent = userLike2.userWhoComment[0].username;
+
+                    var commentTextP = document.createElement("p");
+                    commentTextP.id = "commentTextP";
+                    commentTextP.classList.add("commentTextP");
+                    commentTextP.textContent = userLike2.userWhoComment[0].userComment;
+
+
+
+
+                    commentUserArea.appendChild(imageCommentHeader);
+                    commentUserArea.appendChild(commentP);
+                    commentUserArea.appendChild(commentTextP);
+
+                    commentArea.appendChild(commentUserArea);
+
+                }
+
+
+            });
+
+
+        }
+
 
 
 

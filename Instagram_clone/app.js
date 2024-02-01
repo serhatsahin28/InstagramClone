@@ -18,14 +18,17 @@ app.use(express.static("images"));//Define the img folder
 app.use(express.static("scss"));
 
 const User = require("./Model/table/dbUsers");
+const commentPost = require("./Model/table/commentPost");
 const likePost = require("./Model/table/likePost");
+const postUser = require("./Model/table/postUser");
+const followPost = require("./Model/table/follow");
+
 const UserController = require("./Controller/UserController");
 const Profile = require("./Controller/profileController");
 const storyController = require("./Controller/storyController");
 const messageController = require("./Controller/messageController");
 const postController = require("./Controller/postController");
 const noticeController = require("./Controller/noticeController");
-
 
 const { log } = require("console");
 const post = require("./Model/table/postUser");
@@ -163,14 +166,92 @@ io.on("connection", (socket) => {
 
     socket.on("likeSee", async (data) => {
         try {
-            const a = await likePost.find({post_id:data});
-            io.emit("likeSeeReturn",a);
+            const a = await likePost.find({ post_id: data });
+            io.emit("likeSeeReturn", a);
         } catch (error) {
             console.error(error);
         }
     });
-    
 
+
+
+    socket.on("commentPost", async ({ data, sessionUserName }) => {
+
+        try {
+            const post_id = data.imgId;
+            const query = await commentPost.find({ "post_id": post_id }).sort({ _id: -1 });
+            const IslikedSession = await likePost.find({ post_id: post_id, "userWhoLike.username": sessionUserName });
+            let IslikedSession2 = "";
+
+            if (IslikedSession != null && IslikedSession != "") {
+                IslikedSession2 = "/Icons/redHeart.png";
+
+            }
+            else {
+                IslikedSession2 = "/Icons/heart.png";
+
+            }
+
+
+            io.emit("commentPostReturn", { query, IslikedSession2 });
+
+
+        } catch (error) {
+            console.error(error);
+        }
+    });
+
+    socket.on("commentMessageAdd", async (newCommentData) => {
+
+        try {
+            const post_id = newCommentData.imgId;
+            const sessionUserName = newCommentData.sessionUserName;
+            const newComment = newCommentData.newComment;
+            const usernamePostOwner = newCommentData.usernamePostOwner;
+            const sessionUserPicture = newCommentData.sessionUserPicture;
+
+            console.log(newCommentData);
+            console.log("newCommentData");
+
+            const queryAddNewComment = await commentPost.create({
+                "post_id": post_id,
+                "postOwnerUsername": usernamePostOwner,
+                userWhoComment: [
+                    {
+                        "username": sessionUserName,
+                        "userPicture": sessionUserPicture,
+                        "userComment": newComment,
+
+                    }
+                ]
+
+            });
+
+            const newQuery = await commentPost.find({ "post_id": post_id }).sort({ _id: -1 });
+
+
+
+
+            io.emit("commentPostReturn2", newQuery);
+        } catch (error) {
+            console.error(error);
+        }
+    });
+
+
+    socket.on("follower",async (sessionUserName) => {
+        const query =await followPost.find({"followed.username":sessionUserName,"followed.situation":true});
+        console.log("follow");
+   io.emit("followerReturn",query);
+
+});
+
+
+socket.on("followed",async (sessionUserName) => {
+    const query =await followPost.find({"userName":sessionUserName,"followed.situation":true});
+io.emit("followedReturn",query);
+
+});
 
 
 
@@ -306,9 +387,7 @@ app.post("/upload/", upload.array('photos', 4), (req, res) => {
 
 
 
-server.listen(PORT, () => {//App yerine burada server kullanmamız gerekiyor.(Socket.io çalışması için)
+server.listen(PORT, () => {
     console.log("port dinleniyor");
 });
-
-
 

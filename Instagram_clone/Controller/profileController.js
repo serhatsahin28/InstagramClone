@@ -23,10 +23,13 @@ class Profile extends UserController {
       const followersUser = await UserModel.findAllFollowers(username, sessionUserName);//followersUser ile profiline girilen kullanıcıyı,session'ı açık olan kullanıcı takip ediyor mu kontrol ediyoruz
       const sessionProfilePicture = req.session.user.profilePicture;
       const profileName = req.session.user.profileName;
+      const followedProfile = await UserModel.findProfileFollowed(username);
+      const followersProfile = await UserModel.findProfileFollowers(username);
+      const findProfilePosts = await UserModel.findProfilePosts(username);
 
       // res.json("followersUser"+followedUser);
       const isPrivate = result[0].isPrivate;
-
+      
 
       let followData = null;
 
@@ -66,24 +69,23 @@ class Profile extends UserController {
 
       console.log("Isfollowed:  " + Isfollowed);
 
-
       if (username == userName) {
-        res.render("profile", { result, posts, userName, sessionProfilePicture, profileName });
+        res.render("profile", { result, posts, userName, sessionProfilePicture, profileName,followedProfile,followersProfile,findProfilePosts });
 
       }
       else {
         if (isPrivate == true && Isfollowed == true) {
-          res.render("otherProfile", { result, posts, userName, sessionProfileName, followData, sessionProfilePicture, profileName });
+          res.render("otherProfile", { result, posts, userName, sessionProfileName, followData, sessionProfilePicture, profileName,followedProfile,followersProfile,findProfilePosts});
         }
         else if(isPrivate!=true)
         {
-          res.render("otherProfile", { result, posts, userName, sessionProfileName, followData, sessionProfilePicture, profileName });
+          res.render("otherProfile", { result, posts, userName, sessionProfileName, followData, sessionProfilePicture, profileName,followedProfile,followersProfile,findProfilePosts});
 
 
         }
         else {
 
-          res.render("privateOtherProfile", { result, posts, userName, sessionProfileName, followData, sessionProfilePicture, profileName });
+          res.render("privateOtherProfile", { result, posts, userName, sessionProfileName, followData, sessionProfilePicture, profileName,followedProfile,followersProfile,findProfilePosts });
 
         }
       }
