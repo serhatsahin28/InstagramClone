@@ -19,8 +19,8 @@
                 <div class="modal-body row">
                     <p class="col-2">Ara:</p>
                     <form class="col-6">
-                        <input id="inputField" class="form-control col text-light bg-dark"
-                            placeholder="Ara.." type="text">
+                        <input id="inputField" class="form-control col text-light bg-dark" placeholder="Ara.."
+                            type="text">
                     </form>
                 </div>
                 <div id="modal-body2" class="modal-body2 row">
@@ -28,305 +28,709 @@
                     </div>
                 </div>
 
-        </div>
-        <div class="row">
-
-            <% result.forEach(function(a){ const newResult=a.toJSON(); %>
-
-                <div class="col profile_photo" data-toggle="modal" data-target="#exampleModal">
-                    <img src="/users_profile/<%=newResult.profilePicture%>">
-                </div>
-                <div class="col container-small">
-                    <div class="username">
-                        <%=newResult.username%>
-                    </div>
-                    <button class="btn ">Profili düzenle</button>
-                    <button class="btn">Arşivi gör</button>
-                    <div class="btn-img"><img src="/Icons/settings.png"></div>
-                    <div class="info">
-                        <div class="post one">0 gönderi</div>
-                        <div class="post two">0 gönderi</div>
-                        <div class="post three">0 gönderi</div>
-                    </div><br>
-                    <div class="username2">
-                        <%=newResult.profileName%>
-                    </div>
-                    <div class="textArea">
-                        <%=newResult.description%>
-                    </div>
-                </div>
-
-        </div>
-        <div class="stories">
-            <div class="btn-storie one"><img src="/Icons/user.png">
-                <p class="p-stories one">Önde çıkanlar</p>
             </div>
-            <div class="btn-storie two"><img src="/Icons/user.png">
-                <p class="p-stories two">Önde çıkanlar</p>
-            </div>
-            <div class="btn-storie add"><img src="/Icons/user.png">
-                <p class="p-stories add">Yeni</p>
-            </div>
-
-            <hr class="hrMid">
-
-        </div>
-
-        <div class="postArea ">
-
             <div class="row">
-                <%posts.forEach(function(p){ const newPost=p.toJSON(); const postPhoto1=newPost.photos[0].photo1;
-                    console.log(postPhoto1); %>
-                    <a href="/p/<%=newPost._id%>"><img id="imgPost" src="/posts/<%=postPhoto1%>"></a>
 
-                    <%});%>
+                <% result.forEach(function(a){ const newResult=a.toJSON(); %>
 
+                    <div class="col profile_photo" data-toggle="modal" data-target="#exampleModal">
+                        <img src="/users_profile/<%=newResult.profilePicture%>">
+                    </div>
+                    <div class="col container-small">
+                        <div class="username">
+                            <%=newResult.username%>
+                        </div>
+                        <button class="btn ">Profili düzenle</button>
+                        <button class="btn">Arşivi gör</button>
+                        <div class="btn-img"><img src="/Icons/settings.png"></div>
+                        <div class="info">
+                            <div class="post one"><%=findProfilePosts%> gönderi</div>
+                            <div class="post two" data-bs-toggle="modal" data-bs-target="#followersModal"><%=followedProfile%> takipçi</div>
+                            <div class="post three" data-bs-toggle="modal" data-bs-target="#followedModal"><%=followersProfile%> takip</div>
+                        </div><br>
+                        <div class="username2">
+                            <%=newResult.profileName%>
+                        </div>
+                        <div class="textArea">
+                            <%=newResult.description%>
+                        </div>
+                    </div>
 
             </div>
-            <br><br><br>
+            <div class="stories">
+                <div class="btn-storie one"><img src="/Icons/user.png">
+                    <p class="p-stories one">Önde çıkanlar</p>
+                </div>
+                <div class="btn-storie two"><img src="/Icons/user.png">
+                    <p class="p-stories two">Önde çıkanlar</p>
+                </div>
+                <div class="btn-storie add"><img src="/Icons/user.png">
+                    <p class="p-stories add">Yeni</p>
+                </div>
 
-        </div>
+                <hr class="hrMid">
 
-        <%});%>
+            </div>
+
+            <div class="postArea ">
+
+                <div class="row">
+                    <%posts.forEach(function(p){ const newPost=p.toJSON(); const postPhoto1=newPost.photos[0].photo1;
+                        %>
+                        <a class="commentModalButton" id="<%=p._id%>" data-bs-toggle="modal" data-bs-target="#commentModalPost"><img id="imgPost"
+                                src="/posts/<%=postPhoto1%>"> <input name="usernameInPost" id="<%=newResult.profileName%>" type="hidden">
+                                <input name="userPhotoInPost" id="<%=newResult.profilePicture%>%>" type="hidden">
+                            </a>
+
+                        <%});%>
 
 
-            <!-- Modal Edit-->
-            <div id="modalEdit" class="modal fade " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Profil Fotoğrafını Değiştir</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body bg-danger">
-                            <div class="btn col-12 bg-primary">Fotoğraf yükle</div><br>
-                            <div class="btn col-12  bg-primary">Resmi kaldır</div>
-                            <div class="btn  col-12  bg-primary" data-dismiss="modal"> İptal
+                </div>
+                <br><br><br>
+
+            </div>
+
+            <%});%>
+
+
+                <!-- Modal Edit-->
+                <div id="modalEdit" class="modal fade " id="exampleModal" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Profil Fotoğrafını Değiştir</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body bg-danger">
+                                <div class="btn col-12 bg-primary">Fotoğraf yükle</div><br>
+                                <div class="btn col-12  bg-primary">Resmi kaldır</div>
+                                <div class="btn  col-12  bg-primary" data-dismiss="modal"> İptal
+                                </div>
+
                             </div>
 
                         </div>
-
                     </div>
                 </div>
-            </div>
 
 
 
 
-<!--PostAdd modal-->
+                <!--PostAdd modal-->
 
-<div class="modal fade More " id="postAdd" tabindex="-1" role="dialog" aria-labelledby="MoreLabel" aria-hidden="true">
-    <div class="modal-dialog " id="photoUpload" role="document">
-            <div class="modal-content " id="photoUploadContent">
-                    <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Profil Fotoğrafı Ekle</h5>
-                         
-                    </div>
-                    <div id="photoUploadBody" class="modal-body ">
-                            <form action="/upload" method="post" enctype="multipart/form-data">
+                <div class="modal fade More " id="postAdd" tabindex="-1" role="dialog" aria-labelledby="MoreLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog " id="photoUpload" role="document">
+                        <div class="modal-content " id="photoUploadContent">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Profil Fotoğrafı Ekle</h5>
+
+                            </div>
+                            <div id="photoUploadBody" class="modal-body ">
+                                <form action="/upload" method="post" enctype="multipart/form-data">
                                     <input type="file" name="photos" accept="image/*" multiple>
                                     <div id="selectedImages"></div>
                                     <textarea name="textArea" id="textArea" cols="50" rows="5"></textarea>
                                     <button type="submit">Yükle</button>
                                 </form>
-                            <br>
-                            <div class="btn  col-12" data-dismiss="modal"> İptal
+                                <br>
+                                <div class="btn  col-12" data-dismiss="modal"> İptal
+                                </div>
+
                             </div>
 
+                        </div>
                     </div>
+                </div>
+                <!-- More -->
+                <div class="moreDivArea" id="moreDivArea">
 
-            </div>
-    </div>
-</div>
-<!-- More -->
-<div class="moreDivArea" id="moreDivArea">
+                    <div class="modal-body ">
+                        <form class="col" action="/logout" method="post">
+                            <button type="submit" class="btn col-12 bg-primary">Çıkış</button>
+                        </form>
+                        <br>
+
+
+                    </div>
+                </div>
+
+                <!--commentModal-->
+                <div class="modal fade" id="commentModalPost" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog" id="commentDialog">
+                        <div class="modal-content " id="modal-content-comment">
+                            <div class="imgComment " id="imgComment">
+                                <!-- <img id="imageComment" src="/users_profile/image1.jpg"> -->
+                            </div>
+                            <div class="commentsScreen" id="commentsScreen">
+                                <div class="commentHeader" id="commentHeader">
+
+                                </div>
+                                <div class="commentArea" id="commentArea">
+
+                                </div>
+                                <div class="commentFooter" id="commentFooter">
+                                    <div class="commentFooter2" id="commentFooter2">
+
+                                        <img src="/Icons/chat.png" id="chatIconComment" class="commentIcons">
+                                        <img src="/Icons/direct-instagram.png" id="directIconComment"
+                                            class="commentIcons">
+                                        <img src="/Icons/bookmark.png" id="saveIconComment" class="commentIcons">
+                                        <br>
+                                        <a data-bs-toggle="modal" data-bs-target="#likesModal" href="#"
+                                            id="likesWhoInCommentTag">
+                                            <p id="likesWhoInComment">Beğenmeleri görüntüle</p>
+                                        </a>
+                                    </div>
+                                </div>
+                                <form class="commentForm" id="commentForm">
+                                    <textarea id="commentFormText">
+
+          </textarea>
+                                    <input type="submit" onclick="submitForm();" id="commentFormButton">
+                                </form>
+
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+
+<!--followersModal-->
+<div class="modal fade" id="followersModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content" id="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="modal-title-likes">Takipçiler</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="followersModalBody">
+          <div class="area">
   
-    <div class="modal-body ">
-        <form class="col" action="/logout" method="post">
-                <button type="submit" class="btn col-12 bg-primary">Çıkış</button>
-        </form>
-        <br>
-       
-    
+        </div>
+      
+      </div>
     </div>
+  </div>
+  </div>
+  
+  <!--followersModal Finished-->
+
+
+<!--followedModal-->
+<div class="modal fade" id="followedModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content" id="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="modal-title-likes">Takip Edilenler</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="followedModalBody">
+          <div class="area">
+  
+        </div>
+      
+      </div>
     </div>
-    
+  </div>
+  </div>
+  
+  <!--followedModal Finished-->
 
 
 
 
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const imageInput = document.querySelector('input[type="file"]');
-        const selectedImagesContainer = document.getElementById('selectedImages');
 
-        // Resim seçildiğinde işlenmesi gereken fonksiyon
-        imageInput.addEventListener('change', function(event) {
-            selectedImagesContainer.innerHTML = ''; // Seçilen resimlerin listesini temizle
 
-            const files = event.target.files;
-            Array.from(files).forEach(function(file) {
-                const imageElement = document.createElement('img');
-                imageElement.src = URL.createObjectURL(file);
-                imageElement.style.width = '100px';
-                imageElement.style.height = '100px';
-                selectedImagesContainer.appendChild(imageElement);
+
+
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const imageInput = document.querySelector('input[type="file"]');
+                const selectedImagesContainer = document.getElementById('selectedImages');
+
+                // Resim seçildiğinde işlenmesi gereken fonksiyon
+                imageInput.addEventListener('change', function (event) {
+                    selectedImagesContainer.innerHTML = ''; // Seçilen resimlerin listesini temizle
+
+                    const files = event.target.files;
+                    Array.from(files).forEach(function (file) {
+                        const imageElement = document.createElement('img');
+                        imageElement.src = URL.createObjectURL(file);
+                        imageElement.style.width = '100px';
+                        imageElement.style.height = '100px';
+                        selectedImagesContainer.appendChild(imageElement);
+                    });
+                });
+
+                // Form submit edildiğinde işlenmesi gereken fonksiyon
+                const form = document.querySelector('form');
+                form.addEventListener('submit', function (event) {
+                    event.preventDefault(); // Form submit işlemini engelle
+
+                    // Seçilen resimleri ve diğer form verilerini sunucuya göndermek için gerekli işlemleri gerçekleştirin
+
+                    // Örnek olarak, form verilerini konsola yazdırabilirsiniz
+                    const formData = new FormData(form);
+                    for (var pair of formData.entries()) {
+                        console.log(pair[0] + ', ' + pair[1]);
+                    }
+                });
             });
-        });
-
-        // Form submit edildiğinde işlenmesi gereken fonksiyon
-        const form = document.querySelector('form');
-        form.addEventListener('submit', function(event) {
-            event.preventDefault(); // Form submit işlemini engelle
-
-            // Seçilen resimleri ve diğer form verilerini sunucuya göndermek için gerekli işlemleri gerçekleştirin
-
-            // Örnek olarak, form verilerini konsola yazdırabilirsiniz
-            const formData = new FormData(form);
-            for (var pair of formData.entries()) {
-                console.log(pair[0]+ ', ' + pair[1]); 
-            }
-        });
-    });
 
 
-</script>
+        </script>
 
 
 
 
 
-            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-                integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-                crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-                crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-                crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
 
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.4/socket.io.js"></script>
 
-          
+
     <script src="/socket.io/socket.io.js"></script>
     <script>
-                const socket = io();
-
-     
+        const socket = io();
 
 
 
 
-    //search div tag call start
-    $("#searchDivNav").hide();
-    $("#noticeDivNav").hide();
-    $("#moreDivArea").hide();
-
-    $(document).ready(function(){
-    // Başlangıçta #searchDivNav gizli olsun
-    $("#searchDivNav").hide();
-
-    // Butona tıklandığında #searchDivNav elementini göster veya gizle
-    $("#myLink").click(function(event){
-        event.preventDefault(); // Sayfanın yenilenmesini engelle
-    $("#noticeDivNav").hide();
-
-        $("#searchDivNav").toggle(); // #searchDivNav elementini göster veya gizle
-    });
 
 
-  //notice  div tag call start
-                    // Başlangıçta #noticeDivNav gizli olsun
-                    $("#noticeDivNav").hide();
+        //search div tag call start
+        $("#searchDivNav").hide();
+        $("#noticeDivNav").hide();
+        $("#moreDivArea").hide();
 
-                    // Butona tıklandığında #searchDivNav elementini göster veya gizle
-                    $("#myNotice").click(function (event) {
-                        event.preventDefault(); // Sayfanın yenilenmesini engelle
-                  $("#searchDivNav").hide();
+        $(document).ready(function () {
+            // Başlangıçta #searchDivNav gizli olsun
+            $("#searchDivNav").hide();
 
-                        $("#noticeDivNav").toggle(); // #searchDivNav elementini göster veya gizle
-                    });
+            // Butona tıklandığında #searchDivNav elementini göster veya gizle
+            $("#myLink").click(function (event) {
+                event.preventDefault(); // Sayfanın yenilenmesini engelle
+                $("#noticeDivNav").hide();
 
-
-
-      //moreDiv  div tag call start
-                    // Başlangıçta #noticeDivNav gizli olsun
-                    $("#moreDivArea").hide();
-
-                    // Butona tıklandığında #searchDivNav elementini göster veya gizle
-                    $("#moreDiv").click(function (event) {
-                        event.preventDefault(); // Sayfanın yenilenmesini engelle
-
-                        $("#moreDivArea").toggle(); // #searchDivNav elementini göster veya gizle
-                    });
-
-    
-    
-});
-
-const inputElement = document.getElementById('inputField');
-
-// Input değeri değiştiğinde çalışacak olan fonksiyon
-inputElement.addEventListener('input', function () {
-    const formUser = inputElement.value;
-    const sessionUserName = "<%=userName%>";
-    const formData = {
-        formUser: formUser,
-        sessionUserName: sessionUserName
-
-    }
-    socket.emit("searchUser", formData);
-
-    socket.on("searchUser2", (users) => {
-        // console.log("users:" + JSON.stringify(users));
-        const modalBody = document.getElementById('modal-body2');
-        modalBody.class = "modal-body2 row";
-        modalBody.innerHTML = ''; // Önceki içeriği temizle
-        // <p class="col-2">Kime:</p>
+                $("#searchDivNav").toggle(); // #searchDivNav elementini göster veya gizle
+            });
 
 
-        users.forEach(user => {
-            const userInfoDiv = document.createElement('div');
-            userInfoDiv.class = 'col-12 UserInfo';
-            userInfoDiv.id = "UserInfo";
-            const img = document.createElement('img');
-            img.id = "searchUser";
-            img.class = 'col bg-secondary';
-            img.src = '/users_profile/' + user.profilePicture; // Kullanıcının profil resmi yolunu ekleyin
+            //notice  div tag call start
+            // Başlangıçta #noticeDivNav gizli olsun
+            $("#noticeDivNav").hide();
 
-            const nickNameParagraph = document.createElement('p');
-            nickNameParagraph.class = 'userNickName';
-            nickNameParagraph.id = "userNickName";
+            // Butona tıklandığında #searchDivNav elementini göster veya gizle
+            $("#myNotice").click(function (event) {
+                event.preventDefault(); // Sayfanın yenilenmesini engelle
+                $("#searchDivNav").hide();
 
-            nickNameParagraph.textContent = user.username;
+                $("#noticeDivNav").toggle(); // #searchDivNav elementini göster veya gizle
+            });
 
-            const profileNameParagraph = document.createElement('p');
-            profileNameParagraph.class = 'userProfileName';
-            profileNameParagraph.id = "userProfileName";
 
-            profileNameParagraph.textContent = user.profileName;
 
-            // Oluşturulan elemanları ana div içine ekleyin
-            const link = document.createElement('a');
-            link.href = "/" + user.username;
-            link.appendChild(userInfoDiv);
-            userInfoDiv.appendChild(img);
-            userInfoDiv.appendChild(nickNameParagraph);
-            userInfoDiv.appendChild(profileNameParagraph);
+            //moreDiv  div tag call start
+            // Başlangıçta #noticeDivNav gizli olsun
+            $("#moreDivArea").hide();
 
-            // Ana div'i modal-body2 içine ekleyin
-            modalBody.appendChild(link);
+            // Butona tıklandığında #searchDivNav elementini göster veya gizle
+            $("#moreDiv").click(function (event) {
+                event.preventDefault(); // Sayfanın yenilenmesini engelle
+
+                $("#moreDivArea").toggle(); // #searchDivNav elementini göster veya gizle
+            });
+
 
 
         });
-    });
+
+        const inputElement = document.getElementById('inputField');
+
+        // Input değeri değiştiğinde çalışacak olan fonksiyon
+        inputElement.addEventListener('input', function () {
+            const formUser = inputElement.value;
+            const sessionUserName = "<%=userName%>";
+            const formData = {
+                formUser: formUser,
+                sessionUserName: sessionUserName
+
+            }
+            socket.emit("searchUser", formData);
+
+            socket.on("searchUser2", (users) => {
+                // console.log("users:" + JSON.stringify(users));
+                const modalBody = document.getElementById('modal-body2');
+                modalBody.class = "modal-body2 row";
+                modalBody.innerHTML = ''; // Önceki içeriği temizle
+                // <p class="col-2">Kime:</p>
+
+
+                users.forEach(user => {
+                    const userInfoDiv = document.createElement('div');
+                    userInfoDiv.class = 'col-12 UserInfo';
+                    userInfoDiv.id = "UserInfo";
+                    const img = document.createElement('img');
+                    img.id = "searchUser";
+                    img.class = 'col bg-secondary';
+                    img.src = '/users_profile/' + user.profilePicture; // Kullanıcının profil resmi yolunu ekleyin
+
+                    const nickNameParagraph = document.createElement('p');
+                    nickNameParagraph.class = 'userNickName';
+                    nickNameParagraph.id = "userNickName";
+
+                    nickNameParagraph.textContent = user.username;
+
+                    const profileNameParagraph = document.createElement('p');
+                    profileNameParagraph.class = 'userProfileName';
+                    profileNameParagraph.id = "userProfileName";
+
+                    profileNameParagraph.textContent = user.profileName;
+
+                    // Oluşturulan elemanları ana div içine ekleyin
+                    const link = document.createElement('a');
+                    link.href = "/" + user.username;
+                    link.appendChild(userInfoDiv);
+                    userInfoDiv.appendChild(img);
+                    userInfoDiv.appendChild(nickNameParagraph);
+                    userInfoDiv.appendChild(profileNameParagraph);
+
+                    // Ana div'i modal-body2 içine ekleyin
+                    modalBody.appendChild(link);
+
+
+                });
+            });
+
+        });
+
+
+        var usernameInput2="";
+
+var imgId="";
+var commentButtons = document.querySelectorAll(".commentModalButton");
+commentButtons.forEach(function(button) {
+    button.addEventListener("click", function(event) {
+          imgId=button.id;
+        var sessionUserName="<%=userName%>";
+const data={
+sessionUserName:sessionUserName,
+imgId:imgId
+}
+
+var parentAnchor = event.currentTarget;
+
+// Parent node içindeki img elementini bul
+
+// Img elementinin src özelliğine eriş
+
+var parentDiv = button.closest(".commentModalButton");  // Tıklama yapılan butonun üst div'ini bul
+    var usernameInput = parentDiv.querySelector("input[name='usernameInPost']");
+    var userPhotoInput = parentDiv.querySelector("input[name='userPhotoInPost']");
+    usernameInput2 = usernameInput.id;
+    var userPhoto = userPhotoInput.id;
+
+    var imgElement = parentAnchor.querySelector("img");
+    var imgSrc = imgElement.src;
+var url = new URL(imgSrc);
+var newImgSrc = url.pathname;
+
+    const imgComment=document.getElementById("imgComment");
+document.getElementById("imgComment").innerHTML="";
+const imgPost=document.getElementById("imgPost");
+const commentBigPhoto=document.createElement("img");
+commentBigPhoto.id="imageComment";
+commentBigPhoto.src=newImgSrc;
+imgComment.appendChild(commentBigPhoto);
+
+
+
+    const commentHeader=document.getElementById("commentHeader");
+
+socket.emit("commentPost",{data,sessionUserName});     
+
+const commentFooter2=document.getElementById("commentFooter2");
+
+socket.on("commentPostReturn",({query,IslikedSession2})=>{
+
+
+    const LikePhotoEx=document.getElementById("likeIconComment");
+
+    if(LikePhotoEx!=undefined)
+    {
+        console.log("içerde");
+        LikePhotoEx.src=IslikedSession2;
+    }
+   else{
+
+
+    const LikePhotoResult=document.createElement("img");
+LikePhotoResult.src=IslikedSession2;
+LikePhotoResult.id="likeIconComment";
+LikePhotoResult.classList.add("commentFooter2");
+
+commentFooter2.appendChild(LikePhotoResult);
+
+
+   }
+
+
+
+
+const commentArea=document.getElementById("commentArea");
+document.getElementById("commentHeader").innerHTML="";
+
+var postUserOwner=document.createElement("img");
+postUserOwner.id="imageCommentHeader";
+postUserOwner.src="/users_profile/"+userPhoto;
+
+var postUserOwnerP=document.createElement("p");
+postUserOwnerP.classList.add("commentP");
+postUserOwnerP.id="commentP";
+postUserOwnerP.textContent=usernameInput2;
+
+var postUserMore=document.createElement("img");
+postUserMore.id="imageCommentHeader2";
+postUserMore.src="/Icons/more.png";
+
+var lastClassComment=document.createElement("div");
+lastClassComment.classList.add("hrF");
+commentHeader.appendChild(postUserOwner);
+commentHeader.appendChild(postUserOwnerP);
+commentHeader.appendChild(postUserMore);
+commentHeader.appendChild(lastClassComment);
+
+
+document.getElementById("commentArea").innerHTML = "";
+
+
+for (let i = 0; i < query.length; i++) {
+    const userLike2 = query[i];
+  
+
+var commentUserArea=document.createElement("div");
+commentUserArea.id="commentUserArea";
+commentUserArea.classList.add("commentUserArea");
+
+
+var imageCommentHeader=document.createElement("img");
+imageCommentHeader.id="imageCommentHeader";
+imageCommentHeader.src= "/users_profile/" + userLike2.userWhoComment[0].userPicture;
+
+var commentP=document.createElement("p");
+commentP.classList.add("commentP");
+commentP.id="commentP";
+commentP.textContent=userLike2.userWhoComment[0].username;
+
+var commentTextP=document.createElement("p");
+commentTextP.id="commentTextP";
+commentTextP.classList.add("commentTextP");
+commentTextP.textContent=userLike2.userWhoComment[0].userComment;
+
+   
+   
+
+    commentUserArea.appendChild(imageCommentHeader);
+    commentUserArea.appendChild(commentP);
+    commentUserArea.appendChild(commentTextP);
+
+    commentArea.appendChild(commentUserArea);
+    
+}
 
 });
+
+
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+function submitForm(){
+        event.preventDefault();
+        const commentFormText = document.getElementById("commentFormText").value.trim();
+        const sessionUserPicture="<%=sessionProfilePicture%>";
+        const sessionUserName="<%=userName%>";
+const newCommentData={
+"sessionUserName":sessionUserName,
+"imgId":imgId,
+"newComment":commentFormText,
+"usernamePostOwner":usernameInput2,
+"sessionUserPicture":sessionUserPicture,
+
+}
+
+ socket.emit("commentMessageAdd",newCommentData);
+ const commentArea=document.getElementById("commentArea");
+
+socket.on("commentPostReturn2",newCommentData2=>{
+document.getElementById("commentArea").innerHTML = "";
+   
+
+for (let i = 0; i < newCommentData2.length; i++) {
+    const userLike2 = newCommentData2[i];
+  
+
+var commentUserArea=document.createElement("div");
+commentUserArea.id="commentUserArea";
+commentUserArea.classList.add("commentUserArea");
+
+
+var imageCommentHeader=document.createElement("img");
+imageCommentHeader.id="imageCommentHeader";
+imageCommentHeader.src= "/users_profile/" + userLike2.userWhoComment[0].userPicture;
+
+var commentP=document.createElement("p");
+commentP.classList.add("commentP");
+commentP.id="commentP";
+commentP.textContent=userLike2.userWhoComment[0].username;
+
+var commentTextP=document.createElement("p");
+commentTextP.id="commentTextP";
+commentTextP.classList.add("commentTextP");
+commentTextP.textContent=userLike2.userWhoComment[0].userComment;
+
+   
+   
+
+    commentUserArea.appendChild(imageCommentHeader);
+    commentUserArea.appendChild(commentP);
+    commentUserArea.appendChild(commentTextP);
+
+    commentArea.appendChild(commentUserArea);
+    
+}
+
+
+});
+
+
+    }
+
+
+    var sessionUserName="<%=userName%>";
+socket.emit("follower",(sessionUserName));
+    socket.on("followerReturn",(usersInfo)=>{
+        document.getElementById("followersModalBody").innerHTML = "";
+    document.getElementById("followersModalBody").textContent = "";
+
+const likesModalBody = document.getElementById("followersModalBody");
+const likesModalArea = document.createElement("div");
+likesModalArea.classList.add("area");
+
+for (let i = 0; i < usersInfo.length; i++) {
+    const userLike = usersInfo[i];
+    const img = document.createElement("img");
+    img.id = "modalLike";
+    img.src = "/users_profile/" + userLike.userProfilePicture;
+console.log(img.src);
+
+    const aLink = document.createElement("a");
+    aLink.id="aLink";
+    aLink.href="/";
+    const p = document.createElement("p");
+    p.id = "modalLikeName";
+    p.textContent = userLike.userName;
+    aLink.textContent=p.textContent;
+    aLink.href=p.textContent;
+
+    const p2 = document.createElement("p");
+    p2.id = "modalLikeUserName";
+    p2.textContent = userLike.userProfileName;
+
+    // Append elements to the user area
+    likesModalArea.appendChild(img);
+    likesModalArea.appendChild(aLink);
+    likesModalArea.appendChild(p2);
+
+    // Append the user area to the modal body
+    likesModalBody.appendChild(likesModalArea);
+    
+
+}
+
+
+
+  }); 
+   
+
+
+
+  socket.emit("followed",(sessionUserName));
+    socket.on("followedReturn",(usersInfo)=>{
+        document.getElementById("followedModalBody").innerHTML = "";
+    document.getElementById("followedModalBody").textContent = "";
+
+const likesModalBody = document.getElementById("followedModalBody");
+const likesModalArea = document.createElement("div");
+likesModalArea.classList.add("area");
+
+for (let i = 0; i < usersInfo.length; i++) {
+    const userLike = usersInfo[i];
+    const img = document.createElement("img");
+    img.id = "modalLike";
+    img.src = "/users_profile/" + userLike.followed[0].profilePicture;
+console.log(img.src);
+
+    const aLink = document.createElement("a");
+    aLink.id="aLink";
+    aLink.href="/";
+    const p = document.createElement("p");
+    p.id = "modalLikeName";
+    p.textContent = userLike.followed[0].username;
+    aLink.textContent=p.textContent;
+    aLink.href=p.textContent;
+
+    const p2 = document.createElement("p");
+    p2.id = "modalLikeUserName";
+    p2.textContent = userLike.followed[0].profileName;
+
+    // Append elements to the user area
+    likesModalArea.appendChild(img);
+    likesModalArea.appendChild(aLink);
+    likesModalArea.appendChild(p2);
+
+    // Append the user area to the modal body
+    likesModalBody.appendChild(likesModalArea);
+    
+
+}
+
+
+
+  }); 
+   
+
+
+
     </script>

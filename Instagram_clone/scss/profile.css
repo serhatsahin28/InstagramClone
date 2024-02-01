@@ -287,3 +287,179 @@ body {
 
 }
 
+
+#modal-content-comment {
+
+    width: 215%;
+    height: 90vh;
+    margin-left: -45vh;
+    margin-top: 5vh;
+    background-color: rgb(0, 0, 0);
+    color:white;
+
+}
+#modal-content {
+    background-color: #262626;
+    border-radius: 10px;
+    width: 75vh;
+    height: 75vh;
+}
+
+#imgComment {
+    background-color: rgb(6, 6, 6);
+    height: 90vh;
+    width: 98vh;
+}
+
+#imageComment {
+    height: 90vh;
+    width: 98vh;
+
+}
+#commentsScreen {
+    background-color: rgb(0, 0, 0);
+    margin-left: 98vh;
+    margin-top: -90vh;
+    height: 90vh;
+}
+#commentHeader {
+    height: 10vh;
+    display: flex;
+}
+.commentIcons {
+    height: 25px;
+    height: 25px;
+    
+}
+#commentArea {
+    background-color: rgb(0, 0, 0);
+    height: 60vh;
+    overflow-y: scroll;
+    border: 1px solid grey;
+
+}
+
+#commentFooter {
+    background-color: #000000;
+    height: 10vh;
+    border: 1px solid grey;
+}
+#commentFooter2 {
+    background-color: #000000;
+    margin-top: 1vh;
+
+}
+
+#chatIconComment {
+    margin-left: 9vh;
+
+}
+
+#saveIconComment {
+    margin-left: 52vh;
+
+}
+
+#likesWhoInCommentTag{
+    text-decoration: none;
+    color: white;
+}
+
+#likesWhoInComment{
+    font-size:12px;
+    margin-left:2vh;
+    
+} 
+#commentForm{
+        background-color: #000000;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    }
+    #commentFormText{
+        background-color: #000000;
+        width: 90vh;
+        height: 6vh;
+        text-align: left;
+        color: white;
+        
+        }
+        
+        #commentFormButton{
+        
+            color: rgb(20, 86, 191);
+        
+        }
+
+
+        #modalLike {
+
+            width: 50px;
+            height: 50px;
+            border-radius: 100%;
+        }
+
+        #aLink {
+            color: white;
+            text-decoration: none;
+            margin-left: 2vh;
+        }
+        #modalLikeName {
+            color: white;
+            margin-top: -8vh;
+            margin-left: 10vh;
+        }
+
+        #imageCommentHeader {
+
+            height: 40px;
+            width: 40px;
+            border-radius: 100%;
+            margin-left: 3vh;
+            margin-top: 2vh;
+        
+        }
+
+        #commentUserArea {
+            background-color: #000000;
+            display: flex;
+        
+        }
+
+
+        #commentP {
+            margin-top: 3vh;
+            margin-left: 1vh;
+            color: white;
+        }
+
+
+        #imageCommentHeader2 {
+            height: 20px;
+            width: 20px;
+            margin-left: 55vh;
+            margin-top: 3vh;
+        
+        }
+        #modalLikeUserName {
+            color: white;
+            margin-top: -3vh;
+            margin-left: 10vh;
+            font-size: 12px;
+        }
+
+
+        #commentTextP {
+            font-size: 15px;
+            font-weight: 500;
+            margin-top: 3vh;
+            margin-left: 2vh;
+            color:white;
+        }
+        #likeIconComment{
+            height: 25px;
+            height: 25px;
+            margin-left:2vh;
+            margin-top: -20vh;
+    }
+    

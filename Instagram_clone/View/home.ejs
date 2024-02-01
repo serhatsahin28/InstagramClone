@@ -53,6 +53,7 @@
             <br>
         </div>
 
+        <!--Stories Area-->
 
         <div class="owl-carousel col-6 ">
 
@@ -80,11 +81,15 @@
                 <button class="btn am-prev ">Prev</button>
                 <button class="btn am-next ">Next</button>
        
+        <!--Stories Area Finish-->
+
+        <!--Post Area start-->
+
 
                 <div class="post">
-                    <% post.forEach(function(a,index) { 
+                    <% 
+                    post.forEach(function(a,index) { 
                             const username = a.toJSON();
-                            console.log(username);
                             const photo1 = username.photos[0].photo1;
                             const photo2 = username.photos[0].photo2;
                             const photo3 = username.photos[0].photo3;
@@ -92,8 +97,9 @@
 
 
                             const counter = index;
-
                             let likeIcon = '/Icons/heart.png'; // Varsayılan değer
+
+                           
                         %>
                 
                         <div class="card " id="card">
@@ -103,6 +109,7 @@
                                     <%=username.username%>
                                 </a>
                                 <img class="threeDot" id="threeDot" src="/Icons/more.png">
+                           
                             </div>
                             <div class="card-body " id="card-body">
                                 <div id="carouselExampleFade-<%=counter%>" class="carousel slide">
@@ -142,16 +149,21 @@
                             </div>
                             
                             <div class="card-footer" id="card-footer">
-                                <% userLikePostUser.forEach(function(b) { %>
+                                <% userLikePostUser.forEach(function(b) {
+                                     %>
                                     <% if (a._id == b.post_id) { %>
                                         <% likeIcon = '/Icons/redHeart.png'; %>
                                     <% } %>
                                 <% }); %>
                                 <img class="postIconA" id="<%=a._id%>" src="<%=likeIcon%>" alt="" srcset="">
-                                <div class="btn"> <img class="postIcon" id="postIcon2" src="/Icons/icon_chat.png" alt="" srcset=""></div>
+                                <div class="btn"> 
+                                    <a  class="commentModalButton" data-bs-toggle="modal" data-bs-target="#commentModalPost"  id="<%=a._id%>" href="#"><img class="postIcon" id="postIcon2" src="/Icons/icon_chat.png" alt="" srcset=""></a>
+                                    <input name="usernameInPost" id="<%=username.username%>" type="hidden">
+                                    <input name="userPhotoInPost" id="<%=username.profilePhoto%>" type="hidden">
+                                </div>
                                 <div class="btn"> <img class="postIcon" id="postIcon3" src="/Icons/direct-instagram.png" alt="" srcset=""></div>
                                 <div class="btn"> <img class="postIcon" id="postIcon4" src="/Icons/bookmark.png" alt="" srcset=""></div>
-                          
+                               
                                 <div class="col" id="whoLikes">
                                     <a data-bs-toggle="modal" data-bs-target="#likesModal" class="whoLikesInA-tag" id="<%=a._id%>" href="#"><p>Beğenmeleri görüntüle</p></a>
                                 </div> 
@@ -166,6 +178,7 @@
                         <div id="postHrDiv"><hr id="postHr" class="hr"></div>
                 </div>
                 
+        <!--Post Area Finish-->
 
 
 <!--Notice div codes-->
@@ -178,12 +191,10 @@
                 </div>
                 <hr>
                 <% let profileName="";
-                console.log(noticeFollow);
                 noticeFollow.forEach(function(a){
 let profilePhoto=a.userProfilePicture;
  profileName=a.userName;
 let _id=a._id;
-console.log(_id);
 
                     %>
                 <a href="/<%=profileName%>">
@@ -235,7 +246,7 @@ console.log(_id);
 
 <!--PostAdd modal-->
 
-<div class="modal fade More" id="postAdd" tabindex="-1" role="dialog" aria-labelledby="MoreLabel" aria-hidden="true">
+<div class="modal fade More"  id="postAdd" tabindex="-1" role="dialog" aria-labelledby="MoreLabel" aria-hidden="true">
     <div class="modal-dialog" id="photoUpload" role="document">
             <div class="modal-content" id="photoUploadContent">
                     <div class="modal-header">
@@ -259,6 +270,18 @@ console.log(_id);
     </div>
 </div>
 
+<!-- More -->
+<div class="moreDivArea" id="moreDivArea">
+  
+    <div class="modal-body ">
+        <form class="col" action="/logout" method="post">
+                <button type="submit" class="btn col-12 bg-primary">Çıkış</button>
+        </form>
+        <br>
+       
+    
+    </div>
+    </div>
 
 
 <!--LikesModal-->
@@ -271,37 +294,61 @@ console.log(_id);
       </div>
       <div class="modal-body" id="likesModalBody">
         <div class="area">
-         <img id="modalLike" src="/users_profile/image1.jpg">
-<p id="modalLikeName">alex_21</p>
-<p id="modalLikeUserName">MehmetHan</p>
-        </div>
+
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+    
     </div>
   </div>
 </div>
+</div>
+
 <!--LikesModal Finished-->
 
 
 
 
 
+<!--commentModal-->
+<div class="modal fade" id="commentModalPost" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" id="commentDialog">
+    <div class=" modal-content " id="modal-content-comment">
+       <div class="imgComment " id="imgComment">
+        <img id="imageComment"src="/users_profile/image1.jpg">
+        </div>
+    <div class="commentsScreen" id="commentsScreen">
+        <div class="commentHeader" id="commentHeader">
+    
+        </div>
+    <div class="commentArea" id="commentArea">
+       
+    </div>
+    <div class="commentFooter" id="commentFooter">
+        <div class="commentFooter2"id="commentFooter2">
 
-<!-- More -->
-<div class="moreDivArea" id="moreDivArea">
-  
-<div class="modal-body ">
-    <form class="col" action="/logout" method="post">
-            <button type="submit" class="btn col-12 bg-primary">Çıkış</button>
+     <img src="/Icons/chat.png" id="chatIconComment" class="commentIcons">
+     <img src="/Icons/direct-instagram.png" id="directIconComment" class="commentIcons">
+     <img src="/Icons/bookmark.png" id="saveIconComment" class="commentIcons">
+     <br>
+     <a data-bs-toggle="modal" data-bs-target="#likesModal" href="#" id="likesWhoInCommentTag"><p id="likesWhoInComment">Beğenmeleri görüntüle</p></a>
+    </div>
+     </div>
+     <form class="commentForm" id="commentForm">
+        <textarea id="commentFormText" >
+            
+        </textarea>
+        <input type="submit" onclick="submitForm();" id="commentFormButton">
     </form>
-    <br>
-   
+    
+    </div>
+    
+    
 
+      </div>
+    </div>
+  </div>
 </div>
-</div>
+
+  <!--commentModal Finished-->
 
 
 
@@ -337,7 +384,7 @@ console.log(_id);
             // Örnek olarak, form verilerini konsola yazdırabilirsiniz
             const formData = new FormData(form);
             for (var pair of formData.entries()) {
-                console.log(pair[0]+ ', ' + pair[1]); 
+                // console.log(pair[0]+ ', ' + pair[1]); 
             }
         });
     });
@@ -452,7 +499,7 @@ socket.emit("deleteFollow",data);
         });
     });
 
-
+    $(document).ready(function() {
 
 
     //search div tag call start
@@ -504,14 +551,15 @@ socket.emit("deleteFollow",data);
 
     //search div tag call finished
 
+});
 
 
 const inputElement = document.getElementById('inputField');
-
+const sessionUserName="";
 // Input değeri değiştiğinde çalışacak olan fonksiyon
 inputElement.addEventListener('input', function () {
     const formUser = inputElement.value;
-    const sessionUserName = "<%=userName%>";
+     sessionUserName = "<%=userName%>";
     const formData = {
         formUser: formUser,
         sessionUserName: sessionUserName
@@ -598,19 +646,178 @@ button.src="/Icons/redHeart.png";
 });
 
 
-
 var likeSee = document.querySelectorAll(".whoLikesInA-tag");
-
 
 likeSee.forEach(function(button) {
     button.addEventListener("click", function(event) {
         var sessionUserName="<%=userName%>";
         var imgId=button.id;
         socket.emit("likeSee",imgId);
-       socket.on("likeSeeReturn",(data)=>{
-console.log(data);
 
-       }); 
+
+
+
+       socket.on("likeSeeReturn",(usersInfo)=>{
+        document.getElementById("likesModalBody").innerHTML = "";
+    document.getElementById("likesModalBody").textContent = "";
+
+const likesModalBody = document.getElementById("likesModalBody");
+const likesModalArea = document.createElement("div");
+likesModalArea.classList.add("area");
+
+for (let i = 0; i < usersInfo.length; i++) {
+    const userLike = usersInfo[i];
+
+    const img = document.createElement("img");
+    img.id = "modalLike";
+    img.src = "/users_profile/" + userLike.userWhoLike[0].userPicture;
+    const aLink = document.createElement("a");
+    aLink.id="aLink";
+    aLink.href="/";
+    const p = document.createElement("p");
+    p.id = "modalLikeName";
+    p.textContent = userLike.userWhoLike[0].username;
+    aLink.textContent=p.textContent;
+    aLink.href=p.textContent;
+
+    const p2 = document.createElement("p");
+    p2.id = "modalLikeUserName";
+    p2.textContent = userLike.userWhoLike[0].userProfileName;
+
+    // Append elements to the user area
+    likesModalArea.appendChild(img);
+    likesModalArea.appendChild(aLink);
+    likesModalArea.appendChild(p2);
+
+    // Append the user area to the modal body
+    likesModalBody.appendChild(likesModalArea);
+    
+
+}
+
+
+
+  }); 
+    });
+});
+
+var usernameInput2="";
+
+var imgId="";
+var commentButtons = document.querySelectorAll(".commentModalButton");
+commentButtons.forEach(function(button) {
+    button.addEventListener("click", function(event) {
+          imgId=button.id;
+        var sessionUserName="<%=userName%>";
+        var srcName=button.getAttribute("src");
+const data={
+sessionUserName:sessionUserName,
+imgId:imgId
+}
+
+
+var parentDiv = button.closest(".btn");  // Tıklama yapılan butonun üst div'ini bul
+    var usernameInput = parentDiv.querySelector("input[name='usernameInPost']");
+    var userPhotoInput = parentDiv.querySelector("input[name='userPhotoInPost']");
+    usernameInput2 = usernameInput.id;
+    var userPhoto = userPhotoInput.id;
+
+    const commentHeader=document.getElementById("commentHeader");
+
+socket.emit("commentPost",{data,sessionUserName});     
+
+
+const commentFooter2=document.getElementById("commentFooter2");
+
+socket.on("commentPostReturn",({query,IslikedSession2})=>{
+
+    const LikePhotoEx=document.getElementById("likeIconComment");
+
+    if(LikePhotoEx!=undefined)
+    {
+        console.log("içerde");
+        LikePhotoEx.src=IslikedSession2;
+    }
+   else{
+
+
+    const LikePhotoResult=document.createElement("img");
+LikePhotoResult.src=IslikedSession2;
+LikePhotoResult.id="likeIconComment";
+LikePhotoResult.classList.add("commentFooter2");
+
+commentFooter2.appendChild(LikePhotoResult);
+
+
+   }
+
+
+
+
+const commentArea=document.getElementById("commentArea");
+document.getElementById("commentHeader").innerHTML="";
+
+var postUserOwner=document.createElement("img");
+postUserOwner.id="imageCommentHeader";
+postUserOwner.src="/users_profile/"+userPhoto;
+
+var postUserOwnerP=document.createElement("p");
+postUserOwnerP.classList.add("commentP");
+postUserOwnerP.id="commentP";
+postUserOwnerP.textContent=usernameInput2;
+
+var postUserMore=document.createElement("img");
+postUserMore.id="imageCommentHeader2";
+postUserMore.src="/Icons/more.png";
+
+var lastClassComment=document.createElement("div");
+lastClassComment.classList.add("hrF");
+commentHeader.appendChild(postUserOwner);
+commentHeader.appendChild(postUserOwnerP);
+commentHeader.appendChild(postUserMore);
+commentHeader.appendChild(lastClassComment);
+
+
+document.getElementById("commentArea").innerHTML = "";
+
+
+for (let i = 0; i < query.length; i++) {
+    const userLike2 = query[i];
+  
+
+var commentUserArea=document.createElement("div");
+commentUserArea.id="commentUserArea";
+commentUserArea.classList.add("commentUserArea");
+
+
+var imageCommentHeader=document.createElement("img");
+imageCommentHeader.id="imageCommentHeader";
+imageCommentHeader.src= "/users_profile/" + userLike2.userWhoComment[0].userPicture;
+
+var commentP=document.createElement("p");
+commentP.classList.add("commentP");
+commentP.id="commentP";
+commentP.textContent=userLike2.userWhoComment[0].username;
+
+var commentTextP=document.createElement("p");
+commentTextP.id="commentTextP";
+commentTextP.classList.add("commentTextP");
+commentTextP.textContent=userLike2.userWhoComment[0].userComment;
+
+   
+   
+
+    commentUserArea.appendChild(imageCommentHeader);
+    commentUserArea.appendChild(commentP);
+    commentUserArea.appendChild(commentTextP);
+
+    commentArea.appendChild(commentUserArea);
+    
+}
+
+});
+
+
     });
 });
 
@@ -619,12 +826,66 @@ console.log(data);
 
 
 
+    function submitForm(){
+        event.preventDefault();
+        const commentFormText = document.getElementById("commentFormText").value.trim();
+        const sessionUserPicture="<%=sessionProfilePicture%>";
+        const sessionUserName="<%=userName%>";
+const newCommentData={
+"sessionUserName":sessionUserName,
+"imgId":imgId,
+"newComment":commentFormText,
+"usernamePostOwner":usernameInput2,
+"sessionUserPicture":sessionUserPicture,
+
+}
+
+ socket.emit("commentMessageAdd",newCommentData);
+ const commentArea=document.getElementById("commentArea");
+
+socket.on("commentPostReturn2",newCommentData2=>{
+document.getElementById("commentArea").innerHTML = "";
+   
+
+for (let i = 0; i < newCommentData2.length; i++) {
+    const userLike2 = newCommentData2[i];
+  
+
+var commentUserArea=document.createElement("div");
+commentUserArea.id="commentUserArea";
+commentUserArea.classList.add("commentUserArea");
 
 
+var imageCommentHeader=document.createElement("img");
+imageCommentHeader.id="imageCommentHeader";
+imageCommentHeader.src= "/users_profile/" + userLike2.userWhoComment[0].userPicture;
+
+var commentP=document.createElement("p");
+commentP.classList.add("commentP");
+commentP.id="commentP";
+commentP.textContent=userLike2.userWhoComment[0].username;
+
+var commentTextP=document.createElement("p");
+commentTextP.id="commentTextP";
+commentTextP.classList.add("commentTextP");
+commentTextP.textContent=userLike2.userWhoComment[0].userComment;
+
+   
+   
+
+    commentUserArea.appendChild(imageCommentHeader);
+    commentUserArea.appendChild(commentP);
+    commentUserArea.appendChild(commentTextP);
+
+    commentArea.appendChild(commentUserArea);
+    
+}
 
 
+});
 
 
+    }
 
 
 </script>

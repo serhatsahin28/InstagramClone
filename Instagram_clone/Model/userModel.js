@@ -240,6 +240,76 @@ class UserModel {
 
     }
 
+    static async findProfileFollowed(userName) {
+
+        try {
+
+            const a = await follow.find({
+                "followed.username":userName,
+                "followed.situation": true
+            });
+
+            const count=a.length;
+           return count;
+
+
+
+
+        } catch (error) {
+            console.log("UserModel.js sayfası içerisinde findFolloSend Fonksiyonu içerisinde: " + error);
+        }
+
+    }
+
+
+    static async findProfileFollowers(userName) {
+
+        try {
+
+            const a = await follow.find({
+                "userName":userName,
+                "followed.situation": true
+            });
+
+            const count=a.length;
+           return count;
+
+
+
+
+        } catch (error) {
+            console.log("UserModel.js sayfası içerisinde findFolloSend Fonksiyonu içerisinde: " + error);
+        }
+
+    }
+
+
+
+
+    static async findProfilePosts(userName) {
+
+        try {
+
+            const a = await Post.find({
+                "username":userName,
+            });
+
+            const count=a.length;
+           return count;
+
+
+
+
+        } catch (error) {
+            console.log("UserModel.js sayfası içerisinde findFolloSend Fonksiyonu içerisinde: " + error);
+        }
+
+    }
+
+
+
+
+
 
 
 

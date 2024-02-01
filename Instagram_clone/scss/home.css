@@ -250,11 +250,10 @@ a:active {
 }
 
 #postAdd {
-    margin-top: 10vh;
-    width: 70vh;
-    height: 70vh;
+    width: 100%;
+    height: 100%;
     border-radius: 15px;
-    margin-left: 70vh;
+    margin-left: 0vh;
 
 }
 
@@ -309,47 +308,216 @@ a:active {
     color: white;
     text-decoration: none;
     margin-left: -5vh;
-    margin-top:-5vh;
+    margin-top: -5vh;
 
 }
 
-#whoLikesInA-tag{
-color: white;
+#whoLikesInA-tag {
+    color: white;
 
 }
 
-#modal-content{
-background-color: #262626;
-border-radius: 10px;
-width: 75vh;
-height: 75vh;
+#modal-content {
+    background-color: #262626;
+    border-radius: 10px;
+    width: 75vh;
+    height: 75vh;
 }
-#likesModalBody{
+
+#likesModalBody {
 
     overflow-y: scroll;
 }
 
-#modal-title-likes{
+#modal-title-likes {
     color: white;
 }
 
-#modalLike{
+#modalLike {
 
     width: 50px;
     height: 50px;
     border-radius: 100%;
 }
 
-#modalLikeName{
-color: white;
-margin-top:-8vh;
-margin-left:10vh;
+#modalLikeName {
+    color: white;
+    margin-top: -8vh;
+    margin-left: 10vh;
 }
 
-#modalLikeUserName{
+#modalLikeUserName {
+    color: white;
+    margin-top: -3vh;
+    margin-left: 10vh;
+    font-size: 12px;
+}
+
+
+#aLink {
+    color: white;
+    text-decoration: none;
+    margin-left: 2vh;
+}
+
+#modal-content-comment {
+
+    width: 215%;
+    height: 90vh;
+    margin-left: -45vh;
+    margin-top: 5vh;
+    background-color: rgb(0, 0, 0);
     color:white;
-margin-top:-3vh;
-margin-left:10vh;
-font-size: 12px;
+
 }
 
+#imgComment {
+    background-color: rgb(6, 6, 6);
+    height: 90vh;
+    width: 98vh;
+}
+
+#commentsScreen {
+    background-color: rgb(0, 0, 0);
+    margin-left: 98vh;
+    margin-top: -90vh;
+    height: 90vh;
+}
+
+#imageComment {
+    height: 90vh;
+    width: 98vh;
+
+}
+
+#commentHeader {
+    height: 10vh;
+    display: flex;
+}
+
+#imageCommentHeader {
+
+    height: 40px;
+    width: 40px;
+    border-radius: 100%;
+    margin-left: 3vh;
+    margin-top: 2vh;
+
+}
+
+#imageCommentHeader2 {
+    height: 20px;
+    width: 20px;
+    margin-left: 55vh;
+    margin-top: 3vh;
+
+}
+
+#commentP {
+    margin-top: 3vh;
+    margin-left: 1vh;
+    color: white;
+}
+
+#hrComment {
+    width: 100vh;
+    height: 1px;
+    margin-left: -92vh;
+    margin-top: 10vh;
+    background-color: #738184;
+}
+
+#commentArea {
+    background-color: rgb(0, 0, 0);
+    height: 60vh;
+    overflow-y: scroll;
+    border: 1px solid grey;
+
+}
+
+#commentUserArea {
+    background-color: #000000;
+    display: flex;
+
+}
+
+#commentTextP {
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 3vh;
+    margin-left: 2vh;
+    color:white;
+}
+
+.commentIcons {
+    height: 25px;
+    height: 25px;
+    
+}
+
+#likeIconComment{
+        height: 25px;
+        height: 25px;
+        margin-left:2vh;
+        margin-top: -20vh;
+}
+
+#commentFooter {
+    background-color: #000000;
+    height: 10vh;
+    border: 1px solid grey;
+}
+
+#commentFooter2 {
+    background-color: #000000;
+    margin-top: 1vh;
+
+}
+
+#saveIconComment {
+    margin-left: 52vh;
+
+}
+
+#directIconComment {
+    margin-left: 2vh;
+
+}
+#chatIconComment {
+    margin-left: 9vh;
+
+}
+
+
+#likesWhoInComment{
+font-size:12px;
+margin-left:2vh;
+
+}
+
+#likesWhoInCommentTag{
+    text-decoration: none;
+    color: white;
+}
+
+#commentForm{
+    background-color: #000000;
+height: 10vh;
+display: flex;
+align-items: center;
+}
+
+#commentFormText{
+background-color: #000000;
+width: 90vh;
+height: 6vh;
+text-align: left;
+color: white;
+
+}
+
+#commentFormButton{
+
+    color: rgb(20, 86, 191);
+
+}
