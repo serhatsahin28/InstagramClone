@@ -57,10 +57,10 @@ body {
 }
 
 
-#profilePhoto{
+#profilePhoto {
     border-radius: 100%;
-    
-    }
+
+}
 
 
 .a:hover {
@@ -97,8 +97,14 @@ a:hover {
 
 }
 
+#modal-body3 {
+    margin-left: 5px;
+    overflow-y: scroll;
+
+}
+
 #modal-content {
-    background-color: #a91616;
+    background-color: #000000;
     height: 75vh;
 
 }
@@ -111,6 +117,15 @@ a:hover {
 
 }
 
+#userNickName3 {
+    color: white;
+    margin-top: -41px;
+    margin-left: 50px;
+    width: 70vh;
+
+}
+
+
 #userProfileName {
     font-size: 13px;
     font-weight: 600;
@@ -120,6 +135,14 @@ a:hover {
 
 }
 
+#userProfileName3 {
+    font-size: 13px;
+    font-weight: 600;
+    color: #9a9a9a;
+    margin-left: 50px;
+    margin-top: -21px;
+
+}
 
 
 #UserInfo:hover {
@@ -128,6 +151,11 @@ a:hover {
 
 }
 
+#UserInfo3:hover {
+
+    background-color: #ffdfdf59;
+
+}
 
 #searchUser {
     width: 40px;
@@ -135,6 +163,14 @@ a:hover {
     border-radius: 100%;
 
 }
+
+#searchUser3 {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+
+}
+
 
 .More {
 
@@ -317,7 +353,7 @@ a:hover {
 .sessionUserMessages {
     height: 10vh;
     color: #ffffff;
-    background-color:#3797f0;
+    background-color: #3797f0;
     border-radius: 15px;
     width: 75vh;
     margin-left: 85vh;
@@ -359,16 +395,21 @@ a:hover {
     width: 50vh;
     background-color: #fff8f834;
 }
+
 .moreDivArea {
     position: fixed;
     top: 50vh;
     left: 20px;
     width: 50vh;
     border-radius: 15px;
-    z-index: 9999; /* Diğer içeriklerin üzerinde görünmesini sağlar */
-    background-color: #665e5e; /* Arka plan rengi */
-    padding: 10px; /* İçeriği kenarlardan uzaklaştırır */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Gölge efekti */
+    z-index: 9999;
+    /* Diğer içeriklerin üzerinde görünmesini sağlar */
+    background-color: #665e5e;
+    /* Arka plan rengi */
+    padding: 10px;
+    /* İçeriği kenarlardan uzaklaştırır */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Gölge efekti */
 }
 
 
@@ -396,4 +437,25 @@ a:hover {
     top: 0;
     left: 40vh;
     z-index: 999;
+}
+
+#header2 {
+    color: white;
+    height: 5vh;
+    position: absolute;
+    display: flex;
+    margin-top: -4vh;
+    width: 55vh;
+    margin-left: 12vh;
+    
+}
+#requestHeader{
+margin-left:30vh;
+font-weight: 300;
+
+}
+#messagesHeader{
+margin-left:2vh;
+font-weight: 600;
+
 }

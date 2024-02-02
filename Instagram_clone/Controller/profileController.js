@@ -26,6 +26,8 @@ class Profile extends UserController {
       const followedProfile = await UserModel.findProfileFollowed(username);
       const followersProfile = await UserModel.findProfileFollowers(username);
       const findProfilePosts = await UserModel.findProfilePosts(username);
+      const noticeFollow = await UserModel.findFollowSend(username);
+      const followersTrue = await UserModel.findAllFollowersTrue(username);
 
       // res.json("followersUser"+followedUser);
       const isPrivate = result[0].isPrivate;
@@ -70,22 +72,22 @@ class Profile extends UserController {
       console.log("Isfollowed:  " + Isfollowed);
 
       if (username == userName) {
-        res.render("profile", { result, posts, userName, sessionProfilePicture, profileName,followedProfile,followersProfile,findProfilePosts });
+        res.render("profile", { result, posts, userName, sessionProfilePicture, profileName,followedProfile,followersProfile,findProfilePosts,noticeFollow,followersTrue });
 
       }
       else {
         if (isPrivate == true && Isfollowed == true) {
-          res.render("otherProfile", { result, posts, userName, sessionProfileName, followData, sessionProfilePicture, profileName,followedProfile,followersProfile,findProfilePosts});
+          res.render("otherProfile", { result, posts, userName, sessionProfileName, followData, sessionProfilePicture, profileName,followedProfile,followersProfile,findProfilePosts,noticeFollow,followersTrue});
         }
         else if(isPrivate!=true)
         {
-          res.render("otherProfile", { result, posts, userName, sessionProfileName, followData, sessionProfilePicture, profileName,followedProfile,followersProfile,findProfilePosts});
+          res.render("otherProfile", { result, posts, userName, sessionProfileName, followData, sessionProfilePicture, profileName,followedProfile,followersProfile,findProfilePosts,noticeFollow,followersTrue});
 
 
         }
         else {
 
-          res.render("privateOtherProfile", { result, posts, userName, sessionProfileName, followData, sessionProfilePicture, profileName,followedProfile,followersProfile,findProfilePosts });
+          res.render("privateOtherProfile", { result, posts, userName, sessionProfileName, followData, sessionProfilePicture, profileName,followedProfile,followersProfile,findProfilePosts,noticeFollow,followersTrue });
 
         }
       }
@@ -149,7 +151,6 @@ class Profile extends UserController {
     await UserModel.unFollowed(profileName, sessionUserProfile);
 
   }
-
 
 
 

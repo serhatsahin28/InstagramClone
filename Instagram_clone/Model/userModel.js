@@ -76,7 +76,7 @@ class UserModel {
 
             const posts = await follow.find({
                 "followed.username": userName,
-                "followed.situation":true
+                "followed.situation": true
             });
             return posts;
         } catch (err) {
@@ -86,7 +86,7 @@ class UserModel {
 
 
 
-    static async followSend(sessionUserName, otherUserId, sessionUserProfile, otherUserName, profileName, profilePicture, userSessionPicture,sessionProfileName) {
+    static async followSend(sessionUserName, otherUserId, sessionUserProfile, otherUserName, profileName, profilePicture, userSessionPicture, sessionProfileName) {
         try {
             const result = await follow.find({
                 "userName": sessionUserName,
@@ -125,7 +125,7 @@ class UserModel {
 
 
 
-    static async followRequest(sessionUserName, otherUserId, sessionUserProfile, otherUserName, profileName, profilePicture, userSessionPicture,sessionProfileName) {
+    static async followRequest(sessionUserName, otherUserId, sessionUserProfile, otherUserName, profileName, profilePicture, userSessionPicture, sessionProfileName) {
         try {
             const result = await follow.find({
                 "userName": sessionUserName,
@@ -224,7 +224,7 @@ class UserModel {
         try {
 
             const a = await follow.find({
-                "followed.username":userName,
+                "followed.username": userName,
                 "followed.situation": false
 
             });
@@ -245,12 +245,12 @@ class UserModel {
         try {
 
             const a = await follow.find({
-                "followed.username":userName,
+                "followed.username": userName,
                 "followed.situation": true
             });
 
-            const count=a.length;
-           return count;
+            const count = a.length;
+            return count;
 
 
 
@@ -267,12 +267,12 @@ class UserModel {
         try {
 
             const a = await follow.find({
-                "userName":userName,
+                "userName": userName,
                 "followed.situation": true
             });
 
-            const count=a.length;
-           return count;
+            const count = a.length;
+            return count;
 
 
 
@@ -291,11 +291,11 @@ class UserModel {
         try {
 
             const a = await Post.find({
-                "username":userName,
+                "username": userName,
             });
 
-            const count=a.length;
-           return count;
+            const count = a.length;
+            return count;
 
 
 
@@ -308,9 +308,61 @@ class UserModel {
 
 
 
+    static async privateAccountControle(username, isPrivate) {
+
+        try {
+console.log(isPrivate);
+
+            if (isPrivate == "true") {
+                const a = await User.updateOne({
+                    "username": username,
+                },
+                    { $set: { "isPrivate": false } }
+                );
+                return a;
+            }
+            else {
+                const a = await User.updateOne({
+                    "username": username,
+                },
+                    { $set: { "isPrivate": true } }
+                );
+console.log("false fonk");
+
+                return a;
+
+            }
 
 
 
+
+
+        } catch (error) {
+            console.log("UserModel.js sayfası içerisinde findFolloSend Fonksiyonu içerisinde: " + error);
+        }
+
+    }
+
+
+    static async findSessionUser(userName) {
+
+        try {
+
+            const a = await User.find({
+                "username": userName,
+
+            });
+
+            return a;
+
+
+
+
+        } catch (error) {
+            console.log("UserModel.js sayfası içerisinde findFolloSend Fonksiyonu içerisinde: " + error);
+        }
+
+    }
 
 
 }

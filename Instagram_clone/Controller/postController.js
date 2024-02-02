@@ -50,17 +50,86 @@ class postController {
 
     async likePhoto(data) {
 
-        
+
         const a = await postUser.likeNewPost(data);
 
     }
 
     async deleteLikePhoto(data) {
 
-        
+
         const a = await postUser.deleteLikePost(data);
 
     }
+
+
+
+
+
+
+
+    async uploadProfilePhoto(req, res, photos, sessionUserName) {
+
+
+        const newProfilePhoto = photos[0].originalname;
+        console.log(sessionUserName);
+
+        const sessionUserQuery = await postUser.userInfo(sessionUserName);
+        const isProfilePhotoNull = sessionUserQuery.profilePicture;
+
+
+        const updateProfilePhoto = await postUser.updateProfilePhoto(sessionUserName, newProfilePhoto);
+
+
+        res.redirect("/" + sessionUserName);
+
+
+    }
+
+
+
+
+
+
+
+
+    async uploadProfileSettings(req, res, photos, sessionUserName) {
+
+        const textArea = req.body.biography;
+        let newProfilePhoto = "";
+        if (photos != undefined && photos != "") {
+            newProfilePhoto = photos[0].originalname;
+
+
+        }
+        else {
+            newProfilePhoto = "";
+
+        }
+
+       console.log(textArea);
+        const sessionUserQuery = await postUser.userInfo(sessionUserName);
+        const isProfilePhotoNull = sessionUserQuery.profilePicture;
+
+
+
+            const updateProfilePhoto = await postUser.updateProfileSetting(sessionUserName, newProfilePhoto,textArea);
+
+
+
+        res.redirect("/accounts/edit/");
+
+
+    }
+
+
+
+
+
+
+
+
+
 
 
 }

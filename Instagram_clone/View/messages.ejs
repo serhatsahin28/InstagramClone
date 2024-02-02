@@ -18,487 +18,554 @@
 
 <body class="body">
     <%-include("sidebar2")%>
-    
-    <div class="content">
-        <div id="searchDivNav" class="searchDivNav">
-            <div class="modal-body row">
-                <p class="col-2">Ara:</p>
-                <form class="col-6">
-                    <input id="inputField" class="form-control col text-light bg-dark"
-                        placeholder="Ara.." type="text">
-                </form>
-            </div>
-            <div id="modal-body2" class="modal-body2 row">
-                <div class="col-11 UserInfo" id="UserInfo">
+
+        <div class="content">
+            <div id="searchDivNav" class="searchDivNav">
+                <div class="modal-body row">
+                    <p class="col-2">Ara:</p>
+                    <form class="col-6">
+                        <input id="inputField" class="form-control col text-light bg-dark" placeholder="Ara.."
+                            type="text">
+                    </form>
                 </div>
-            </div>
-
-    </div>
-        <div class="row messageBox">
-
-            <div class="profile ">
-                <p id="sessionName">
-                    <%=sessionUserName%>
-                </p>
-
-                <img data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="createChat" src="/Icons/createChat.png"
-                    alt="">
+                <div id="modal-body2" class="modal-body2 row">
+                    <div class="col-11 UserInfo" id="UserInfo">
+                    </div>
+                </div>
 
             </div>
+            <div class="row messageBox">
+
+                <div class="profile ">
+                    <p id="sessionName">
+                        <%=sessionUserName%>
+                    </p>
+
+                    <img data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="createChat"
+                        src="/Icons/createChat.png" alt="">
+
+                    <div id="header2" class="col header2">
+                        <p id="messagesHeader">Mesajlar</p>
+                        <p id="requestHeader">İstekler</p>
+                    </div>
+
+                </div>
 
 
 
-            <div id="sidebarMessageBox">
-                <% newDirectInbox.forEach(function(a){ if(a.senderUser==sessionUserName){ %>
-                    <a href="/direct/<%=a.sentUserId%>">
-                        <div id="user">
-                            <img id="messageImg" src="/users_profile/<%=a.sentUserImage%>"></img>
-                            <div id="profileName">
-                                <%=a.sentUsername%>
-                            </div>
-                            <div id="lastMessage">Nasılsın bro</div>
-
-                        </div>
-                    </a>
-                    <br>
-                    <% } else if(a.sentUsername==sessionUserName){ %>
-                        <br>
-                        <a href="/direct/<%=a.senderId%>">
+                <div id="sidebarMessageBox">
+                    <% newDirectInbox.forEach(function(a){ if(a.senderUser==sessionUserName){ %>
+                        <a href="/direct/<%=a.sentUserId%>">
                             <div id="user">
-                                <img id="messageImg" src="/users_profile/<%=a.senderImage%>"></img>
+                                <img id="messageImg" src="/users_profile/<%=a.sentUserImage%>"></img>
                                 <div id="profileName">
-                                    <%=a.senderUser%>
-
+                                    <%=a.sentUsername%>
                                 </div>
                                 <div id="lastMessage">Nasılsın bro</div>
 
                             </div>
                         </a>
                         <br>
+                        <% } else if(a.sentUsername==sessionUserName){ %>
+                            <br>
+                            <a href="/direct/<%=a.senderId%>">
+                                <div id="user">
+                                    <img id="messageImg" src="/users_profile/<%=a.senderImage%>"></img>
+                                    <div id="profileName">
+                                        <%=a.senderUser%>
 
+                                    </div>
+                                    <div id="lastMessage">Nasılsın bro</div>
 
-
-
-
-
-
-                        <%}});%>
-            </div>
-        </div>
-
-        <!--Mesajların geleceği alan-->
-        <% if (typeof messagesInfo !=='undefined' && messagesInfo !==null && messagesInfo !=="" ) { %>
-            <div class="row" id="messagesBox2">
-                <div id="profileInfo"><img id="profileInfoImage" src="/users_profile/<%=otherUser.otherUserImage%>">
-                    <a href="/<%=otherUser.otherUsername%>">
-                        <h1 id="h1Profile">
-                            <%=otherUser.otherUsername%>
-                        </h1>
-                    </a>
-                    </img>
-                    <div id="IconMessage">
-                        <img src="/Icons/user.png">
-                        <img src="/Icons/user.png">
-                        <img src="/Icons/user.png">
-
-
-                    </div>
-                </div>
-                <div id="profileMessages">
-
-                    <div id="messagesArea" class="row">
-                        <% messagesInfo.forEach(function(a, index) { if (a.senderUser !=sessionUserName) { %>
-                            <div class="otherUserMessages" id="otherUserMessages_<%= index %>">
-                                <img class="message1Img" id="message1Img_<%= index %>"
-                                    src="/users_profile/<%= a.senderImage %>">
-                                <div id="otherMessageText1" class="otherMessageText1">
-                                    <%= a.message %>
                                 </div>
-                                <br>
-                            </div>
-                            <% } else { %>
-                                <div class="sessionUserMessages" id="sessionUserMessages_<%= index %>">
-                                    <div id="messageText" class="messageText">
+                            </a>
+                            <br>
+
+
+
+
+
+
+
+                            <%}});%>
+                </div>
+            </div>
+
+            <!--Mesajların geleceği alan-->
+            <% if (typeof messagesInfo !=='undefined' && messagesInfo !==null && messagesInfo !=="" ) { %>
+                <div class="row" id="messagesBox2">
+                    <div id="profileInfo"><img id="profileInfoImage" src="/users_profile/<%=otherUser.otherUserImage%>">
+                        <a href="/<%=otherUser.otherUsername%>">
+                            <h1 id="h1Profile">
+                                <%=otherUser.otherUsername%>
+                            </h1>
+                        </a>
+                        </img>
+                        <div id="IconMessage">
+                            <img src="/Icons/user.png">
+                            <img src="/Icons/user.png">
+                            <img src="/Icons/user.png">
+
+
+                        </div>
+                    </div>
+                    <div id="profileMessages">
+
+                        <div id="messagesArea" class="row">
+                            <% messagesInfo.forEach(function(a, index) { if (a.senderUser !=sessionUserName) { %>
+                                <div class="otherUserMessages" id="otherUserMessages_<%= index %>">
+                                    <img class="message1Img" id="message1Img_<%= index %>"
+                                        src="/users_profile/<%= a.senderImage %>">
+                                    <div id="otherMessageText1" class="otherMessageText1">
                                         <%= a.message %>
                                     </div>
+                                    <br>
                                 </div>
-                                <% } }); %>
-                    </div>
-
-
-                    <form id="form">
-                        <input id="username" type="hidden" name="userName" value="<%=messagesUser.username%>">
-                        <input id="sessionUserName" type="hidden" name="sessionUserName" value="<%=sessionUserName%>">
-                        <input id="sessionPicture" type="hidden" name="sessionPicture" value="<%=sessionPicture%>">
-
-
-
-                        <input id="input" type="text">
-                        <button type="button" id="button" onclick="submitForm()">Gönder</button>
-                    </form>
-
-                </div>
-
-            </div>
-
-            <% }%>
-
-
-
-
-
-                <div class="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
-                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog ">
-                        <div class="modal-content" id="modal-content">
-                            <div class="modal-header">
-                                <p class="modal-title fs-5" id="staticBackdropLabel">Yeni mesaj</p>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            </div>
-
-                            <div class="modal-body row">
-                                <p class="col-2">Kime:</p>
-                                <form class="col-6">
-                                    <input id="inputField" class="form-control col text-light bg-dark"
-                                        placeholder="Ara..." type="text">
-                                </form>
-                            </div>
-                            <div id="modal-body2" class="modal-body2 row">
-                                <div class="col-11 UserInfo" id="UserInfo">
-                                </div>
-                            </div>
-
-                            <hr class="hr bg-danger">
-
-
+                                <% } else { %>
+                                    <div class="sessionUserMessages" id="sessionUserMessages_<%= index %>">
+                                        <div id="messageText" class="messageText">
+                                            <%= a.message %>
+                                        </div>
+                                    </div>
+                                    <% } }); %>
                         </div>
 
+
+                        <form id="form">
+                            <input id="username" type="hidden" name="userName" value="<%=messagesUser.username%>">
+                            <input id="sessionUserName" type="hidden" name="sessionUserName"
+                                value="<%=sessionUserName%>">
+                            <input id="sessionPicture" type="hidden" name="sessionPicture" value="<%=sessionPicture%>">
+
+
+
+                            <input id="input" type="text">
+                            <button type="button" id="button" onclick="submitForm()">Gönder</button>
+                        </form>
+
                     </div>
+
                 </div>
 
+                <% }%>
 
 
 
-                <!--PostAdd modal-->
 
-                <div class="modal fade More" id="postAdd" tabindex="-1" role="dialog" aria-labelledby="MoreLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog" id="photoUpload" role="document">
-                        <div class="modal-content" id="photoUploadContent">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Profil Fotoğrafı Ekle</h5>
 
-                            </div>
-                            <div id="photoUploadBody" class="modal-body ">
-                                <form action="/upload" method="post" enctype="multipart/form-data">
-                                    <input type="file" name="photos" accept="image/*" multiple>
-                                    <div id="selectedImages"></div>
-                                    <textarea name="textArea" id="textArea" cols="50" rows="5"></textarea>
-                                    <button type="submit">Yükle</button>
-                                </form>
-                                <br>
-                                <div class="btn  col-12" data-dismiss="modal"> İptal
+                    <div class="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog ">
+                            <div class="modal-content" id="modal-content">
+                                <div class="modal-header">
+                                    <p class="modal-title fs-5 text-light" id="staticBackdropLabel">Yeni mesaj</p>
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
                                 </div>
+
+                                <div class="modal-body row">
+                                    <p class="col-2 text-light">Kime:</p>
+                                    <form class="col-6">
+                                        <input id="inputField3" class="form-control col text-light bg-dark"
+                                            placeholder="Ara..." type="text">
+                                    </form>
+                                </div>
+                                <div id="modal-body3" class="modal-body3 row">
+                                    <div class="col-11 UserInfo3" id="UserInfo3">
+                                    </div>
+                                </div>
+
+                                <hr class="hr bg-danger">
+
 
                             </div>
 
                         </div>
                     </div>
-                </div>
-
-
-<!-- More -->
-<div class="moreDivArea" id="moreDivArea">
-  
-    <div class="modal-body ">
-        <form class="col" action="/logout" method="post">
-                <button type="submit" class="btn col-12 bg-primary">Çıkış</button>
-        </form>
-        <br>
-       
-    
-    </div>
-    </div>
-    
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
-<script>
-
-    //search div tag call start
-    $("#searchDivNav").hide();
-    $("#noticeDivNav").hide();
-    $("#moreDivArea").hide();
-
-    $(document).ready(function(){
-    // Başlangıçta #searchDivNav gizli olsun
-    $("#searchDivNav").hide();
-
-    // Butona tıklandığında #searchDivNav elementini göster veya gizle
-    $("#myLink").click(function(event){
-        event.preventDefault(); // Sayfanın yenilenmesini engelle
-    $("#noticeDivNav").hide();
-
-        $("#searchDivNav").toggle(); // #searchDivNav elementini göster veya gizle
-    });
-
-
-  //notice  div tag call start
-                    // Başlangıçta #noticeDivNav gizli olsun
-                    $("#noticeDivNav").hide();
-
-                    // Butona tıklandığında #searchDivNav elementini göster veya gizle
-                    $("#myNotice").click(function (event) {
-                        event.preventDefault(); // Sayfanın yenilenmesini engelle
-                  $("#searchDivNav").hide();
-
-                        $("#noticeDivNav").toggle(); // #searchDivNav elementini göster veya gizle
-                    });
 
 
 
-      //moreDiv  div tag call start
-                    // Başlangıçta #noticeDivNav gizli olsun
-                    $("#moreDivArea").hide();
 
-                    // Butona tıklandığında #searchDivNav elementini göster veya gizle
-                    $("#moreDiv").click(function (event) {
-                        event.preventDefault(); // Sayfanın yenilenmesini engelle
+                    <!--PostAdd modal-->
 
-                        $("#moreDivArea").toggle(); // #searchDivNav elementini göster veya gizle
-                    });
+                    <div class="modal fade More" id="postAdd" tabindex="-1" role="dialog" aria-labelledby="MoreLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog" id="photoUpload" role="document">
+                            <div class="modal-content" id="photoUploadContent">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Profil Fotoğrafı Ekle</h5>
 
-    
-    
-});    
-</script>
+                                </div>
+                                <div id="photoUploadBody" class="modal-body ">
+                                    <form action="/upload" method="post" enctype="multipart/form-data">
+                                        <input type="file" name="photos" accept="image/*" multiple>
+                                        <div id="selectedImages"></div>
+                                        <textarea name="textArea" id="textArea" cols="50" rows="5"></textarea>
+                                        <button type="submit">Yükle</button>
+                                    </form>
+                                    <br>
+                                    <div class="btn  col-12" data-dismiss="modal"> İptal
+                                    </div>
 
-                <script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                        const imageInput = document.querySelector('input[type="file"]');
-                        const selectedImagesContainer = document.getElementById('selectedImages');
-                
-                        // Resim seçildiğinde işlenmesi gereken fonksiyon
-                        imageInput.addEventListener('change', function(event) {
-                            selectedImagesContainer.innerHTML = ''; // Seçilen resimlerin listesini temizle
-                
-                            const files = event.target.files;
-                            Array.from(files).forEach(function(file) {
-                                const imageElement = document.createElement('img');
-                                imageElement.src = URL.createObjectURL(file);
-                                imageElement.style.width = '100px';
-                                imageElement.style.height = '100px';
-                                selectedImagesContainer.appendChild(imageElement);
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- More -->
+                    <div class="moreDivArea" id="moreDivArea">
+
+                        <div class="modal-body ">
+                            <form class="col" action="/logout" method="post">
+                                <button type="submit" class="btn col-12 bg-primary">Çıkış</button>
+                            </form>
+                            <br>
+
+
+                        </div>
+                    </div>
+
+                    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+                        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+                        crossorigin="anonymous"></script>
+                    <script>
+
+                        //search div tag call start
+                        $("#searchDivNav").hide();
+                        $("#noticeDivNav").hide();
+                        $("#moreDivArea").hide();
+
+                        $(document).ready(function () {
+                            // Başlangıçta #searchDivNav gizli olsun
+                            $("#searchDivNav").hide();
+
+                            // Butona tıklandığında #searchDivNav elementini göster veya gizle
+                            $("#myLink").click(function (event) {
+                                event.preventDefault(); // Sayfanın yenilenmesini engelle
+                                $("#noticeDivNav").hide();
+
+                                $("#searchDivNav").toggle(); // #searchDivNav elementini göster veya gizle
+                            });
+
+
+                            //notice  div tag call start
+                            // Başlangıçta #noticeDivNav gizli olsun
+                            $("#noticeDivNav").hide();
+
+                            // Butona tıklandığında #searchDivNav elementini göster veya gizle
+                            $("#myNotice").click(function (event) {
+                                event.preventDefault(); // Sayfanın yenilenmesini engelle
+                                $("#searchDivNav").hide();
+
+                                $("#noticeDivNav").toggle(); // #searchDivNav elementini göster veya gizle
+                            });
+
+
+
+                            //moreDiv  div tag call start
+                            // Başlangıçta #noticeDivNav gizli olsun
+                            $("#moreDivArea").hide();
+
+                            // Butona tıklandığında #searchDivNav elementini göster veya gizle
+                            $("#moreDiv").click(function (event) {
+                                event.preventDefault(); // Sayfanın yenilenmesini engelle
+
+                                $("#moreDivArea").toggle(); // #searchDivNav elementini göster veya gizle
+                            });
+
+
+
+                        });    
+                    </script>
+
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            const imageInput = document.querySelector('input[type="file"]');
+                            const selectedImagesContainer = document.getElementById('selectedImages');
+
+                            // Resim seçildiğinde işlenmesi gereken fonksiyon
+                            imageInput.addEventListener('change', function (event) {
+                                selectedImagesContainer.innerHTML = ''; // Seçilen resimlerin listesini temizle
+
+                                const files = event.target.files;
+                                Array.from(files).forEach(function (file) {
+                                    const imageElement = document.createElement('img');
+                                    imageElement.src = URL.createObjectURL(file);
+                                    imageElement.style.width = '100px';
+                                    imageElement.style.height = '100px';
+                                    selectedImagesContainer.appendChild(imageElement);
+                                });
+                            });
+
+                            // Form submit edildiğinde işlenmesi gereken fonksiyon
+                            const form = document.querySelector('form');
+                            form.addEventListener('submit', function (event) {
+                                event.preventDefault(); // Form submit işlemini engelle
+
+                                // Seçilen resimleri ve diğer form verilerini sunucuya göndermek için gerekli işlemleri gerçekleştirin
+
+                                // Örnek olarak, form verilerini konsola yazdırabilirsiniz
+                                const formData = new FormData(form);
+                                for (var pair of formData.entries()) {
+                                    console.log(pair[0] + ', ' + pair[1]);
+                                }
                             });
                         });
-                
-                        // Form submit edildiğinde işlenmesi gereken fonksiyon
-                        const form = document.querySelector('form');
-                        form.addEventListener('submit', function(event) {
-                            event.preventDefault(); // Form submit işlemini engelle
-                
-                            // Seçilen resimleri ve diğer form verilerini sunucuya göndermek için gerekli işlemleri gerçekleştirin
-                
-                            // Örnek olarak, form verilerini konsola yazdırabilirsiniz
-                            const formData = new FormData(form);
-                            for (var pair of formData.entries()) {
-                                console.log(pair[0]+ ', ' + pair[1]); 
+
+
+                    </script>
+
+
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js"></script>
+                    <script>
+                        var socket = io();
+
+
+                        // Form elementini seçin
+                        const form = document.getElementById('form');
+
+                        addEventListener('keypress', function (event) {
+                            // Eğer basılan tuş Enter ise
+                            if (event.key === 'Enter') {
+                                // Formun varsayılan davranışını (sayfa yenileme) engelle
+                                event.preventDefault();
+
+                                // submitForm() fonksiyonunu çağır
+                                submitForm();
                             }
                         });
-                    });
-                
-                
-                </script>
 
+                        function submitForm() {
+                            const username = document.getElementById("username").value;
+                            const sessionUserName = document.getElementById("sessionUserName").value;
+                            const message = document.getElementById("input").value;
+                            const sessionPicture = document.getElementById("sessionPicture").value;
+                            const formData = {
+                                "username": username,
+                                "sessionUserName": sessionUserName,
+                                "message": message,
+                                "sessionPicture": sessionPicture,
 
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js"></script>
-                <script>
-                    var socket = io();
+                            }
+                            socket.emit("submitForm", formData);
+                        };
 
+                        function appendMessageOtherUser(newForm) {
+                            const messagesArea = document.getElementById("messagesArea");
 
-                    // Form elementini seçin
-                    const form = document.getElementById('form');
+                            // Create the main message container
+                            const newMessageDiv = document.createElement("div");
+                            newMessageDiv.className = "otherUserMessages";
 
-                    addEventListener('keypress', function (event) {
-                        // Eğer basılan tuş Enter ise
-                        if (event.key === 'Enter') {
-                            // Formun varsayılan davranışını (sayfa yenileme) engelle
-                            event.preventDefault();
+                            // Generate a unique ID for the message
+                            const messageId = messagesArea.children.length;
+                            newMessageDiv.id = `message_${messageId}`;
 
-                            // submitForm() fonksiyonunu çağır
-                            submitForm();
-                        }
-                    });
+                            // Create and append the image element
+                            const userImage = document.createElement("img");
+                            userImage.id = `message_${messageId}Img`;
+                            userImage.src = `/users_profile/${newForm.sessionPicture}`;
+                            userImage.className = "message1Img";
+                            newMessageDiv.appendChild(userImage);
 
-                    function submitForm() {
-                        const username = document.getElementById("username").value;
-                        const sessionUserName = document.getElementById("sessionUserName").value;
-                        const message = document.getElementById("input").value;
-                        const sessionPicture = document.getElementById("sessionPicture").value;
-                        const formData = {
-                            "username": username,
-                            "sessionUserName": sessionUserName,
-                            "message": message,
-                            "sessionPicture": sessionPicture,
+                            // Create and append the message text element
+                            const messageTextDiv = document.createElement("div");
+                            messageTextDiv.id = `otherMessageText${messageId}`;
+                            messageTextDiv.className = "otherMessageText1";
+                            messageTextDiv.textContent = newForm.message;
+                            newMessageDiv.appendChild(messageTextDiv);
 
-                        }
-                        socket.emit("submitForm", formData);
-                    };
+                            // Append the new message to the bottom of the messagesArea
+                            messagesArea.appendChild(newMessageDiv);
 
-                    function appendMessageOtherUser(newForm) {
-                        const messagesArea = document.getElementById("messagesArea");
-
-                        // Create the main message container
-                        const newMessageDiv = document.createElement("div");
-                        newMessageDiv.className = "otherUserMessages";
-
-                        // Generate a unique ID for the message
-                        const messageId = messagesArea.children.length;
-                        newMessageDiv.id = `message_${messageId}`;
-
-                        // Create and append the image element
-                        const userImage = document.createElement("img");
-                        userImage.id = `message_${messageId}Img`;
-                        userImage.src = `/users_profile/${newForm.sessionPicture}`;
-                        userImage.className = "message1Img";
-                        newMessageDiv.appendChild(userImage);
-
-                        // Create and append the message text element
-                        const messageTextDiv = document.createElement("div");
-                        messageTextDiv.id = `otherMessageText${messageId}`;
-                        messageTextDiv.className = "otherMessageText1";
-                        messageTextDiv.textContent = newForm.message;
-                        newMessageDiv.appendChild(messageTextDiv);
-
-                        // Append the new message to the bottom of the messagesArea
-                        messagesArea.appendChild(newMessageDiv);
-
-                        // Scroll to the bottom of the messagesArea
-                        messagesArea.scrollTop = messagesArea.scrollHeight;
-                    }
-
-
-                    function appendMessageSessionUser(message) {
-
-                        console.log("appendMessageSessionUser");
-                        const messagesArea = document.getElementById("messagesArea");
-
-                        const newMessageDiv = document.createElement("div");
-                        newMessageDiv.className = "sessionUserMessages";
-
-                        const messageId = messagesArea.children.length;
-                        newMessageDiv.id = `message_${messageId}`;
-
-                        const messageTextDiv = document.createElement("div");
-                        messageTextDiv.className = "messageText";
-                        messageTextDiv.textContent = message;
-
-                        newMessageDiv.appendChild(messageTextDiv);
-
-                        messagesArea.appendChild(newMessageDiv);
-
-
-                        var scrollHeight = messagesArea.scrollHeight;
-
-                        messagesArea.scrollTop = scrollHeight;
-                    }
-
-
-
-
-
-                    socket.on("submitForm2", (newForm) => {
-                        const isUser = newForm.sessionUserName;
-                        const sessionUserName = document.getElementById("sessionUserName").value;
-
-                        if (sessionUserName == isUser) {
-                            appendMessageSessionUser(newForm.message);
-
+                            // Scroll to the bottom of the messagesArea
+                            messagesArea.scrollTop = messagesArea.scrollHeight;
                         }
 
-                        else {
-                            appendMessageOtherUser(newForm);
+
+                        function appendMessageSessionUser(message) {
+
+                            console.log("appendMessageSessionUser");
+                            const messagesArea = document.getElementById("messagesArea");
+
+                            const newMessageDiv = document.createElement("div");
+                            newMessageDiv.className = "sessionUserMessages";
+
+                            const messageId = messagesArea.children.length;
+                            newMessageDiv.id = `message_${messageId}`;
+
+                            const messageTextDiv = document.createElement("div");
+                            messageTextDiv.className = "messageText";
+                            messageTextDiv.textContent = message;
+
+                            newMessageDiv.appendChild(messageTextDiv);
+
+                            messagesArea.appendChild(newMessageDiv);
+
+
+                            var scrollHeight = messagesArea.scrollHeight;
+
+                            messagesArea.scrollTop = scrollHeight;
                         }
-                    });
 
 
-                    if (scrollHeight != null) {
-                        // Mesaj alanını seç
-                        var messagesArea = document.getElementById("messagesArea");
-
-                        // Mesaj alanının yüksekliğini al
-                        var scrollHeight = messagesArea.scrollHeight;
-
-                        // Kaydırma çubuğunu en alta ayarla
-                        messagesArea.scrollTop = scrollHeight;
-                    }
-
-                    const inputElement = document.getElementById('inputField');
-
-                    // Input değeri değiştiğinde çalışacak olan fonksiyon
-                    inputElement.addEventListener('input', function () {
-                        const formUser = inputElement.value;
-                        const sessionUserName = "<%=sessionUserName%>";
-
-                        const formData = {
-                            formUser: formUser,
-                            sessionUserName: sessionUserName
-
-                        }
-                        socket.emit("searchUser", formData);
-
-                        socket.on("searchUser2", (users) => {
-                            console.log("users:" + JSON.stringify(users));
-                            const modalBody = document.getElementById('modal-body2');
-                            modalBody.class = "modal-body2 row";
-                            modalBody.innerHTML = '';
 
 
-                            users.forEach(user => {
-                                const userInfoDiv = document.createElement('div');
-                                userInfoDiv.class = 'col-12 UserInfo';
-                                userInfoDiv.id = "UserInfo";
-                                const img = document.createElement('img');
-                                img.id = "searchUser";
-                                img.class = 'col bg-secondary';
-                                img.src = '/users_profile/' + user.profilePicture; // Kullanıcının profil resmi yolunu ekleyin
 
-                                const nickNameParagraph = document.createElement('p');
-                                nickNameParagraph.class = 'userNickName';
-                                nickNameParagraph.id = "userNickName";
+                        socket.on("submitForm2", (newForm) => {
+                            const isUser = newForm.sessionUserName;
+                            const sessionUserName = document.getElementById("sessionUserName").value;
 
-                                nickNameParagraph.textContent = user.username;
+                            if (sessionUserName == isUser) {
+                                appendMessageSessionUser(newForm.message);
 
-                                const profileNameParagraph = document.createElement('p');
-                                profileNameParagraph.class = 'userProfileName';
-                                profileNameParagraph.id = "userProfileName";
+                            }
 
-                                profileNameParagraph.textContent = user.profileName;
-
-                                // Oluşturulan elemanları ana div içine ekleyin
-                                const link = document.createElement('a');
-                                link.href = "/direct/" + user._id;
-                                link.appendChild(userInfoDiv);
-                                userInfoDiv.appendChild(img);
-                                userInfoDiv.appendChild(nickNameParagraph);
-                                userInfoDiv.appendChild(profileNameParagraph);
-
-                                // Ana div'i modal-body2 içine ekleyin
-                                modalBody.appendChild(link);
-
-
-                            });
+                            else {
+                                appendMessageOtherUser(newForm);
+                            }
                         });
 
-                    });
+
+                        if (scrollHeight != null) {
+                            // Mesaj alanını seç
+                            var messagesArea = document.getElementById("messagesArea");
+
+                            // Mesaj alanının yüksekliğini al
+                            var scrollHeight = messagesArea.scrollHeight;
+
+                            // Kaydırma çubuğunu en alta ayarla
+                            messagesArea.scrollTop = scrollHeight;
+                        }
+
+                        const inputElement = document.getElementById('inputField');
+
+                        // Input değeri değiştiğinde çalışacak olan fonksiyon
+                        inputElement.addEventListener('input', function () {
+                            var formUser = inputElement.value;
+                            var sessionUserName = "<%=sessionUserName%>";
+
+                            const formData = {
+                                formUser: formUser,
+                                sessionUserName: sessionUserName
+
+                            }
+
+                            socket.emit("searchUser", formData);
+
+                            socket.on("searchUser2", (users) => {
+                                console.log("users:" + JSON.stringify(users));
+                                const modalBody = document.getElementById('modal-body2');
+                                modalBody.class = "modal-body3 row";
+                                modalBody.innerHTML = '';
+
+
+                                users.forEach(user => {
+                                    const userInfoDiv = document.createElement('div');
+                                    userInfoDiv.class = 'col-12 UserInfo';
+                                    userInfoDiv.id = "UserInfo";
+                                    const img = document.createElement('img');
+                                    img.id = "searchUser";
+                                    img.class = 'col bg-secondary';
+                                    img.src = '/users_profile/' + user.profilePicture; // Kullanıcının profil resmi yolunu ekleyin
+
+                                    const nickNameParagraph = document.createElement('p');
+                                    nickNameParagraph.class = 'userNickName';
+                                    nickNameParagraph.id = "userNickName";
+
+                                    nickNameParagraph.textContent = user.username;
+
+                                    const profileNameParagraph = document.createElement('p');
+                                    profileNameParagraph.class = 'userProfileName';
+                                    profileNameParagraph.id = "userProfileName";
+
+                                    profileNameParagraph.textContent = user.profileName;
+
+                                    // Oluşturulan elemanları ana div içine ekleyin
+                                    const link = document.createElement('a');
+                                    link.href = "/direct/" + user._id;
+                                    link.appendChild(userInfoDiv);
+                                    userInfoDiv.appendChild(img);
+                                    userInfoDiv.appendChild(nickNameParagraph);
+                                    userInfoDiv.appendChild(profileNameParagraph);
+
+                                    // Ana div'i modal-body2 içine ekleyin
+                                    modalBody.appendChild(link);
+
+
+                                });
+                            });
+
+                        });
+
+
+                        //Make new Message
+                        const inputElement2 = document.getElementById('inputField3');
+
+                        // Input değeri değiştiğinde çalışacak olan fonksiyon
+                        inputElement2.addEventListener('input', function () {
+                            var formUser = inputElement2.value;
+                            var sessionUserName = "<%=sessionUserName%>";
+
+                            const formData = {
+                                formUser: formUser,
+                                sessionUserName: sessionUserName
+
+                            }
+                            const modalBody = document.getElementById('modal-body3');
+                            modalBody.class = "modal-body3 row";
+                            socket.emit("searchUser", formData);
+
+                            socket.on("searchUser2", (users) => {
+                                // console.log("users:" + JSON.stringify(users));
+
+                                modalBody.innerHTML = '';
+
+
+                                users.forEach(user => {
+                                    const userInfoDiv = document.createElement('div');
+                                    userInfoDiv.class = 'col-12 UserInfo3';
+                                    userInfoDiv.id = "UserInfo3";
+                                    const img = document.createElement('img');
+                                    img.id = "searchUser3";
+                                    img.class = 'col bg-secondary';
+                                    img.src = '/users_profile/' + user.profilePicture; // Kullanıcının profil resmi yolunu ekleyin
+
+                                    const nickNameParagraph = document.createElement('p');
+                                    nickNameParagraph.class = 'userNickName3';
+                                    nickNameParagraph.id = "userNickName3";
+
+                                    nickNameParagraph.textContent = user.username;
+
+                                    const profileNameParagraph = document.createElement('p');
+                                    profileNameParagraph.class = 'userProfileName3';
+                                    profileNameParagraph.id = "userProfileName3";
+
+                                    profileNameParagraph.textContent = user.profileName;
+
+                                    // Oluşturulan elemanları ana div içine ekleyin
+                                    const link = document.createElement('a');
+                                    link.href = "/direct/" + user._id;
+                                    link.appendChild(userInfoDiv);
+                                    userInfoDiv.appendChild(img);
+                                    userInfoDiv.appendChild(nickNameParagraph);
+                                    userInfoDiv.appendChild(profileNameParagraph);
+
+                                    // Ana div'i modal-body2 içine ekleyin
+                                    modalBody.appendChild(link);
+
+
+                                });
+                            });
+
+                        });
 
 
 
 
-
-
-
-                </script>
+                    </script>
 </body>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
