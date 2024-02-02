@@ -196,7 +196,76 @@ class postUser {
 
 
 
+    static async updateProfilePhoto(sessionUserName, profilePicture) {
+        try {
 
+            const a = await User.updateOne(
+                { "username": sessionUserName },
+
+                { $set: { "profilePicture": profilePicture } }
+            );
+
+
+
+        } catch (error) {
+            console.log("Model/postUser page updateProfilePhoto function: " + error);
+        }
+
+    }
+
+
+    static async updateProfileSetting(sessionUserName, profilePicture, textArea) {
+        try {
+
+            if (profilePicture == "" && textArea != "") {
+                const a = await User.updateOne(
+                    { "username": sessionUserName },
+                    { $set: { "description": textArea } }
+
+                );
+                console.log("textArea değerde boş değil");
+
+                return a;
+
+            }
+
+            else if (textArea == "" && profilePicture != "") {
+
+                const a = await User.updateOne(
+                    { "username": sessionUserName },
+                    { $set: { "profilePicture": profilePicture } }
+
+                );
+                console.log("profilePicture değerde boş değil");
+
+                return a;
+
+            }
+
+            else if (textArea != "" && profilePicture != "") {
+                const a = await User.updateOne(
+                    { "username": sessionUserName },
+
+                    { $set: { "profilePicture": profilePicture, "description": textArea } }
+                );
+                console.log("İki değerde tekrar boş değil ve  ekleme yapıldı");
+            
+                return a;
+
+            }
+
+            else {
+                const a = "boş değer";
+                console.log("İki değerde boş");
+
+            }
+
+
+        } catch (error) {
+            console.log("Model/postUser page updateProfilePhoto function: " + error);
+        }
+
+    }
 
 
 

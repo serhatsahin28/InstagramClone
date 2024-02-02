@@ -274,6 +274,10 @@ let _id=a._id;
 <div class="moreDivArea" id="moreDivArea">
   
     <div class="modal-body ">
+        <form class="col" action="/accounts/edit" method="post">
+            <button type="submit" class="btn col-12 bg-primary">Ayarlar</button>
+    </form>
+    <br>
         <form class="col" action="/logout" method="post">
                 <button type="submit" class="btn col-12 bg-primary">Çıkış</button>
         </form>
@@ -555,7 +559,7 @@ socket.emit("deleteFollow",data);
 
 
 const inputElement = document.getElementById('inputField');
-const sessionUserName="";
+var sessionUserName="";
 // Input değeri değiştiğinde çalışacak olan fonksiyon
 inputElement.addEventListener('input', function () {
     const formUser = inputElement.value;

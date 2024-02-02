@@ -53,6 +53,21 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 
+const storage2 = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'images/users_profile'); // Dosyaların nereye kaydedileceğini belirtin
+    },
+    filename: function (req, file, cb) {
+        // Dosyanın adını belirleyin
+        // Örneğin, her dosyanın orijinal adı yerine farklı bir adlandırma yapabilirsiniz
+        cb(null, file.originalname);
+    }
+});
+
+const upload2 = multer({ storage: storage2 });
+
+
+
 io.on("connection", (socket) => {
     console.log("Kullanıcı bağlandı:", socket.id);
 
@@ -239,19 +254,19 @@ io.on("connection", (socket) => {
     });
 
 
-    socket.on("follower",async (sessionUserName) => {
-        const query =await followPost.find({"followed.username":sessionUserName,"followed.situation":true});
+    socket.on("follower", async (sessionUserName) => {
+        const query = await followPost.find({ "followed.username": sessionUserName, "followed.situation": true });
         console.log("follow");
-   io.emit("followerReturn",query);
+        io.emit("followerReturn", query);
 
-});
+    });
 
 
-socket.on("followed",async (sessionUserName) => {
-    const query =await followPost.find({"userName":sessionUserName,"followed.situation":true});
-io.emit("followedReturn",query);
+    socket.on("followed", async (sessionUserName) => {
+        const query = await followPost.find({ "userName": sessionUserName, "followed.situation": true });
+        io.emit("followedReturn", query);
 
-});
+    });
 
 
 
@@ -384,7 +399,75 @@ app.post("/upload/", upload.array('photos', 4), (req, res) => {
 
     a.uploadPhoto(req, res, photos, sessionUserName);
 });
+app.post("/profilePhoto/", upload2.array('photos', 1), (req, res) => {
+    console.log("profilePhoto fonksiyonunda");
+    const a = new postController();
+    const photos = req.files;
+    const sessionUserName = req.session.user.username;
 
+    a.uploadProfilePhoto(req, res, photos, sessionUserName);
+});
+
+app.post("/profilePhoto/setting/", upload2.array('photos', 1), (req, res) => {
+    console.log("setting profilePhoto fonksiyonunda");
+
+    const a = new postController();
+    let photos = "";
+    if (req.files != "") {
+        photos = req.files;
+    }
+    else {
+        photos = "";
+    }
+
+    const sessionUserName = req.session.user.username;
+
+    a.uploadProfileSettings(req, res, photos, sessionUserName);
+});
+
+
+
+app.get("/accounts/edit/", (req, res) => {
+    const sessionProfilePicture = req.session.user.profilePicture;
+    const userName = req.session.user.username;
+    const profileName = req.session.user.profileName;
+    const description = req.session.user.description;
+
+
+    res.render("settings", { sessionProfilePicture, userName, profileName, description });
+
+});
+
+app.post("/accounts/edit/", (req, res) => {
+    const sessionProfilePicture = req.session.user.profilePicture;
+    const userName = req.session.user.username;
+    const profileName = req.session.user.profileName;
+    const description = req.session.user.description;
+    res.render("settings", { sessionProfilePicture, userName, profileName, description });
+
+
+});
+
+
+app.get("/accounts/accountPrivateEdit/", (req, res) => {
+    const sessionProfilePicture = req.session.user.profilePicture;
+    const userName = req.session.user.username;
+    const a = new UserController();
+    a.notificationSettings(req,res,userName,sessionProfilePicture, userName);
+
+
+
+});
+
+
+app.post("/accounts/PrivatePublicEditProfile/", (req, res) => {
+    const a = new UserController();
+    const username = req.session.user.username;
+    let isPrivate = req.body.name;
+    a.privatePublicSettings(req,res,username, isPrivate);
+
+
+});
 
 
 server.listen(PORT, () => {

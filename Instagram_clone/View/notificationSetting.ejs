@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="/sidebar.css">
+    <link rel="stylesheet" href="/settings.css">
+
+</head>
+
+<body class="body">
+    <%-include("sidebar")%>
+        <div class="sidebar2title" id="sidebar2title">
+            <div class="row" id="titleList">
+                <div class="titleSetting" id="titleSetting">
+                    <h1>Ayarlar</h1>
+                </div>
+                <div class="col" id="editProfile">
+                    <a href="/accounts/edit">
+                        <p>Profili düzenle</p>
+                    </a>
+                </div>
+                <div class="col" id="notificationSetting">
+                    <p>Bildirimler</p>
+                </div>
+                <div class="col" id="privateAccount">
+                    <p>Hesap gizliliği</p>
+                </div>
+            </div>
+        </div>
+
+<%
+
+let situation="";
+
+if(isPrivate==true){
+    situation="gizli";
+    console.log("ejs true");
+}
+else{
+situation="açık";
+console.log("ejs false");
+
+}
+
+%>
+        <div class="row accountPrivate" id="accountPrivate">
+            <div class="col">
+               <h1>Hesap <%=situation%></h1> 
+            </div>
+            <div class="col">
+                <form method="post" action="/accounts/PrivatePublicEditProfile">
+                    <input type="hidden" name="name" value="<%=isPrivate%>">
+                    <input class="accontBtn" type="submit" value="<%=situation%>">
+                </form>
+            </div>
+        </div>
+
+
+
+</body>
+
+</html>

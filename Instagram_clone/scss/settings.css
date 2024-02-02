@@ -1,0 +1,182 @@
+#sidebar2title {
+    background-color: rgb(0, 0, 0);
+    position: fixed;
+    left: 41vh;
+    top: -3vh;
+    width: 50vh;
+    height: 45em;
+    overflow-y: scroll;
+    border: 1px solid grey;
+}
+
+#titleSetting{
+
+    color:white;
+}
+
+#titleList {
+    color: white;
+    margin-top: 20vh;
+    text-align: center;
+
+}
+
+
+#editProfile {
+
+    width: 48vh;
+    height: 8vh;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+
+#editProfile:hover {
+
+    background-color: rgb(139, 130, 130);
+}
+
+
+
+
+#notificationSetting {
+
+    width: 48vh;
+    height: 8vh;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+
+#notificationSetting:hover {
+
+    background-color: rgb(139, 130, 130);
+}
+
+
+
+#privateAccount {
+
+    width: 48vh;
+    height: 8vh;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+
+#privateAccount:hover {
+
+    background-color: rgb(139, 130, 130);
+}
+
+#lastScreen{
+margin-top: -16vh;
+}
+#titleScreenLast{
+color:white;
+margin-top: 25vh;
+text-align: center;
+}
+
+#userNamePicture{
+
+    background-color:#262626;
+    border-radius: 25px;
+    width:90vh;
+    height: 15vh;
+    margin-left:105vh;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+
+}
+
+#sessionPicture{
+height: 50px;
+width: 50px;
+border-radius: 100%;
+
+}
+
+#file{
+margin-left: 30vh;
+
+
+}
+.userNameSession{
+    margin-top: 1vh;
+    margin-left: 2vh;
+    color:white;
+}
+
+.userProfileName{
+margin-left:-9vh;
+margin-top:7vh;
+color:white;
+
+}
+
+#biographyDiv{
+color:white;
+width: 50px;
+
+margin-left:105vh;
+}
+
+#biographyInput{
+border: 1px solid grey;
+background-color: black;
+color: white;
+border-radius: 7px;
+width: 90vh;
+height: 9vh;
+
+}
+
+#InputSubmit{
+
+    margin-left:105vh;
+    width: 90vh;
+    margin-top: 10vh;
+    display: flex;
+    justify-content: end;
+}
+
+#lastInputSubmit{
+width: 30vh;
+height: 8vh;
+color: white;
+background-color: rgb(0, 119, 255);
+border-radius: 15px;
+}
+
+#accountPrivate{
+background-color: aqua;
+margin-left: 95vh;
+width: 50vh;
+height: 50vh;
+
+}
+
+h1{
+
+    color: white;
+}
+
+.accontBtn{
+border-radius: 10px;
+width: 15vh;
+height: 7vh;
+background-color: rgb(0, 102, 255);
+
+}
