@@ -17,12 +17,15 @@ app.use(express.static("images"));//Define the img folder
 
 app.use(express.static("scss"));
 
+//tables
 const User = require("./Model/table/dbUsers");
 const commentPost = require("./Model/table/commentPost");
 const likePost = require("./Model/table/likePost");
 const postUser = require("./Model/table/postUser");
-const followPost = require("./Model/table/follow");
+const post = require("./Model/table/postUser");
 
+//controllers
+const followPost = require("./Model/table/follow");
 const UserController = require("./Controller/UserController");
 const Profile = require("./Controller/profileController");
 const storyController = require("./Controller/storyController");
@@ -31,7 +34,7 @@ const postController = require("./Controller/postController");
 const noticeController = require("./Controller/noticeController");
 
 const { log } = require("console");
-const post = require("./Model/table/postUser");
+const { acceptFollow } = require("./Model/postUser");
 app.set('view engine', 'ejs');
 app.use(session({
     secret: 'a',
@@ -98,8 +101,7 @@ io.on("connection", (socket) => {
         const userName = data.userSessionName;
         const a = new Profile();
         a.followRequest(userName, data);
-        // const IsFollowed = "false";
-        // io.emit("aaa", { IsFollowed });
+
 
     });
 
@@ -152,14 +154,14 @@ io.on("connection", (socket) => {
 
 
     socket.on("acceptFollow", (data) => {
-
+        // console.log("acceptFollow: "+data.userName);
         const a = new noticeController();
         a.acceptFollow(data);
     });
 
     socket.on("deleteFollow", (data) => {
-        // console.log("noticeFollow: " + followId);
         const a = new noticeController();
+        // console.log("data app.js sayfası: "+data.userName);
         a.deleteFollow(data);
     });
 
@@ -173,6 +175,9 @@ io.on("connection", (socket) => {
 
 
     socket.on("unlike", (data) => {
+        console.log("app.js sayfası" + data);
+
+
         const a = new postController();
         a.deleteLikePhoto(data);
 
@@ -188,6 +193,17 @@ io.on("connection", (socket) => {
         }
     });
 
+    socket.on("deletePost", (data) => {
+        try {
+            const sessionName = data.sessionUserName;
+            const a = new postController();
+            a.postDelete(data);
+            io.emit("returnDeletePost", sessionName);
+
+        } catch (error) {
+
+        }
+    });
 
 
     socket.on("commentPost", async ({ data, sessionUserName }) => {
@@ -225,8 +241,6 @@ io.on("connection", (socket) => {
             const usernamePostOwner = newCommentData.usernamePostOwner;
             const sessionUserPicture = newCommentData.sessionUserPicture;
 
-            console.log(newCommentData);
-            console.log("newCommentData");
 
             const queryAddNewComment = await commentPost.create({
                 "post_id": post_id,
@@ -256,7 +270,6 @@ io.on("connection", (socket) => {
 
     socket.on("follower", async (sessionUserName) => {
         const query = await followPost.find({ "followed.username": sessionUserName, "followed.situation": true });
-        console.log("follow");
         io.emit("followerReturn", query);
 
     });
@@ -268,7 +281,15 @@ io.on("connection", (socket) => {
 
     });
 
+    socket.on("notificationLive", async (sessionUserName) => {
+        const query = await followPost.find({ "followed.username": sessionUserName });
 
+        if (query != null) {
+            io.emit("notificationLiveReturn", query);
+
+        }
+
+    });
 
 
 });
@@ -407,6 +428,16 @@ app.post("/profilePhoto/", upload2.array('photos', 1), (req, res) => {
 
     a.uploadProfilePhoto(req, res, photos, sessionUserName);
 });
+app.post("/storyUpload/", upload2.array('photos', 1), (req, res) => {
+    console.log("storyUpload fonksiyonunda");
+    const a = new storyController();
+    const photos = req.files;
+    const sessionUserName = req.session.user.username;
+
+    a.uploadStory(req, res, photos, sessionUserName);
+});
+
+
 
 app.post("/profilePhoto/setting/", upload2.array('photos', 1), (req, res) => {
     console.log("setting profilePhoto fonksiyonunda");
@@ -428,13 +459,9 @@ app.post("/profilePhoto/setting/", upload2.array('photos', 1), (req, res) => {
 
 
 app.get("/accounts/edit/", (req, res) => {
-    const sessionProfilePicture = req.session.user.profilePicture;
     const userName = req.session.user.username;
-    const profileName = req.session.user.profileName;
-    const description = req.session.user.description;
-
-
-    res.render("settings", { sessionProfilePicture, userName, profileName, description });
+    const a = new UserController();
+    a.settingEdit(req, res, userName);
 
 });
 
@@ -443,6 +470,7 @@ app.post("/accounts/edit/", (req, res) => {
     const userName = req.session.user.username;
     const profileName = req.session.user.profileName;
     const description = req.session.user.description;
+    console.log(description);
     res.render("settings", { sessionProfilePicture, userName, profileName, description });
 
 
@@ -453,19 +481,46 @@ app.get("/accounts/accountPrivateEdit/", (req, res) => {
     const sessionProfilePicture = req.session.user.profilePicture;
     const userName = req.session.user.username;
     const a = new UserController();
-    a.notificationSettings(req,res,userName,sessionProfilePicture, userName);
+    a.notificationSettings(req, res, userName, sessionProfilePicture, userName);
 
 
 
 });
 
-
 app.post("/accounts/PrivatePublicEditProfile/", (req, res) => {
     const a = new UserController();
     const username = req.session.user.username;
     let isPrivate = req.body.name;
-    a.privatePublicSettings(req,res,username, isPrivate);
+    a.privatePublicSettings(req, res, username, isPrivate);
 
+
+});
+
+app.post("/delete/story/:id/", (req, res) => {
+    const user_id = req.body.storyId;
+    const username = req.session.user.username;
+    const a = new storyController();
+    a.storyDelete(username, user_id)
+    res.redirect("/");
+
+
+});
+
+app.get("/accounts/emailsignup/", (req, res) => {
+
+    res.render("register");
+
+
+});
+app.post("/accounts/registerAdd/", (req, res) => {
+
+    const email = req.body.email;
+    const userName = req.body.userName;
+    const profileName = req.body.profileName;
+    const password = req.body.password;
+
+    const a = new UserController();
+    a.registerUserAdd(req,res,email,userName,profileName,password);
 
 });
 

@@ -119,5 +119,20 @@ margin-top: -4vh;
 
 }
 
+.registerDiv{
+border:1px solid grey ;
+display: flex;
+width: 60vh;
+height: 10vh;
+margin-left: 99vh;
+margin-top: -25vh;
+justify-content: center;
+align-items: center;
+}
 
+#registerA{
+text-decoration: none;
+margin-top: -3vh;
+margin-left:1vh;
 
+}

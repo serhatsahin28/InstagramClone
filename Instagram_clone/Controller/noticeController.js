@@ -9,8 +9,6 @@ class noticeController {
 
     async acceptFollow(data) {
         try {
-
-          
             const userName=data.userName;
             const profileName=data.profileName;
             const a = postUser.acceptFollow(userName,profileName);
@@ -22,7 +20,6 @@ class noticeController {
     }
     async deleteFollow(data) {
         try {
-           
             const userName=data.userName;
             const profileName=data.profileName;
             const a = postUser.deleteFollow(userName,profileName);
@@ -30,7 +27,6 @@ class noticeController {
         } catch (error) {
             console.log("noticeController.js sayfası deleteFollow function: " + error);
         }
-
     }
 
 

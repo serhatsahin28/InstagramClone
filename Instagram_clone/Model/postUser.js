@@ -3,6 +3,8 @@ const Post = require("../Model/table/postUser");
 const follow = require("../Model/table/follow");
 const story = require("../Model/table/storyTable");
 const likePost = require("../Model/table/likePost");
+const commentPost = require("../Model/table/commentPost");
+
 
 class postUser {
 
@@ -64,8 +66,8 @@ class postUser {
 
     static async acceptFollow(userName, profileName) {
         try {
-            console.log("parentDivId: " + userName);
-            console.log("profileName: " + profileName);
+            // console.log("parentDivId: " + userName);
+            // console.log("profileName: " + profileName);
 
             const a = await follow.updateOne(
                 { "userName": profileName, "followed.username": userName },
@@ -81,8 +83,11 @@ class postUser {
 
     }
 
-    static async deleteFollow(userName, profileName) {
+    static async deleteFollow(userName,profileName) {
         try {
+            console.log("deleteFollow userName: "+userName);
+            console.log("deleteFollow profileName: "+profileName);
+
             const a = await follow.deleteOne(
                 { "userName": profileName, "followed.username": userName },
 
@@ -141,25 +146,41 @@ class postUser {
             const profilePicture = user[0].profilePicture;
             const profileName = user[0].profileName;
 
+let findNewPost=await likePost.find({
+    "post_id": postId,
+    "postOwnerUsername": postOwnerUsername,
+    "userWhoLike.username": sessionUserName,
+            "userWhoLike.userPicture": profilePicture,
+          "userWhoLike.userProfileName": profileName
+    
+    
+});
 
+console.log("postUser likeNewPost fonksiyonu findNewPost değeri: "+findNewPost);
 
-            const createLikePost = await likePost.create({
-                post_id: postId,
-                postOwnerUsername: postOwnerUsername,
-                userWhoLike: [
-                    {
-                        username: sessionUserName,
-                        userPicture: profilePicture,
-                        userProfileName: profileName
-                    }
-                ]
+if(findNewPost==""){
+    // console.log("postUser likeNewPost fonksiyonu findNewPost değeri if değeri içerisi");
+    const createLikePost = await likePost.create({
+        post_id: postId,
+        postOwnerUsername: postOwnerUsername,
+        userWhoLike: [
+            {
+                username: sessionUserName,
+                userPicture: profilePicture,
+                userProfileName: profileName
+            }
+        ]
 
-            });
+    });
+
+}
+
+        
 
 
 
         } catch (error) {
-            console.log("Model/postUser page likePosts function: " + error);
+            console.log("Model/postUser page likeNewPosts function: " + error);
         }
 
     }
@@ -192,6 +213,37 @@ class postUser {
         }
 
     }
+
+
+
+static async deletePost(postId){
+
+try {
+    console.log("postUser.js sayfasında deletePost fonksiyonu içerisinde ");
+    console.log(postId);
+const a=await Post.deleteOne({
+"_id":postId
+});
+
+const b=await likePost.deleteMany({
+    "post_id":postId
+    });
+
+    const c=await commentPost.deleteMany({
+        "post_id":postId
+        });
+
+
+
+} catch (error) {
+    console.log("postUser.js sayfasında deletePost fonksiyonu içerisinde: "+error);
+    
+}
+
+
+};
+
+
 
 
 
