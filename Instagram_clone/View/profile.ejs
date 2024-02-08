@@ -66,10 +66,10 @@
             </div>
             <div class="stories">
                 <div class="btn-storie one"><img src="/Icons/user.png">
-                    <p class="p-stories one">Önde çıkanlar</p>
+                    <p class="p-stories one">Öne çıkanlar</p>
                 </div>
                 <div class="btn-storie two"><img src="/Icons/user.png">
-                    <p class="p-stories two">Önde çıkanlar</p>
+                    <p class="p-stories two">Öne çıkanlar</p>
                 </div>
                 <div class="btn-storie add"><img src="/Icons/user.png">
                     <p class="p-stories add">Yeni</p>
@@ -243,6 +243,8 @@
         <!--Notice div codes-->
         <div class="content">
             <div id="noticeDivNav" class="noticeDivNav">
+            <div id="noticeDivNav2" class="noticeDivNav2">
+
                 <div class="modal-body row">
                     <h2 class="col">Bildirimler</h2>
                     <br>
@@ -251,26 +253,16 @@
                 <hr>
                 <% let profileName="" ; noticeFollow.forEach(function(a){ let profilePhoto=a.userProfilePicture;
                     profileName=a.userName; let _id=a._id; %>
-                    <a href="/<%=profileName%>">
-
-                        <div id="notice-body" class="notice-body row">
-                            <div class="col-11  UserNotice" id="<%=_id%>">
-
-                                <div class="noticeUser">
-                                    <img class="col-6 " id="Notice-img" src="/users_profile/<%=profilePhoto%>">
-                                    <div id="userNotice" class=" col-6 userNotice ">
-                                        <%=profileName%> seni takip etmek istiyor
-                                    </div>
-                                    <a id="accept" class="btn col-3 bg-primary  text-light" value="Onayla">Onayla</a>
-                                    <a id="delete" class="btn bg-secondary text-light" value="Sil">Sil</a>
-                    </a>
-            </div>
-
-        </div>
-        </a>
-        </div>
-        <hr>
         <%});%>
+                        
+                        <div id="noticeBody" class="noticeBody">
+
+                        </div>
+                        <hr>
+
+        </div>
+
+     
 
 
             <div class="row">
@@ -585,6 +577,25 @@
 
                         commentFooter2.appendChild(LikePhotoResult);
 
+                        LikePhotoResult.addEventListener("click", function() {
+                            const src=LikePhotoResult.getAttribute("src");
+
+                            if(src=="/Icons/redHeart.png"){
+                                socket.emit("unlike",data);
+                                LikePhotoResult.src="/Icons/heart.png";
+                            }
+                            else{
+                                socket.emit("like",data);
+                                LikePhotoResult.src="/Icons/redHeart.png";
+
+                            }
+                          
+
+                          
+
+});
+
+
 
                     }
 
@@ -614,6 +625,24 @@
                     commentHeader.appendChild(postUserMore);
                     commentHeader.appendChild(lastClassComment);
 
+                    postUserMore.addEventListener("click", function() {
+                        const data={
+                            imgId:imgId,
+                            sessionUserName:sessionUserName
+                        }
+                        if (confirm("Gönderiyi Silmek istediğinize emin misiniz?")) {
+    // Silme işlemi gerçekleştirilecek kod buraya gelecek
+    alert("Gönderi silme işlemi gerçekleştiriliyor...");
+    socket.emit("deletePost",data);
+    socket.on("returnDeletePost",(data)=>{
+        window.location.href = "/" + data;
+
+    })
+} else {
+    alert("Gönderi silme işlemi iptal edildi.");
+}
+
+                    });
 
                     document.getElementById("commentArea").innerHTML = "";
 
@@ -821,6 +850,141 @@
 
 
         });
+
+
+
+
+function notice()
+{
+let userName="<%=userName%>";
+socket.emit("notificationLive",userName);
+socket.on("notificationLiveReturn",(data)=>{
+
+    let dataLength=0;
+
+for (let i = 0; i < data.length; i++) {
+    dataLength++;
+}
+
+
+
+const noticeDivNav=document.getElementById("noticeDivNav2");
+
+
+document.querySelector(".noticeDivNav2").innerHTML="";
+for(let i=0;i<data.length;i++){
+const newData=data[i];
+let situation=newData.followed[0].situation;
+let noticeBody=document.getElementById("userNotice");
+
+
+if(situation==false)
+{
+
+
+
+
+
+
+        let noticeBody=document.createElement("div");
+noticeBody.id="noticeBody";
+noticeBody.classList.add("noticeBody");
+
+
+    let profileNameNotice=document.createElement("a");
+profileNameNotice.id=newData.userName;
+profileNameNotice.href=newData.userName;
+
+
+
+
+let noticeUserDiv=document.createElement("div");
+noticeUserDiv.id="noticeUser";
+noticeUserDiv.classList.add("noticeUser");
+noticeUserDiv.textContent=newData.userName;
+
+
+
+let imgNotice=document.createElement("img");
+imgNotice.id="NoticeImg";
+imgNotice.classList.add("ImgNotice");
+imgNotice.src="/users_profile/"+newData.userProfilePicture;
+
+
+
+
+
+
+let accept=document.createElement("a");
+accept.id="accept";
+accept.classList.add("btn");
+accept.value="Onayla"
+accept.textContent="Onayla";
+
+let delete2=document.createElement("a");
+delete2.id="delete";
+delete2.classList.add("btn");
+delete2.value="Sil"
+delete2.textContent="Sil";
+
+
+
+noticeBody.appendChild(imgNotice);
+noticeBody.appendChild(noticeUserDiv);
+noticeBody.appendChild(accept);
+noticeBody.appendChild(delete2);
+noticeBody.appendChild(profileNameNotice);
+noticeDivNav.appendChild(noticeBody);
+
+console.log(noticeDivNav);
+
+
+}
+
+
+}
+let userName="<%=userName%>";
+
+document.addEventListener('click', function(event) {
+
+    if (event.target.id === 'accept') {
+        console.log('Onayla butonuna tıklandı');
+        let profileName = event.target.parentElement.querySelector(".noticeUser").textContent;
+        // console.log("Onayla butonuna tıklanan kullanıcı: ", userName);
+
+        let data={
+            userName:userName,
+            profileName:profileName
+        }
+socket.emit("acceptFollow",data);
+
+
+
+    }
+    
+    // "Sil" butonuna tıklandığında
+    if (event.target.id === 'delete') {
+        console.log('Sil butonuna tıklandı');
+        let profileName = event.target.parentElement.querySelector(".noticeUser").textContent;
+        console.log("Sil butonuna tıklanan kullanıcı: ", profileName);
+        
+        let data={
+            userName:userName,
+            profileName:profileName
+        }
+socket.emit("deleteFollow",data);
+
+    }
+});
+
+
+});
+
+
+}
+
+setInterval(notice,2200); 
+
 
 
 

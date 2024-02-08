@@ -170,7 +170,6 @@ a:active {
 #item>a>.img {
 
 
-    background-color: red;
     width: 10vh;
     height: 10vh;
     border-radius: 100%;
@@ -274,8 +273,8 @@ a:active {
 }
 
 
-#Notice-img {
-    width: 12vh;
+#NoticeImg {
+    width: 8vh;
     height: 8vh;
     border-radius: 100%;
     margin-left: 1vh;
@@ -286,15 +285,16 @@ a:active {
 
 
 #accept {
-
+background-color: blue;
     margin-left: 35vh;
-    margin-top: -12vh;
+    margin-top: -8vh;
 }
 
 #delete {
+    background-color: grey;
 
     margin-left: 50vh;
-    margin-top: -19vh;
+    margin-top: -15vh;
 }
 
 #userNoticeFollowers {
@@ -519,5 +519,21 @@ color: white;
 #commentFormButton{
 
     color: rgb(20, 86, 191);
+
+}
+
+#noticeUser{
+
+    color:white;
+    margin-left:15vh ;
+    margin-top: -6vh;
+}
+#Notice-img {
+    width: 12vh;
+    height: 8vh;
+    border-radius: 100%;
+    margin-left: -1vh;
+    margin-top: 2vh;
+
 
 }

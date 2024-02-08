@@ -36,7 +36,10 @@ class UserModel {
 
     static async findAllPosts() {
         try {
-            const posts = await Post.find({});
+
+           
+            const posts = await Post.find({
+            });
             return posts;
         } catch (err) {
             throw err;
@@ -215,10 +218,30 @@ class UserModel {
 
         }
 
+    }
 
 
+    static async findSessionStories(userName) {
+
+        try {
+
+
+            const stories = await story.find({
+                "username": userName
+            });
+            return stories;
+
+        }
+        catch (err) {
+            console.log(err);
+
+        }
 
     }
+
+
+
+
     static async findFollowSend(userName) {
 
         try {
@@ -311,7 +334,7 @@ class UserModel {
     static async privateAccountControle(username, isPrivate) {
 
         try {
-console.log(isPrivate);
+            console.log(isPrivate);
 
             if (isPrivate == "true") {
                 const a = await User.updateOne({
@@ -327,7 +350,7 @@ console.log(isPrivate);
                 },
                     { $set: { "isPrivate": true } }
                 );
-console.log("false fonk");
+                console.log("false fonk");
 
                 return a;
 
@@ -360,6 +383,30 @@ console.log("false fonk");
 
         } catch (error) {
             console.log("UserModel.js sayfası içerisinde findFolloSend Fonksiyonu içerisinde: " + error);
+        }
+
+    }
+
+
+    static async registerAddNewUser(email, userName, profileName, password) {
+        try {
+
+
+            const a = await User.create({
+                "username": userName,
+                "password": password,
+                "profilePicture": "newProfile.png",
+                "description": "",
+                "profileName": profileName,
+                "isPrivate": false
+
+
+
+            });
+
+
+        } catch (error) {
+            console.log("UserModel sayfası registerAddNewUser fonksiyonu: " + error);
         }
 
     }

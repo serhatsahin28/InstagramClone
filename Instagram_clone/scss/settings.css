@@ -120,7 +120,7 @@ margin-left: 30vh;
 }
 
 .userProfileName{
-margin-left:-9vh;
+margin-left:-1vh;
 margin-top:7vh;
 color:white;
 
@@ -161,7 +161,6 @@ border-radius: 15px;
 }
 
 #accountPrivate{
-background-color: aqua;
 margin-left: 95vh;
 width: 50vh;
 height: 50vh;

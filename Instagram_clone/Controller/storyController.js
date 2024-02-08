@@ -65,7 +65,7 @@ class storyController {
 
 
 
-            res.render("story", { allStory, storySelected, nextResult, sessionUserName, prevResult });
+            res.render("story", { allStory, storySelected, nextResult, sessionUserName, prevResult,visitId,visitUsername });
         }
         catch (error) {
             console.log(error);
@@ -75,6 +75,17 @@ class storyController {
 
     }
 
+
+
+async uploadStory(req,res,photos, sessionUserName){
+    const photosName=photos[0].originalname;
+    const a=await storyModel.storyAdd(photosName,sessionUserName);
+res.redirect("/");
+}
+
+async storyDelete(username,user_id){
+    const a=await storyModel.storyDelete(username,user_id);
+}
 
 
 
