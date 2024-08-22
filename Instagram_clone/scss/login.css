@@ -1,8 +1,12 @@
-body {
+body.dark-mode {
 
-    background-color: #f9f9f9ea;
+    background-color: #040404ea;
+    color: white;
 }
-
+body.light-mode {
+    background-color: white;
+    color: black;
+}
 
 
 .img1 {

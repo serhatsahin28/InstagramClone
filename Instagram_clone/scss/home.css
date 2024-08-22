@@ -117,13 +117,18 @@ a:active {
 
 .postIcon {
     width: 4vh;
-    margin-top: 10vh;
     margin-left: -2vh;
 
+}
+.commentBtn{
+height: 50px;
+width: 6vh;
+margin-top: 70px;
 }
 
 .postIconA {
     width: 4vh;
+    height: 4vh;
     margin-top: 10vh;
     margin-left: -2vh;
 
@@ -133,16 +138,22 @@ a:active {
     margin-left: -1vh;
 }
 
-#postIcon3 {
-    margin-left: -3vh;
+
+.directBtn{
+    height: 6vh;
+    margin-top: 10vh;
 }
 
-#postIcon4 {
+/* #postIcon4 {
     margin-top: -15vh;
     margin-left: 62vh;
 
-}
+} */
 
+.saveBtn{
+    margin-left: 75vh;
+    margin-top: -15vh;
+}
 
 #postHr {
     background-color: #9a9a9a64;
@@ -180,6 +191,8 @@ a:active {
 
 
 #searchDivNav {
+    display: none;
+
     color: white;
     background-color: rgb(0, 0, 0);
     margin-top: -5vh;
@@ -194,6 +207,8 @@ a:active {
 
 
 #noticeDivNav {
+    overflow-y: scroll;
+    display: none;
     color: white;
     background-color: #262626;
     height: 100vh;
@@ -209,6 +224,7 @@ a:active {
 
 
 #modal-body2 {
+    
     margin-left: 5px;
     width: 65vh;
     overflow-y: scroll;
@@ -223,6 +239,7 @@ a:active {
 }
 
 #searchUser {
+    
     width: 40px;
     height: 40px;
     border-radius: 100%;
@@ -522,18 +539,30 @@ color: white;
 
 }
 
-#noticeUser{
+
+.noticeUser{
 
     color:white;
-    margin-left:15vh ;
-    margin-top: -6vh;
+    margin-left:16vh ;
+    margin-top:-6vh;
 }
-#Notice-img {
+
+.noticeUser2{
+
+    color:white;
+    margin-left:16vh ;
+    margin-top:-6vh;
+}
+.Notice-img {
     width: 12vh;
     height: 8vh;
     border-radius: 100%;
-    margin-left: -1vh;
+    margin-left: -3vh;
     margin-top: 2vh;
 
 
+}
+
+.noticeDivNavAccept{
+    margin-top: -30px;
 }
