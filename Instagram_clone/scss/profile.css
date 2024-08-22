@@ -540,3 +540,13 @@ body {
         margin-left: 50vh;
         margin-top: -15vh;
     }
+
+    #followedModalBody{
+
+        overflow-y: scroll;
+    }
+
+    #followersModalBody{
+
+        overflow-y: scroll;
+    }

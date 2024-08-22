@@ -54,7 +54,10 @@
                     </div>
                     <div id="followArea" class="follow">
                         <% console.log(followData.Isfollowed);
-                         if(followData.Isfollowed==undefined ){ %>
+                         if(followData.Isfollowed==undefined ){ 
+      <!-- console.log("XXXXXXX::", JSON.stringify(newResult, null, 2));  -->
+
+                            %>
                             
                             <form id="myForm">
 
@@ -62,7 +65,7 @@
                                 <input type="hidden" name="username" value="<%=newResult.username%>">
                                 <input type="hidden" name="userSessionName" value="<%=userName%>">
                                 <input type="hidden" name="userSessionProfile" value="<%=sessionProfileName%>">
-                                <input type="hidden" name="userSessionPicture" value="<%=profilePicture%>">
+                                <input type="hidden" name="userSessionPicture" value="<%=sessionProfilePicture%>">
                                 <input type="hidden" name="profilePicture" value="<%=newResult.profilePicture%>">
                                 <input type="hidden" name="profileName" value="<%=newResult.profileName%>">
                                 <input type="hidden" name="situation" value="false">

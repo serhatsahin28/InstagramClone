@@ -96,6 +96,7 @@ a:hover {
 }
 
 .moreDivArea {
+    display: none;
     position: fixed;
     top: 50vh;
     left: 20px;

@@ -69,7 +69,9 @@ class Profile extends UserController {
 
 
 
-      console.log("Isfollowed:  " + Isfollowed);
+      // console.log("Isfollowed:  " + Isfollowed);
+      // console.log("sessionProfilePicturexxxxx--:  " + sessionProfilePicture);
+
 
       if (username == userName) {
         res.render("profile", { result, posts, userName, sessionProfilePicture, profileName,followedProfile,followersProfile,findProfilePosts,noticeFollow,followersTrue });
@@ -105,7 +107,9 @@ class Profile extends UserController {
 
   async followProfile(userName, data) {
 
-    console.log("followProfile:" + data.userSessionPicture);
+     console.log("followProfile verileriiii: " + JSON.stringify(data, null, 2));
+     console.log("userSessionPicture++++ bbbb"+data.userSessionPicture);
+     console.log("profilePicture++++bbbbb"+data.profilePicture);
     const sessionUserName = userName;
     const otherUserName = data.username;
 
@@ -118,13 +122,14 @@ class Profile extends UserController {
     const profilePicture = data.profilePicture;
     const userSessionPicture = data.userSessionPicture;
 
-    await UserModel.followSend(sessionUserName, otherUserId, sessionUserProfile, otherUserName, profileName, profilePicture, userSessionPicture, sessionProfileName);
+    console.log("userSessionPicture++++"+userSessionPicture);
+    console.log("profilePicture++++"+profilePicture);
+     await UserModel.followSend(sessionUserName, otherUserId, sessionUserProfile, otherUserName, profileName, profilePicture, userSessionPicture, sessionProfileName);
   }
 
 
   async followRequest(userName, data) {
 
-    console.log("followProfile:" + data.userSessionPicture);
     const sessionUserName = userName;
     const otherUserName = data.username;
 
@@ -136,6 +141,14 @@ class Profile extends UserController {
     const profileName = data.profileName;
     const profilePicture = data.profilePicture;
     const userSessionPicture = data.userSessionPicture;
+
+    if(userSessionPicture!=null &&profilePicture!=null){
+      // console.log("Data değerleri:", JSON.stringify(data, null, 2)); 
+      // console.log("SESSION PROFILENAME: "+userSessionPicture);
+      // console.log("profilePicture PROFILENAME: "+profilePicture);
+  
+  
+  }
 
     await UserModel.followRequest(sessionUserName, otherUserId, sessionUserProfile, otherUserName, profileName, profilePicture, userSessionPicture, sessionProfileName);
   }

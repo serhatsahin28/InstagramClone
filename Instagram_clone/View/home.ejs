@@ -61,7 +61,7 @@
 if(sessionUserStories.length>0){
 let storiesId=sessionUserStories[0]._id
 
-    console.log("sessionUserStories değeri boş değil");
+    <!-- console.log("sessionUserStories değeri boş değil"); -->
 
 
 
@@ -182,13 +182,13 @@ let storiesId=sessionUserStories[0]._id
                                     <% } %>
                                 <% }); %>
                                 <img class="postIconA" id="<%=a._id%>" src="<%=likeIcon%>" alt="" srcset="">
-                                <div class="btn"> 
+                                <div class="btn commentBtn"> 
                                     <a  class="commentModalButton" data-bs-toggle="modal" data-bs-target="#commentModalPost"  id="<%=a._id%>" href="#"><img class="postIcon" id="postIcon2" src="/Icons/icon_chat.png" alt="" srcset=""></a>
                                     <input name="usernameInPost" id="<%=username.username%>" type="hidden">
                                     <input name="userPhotoInPost" id="<%=username.profilePhoto%>" type="hidden">
                                 </div>
-                                <div class="btn"> <img class="postIcon" id="postIcon3" src="/Icons/direct-instagram.png" alt="" srcset=""></div>
-                                <div class="btn"> <img class="postIcon" id="postIcon4" src="/Icons/bookmark.png" alt="" srcset=""></div>
+                                <div class="btn directBtn"> <img class="postIcon" id="postIcon3" src="/Icons/direct-instagram.png" alt="" srcset=""></div>
+                                <div class="btn saveBtn"> <img class="postIcon" id="postIcon4" src="/Icons/bookmark.png" alt="" srcset=""></div>
                                
                                 <div class="col" id="whoLikes">
                                     <a data-bs-toggle="modal" data-bs-target="#likesModal" class="whoLikesInA-tag" id="<%=a._id%>" href="#"><p>Beğenmeleri görüntüle</p></a>
@@ -208,48 +208,67 @@ let storiesId=sessionUserStories[0]._id
 
 
 <!--Notice div codes-->
+
         <div class="content">
+
             <div id="noticeDivNav" class="noticeDivNav">
+                <h2 class="col">Bildirimler</h2>
+<br>
             <div id="noticeDivNav2" class="noticeDivNav2">
 
-                <div class="modal-body row">
-                    <h2 class="col">Bildirimler</h2>
                     <br>
                  
-                </div>
                 <hr>
-                <% let profileName="";
-                noticeFollow.forEach(function(a){
-let profilePhoto=a.userProfilePicture;
- profileName=a.userName;
-let _id=a._id;
-                 });%>
+                <!-- Follow sent users -->
+                <% 
+                let profileName = "";
+    <!-- console.log("followProfile verileriiii home ejs: " + JSON.stringify(noticeFollow, null, 2)); -->
+                
+                %>
 
+                <% noticeFollow.forEach(function(a) { %>
+                
+                    <% let profilePhoto = a.userProfilePicture; %>
+                    <% profileName = a.userName; %>
+                    <% let _id = a._id; %>
+                
+                    <div id="<%= _id %>" class="noticeBody">
+                        <img id="NoticeImg" class="NoticeImg" src="users_profile/<%= profilePhoto %>">
+                        <div id="<%= _id %>" class="noticeUser"><%= profileName %></div>
+                        <a id="accept" class="btn">Onayla</a>
+                        <a id="delete" class="btn">Sil</a>
+                    </div>
+                    <br><br>
+                <% }); %>
 
-                <div id="noticeBody" class="noticeBody">
-
-                </div>
-                <hr>
+            
+             
+                
+                
+                <hr>    
             </div> 
-
-
-
-
-
-
-<div class="row">
-    <%followersTrue.forEach(function(a){
-
-%>
-    <div class="noticeUser">
-        <img class="col-6 " id="Notice-img" src="/users_profile/<%=a.userProfilePicture%>">
-        <div id="userNoticeFollowers" class=" col userNotice "><a href="/<%=a.userName%>"><%=a.userName%></a> seni takip etmeye başladı</div>
-        </a>
+    <!-- Accepted Follow users notification -->
+    <div class="noticeDivNavAccept" id="noticeDivNavAccept">
+        <%
+        let profileNameAccepted = ""; %>
+        <% followersTrue.forEach(function(a) { %>
+            <% let profilePhoto = a.userProfilePicture; %>
+            <% profileName = a.userName; %>
+            <% let id2 = a._id; %>
+        
+        <div id="<%= id2 %>" class="noticeFollowed">
+            <img id="NoticeImg" class="NoticeImg" src="users_profile/<%= profilePhoto %>">
+            <div id="<%= id2 %>" class="noticeUser2"><a href="<%=profileName%>"><%= profileName %></a>  sizi takip etmeye başladı</div>
+        </div>
         <hr>
-  <%  });%>
-</div>
 
-</div>
+        <% }); %>
+    </div>
+    
+
+
+
+
 
 
         </div>
@@ -476,7 +495,7 @@ let _id=a._id;
             
                 // Örneğin, kullanıcı girişi veya mesaj gönderme gibi olaylarda Socket.IO kullanın:
                 socket.on("user_login", (data) => {
-                    console.log("Kullanıcı giriş yaptı:", data.username);
+                    // console.log("Kullanıcı giriş yaptı:", data.username);
                 });
             
                 function sendMessage() {
@@ -739,21 +758,28 @@ var parentDiv = button.closest(".btn");  // Tıklama yapılan butonun üst div'i
     const commentHeader=document.getElementById("commentHeader");
 
 socket.emit("commentPost",{data,sessionUserName});     
-
 let LikePhotoResult=null;
-console.log("LikePhotoResult: "+LikePhotoResult);
+// console.log("LikePhotoResult: "+LikePhotoResult);
 
 const commentFooter2=document.getElementById("commentFooter2");
-socket.on("commentPostReturn",({query,IslikedSession2})=>{
+    
+socket.on("commentPostReturn",({ query, IslikedSession2,IslikedSession,post_id})=>{
+
     const LikePhotoEx=document.getElementById("likeIconComment");
 
-    if(LikePhotoEx!=undefined)
+let IslikedSituation=JSON.stringify(IslikedSession);
+// let post_id=IslikedSituation;
+// console.log("IslikedSession::"+IslikedSituation);
+//  console.log("IslikedPostId!:"+post_id);
+
+
+    if(LikePhotoEx!=undefined||LikePhotoEx!=null)
     {
-        console.log("LikePhotoResult undefined: IslikedSession2 değeri: "+IslikedSession2);
+        // console.log("LikePhotoEx:"+LikePhotoEx.src);
+      
         LikePhotoEx.src=IslikedSession2;
     }
    else{
-
      LikePhotoResult=document.createElement("img");
 LikePhotoResult.src=IslikedSession2;
 LikePhotoResult.id="likeIconComment";
@@ -761,24 +787,35 @@ LikePhotoResult.classList.add("commentFooter2");
 commentFooter2.appendChild(LikePhotoResult);
 
    }
- if (LikePhotoResult !== null) {
+   
+ if (LikePhotoResult != null) {
 LikePhotoResult.addEventListener('click', function() {
-    let post_id=query[0].post_id;
+// console.log("IslikedSession::"+IslikedSituation);
+
+    // const post_id=IslikedSituation[0].post_id;
+   if(post_id!=null||post_id!=undefined){
+let post_id=IslikedSituation[0].post_id;
+    
+   }
+   
+
+    // console.log("post_id :"+post_id);
     let sessionUserName="<%=userName%>";
     let srcLikeImage=LikePhotoResult.getAttribute("src");
+
     let data={
 sessionUserName:sessionUserName,
 imgId:post_id
 
     }
 
+
 if(srcLikeImage=="/Icons/heart.png"){
     socket.emit("like",data);
-console.log("if");
 LikePhotoResult.src="/Icons/redHeart.png";
 }
 else{
-    console.log("else: "+srcLikeImage);
+    // console.log("else: "+srcLikeImage);
 
 socket.emit("unlike",data);
 
@@ -927,12 +964,12 @@ commentTextP.textContent=userLike2.userWhoComment[0].userComment;
 
 
 
+    // function notice baslangic
 function notice()
 {
 let userName="<%=userName%>";
 socket.emit("notificationLive",userName);
 socket.on("notificationLiveReturn",(data)=>{
-
     let dataLength=0;
 
 for (let i = 0; i < data.length; i++) {
@@ -950,7 +987,7 @@ const newData=data[i];
 let situation=newData.followed[0].situation;
 let noticeBody=document.getElementById("userNotice");
 
-
+// console.log("????????Notice durumu takip edip etmediği:"+situation);
 if(situation==false)
 {
 
@@ -960,7 +997,7 @@ if(situation==false)
 
 
         let noticeBody=document.createElement("div");
-noticeBody.id="noticeBody";
+noticeBody.id=newData._id;
 noticeBody.classList.add("noticeBody");
 
 
@@ -972,7 +1009,8 @@ profileNameNotice.href=newData.userName;
 
 
 let noticeUserDiv=document.createElement("div");
-noticeUserDiv.id="noticeUser";
+noticeUserDiv.id=newData._id;
+
 noticeUserDiv.classList.add("noticeUser");
 noticeUserDiv.textContent=newData.userName;
 
@@ -1009,22 +1047,126 @@ noticeBody.appendChild(delete2);
 noticeBody.appendChild(profileNameNotice);
 noticeDivNav.appendChild(noticeBody);
 
-console.log(noticeDivNav);
+// console.log(noticeDivNav);
 
 
 }
 
 
 }
+
+
+    // function notice bitis
+
+
+
+});
+
+
+}
+
+
+function noticeFollowAccept() {
+    let userName = "<%= userName %>";
+    let newDataId = "";
+    let targetProfileName = event.target.parentElement.querySelector(".noticeUser").textContent;
+
+    let data = {
+        userName: userName,
+        profileName: targetProfileName
+    };
+
+    socket.emit("acceptFollow", data);
+
+    socket.emit("notificationLive", userName);
+
+    let sayac = 0;
+
+    socket.on("notificationLiveReturn", (data) => {
+        const noticeDivNavAccept = document.getElementById("noticeDivNavAccept");
+
+        // Önce var olan elementleri temizleyelim
+        noticeDivNavAccept.innerHTML = "";
+
+        data.forEach((newData) => {
+            let situation = newData.followed[0].situation;
+
+            if (situation === true) {
+                newDataId = newData._id;
+                // console.log("newData_id verisi: " + newDataId);
+
+                let noticeFollowed = document.createElement("div");
+                noticeFollowed.id = newDataId;
+                noticeFollowed.classList.add("noticeFollowed");
+
+                let imgNotice = document.createElement("img");
+                imgNotice.id = "NoticeImg";
+                imgNotice.classList.add("NoticeImg");
+                imgNotice.src = "users_profile/" + newData.userProfilePicture;
+
+                let noticeUser = document.createElement("div");
+                noticeUser.id = "noticeUser_" + newDataId; // Benzersiz bir ID verelim
+                noticeUser.classList.add("noticeUser2");
+
+                // ProfileName öğesini içeriğe dahil etme
+                noticeUser.innerHTML = `<a class="profileName" href="${newData.userName}">${newData.userName}</a> sizi takip etmeye başladı`;
+
+                noticeFollowed.appendChild(imgNotice);
+                noticeFollowed.appendChild(noticeUser);
+                noticeDivNavAccept.appendChild(noticeFollowed);
+
+                console.log("Sayac: " + sayac);
+                sayac++;
+            }
+        });
+    });
+}
+
+
+
+
+
+
+
 let userName="<%=userName%>";
+let profileName="";
+let notificationId="";
+
+
+function deleteNotice(profileName,notificationId){
+  console.log('Sil butonuna tıklandı');
+//    profileName = event.target.parentElement.querySelector(".noticeBody").textContent;
+//         notificationId = event.target.parentElement.querySelector(".noticeBody").getAttribute("id");
+
+
+        console.log("Sil butonuna tıklanan kullanıcı: ", profileName);
+        console.log("Sil butonu kullanı Id: "+notificationId);
+        
+        let data={
+             userName:userName,
+            profileName:profileName
+        }
+socket.emit("deleteFollow",data);
+let elementToRemove = document.getElementById(notificationId);
+
+// Öğeyi DOM'dan kaldırıyoruz
+if (elementToRemove) {
+  elementToRemove.parentNode.removeChild(elementToRemove);
+}
+
+}
 
 document.addEventListener('click', function(event) {
+console.log("Tıklanma olayı var");
 
+//onayla butonuna tıklandığında
     if (event.target.id === 'accept') {
-        console.log('Onayla butonuna tıklandı');
+         console.log('Onayla butonuna tıklandı');
         let profileName = event.target.parentElement.querySelector(".noticeUser").textContent;
-        // console.log("Onayla butonuna tıklanan kullanıcı: ", userName);
+        let notificationId = event.target.parentElement.querySelector(".noticeUser").getAttribute("id");
 
+
+   
         let data={
             userName:userName,
             profileName:profileName
@@ -1032,40 +1174,56 @@ document.addEventListener('click', function(event) {
 socket.emit("acceptFollow",data);
 
 
+       
+let elementToRemove = document.getElementById(notificationId);
+
+// Öğeyi DOM'dan kaldırıyoruz
+if (elementToRemove) {
+  elementToRemove.parentNode.removeChild(elementToRemove);
+}
+
+noticeFollowAccept();
 
     }
+
     
     // "Sil" butonuna tıklandığında
     if (event.target.id === 'delete') {
-        console.log('Sil butonuna tıklandı');
-        let profileName = event.target.parentElement.querySelector(".noticeUser").textContent;
-        console.log("Sil butonuna tıklanan kullanıcı: ", profileName);
-        
-        let data={
-            userName:userName,
-            profileName:profileName
-        }
-socket.emit("deleteFollow",data);
+console.log("delete");
+// console.log(notificationId);
+let profileName = event.target.parentElement.querySelector(".noticeUser").textContent;
+let notificationId = event.target.parentElement.querySelector(".noticeUser").getAttribute("id");
+
+//  console.log(notificationId);
+
+deleteNotice(profileName,notificationId);
 
     }
 });
 
+socket.on("followNotification",(change)=>{
+    let situation=change.operationType;
+
+    
+console.log("Homeejs sayfası notification: "+JSON.stringify(change.fullDocument._id));
+let profileName=JSON.stringify(change.fullDocument.userName);
+let notificationId=JSON.stringify(change.fullDocument._id);
+if(situation=="insert")
+{
+notice();
+}
+else if(situation=="delete")
+{
+console.log("delete kısmı çalıştı");
+    deleteNotice(profileName,notificationId);
+}
+
+
 
 });
 
 
-}
-
-setInterval(notice,2200); 
-
-
 </script>
-
-
-
-
-
-
 
 
 </body>

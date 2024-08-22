@@ -90,7 +90,12 @@ class UserModel {
 
 
     static async followSend(sessionUserName, otherUserId, sessionUserProfile, otherUserName, profileName, profilePicture, userSessionPicture, sessionProfileName) {
+       
+        // console.log("takip isteği atan bayern resim adı:"+userSessionPicture);
+        // console.log("takip isteği atan bayern resim adı:"+profilePicture);
         try {
+
+
             const result = await follow.find({
                 "userName": sessionUserName,
                 "followed.username": otherUserName
@@ -135,7 +140,6 @@ class UserModel {
                 "followed.username": otherUserName
             });
             if (result == null || result == "") {
-
 
 
                 const addNewResult = await follow.create({
@@ -245,13 +249,14 @@ class UserModel {
     static async findFollowSend(userName) {
 
         try {
-
+// console.log("******-UserModal findFollowSend 248. satır giriş yapan ve takip edilen kullanıcı adı :"+userName);
             const a = await follow.find({
                 "followed.username": userName,
                 "followed.situation": false
 
             });
 
+            // console.log("bu kullanıcıya takip isteği atan şahıslar:"+a);
             return a;
 
 

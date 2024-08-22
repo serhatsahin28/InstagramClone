@@ -127,7 +127,7 @@ class postUser {
 
 
         } catch (error) {
-            console.log("Model/postUser page likePosts function: " + error);
+            console.log("Model/postUser page userLikePosts function: " + error);
         }
 
     }
@@ -209,7 +209,7 @@ if(findNewPost==""){
 
 
         } catch (error) {
-            console.log("Model/postUser page likePosts function: " + error);
+            console.log("Model/postUser page deleteLikePost function: " + error);
         }
 
     }

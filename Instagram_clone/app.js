@@ -71,9 +71,40 @@ const upload2 = multer({ storage: storage2 });
 
 
 
+
+
+// MongoDB Change Stream
+const changeStream = followPost.watch();
+
+
+
+
+
 io.on("connection", (socket) => {
     console.log("Kullanıcı bağlandı:", socket.id);
 
+    changeStream.on('change', (change) => {
+        let notification;
+        if (change.operationType === 'insert') {
+            // console.log("INSERT");
+            notification = `Yeni bir kullanıcı eklendi: ${change.fullDocument.name}`;
+        } else if (change.operationType === 'update') {
+            // console.log("update");
+    
+            notification = `Bir kullanıcı güncellendi: ${change.documentKey._id}`;
+        } else if (change.operationType === 'delete') {
+            // console.log("delete");
+    
+            notification = `Bir kullanıcı silindi: ${change.documentKey._id}`;
+        }
+    
+        if (notification) {
+            io.emit('followNotification', change);
+            // console.log("Bildirim var(followNotification)...");
+        }
+    });
+    
+    
 
     // Client'tan gelen 'disconnect' event'ini dinle
     socket.on('disconnect', () => {
@@ -213,6 +244,7 @@ io.on("connection", (socket) => {
             const query = await commentPost.find({ "post_id": post_id }).sort({ _id: -1 });
             const IslikedSession = await likePost.find({ post_id: post_id, "userWhoLike.username": sessionUserName });
             let IslikedSession2 = "";
+             console.log("aaa:"+post_id);
 
             if (IslikedSession != null && IslikedSession != "") {
                 IslikedSession2 = "/Icons/redHeart.png";
@@ -224,7 +256,7 @@ io.on("connection", (socket) => {
             }
 
 
-            io.emit("commentPostReturn", { query, IslikedSession2 });
+            io.emit("commentPostReturn", { query, IslikedSession2,IslikedSession,post_id });
 
 
         } catch (error) {
@@ -269,6 +301,7 @@ io.on("connection", (socket) => {
 
 
     socket.on("follower", async (sessionUserName) => {
+
         const query = await followPost.find({ "followed.username": sessionUserName, "followed.situation": true });
         io.emit("followerReturn", query);
 
@@ -282,8 +315,8 @@ io.on("connection", (socket) => {
     });
 
     socket.on("notificationLive", async (sessionUserName) => {
-        const query = await followPost.find({ "followed.username": sessionUserName });
-
+         const query = await followPost.find({"followed.username": sessionUserName });
+      
         if (query != null) {
             io.emit("notificationLiveReturn", query);
 
@@ -291,6 +324,12 @@ io.on("connection", (socket) => {
 
     });
 
+    socket.on('buttonClickedFollow', (data) => {
+        console.log('Button clicked:', data);
+
+        // Diğer tüm kullanıcılara veya belirli bir odaya mesaj gönder
+        io.emit('ClickedFollow', data); // b.ejs'teki fonksiyonu tetikle
+    });
 
 });
 
@@ -465,6 +504,16 @@ app.get("/accounts/edit/", (req, res) => {
 
 });
 
+app.get("/accounts/themeSetting/", (req, res) => {
+    const sessionProfilePicture = req.session.user.profilePicture;
+    const userName = req.session.user.username;
+    const profileName = req.session.user.profileName;
+    const description = req.session.user.description;
+    // console.log("sessionProfilePicture"+req.session.user.profilePicture);
+     res.render("themeSetting", { sessionProfilePicture, userName, profileName, description });
+
+});
+
 app.post("/accounts/edit/", (req, res) => {
     const sessionProfilePicture = req.session.user.profilePicture;
     const userName = req.session.user.username;
@@ -527,5 +576,6 @@ app.post("/accounts/registerAdd/", (req, res) => {
 
 server.listen(PORT, () => {
     console.log("port dinleniyor");
+    
 });
 

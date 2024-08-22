@@ -29,38 +29,23 @@
                 <div class="col" id="privateAccount">
                     <p>Hesap gizliliği</p>
                 </div>
-                <div class="col" id="themeScreen">
-                    <a href="/accounts/themeSetting/">
-                        <p>Tema</p>
+                <div class="col" id="privateAccount">
+                    <a href="/screen/Tema">
+                        <p>Profili düzenle</p>
                     </a>
                 </div>
             </div>
         </div>
 
-<%
 
-let situation="";
-
-if(isPrivate==true){
-    situation="gizli";
-    console.log("ejs true");
-}
-else{
-situation="açık";
-console.log("ejs false");
-
-}
-
-%>
         <div class="row accountPrivate" id="accountPrivate">
             <div class="col">
-               <h1>Hesap <%=situation%></h1> 
+               <h1>Hesap</h1> 
             </div>
             <div class="col">
-                <form method="post" action="/accounts/PrivatePublicEditProfile">
-                    <input type="hidden" name="name" value="<%=isPrivate%>">
-                    <input class="accontBtn" type="submit" value="<%=situation%>">
-                </form>
+                <button id="toggle-button">Karanlık Modu Aç</button>
+
+                <script src="script.js"></script>
             </div>
         </div>
 

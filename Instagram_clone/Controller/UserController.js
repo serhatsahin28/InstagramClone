@@ -25,6 +25,9 @@ class UserController {
                 // const allLikePostUser = await postUser.likePosts();
                 const userLikePostUser = await postUser.userLikePosts(userName);
                 const sessionProfilePicture = req.session.user.profilePicture;
+
+
+
                 res.render("home", { userName, result, post: posts, stories, sessionProfilePicture, noticeFollow, followersTrue, userLikePostUser, sessionUserStories });
             } else {
                 res.render("login");
@@ -105,6 +108,8 @@ class UserController {
 
 
     }
+
+
 
 
 
