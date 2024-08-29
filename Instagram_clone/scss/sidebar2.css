@@ -15,7 +15,6 @@ body {
 
 .sidebar {
     text-decoration: none;
-
     height: 100%;
     width: 60px;
     background-color: #000000;
@@ -26,7 +25,6 @@ body {
 
 .a {
     color: white;
-
     width: 120%;
     height: 5%;
     border-radius: 10px;
@@ -284,39 +282,58 @@ a:hover {
 #IconMessage {
 
     margin-top: -5vh;
-    margin-left: 135vh;
+    margin-left: 140vh;
 }
 
 #IconMessage>img {
     width: 30px;
     height: 30px;
+    margin-right: 20px;
+
+
+}
+
+#IconMessage>img {
+    width: 25px;
+    height: 25px;
     margin-right: 10px;
 
 
 }
 
+
 #form {
-    margin-left: 10vh;
-    margin-top: 0vh;
+    margin-left: 30vh;
+    margin-top: 1vh;
 }
 
 #input {
     border: 1px solid #a49c9c;
-    width: 90%;
+    width: 100%;
     height: 50px;
     background-color: #000000;
     border-radius: 25px;
     color: #ffffff;
 }
 
-#button {
+#buttonSend {
     border-radius: 50px;
     margin-left: -15vh;
     margin-top: -55px;
     background-color: #000000;
-    color: rgb(63, 76, 197);
     border: 0;
     font-weight: bold;
+}
+
+/* Buton devre dışı olduğunda (disabled) */
+#buttonSend:disabled {
+    color: #a8c6ff; /* Solgun mavi renk */
+    cursor: not-allowed; /* Devre dışı durumda imleç değişimi */
+}
+
+/* Buton etkin olduğunda (enabled) */
+#buttonSend:not(:disabled) {
+    color: #3797f0; /* Açık mavi renk */
 }
 
 
@@ -331,35 +348,37 @@ a:hover {
 }
 
 .otherUserMessages {
-    height: 8vh;
+    display: flex;
     color: #ffffff;
     border-radius: 15px;
     margin-left: 7vh;
     margin-top: 5vh;
-
 }
 
 .otherMessageText1 {
+    
     background-color: #333;
-    margin-top: -7vh;
     width: 95vh;
     border-radius: 15px;
-    height: 10vh;
-    position: relative;
 
 }
 
 
 .sessionUserMessages {
-    height: 10vh;
+    display: flex;
     color: #ffffff;
     background-color: #3797f0;
     border-radius: 15px;
     width: 75vh;
     margin-left: 85vh;
     margin-top: 5vh;
-    position: relative;
 
+}
+
+#messageText{
+    margin-left: 5px;
+    margin-top: 5px;
+    margin-bottom:15px;
 }
 
 
@@ -447,15 +466,63 @@ a:hover {
     margin-top: -4vh;
     width: 55vh;
     margin-left: 12vh;
-    
-}
-#requestHeader{
-margin-left:30vh;
-font-weight: 300;
 
 }
-#messagesHeader{
-margin-left:2vh;
-font-weight: 600;
+
+#requestHeader {
+    margin-left: 30vh;
+    font-weight: 300;
+
+}
+
+#messagesHeader {
+    margin-left: 2vh;
+    font-weight: 600;
+
+}
+
+
+
+
+
+
+
+
+#emoji-button {
+    margin-left: -150px;
+    color: #3797f0;
+    border: none;
+    background: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.emoji-picker {
+    display: none;
+    /* Başlangıçta gizli */
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ffffff;
+    margin-top: -350px;
+    margin-left: -150px;
+    border-radius: 5px;
+    z-index: 50;
+    width: 300px;
+    height: 300px;
+    overflow-y: auto;
+    box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.1);
+}
+
+.emoji {
+    cursor: pointer;
+    font-size: 20px;
+    padding: 5px;
+}
+
+#img {
+    width: 30px;
+    height: 30px;
+    margin-right: 20px;
+
 
 }
