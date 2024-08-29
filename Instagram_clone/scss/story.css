@@ -5,23 +5,60 @@
 
 .carousel {
     border-radius: 15px;
-    margin-top: 2vh;
     margin-left: 75vh;
     width: 75vh;
-    height: 95vh;
+    background-color: aqua;
 }
 
 .carousel-inner {
-    border-radius: 15px;
-    height: 92vh;
-    margin-top: -85vh;
+    height: 102vh;
+    width: 3vh;
+margin-top:-20px;
+
 }
 
-.carousel-inner > .carousel-item > .img {
-    width: 85vh;
-    height: 95vh;
-    margin-left: 72vh;
-    border-radius: 15px;
+
+
+#carousel-prev-result img{
+    margin-top:-85vh;
+margin-left: 10vh;
+        width: 50vh ;
+        height: 80vh;
+        border-radius: 20px;
+        object-fit: cover;
+    
+    }
+
+
+
+
+
+#carousel-next-result img{
+background-color: aqua;
+    width: 50vh ;
+     margin-left: 160vh; 
+    margin-top:-82vh;
+    height: 80vh;
+    border-radius: 20px;
+    object-fit: cover;
+
+}
+
+
+
+
+#carousel-inner2>.carousel-item2{
+    width: 50px;
+}
+ 
+
+.carousel-inner > .carousel-item  img {
+    width: 55vh;
+    height: 100vh;
+    margin-left: 87vh;
+    border-radius: 25px;
+    margin-top: 7vh;
+    object-fit: cover;
 }
 
 .carousel-indicators{
@@ -30,10 +67,19 @@ position: absolute;
 }
 
 #deleteIcon{
+position: absolute; 
 width: 5vh;
-margin-left:70vh;
+margin-left:62vh;
+margin-top: 8vh;
+z-index: 10;
 }
+
 #moreDivArea{
 width: 15vh;
 margin-left: 85vh;
 }
+
+#customPrevButton,#customNextButton{
+    width:160vh; /* Butonların genişliğini belirleyin */
+}
+

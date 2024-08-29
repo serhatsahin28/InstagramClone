@@ -54,6 +54,9 @@ if(visitUsername==sessionUserName)
         </div>
            
             </div>
+          
+
+
         <div class="carousel-inner">
             <% storySelected.forEach(function(a, index) { %>
                 <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
@@ -74,7 +77,22 @@ if(visitUsername==sessionUserName)
             <span class="visually-hidden">Next</span>
         </button>
     </div>
-
+    <% if (prevResult != null && prevResult != "") { %>
+        <div class="carousel-prev-result" id="carousel-prev-result">
+            <div class="carousel-item2">
+                <img src="/users_profile/<%= prevResult.storie %>" class="d-block img" alt="/users_profile/image1.jpg">
+            </div>
+        </div>
+    <% } %>
+    
+    <% if (nextResult != null && nextResult != "") { %>
+        <div class="carousel-next-result" id="carousel-next-result">
+            <div class="carousel-item2">
+                <img src="/users_profile/<%= nextResult.storie %>" class="d-block img" alt="/users_profile/image1.jpg">
+            </div>
+        </div>
+    <% } %>
+    
 
     <div id="myObjectNext" data-myObject='<%= JSON.stringify(nextResult) %>'></div>
     <div id="myObjectPrev" data-myObject='<%= JSON.stringify(prevResult) %>'></div>

@@ -70,6 +70,8 @@ let storiesId=sessionUserStories[0]._id
                 <a href="/stories/<%=userName %>/<%=storiesId%>">
                   <img class="img" src="/users_profile/<%=sessionProfilePicture %>" alt="User Image 1">
                 </a>
+                <p id="storyUsername">Hikayen</p>
+
               </div> 
 
 
@@ -79,6 +81,8 @@ let storiesId=sessionUserStories[0]._id
                     <a href="/stories/<%=userName %>" data-bs-toggle="modal" data-bs-target="#storyAdd">
                       <img class="img" src="/users_profile/<%=sessionProfilePicture %>" alt="User Image 1">
                     </a>
+                  <p id="storyUsername">Hikaye ekle</p>
+
                   </div> 
 
                 <%}%>
@@ -95,6 +99,8 @@ let storiesId=sessionUserStories[0]._id
                   <a href="/stories/<%= s.username %>/<%= s._id %>">
                     <img class="img" src="/users_profile/<%= s.profilePicture %>" alt="User Image 1">
                   </a>
+                  <p id="storyUsername"><%=s.username%></p>
+
                 </div>      
           <%
                 displayedUsernames.push(s.username);
@@ -314,11 +320,11 @@ let storiesId=sessionUserStories[0]._id
   
     <div class="modal-body ">
         <form class="col" action="/accounts/edit" method="post">
-            <button type="submit" class="btn col-12 bg-primary">Ayarlar</button>
+            <button type="submit" class="btn">Ayarlar</button>
     </form>
     <br>
         <form class="col" action="/logout" method="post">
-                <button type="submit" class="btn col-12 bg-primary">Çıkış</button>
+                <button type="submit" class="btn">Çıkış</button>
         </form>
         <br>
        

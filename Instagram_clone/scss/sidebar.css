@@ -103,10 +103,18 @@ a:hover {
     width: 50vh;
     border-radius: 15px;
     z-index: 9999; /* Diğer içeriklerin üzerinde görünmesini sağlar */
-    background-color: #665e5e; /* Arka plan rengi */
+    background-color: rgb(38 38 38); /* Arka plan rengi */
     padding: 10px; /* İçeriği kenarlardan uzaklaştırır */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Gölge efekti */
+    text-align: center;
+    cursor: pointer; 
 }
 
+.moreDivArea>.modal-body>.col>.btn{
+    color: #ffffff;
+}
+.moreDivArea>.modal-body>.col:hover {
+    background-color: #8a958a; /* Butonun üzerine gelindiğinde arka plan rengi değişir */
+    border-radius: 25px;
 
-
+}

@@ -54,14 +54,14 @@
 
 
                 <div id="sidebarMessageBox">
-                    <% newDirectInbox.forEach(function(a){ if(a.senderUser==sessionUserName){ %>
+                    <% newDirectInbox.forEach(function(a){ if(a.senderUser==sessionUserName){ console.log(a); %>
                         <a href="/direct/<%=a.sentUserId%>">
                             <div id="user">
                                 <img id="messageImg" src="/users_profile/<%=a.sentUserImage%>"></img>
                                 <div id="profileName">
                                     <%=a.sentUsername%>
                                 </div>
-                                <div id="lastMessage">Nasılsın bro</div>
+                                <div id="lastMessage"></div>
 
                             </div>
                         </a>
@@ -94,17 +94,19 @@
             <!--Mesajların geleceği alan-->
             <% if (typeof messagesInfo !=='undefined' && messagesInfo !==null && messagesInfo !=="" ) { %>
                 <div class="row" id="messagesBox2">
-                    <div id="profileInfo"><img id="profileInfoImage" src="/users_profile/<%=otherUser.otherUserImage%>">
+                    <div id="profileInfo">
                         <a href="/<%=otherUser.otherUsername%>">
+
+                            <img id="profileInfoImage" src="/users_profile/<%=otherUser.otherUserImage%>">
                             <h1 id="h1Profile">
                                 <%=otherUser.otherUsername%>
                             </h1>
                         </a>
                         </img>
                         <div id="IconMessage">
-                            <img src="/Icons/user.png">
-                            <img src="/Icons/user.png">
-                            <img src="/Icons/user.png">
+                            <img id="phoneCall" src="/Icons/phoneCall.png">
+                            <img src="/Icons/camRecorder.png">
+                            <img src="/Icons/info.png">
 
 
                         </div>
@@ -121,27 +123,39 @@
                                     </div>
                                     <br>
                                 </div>
+
                                 <% } else { %>
                                     <div class="sessionUserMessages" id="sessionUserMessages_<%= index %>">
                                         <div id="messageText" class="messageText">
                                             <%= a.message %>
+
+
                                         </div>
                                     </div>
                                     <% } }); %>
+                                        <br>
+                                        <br>
+
                         </div>
-
-
                         <form id="form">
                             <input id="username" type="hidden" name="userName" value="<%=messagesUser.username%>">
                             <input id="sessionUserName" type="hidden" name="sessionUserName"
                                 value="<%=sessionUserName%>">
                             <input id="sessionPicture" type="hidden" name="sessionPicture" value="<%=sessionPicture%>">
 
+                            <div class="input-container">
+                                <img id="img" src="/Icons/happy.png" alt="Emoji" style="display: none;">
+                                <button id="emoji-button" type="button" onclick="toggleEmojiPicker(event)">
+                                    <img src="/Icons/happy.png" alt="Emoji" style="width: 20px; height: 20px;">
+                                </button>
 
+                                <input id="input" type="text" placeholder="Bir şey yaz...">
 
-                            <input id="input" type="text">
-                            <button type="button" id="button" onclick="submitForm()">Gönder</button>
+                                <button type="button" id="buttonSend" disabled onclick="submitForm()">Gönder</button>
+                            </div>
+                            <div id="emoji-picker" class="emoji-picker"></div>
                         </form>
+
 
                     </div>
 
@@ -342,6 +356,9 @@
                             const sessionUserName = document.getElementById("sessionUserName").value;
                             const message = document.getElementById("input").value;
                             const sessionPicture = document.getElementById("sessionPicture").value;
+
+                            document.getElementById('input').value = '';
+
                             const formData = {
                                 "username": username,
                                 "sessionUserName": sessionUserName,
@@ -350,6 +367,10 @@
 
                             }
                             socket.emit("submitForm", formData);
+                            inputField.value = "";
+
+                            // Butonu tekrar devre dışı bırak
+                            buttonSend.disabled = true;
                         };
 
                         function appendMessageOtherUser(newForm) {
@@ -361,11 +382,11 @@
 
                             // Generate a unique ID for the message
                             const messageId = messagesArea.children.length;
-                            newMessageDiv.id = `message_${messageId}`;
+                            newMessageDiv.id = `sessionUserMessages_${messageId}`;
 
                             // Create and append the image element
                             const userImage = document.createElement("img");
-                            userImage.id = `message_${messageId}Img`;
+                            userImage.id = `sessionUserMessages_${messageId}Img`;
                             userImage.src = `/users_profile/${newForm.sessionPicture}`;
                             userImage.className = "message1Img";
                             newMessageDiv.appendChild(userImage);
@@ -394,7 +415,7 @@
                             newMessageDiv.className = "sessionUserMessages";
 
                             const messageId = messagesArea.children.length;
-                            newMessageDiv.id = `message_${messageId}`;
+                            newMessageDiv.id = `sessionUserMessages_${messageId}`;
 
                             const messageTextDiv = document.createElement("div");
                             messageTextDiv.className = "messageText";
@@ -561,6 +582,71 @@
                             });
 
                         });
+
+
+                        const emojis = ["😊", "😂", "😍", "😒", "😎", "😭", "😡", "👍", "🙏", "🔥", "🎉", "🤔", "😇", "💔", "💪", "🤷‍♂️", "🙌", "😱", "😜", "👏", "🙄", "🥳", "😔", "😏", "🤦‍♂️", "💃", "🕺", "😢", "🎂", "🎁", "🤩", "😳", "😅", "😆", "🥺", "🤓", "🧐", "😷", "🤢", "🤮", "🥶", "🥵", "🥰", "😚", "😋", "😌", "🤗", "🤭", "😜", "🤪"];
+
+                        function toggleEmojiPicker(event) {
+                            const emojiPicker = document.getElementById('emoji-picker');
+                            emojiPicker.style.display = emojiPicker.style.display === 'block' ? 'none' : 'block'; // Aç/kapa
+
+                            if (emojiPicker.innerHTML === '') {
+                                emojis.forEach(emoji => {
+                                    const emojiElement = document.createElement('span');
+                                    emojiElement.className = 'emoji';
+                                    emojiElement.textContent = emoji;
+                                    emojiElement.onclick = function () {
+                                        addEmoji(emoji);
+                                        // Emoji seçildiğinde kutu kapanmasın
+                                    };
+                                    emojiPicker.appendChild(emojiElement);
+                                });
+                            }
+
+                            // Tıklandığında emoji kutusu dışına tıklandığında gizlemek için
+                            document.addEventListener('click', function (e) {
+                                if (!emojiPicker.contains(e.target) && e.target !== event.target) {
+                                    emojiPicker.style.display = 'none'; // Emoji kutusunu gizle
+                                }
+                            }, { once: true });
+                        }
+
+                        function addEmoji(emoji) {
+                            const inputElement = document.getElementById('input');
+                            inputElement.value += emoji; // Seçilen emojiyi inputa ekle
+                            inputElement.focus(); // Inputa odaklan
+                        }
+
+
+
+                        const messageBox = document.getElementById('messagesArea');
+
+
+                            document.addEventListener('DOMContentLoaded', function () {
+
+                                // Sayfa yüklendiğinde mesaj kutusunu en aşağıya kaydır
+                                messageBox.scrollTop = messageBox.scrollHeight;
+
+                                // Kaydırıcıyı gösterme
+                                messageBox.style.display = 'block'; // Kaydırıcıyı görünür yap
+                                messageBox.addEventListener('input', function () {
+                                    messageBox.scrollTop = (messageBox.value / 100) * messageBox.scrollHeight;
+                                });
+                            });
+
+
+                        const inputField = document.getElementById('input');
+                        const submitButton = document.getElementById('buttonSend');
+                        if (inputField != null && submitButton != null) {
+                            inputField.addEventListener('input', function () {
+                                if (inputField.value.trim() === "") {
+                                    buttonSend.disabled = true; // Input boşsa butonu devre dışı bırak
+                                } else {
+                                    buttonSend.disabled = false; // Input doluysa butonu etkinleştir
+                                }
+                            });
+
+                        }
 
 
 
