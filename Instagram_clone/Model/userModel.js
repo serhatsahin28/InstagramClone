@@ -74,13 +74,13 @@ class UserModel {
         }
     }
 
-    static async findAllFollowersTrue(userName) {
+    static async findAllFollowersTrue(sessionUserName) {
         try {
-
             const posts = await follow.find({
-                "followed.username": userName,
+                "followed.username": sessionUserName,
                 "followed.situation": true
             });
+
             return posts;
         } catch (err) {
             throw err;

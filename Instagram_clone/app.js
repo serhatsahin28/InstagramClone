@@ -87,7 +87,7 @@ io.on("connection", (socket) => {
         let notification;
         if (change.operationType === 'insert') {
             // console.log("INSERT");
-            notification = `Yeni bir kullanıcı eklendi: ${change.fullDocument.name}`;
+            // notification = `Yeni bir kullanıcı eklendi: ${change.fullDocument.name}`;
         } else if (change.operationType === 'update') {
             // console.log("update");
     
@@ -242,9 +242,12 @@ io.on("connection", (socket) => {
         try {
             const post_id = data.imgId;
             const query = await commentPost.find({ "post_id": post_id }).sort({ _id: -1 });
+            const postInfo = await post.find({ "_id": post_id });
+            // console.log("postInfo::"+postInfo);
+
             const IslikedSession = await likePost.find({ post_id: post_id, "userWhoLike.username": sessionUserName });
             let IslikedSession2 = "";
-             console.log("aaa:"+post_id);
+            //  console.log("aaa:"+post_id);
 
             if (IslikedSession != null && IslikedSession != "") {
                 IslikedSession2 = "/Icons/redHeart.png";
@@ -256,7 +259,7 @@ io.on("connection", (socket) => {
             }
 
 
-            io.emit("commentPostReturn", { query, IslikedSession2,IslikedSession,post_id });
+            io.emit("commentPostReturn", { query, IslikedSession2,IslikedSession,post_id,postInfo });
 
 
         } catch (error) {
@@ -302,8 +305,8 @@ io.on("connection", (socket) => {
 
     socket.on("follower", async (sessionUserName) => {
 
-        const query = await followPost.find({ "followed.username": sessionUserName, "followed.situation": true });
-        io.emit("followerReturn", query);
+        const usersInfo = await followPost.find({ "followed.username": sessionUserName, "followed.situation": true });
+        io.emit("followerReturn", usersInfo);
 
     });
 

@@ -125,7 +125,7 @@ body {
     width: 285px;
     color: white;
     margin-top: 23vh;
-    margin-left: -7.5vh;
+    margin-left: -19vh;
 
 }
 
@@ -183,6 +183,7 @@ body {
     height: 50vh;
     width: 150vh;
     margin-left: 60vh;
+    margin-top: 15vh;
 
 
 }
@@ -284,6 +285,7 @@ body {
 .rowOtherProfile{
 
   margin-left: 60vh;
+  margin-top: 10vh;
 
 }
 
