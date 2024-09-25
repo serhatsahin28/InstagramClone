@@ -26,13 +26,12 @@ class Profile extends UserController {
       const followedProfile = await UserModel.findProfileFollowed(username);
       const followersProfile = await UserModel.findProfileFollowers(username);
       const findProfilePosts = await UserModel.findProfilePosts(username);
-      const noticeFollow = await UserModel.findFollowSend(username);
-      const followersTrue = await UserModel.findAllFollowersTrue(username);
+      const noticeFollow = await UserModel.findFollowSend(sessionUserName);
+      const followersTrue = await UserModel.findAllFollowersTrue(sessionUserName);
+
 
       // res.json("followersUser"+followedUser);
       const isPrivate = result[0].isPrivate;
-      
-
       let followData = null;
 
       let Isfollowed = "";

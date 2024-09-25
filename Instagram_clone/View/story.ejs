@@ -10,7 +10,7 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
-<body class="body">
+<body class="body" id="body">
     <div id="carouselExampleIndicators" class="carousel slide ">
         <div class="carousel-indicators">
 <%
@@ -42,7 +42,10 @@ if(visitUsername==sessionUserName)
         </div>
 
         <div class="moreDivArea" id="moreDivArea">
-            <button type="submit" class="btn  bg-primary">Şikayet et</button>
+            <button type="submit" class="btn  text-light">Şikayet et</button>
+            <button type="submit" class="btn  text-light">Bu hesap hakkında</button>
+            <button type="submit" class="btn  text-light">İptal</button>
+
   <%
   if(situation){
   %>
@@ -67,27 +70,28 @@ if(visitUsername==sessionUserName)
 
         <button class="carousel-control-prev" id="customPrevButton" type="button"
             data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
+            <span class="carousel-control-prev-icon" id="prevButton" aria-hidden="true"></span>
+            <span  class="visually-hidden">Previous</span>
         </button>
 
         <button class="carousel-control-next" id="customNextButton" type="button"
             data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="carousel-control-next-icon"  id="nextButton" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
         </button>
     </div>
     <% if (prevResult != null && prevResult != "") { %>
         <div class="carousel-prev-result" id="carousel-prev-result">
-            <div class="carousel-item2">
-                <img src="/users_profile/<%= prevResult.storie %>" class="d-block img" alt="/users_profile/image1.jpg">
-            </div>
+            <div class="carousel-item2" id="carouselPrevLink">
+                <img id="carouselPrevImg" src="/users_profile/<%= prevResult.storie %>" class="d-block img" alt="/users_profile/image1.jpg">
+            </div> 
         </div>
+        
     <% } %>
     
     <% if (nextResult != null && nextResult != "") { %>
         <div class="carousel-next-result" id="carousel-next-result">
-            <div class="carousel-item2">
+            <div class="carousel-item2"  id="carouselNextLink">
                 <img src="/users_profile/<%= nextResult.storie %>" class="d-block img" alt="/users_profile/image1.jpg">
             </div>
         </div>
@@ -106,7 +110,10 @@ if(visitUsername==sessionUserName)
 
 
     <script>
+
         document.addEventListener('DOMContentLoaded', function () {
+            $("#moreDivArea").hide();
+
             const sessionUsername = "<%=sessionUserName%>";
 
             const myObjectElementNext = document.getElementById("myObjectNext");
@@ -141,13 +148,54 @@ if(visitUsername==sessionUserName)
 
             var customNextButton = document.getElementById('customNextButton');
             var customPrevButton = document.getElementById('customPrevButton');
-
             let prevClick = 2;
             let nextClick = 1;
 
+
+const carouselPrevLink = document.getElementById('carouselPrevLink');
+
+if (carouselPrevLink) { // div var mı kontrol et
+    carouselPrevLink.addEventListener('click', function(event) {
+        const prevUsername = myObjectPrev.username;
+        const prev_id = myObjectPrev._id;
+        window.location.href = "/stories/" + prevUsername + "/" + prev_id;
+
+    });
+}
+
+
+const carouselNextLink = document.getElementById('carouselNextLink');
+if (carouselNextLink) { // div var mı kontrol et
+    carouselNextLink.addEventListener('click', function(event) {
+
+        if (myObjectNext) {
+                        const nextUsername = myObjectNext.username;
+                        const _id = myObjectNext._id;
+
+                        if (nextUsername != sessionUsername) {
+                            window.location.href = "/stories/" + nextUsername + "/" + _id;
+                        }
+
+                    }
+                    else {
+                        window.location.href = "/";
+
+                    }
+
+
+    });
+}
+
+
+
+
+
+
+
+   
+
             customPrevButton.addEventListener('click', function () {
-                console.log('Prev button clicked');
-                console.log("PrevNumber:" + prevClick);
+                // console.log('Prev button clicked');
 
                 if (prevClick >= number) {
                     prevClick = 1;
@@ -159,6 +207,7 @@ if(visitUsername==sessionUserName)
                     } else {
                     window.location.href = "/";
 
+
                 }
                 }
                
@@ -168,8 +217,7 @@ if(visitUsername==sessionUserName)
             });
 
             customNextButton.addEventListener('click', function () {
-                console.log('Next button clicked');
-                console.log("NextNumber:" + nextClick);
+                // console.log('Next button clicked');
 
                 if (nextClick >= number) {
                     nextClick = 1;
@@ -185,6 +233,7 @@ if(visitUsername==sessionUserName)
                     }
                     else {
                         window.location.href = "/";
+
                     }
 
 
@@ -202,10 +251,10 @@ if(visitUsername==sessionUserName)
 $(document).ready(function(){
 
 
-                $("#moreDivArea").hide();
 
                 // Butona tıklandığında #searchDivNav elementini göster veya gizle
                 $("#moreDiv").click(function (event) {
+                    
                     event.preventDefault(); // Sayfanın yenilenmesini engelle
 
                     $("#moreDivArea").toggle(); // #searchDivNav elementini göster veya gizle
@@ -216,7 +265,11 @@ $(document).ready(function(){
 });
 
 //search div tag call finished
-
+$(document).click(function(event) {
+        if (!$(event.target).closest("#moreDiv").length && !$(event.target).closest("#moreDivArea").length) {
+            $("#moreDivArea").hide(); // #moreDivArea gizle
+        }
+    });
     </script>
 
 </body>

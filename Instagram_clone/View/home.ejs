@@ -360,9 +360,9 @@ let storiesId=sessionUserStories[0]._id
 <!--commentModal-->
 <div class="modal fade" id="commentModalPost" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" id="commentDialog">
-    <div class=" modal-content " id="modal-content-comment">
+    <div class="modal-content " id="modal-content-comment">
        <div class="imgComment " id="imgComment">
-        <img id="imageComment"src="/users_profile/image1.jpg">
+       
         </div>
     <div class="commentsScreen" id="commentsScreen">
         <div class="commentHeader" id="commentHeader">
@@ -730,7 +730,6 @@ for (let i = 0; i < usersInfo.length; i++) {
 
     // Append the user area to the modal body
     likesModalBody.appendChild(likesModalArea);
-    
 
 }
 
@@ -767,11 +766,37 @@ socket.emit("commentPost",{data,sessionUserName});
 let LikePhotoResult=null;
 // console.log("LikePhotoResult: "+LikePhotoResult);
 
+
+
+
+
+
+
+
+
+
 const commentFooter2=document.getElementById("commentFooter2");
     
-socket.on("commentPostReturn",({ query, IslikedSession2,IslikedSession,post_id})=>{
-
+socket.on("commentPostReturn",({ query, IslikedSession2,IslikedSession,post_id,postInfo})=>{
     const LikePhotoEx=document.getElementById("likeIconComment");
+    const modalContent=document.getElementById("imgComment");
+
+// console.log(modalContent);
+// console.log(postInfo);
+const imagePost=postInfo[0].photos[0].photo1;
+
+var postImageDiv=document.createElement("img");
+postImageDiv.id="imageComment";
+postImageDiv.src="/posts/"+imagePost;
+document.getElementById("imgComment").innerHTML = "";
+
+ modalContent.appendChild(postImageDiv);
+// Modal kapanma olayını dinleme
+$('#commentModalPost').on('hidden.bs.modal', function () {
+    document.getElementById("imgComment").innerHTML = "";
+});
+
+
 
 let IslikedSituation=JSON.stringify(IslikedSession);
 // let post_id=IslikedSituation;
@@ -818,6 +843,7 @@ imgId:post_id
 
 if(srcLikeImage=="/Icons/heart.png"){
     socket.emit("like",data);
+
 LikePhotoResult.src="/Icons/redHeart.png";
 }
 else{
@@ -841,7 +867,6 @@ document.getElementById("commentHeader").innerHTML="";
 var postUserOwner=document.createElement("img");
 postUserOwner.id="imageCommentHeader";
 postUserOwner.src="/users_profile/"+userPhoto;
-
 var postUserOwnerP=document.createElement("p");
 postUserOwnerP.classList.add("commentP");
 postUserOwnerP.id="commentP";
@@ -865,7 +890,7 @@ document.getElementById("commentArea").innerHTML = "";
 for (let i = 0; i < query.length; i++) {
     const userLike2 = query[i];
   
-
+// console.log(userLike2);
 var commentUserArea=document.createElement("div");
 commentUserArea.id="commentUserArea";
 commentUserArea.classList.add("commentUserArea");
@@ -885,7 +910,6 @@ commentTextP.id="commentTextP";
 commentTextP.classList.add("commentTextP");
 commentTextP.textContent=userLike2.userWhoComment[0].userComment;
 
-   
    
 
     commentUserArea.appendChild(imageCommentHeader);
@@ -930,7 +954,6 @@ document.getElementById("commentArea").innerHTML = "";
 
 for (let i = 0; i < newCommentData2.length; i++) {
     const userLike2 = newCommentData2[i];
-  
 
 var commentUserArea=document.createElement("div");
 commentUserArea.id="commentUserArea";
@@ -1163,7 +1186,7 @@ if (elementToRemove) {
 }
 
 document.addEventListener('click', function(event) {
-console.log("Tıklanma olayı var");
+// console.log("Tıklanma olayı var");
 
 //onayla butonuna tıklandığında
     if (event.target.id === 'accept') {

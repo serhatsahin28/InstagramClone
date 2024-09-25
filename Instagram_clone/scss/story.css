@@ -7,37 +7,40 @@
     border-radius: 15px;
     margin-left: 75vh;
     width: 75vh;
-    background-color: aqua;
 }
 
 .carousel-inner {
     height: 102vh;
     width: 3vh;
-margin-top:-20px;
+    margin-top: -20px;
 
 }
 
 
 
-#carousel-prev-result img{
-    margin-top:-85vh;
-margin-left: 10vh;
-        width: 50vh ;
-        height: 80vh;
-        border-radius: 20px;
-        object-fit: cover;
-    
-    }
+#carousel-prev-result {
+position: relative;
+    height: 100vh; /* Yüksekliği ayarlayın */
+}
+
+#carousel-prev-result img {
+    position: absolute; /* Görseli yukarıda konumlandır */
+    top: -85vh; /* Üstten sıfır boşluk */
+    left: 10vh; /* Sol taraftan 10vh boşluk */
+    width: 50vh;
+    height: 80vh;
+    border-radius: 20px;
+    object-fit: cover;
+}
 
 
 
 
-
-#carousel-next-result img{
-background-color: aqua;
-    width: 50vh ;
-     margin-left: 160vh; 
-    margin-top:-82vh;
+#carousel-next-result img {
+    position: absolute; /* Görseli yukarıda konumlandır */
+    top: 15vh; /* Üstten sıfır boşluk */
+    left: 160vh; /* Sol taraftan 10vh boşluk */
+    width: 50vh;
     height: 80vh;
     border-radius: 20px;
     object-fit: cover;
@@ -47,12 +50,14 @@ background-color: aqua;
 
 
 
-#carousel-inner2>.carousel-item2{
+
+
+#carousel-inner2>.carousel-item2 {
     width: 50px;
 }
- 
 
-.carousel-inner > .carousel-item  img {
+
+.carousel-inner>.carousel-item img {
     width: 55vh;
     height: 100vh;
     margin-left: 87vh;
@@ -61,25 +66,55 @@ background-color: aqua;
     object-fit: cover;
 }
 
-.carousel-indicators{
-position: absolute;
+.carousel-indicators {
+    position: absolute;
     top: 3vh;
 }
 
-#deleteIcon{
-position: absolute; 
-width: 5vh;
-margin-left:62vh;
-margin-top: 8vh;
-z-index: 10;
+#deleteIcon {
+    position: absolute;
+    width: 5vh;
+    margin-left: 62vh;
+    margin-top: 8vh;
+    z-index: 10;
 }
 
-#moreDivArea{
-width: 15vh;
-margin-left: 85vh;
+#moreDivArea {
+    position: absolute;
+    display: none; /* İlk başta gizli */
+    flex-direction: column; /* Butonları alt alta yerleştirir */
+    margin-top: 35vh;
+    margin-left: 5vh;
+    width: 70vh;
+    height: 35vh;
+    border-radius: 15px;
+    z-index: 10;
+    background-color: rgba(38, 38, 38, 1);
 }
 
-#customPrevButton,#customNextButton{
-    width:160vh; /* Butonların genişliğini belirleyin */
+#moreDivArea button {
+    border-color: rgb(255, 255, 255);
+    width: 100%; /* Butonların genişliğini %100 yap */
+    margin: 5px 0; /* Butonlar arasında boşluk bırak */
 }
 
+#customPrevButton,
+#customNextButton {
+    position: absolute;
+    top: 50%;
+    /* Butonları dikeyde ortalar */
+    transform: translateY(-50%);
+    /* Dikey ortalamayı tam olarak sağlar */
+    width: 50px;
+    height: 50px;
+}
+
+#customPrevButton {
+    left: 80vh;
+    /* Sol kenarda konumlandırır */
+}
+
+#customNextButton {
+    right: 80vh;
+    /* Sağ kenarda konumlandırır */
+}
