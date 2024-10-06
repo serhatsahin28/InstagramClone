@@ -1,3 +1,7 @@
+.body {
+    overflow-x: hidden;
+}
+
 .content {
     margin-left: 48vh;
     position: absolute;
@@ -7,7 +11,14 @@
     font-weight: bolder;
 }
 
-.content>.button {
+#button1 {
+    color: rgb(255, 255, 255);
+    margin-left: 15px;
+    text-decoration: none;
+
+}
+
+#button2 {
     color: rgb(255, 255, 255);
     margin-left: 15px;
     text-decoration: none;
@@ -26,32 +37,47 @@ a:active {
     width: 103vh;
 }
 
-.owl-carousel {
-    width: 120vh !important;
+#owl-carousel {
+    width: 50%;
     margin-left: 47vh;
     margin-top: 17vh;
-
+    display: flex;
     /* Flexbox kullanarak yatay hizalama */
 }
 
+.am-prev,
 .am-next {
-    background-color: rgba(255, 255, 255, 0.494);
-    margin-left: 105vh;
-    /* Piksel değerine ayarlandı */
-    margin-top: -25vh;
-    /* Piksel değerine ayarlandı */
-    color: #fafafa6c;
+    position: absolute;
+    top: 0%;
+    transform: translateY(-50%);
+    z-index: 1000;
+    color: white;
+    /* Yazı rengi */
+    border: none;
+    /* Kenarlık yok */
+    padding: 10px 10px;
+    /* İç boşluk */
+    cursor: pointer;
+    /* İmleç değişimi */
+}
+
+#leftButon {
+    width: 50px;
+}
+
+#rightButon {
+    width: 50px;
 }
 
 .am-prev {
-    border-radius: 55px;
-    background-color: #ffffff7e;
-    color: #c0afaf;
-    margin-top: -15vh;
-    /* Piksel değerine ayarlandı */
-    margin-left: -5vh;
+    left: 100px;
+    /* Sol konum */
 }
 
+.am-next {
+    right: 320px;
+    /* Sağ konum */
+}
 
 #postImage {
     width: 100vh;
@@ -371,9 +397,6 @@ a:active {
     font-size: 12px;
 }
 
-.title2 {
-    display: none;
-}
 
 #aLink {
     color: white;
@@ -480,7 +503,7 @@ a:active {
     height: 25px;
     height: 25px;
     margin-left: 2vh;
-    margin-top: -27vh;
+    margin-top: -20vh;
 }
 
 #commentFooter {
@@ -579,153 +602,259 @@ a:active {
     font-size: 12px;
 }
 
+#prevButton {
+    z-index: auto;
+    margin-top: 150px;
+    margin-left: 150px;
+
+}
+
+
+#nextButton {
+    z-index: auto;
+    margin-top: 150px;
+    margin-left: 150px;
+
+}
+
+#prevButton,
+#nextButton {
+    border: none;
+    /* Kenar çizgisini kaldır */
+    background: none;
+    /* Arka planı kaldır */
+    padding: 0;
+    /* İçerik etrafındaki boşlukları kaldır */
+    cursor: pointer;
+    /* İmleci tıklanabilir yap */
+    outline: none;
+    /* Odaklanma sırasında görünür kenarlığı kaldır */
+}
+
+#prevButton:focus,
+#prevButton:active,
+#nextButton:focus,
+#nextButton:active {
+    outline: none;
+    /* Odaklanma ve aktif durumda görünür kenarlığı kaldır */
+    box-shadow: none;
+    /* Kenar gölgesini kaldır */
+}
+
+#prevButton img,
+#nextButton img {
+    display: block;
+    /* Resimleri blok olarak göster */
+    width: 30px;
+    /* Resim genişliğini ayarlayın */
+    height: auto;
+    /* Yükseklik otomatik */
+}
 
 @media screen and (max-width:1024px) {
+
     body {
         overflow-x: hidden;
-
     }
 
 
     #content {
-
-        width: 200px;
-        display: hidden;
+        margin-left: 10%;
+        display: inline-block;
     }
 
-    #button1 {
-        width: 100px;
-        margin-left: -180%;
-        display: hidden;
-    }
-
-    #owl-carousel {
-        margin-left: 150px;
+    #pages {
+        margin-left: 40%;
+        display: inline-block !important;
         width: 100% !important;
 
     }
 
-    #item {
-        width: 100%;
-        height: 100%;
-
-    }
 
 
-
-    #itemImg {
-        height: 85px !important;
-        width: 85px !important;
-    }
-
-    .owl-item {
-        display: flex;
-    }
-
-
-    .subtitle {
-        display: none;
-    }
-
-
-
-    #sidebar {
-        width: 10%;
-
-    }
-
-
-    #subA>img {
-        width: 20%;
-        height: 30%;
-        margin-top: 30%;
-    }
-
-    .title {
-        display: none;
-    }
-
-    .title2 {
-        display: block;
-        height: 50px;
+    #owl-carousel {
+        width: 90%;
         margin-left: 10%;
-        margin-top: 10%;
     }
 
     #prevButton {
-        background-color: #d07814 !important;
+        z-index: auto;
+        margin-top: 150px;
+        margin-left: 150px;
+
     }
+
 
     #nextButton {
-        background-color: #d07814 !important;
-        position: relative;
+        z-index: auto;
+        margin-top: 150px;
+        margin-left: 150px;
+
     }
 
-    #postImage {
-        width: 50vh;
-        height: 50vh;
-        border-radius: 5px;
-        margin-top: 80px;
-        margin-left: 10px;
-        border: 1px solid grey;
+    #prevButton,
+    #nextButton {
+        border: none;
+        /* Kenar çizgisini kaldır */
+        background: none;
+        /* Arka planı kaldır */
+        padding: 0;
+        /* İçerik etrafındaki boşlukları kaldır */
+        cursor: pointer;
+        /* İmleci tıklanabilir yap */
+        outline: none;
+        /* Odaklanma sırasında görünür kenarlığı kaldır */
     }
+
+    #prevButton:focus,
+    #prevButton:active,
+    #nextButton:focus,
+    #nextButton:active {
+        outline: none;
+        /* Odaklanma ve aktif durumda görünür kenarlığı kaldır */
+        box-shadow: none;
+        /* Kenar gölgesini kaldır */
+    }
+
+    #prevButton img,
+    #nextButton img {
+        display: block;
+        /* Resimleri blok olarak göster */
+        width: 30px;
+        /* Resim genişliğini ayarlayın */
+        height: auto;
+        /* Yükseklik otomatik */
+    }
+
+    #prevButton,
+    #nextButton {
+        position: relative;
+        margin-top: -200px;
+        /* Z-index'in etkili olabilmesi için pozisyon ayarı yapıldı */
+        z-index: 10;
+        /* Butonların katman sırasını ayarlayın */
+        border: none;
+        /* Kenar çizgisini kaldır */
+        background: none;
+        /* Arka planı kaldır */
+        padding: 0;
+        /* İçerik etrafındaki boşlukları kaldır */
+        cursor: pointer;
+        /* İmleci tıklanabilir yap */
+        outline: none;
+        /* Odaklanma sırasında görünür kenarlığı kaldır */
+    }
+
+    #leftButon {
+        width: 500px;
+        background-color: rgb(17, 16, 16);
+        border-radius: 30px
+    }
+
+    #rightButon {
+        width: 500px;
+        background-color: rgb(17, 16, 16);
+        border-radius: 30px
+    }
+
+    .am-prev {
+        z-index: 100;
+
+        left: -35px;
+        /* Sol konum */
+    }
+
+
+    .am-next {
+        z-index: 100;
+
+        right: -62%;
+        /* Sağ konum */
+        ;
+    }
+
 
     #card {
-        margin-left: 200px;
         width: 70%;
-        height: 55%;
+        margin-left: 20%;
+        margin-top: 5%;
+
     }
 
+
     #card-header {
-        width: 200px;
+        height: 10%;
+        margin-top: -0%;
+        margin-left: 1%;
     }
 
     #card-body {
 
         width: 100%;
+        height: 50%;
+        margin-top: 0%;
+        margin-left: 0%;
     }
 
-    #threeDot {
-        margin-left: 48vh;
-        margin-top: -50px;
+    #postImage {
+
+        width: 100%;
+        height: 700px;
     }
 
     #card-footer {
+        height: 10%;
+        margin-top: 20%;
+    }
 
-        margin-top: -10vh !important;
+    .postIconA {
+        margin-top: -65%;
+    }
+
+    .commentBtn {
+        margin-top: -67%;
+        margin-left: 2%;
+
+    }
+
+    .directBtn {
+        margin-top: -63%;
+        margin-left: 3%;
+
+    }
+
+    .saveBtn {
+        margin-top: -65%;
+        margin-left: 55%;
+
+    }
+
+    .whoLikes {
+        margin-top: -95%;
+        margin-left: -3%;
+
     }
 
     #whoLikes {
-        margin-top: 10px;
-        margin-left: -50px;
+        font-size: 35px;
+        margin-top: -27%;
+        margin-left: -6%;
     }
 
-    #postIcon2 {
-        margin-top: 15px;
-    }
-
-    #commentModalPost{
-
-        width: 80%!important;
-        height: 50%; 
-        margin-left: 10vh;
-        margin-top: 20vh;
-    }
-#modal-content {
-    margin-left: 80vh;
-    background-color: #738184;
-}
-
-#commentsScreen{
-    background-color: #e90b0b;
-    margin-left: 50vh;
-    width: 250px;
-    height: 250px;
-}
 
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+    
 }

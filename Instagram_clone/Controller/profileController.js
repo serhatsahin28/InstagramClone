@@ -22,7 +22,7 @@ class Profile extends UserController {
       const followedUser = await UserModel.findAllFollowed(username, sessionUserName);//followedUser ile oturumu açık olan kullanıcı,profiline girilen kullanıcıyı takip ediyor mu kontrol ediyoruz
       const followersUser = await UserModel.findAllFollowers(username, sessionUserName);//followersUser ile profiline girilen kullanıcıyı,session'ı açık olan kullanıcı takip ediyor mu kontrol ediyoruz
       const sessionProfilePicture = req.session.user.profilePicture;
-      const visitProfilename = req.session.user.profileName;
+      const userProfileName = req.session.user.profileName;
       const followedProfile = await UserModel.findProfileFollowed(username);
       const followersProfile = await UserModel.findProfileFollowers(username);
       const findProfilePosts = await UserModel.findProfilePosts(username);
@@ -67,31 +67,28 @@ class Profile extends UserController {
       const userName = sessionUserName;
 
 
+
       // console.log("Isfollowed:  " + Isfollowed);
       // console.log("sessionProfilePicturexxxxx--:  " + sessionProfilePicture);
 
 
       if (username == userName) {
-        res.render("profile", { result, posts, userName, sessionProfilePicture, visitProfilename,followedProfile,followersProfile,findProfilePosts,noticeFollow,followersTrue });
+        res.render("profile", { result, posts, userName, sessionProfilePicture, userProfileName,followedProfile,followersProfile,findProfilePosts,noticeFollow,followersTrue });
 
       }
       else {
         if (isPrivate == true && Isfollowed == true) {
-          res.render("otherProfile", { result, posts, userName, sessionProfileName, followData, sessionProfilePicture, visitProfilename,followedProfile,followersProfile,findProfilePosts,noticeFollow,followersTrue});
+          res.render("otherProfile", { result, posts, userName, sessionProfileName, followData, sessionProfilePicture, userProfileName,followedProfile,followersProfile,findProfilePosts,noticeFollow,followersTrue});
         }
         else if(isPrivate!=true)
         {
-          console.log("2");
-
-
-          res.render("otherProfile", {visitProfilename, result, posts, userName, sessionProfileName, followData, sessionProfilePicture,followedProfile,followersProfile,findProfilePosts,noticeFollow,followersTrue});
+          res.render("otherProfile", { result, posts, userName, sessionProfileName, followData, sessionProfilePicture, userProfileName,followedProfile,followersProfile,findProfilePosts,noticeFollow,followersTrue});
 
 
         }
         else {
 
-
-          res.render("privateOtherProfile", { result, posts, userName, sessionProfileName, followData, sessionProfilePicture, visitProfilename,followedProfile,followersProfile,findProfilePosts,noticeFollow,followersTrue });
+          res.render("privateOtherProfile", { result, posts, userName, sessionProfileName, followData, sessionProfilePicture, userProfileName,followedProfile,followersProfile,findProfilePosts,noticeFollow,followersTrue });
 
         }
       }

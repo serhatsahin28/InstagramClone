@@ -1,8 +1,7 @@
 const express = require("express");
 const app = express();
 const http = require('http');
-const PORT = process.env.PORT || 3000;
-
+const PORT = 3000;
 const session = require("express-session");
 const path = require('path');
 const bodyParser = require("body-parser");
