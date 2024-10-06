@@ -14,8 +14,10 @@
 
 <%-include("sidebar")%>
 
-    <body class="body">
 
+
+    <body class="body">
+        <% console.log("Sayfa içeriği:", "profileName"); %>
         <div class="content">
             <div id="searchDivNav" class="searchDivNav">
                 <div class="modal-body row">
@@ -58,7 +60,7 @@
                                     <input type="hidden" name="username" value="<%=newResult.username%>">
                                     <input type="hidden" name="userSessionName" value="<%=userName%>">
                                     <input type="hidden" name="userSessionProfile" value="<%=sessionProfileName%>">
-                                    <input type="hidden" name="sessionProfileName" value="<%=profileName%>">
+                                    <input type="hidden" name="sessionProfileName" value="<%=visitProfilename%>">
                                     <input type="hidden" name="userSessionPicture" value="<%=sessionProfilePicture%>">
                                     <input type="hidden" name="profilePicture" value="<%=newResult.profilePicture%>">
                                     <input type="hidden" name="profileName" value="<%=newResult.profileName%>">
