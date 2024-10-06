@@ -102,94 +102,64 @@ a:hover {
     left: 20px;
     width: 50vh;
     border-radius: 15px;
-    z-index: 9999;
-    /* Diğer içeriklerin üzerinde görünmesini sağlar */
-    background-color: rgb(38 38 38);
-    /* Arka plan rengi */
-    padding: 10px;
-    /* İçeriği kenarlardan uzaklaştırır */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    /* Gölge efekti */
+    z-index: 9999; /* Diğer içeriklerin üzerinde görünmesini sağlar */
+    background-color: rgb(38 38 38); /* Arka plan rengi */
+    padding: 10px; /* İçeriği kenarlardan uzaklaştırır */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Gölge efekti */
     text-align: center;
-    cursor: pointer;
+    cursor: pointer; 
 }
 
-.moreDivArea>.modal-body>.col>.btn {
+.moreDivArea>.modal-body>.col>.btn{
     color: #ffffff;
 }
-
 .moreDivArea>.modal-body>.col:hover {
-    background-color: #8a958a;
-    /* Butonun üzerine gelindiğinde arka plan rengi değişir */
+    background-color: #8a958a; /* Butonun üzerine gelindiğinde arka plan rengi değişir */
     border-radius: 25px;
 
 }
 
-
-
-@media screen and (max-width:1024) {
-    .sidebar {
-        width: 50px;
-    background-color: white;
-
-    }
-   
-   
-    .sidebarIcon {
-        position: absolute;
-
-        width: 10px;
-        height: 10px;
-
-    }
-
-    .subtitle {
-        display: none;
-    }
+#title2{
+display: none;
 }
 
 
 
 
 
+@media screen and (max-width: 1024px) {
 
-@media screen and (max-width:480px) {
+.sidebar{
+    width: 10%;
+    margin-top: 5%;
 
-    .sidebar {
-        position: fixed;
-        width: 100%;
-        height: 1%;
-        background-color: aqua;
-        margin-top: 35%;
-        bottom: 0;
-        /* Ekranın altına sabitle */
+}
 
-    }
+#title{
+   display: none;
+}
 
+#title2{
+display: inline;
+width: 30%;
+margin-left: 40%;
+}
 
-    .title {
-        width: 45px;
-        height: 45px;
-        margin-left: 5px;
+.sidebarIcon{
+    width: 80%;
+    height: 80%;
+    margin-left: 25%;
+}
 
-    }
+.subtitle{
+    display: none;
+}
 
-    .sidebar>.subA {
-        height: 25px;
-
-    }
-
-    .sidebarIcon {
-        position: absolute;
-
-        width: 10px;
-        height: 10px;
-        margin-left: 5%;
-
-    }
-
- 
-
+#placeIcon{
+    width: 45%;
+    height: 35px;
+    margin-left: 25%;
+}
 
 
 

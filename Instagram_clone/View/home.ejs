@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
     <title>Sidebar Örneği</title>
     <link rel="stylesheet" href="home.css">
     <link rel="stylesheet" href="sidebar.css">
@@ -45,9 +46,10 @@
 
         </div>
 
-       
+       <div class="pages" id="pages">
             <a href="/" id="button1" class="button">Senin için</a>
             <a href="/" id="button2" class="button">Takip ettiklerin</a>
+        </div>
             <br>
             <div class="col">
                 <hr class="hr">
@@ -57,7 +59,7 @@
 
         <!--Stories Area-->
 
-        <div class="owl-carousel " id="owl-carousel">
+        <div class="owl-carousel" id="owl-carousel">
         
 <%
 if(sessionUserStories.length>0){
@@ -70,7 +72,7 @@ let storiesId=sessionUserStories[0]._id
 %>
             <div class="col" id="item">
                 <a href="/stories/<%=userName %>/<%=storiesId%>">
-                  <img id="itemImg" class="img" src="/users_profile/<%=sessionProfilePicture %>" alt="User Image 1">
+                  <img class="img" id="imgStory1" src="/users_profile/<%=sessionProfilePicture %>" alt="User Image 1">
                 </a>
                 <p id="storyUsername">Hikayen</p>
 
@@ -79,9 +81,9 @@ let storiesId=sessionUserStories[0]._id
 
               <%} else{ %>
 
-                <div class="col" id="item">
+                <div class="col" id="item"  >
                     <a href="/stories/<%=userName %>" data-bs-toggle="modal" data-bs-target="#storyAdd">
-                      <img id="itemImg" class="img" src="/users_profile/<%=sessionProfilePicture %>" alt="User Image 1">
+                      <img class="img" id="imgStory2" src="/users_profile/<%=sessionProfilePicture %>" alt="User Image 1">
                     </a>
                   <p id="storyUsername">Hikaye ekle</p>
 
@@ -99,7 +101,7 @@ let storiesId=sessionUserStories[0]._id
           %>
                 <div class="col" id="item">
                   <a href="/stories/<%= s.username %>/<%= s._id %>">
-                    <img id="itemImg" class="img" src="/users_profile/<%= s.profilePicture %>" alt="User Image 1">
+                    <img class="img" id="imgStory2" src="/users_profile/<%= s.profilePicture %>" alt="User Image 1">
                   </a>
                   <p id="storyUsername"><%=s.username%></p>
 
@@ -111,9 +113,9 @@ let storiesId=sessionUserStories[0]._id
           %>
           
         </div>
-        
-                <button id="prevButton" class="btn am-prev ">Prev</button>
-                <button id="nextButton" class="btn am-next ">Next</button>
+        <button id="prevButton" class="btn am-prev" onclick="$('.owl-carousel').trigger('prev.owl.carousel');"><img id="leftButon" src="/left.png"></button> 
+        <button id="nextButton" class="btn am-next" onclick="$('.owl-carousel').trigger('next.owl.carousel');"><img id="rightButon" src="/right.png"></button>  
+
        
         <!--Stories Area Finish-->
 
@@ -137,7 +139,7 @@ let storiesId=sessionUserStories[0]._id
                         %>
                 
                         <div class="card " id="card">
-                            <div class="card-header" id="card-header">
+                            <div class="card-header  " id="card-header">
                                 <img class="card-img-top" id="card-img-top" src="/users_profile/<%=username.profilePhoto%>" alt="Card image cap">
                                 <a href="/<%=username.username%>" class="username" id="headerUserName">
                                     <%=username.username%>
@@ -145,7 +147,7 @@ let storiesId=sessionUserStories[0]._id
                                 <img class="threeDot" id="threeDot" src="/Icons/more.png">
                            
                             </div>
-                            <div class="card-body" id="card-body">
+                            <div class="card-body " id="card-body">
                                 <div id="carouselExampleFade-<%=counter%>" class="carousel slide">
                                     <div class="carousel-inner">
                                         <% if (photo1 !== "" && photo1 !== null) { %>
@@ -517,25 +519,38 @@ let storiesId=sessionUserStories[0]._id
 
 <script>
     
-    $(document).ready(function(){
-        $('.owl-carousel').owlCarousel({
-            loop: false,
-            margin: 0,
-            nav: true,
-            responsive:{
-                0:{
-                    items:10
-                },
-                600:{
-                    items:3
-                },
-                1000:{
-                    items:10
-                },
+    $(document).ready(function() {
+    $('.owl-carousel').owlCarousel({
+        loop: false,  // Döngü yok
+        margin: 10,   // Öğeler arasındaki boşluk
+        nav: true,     // Navigasyon okları
+        items: 7,      // En az 7 öğe göster
+        responsive: {
+            0: {
+                items: 1  // Mobilde tek öğe
             },
-           navText: [$('.am-prev'),$('.am-next')],
-        });
+            600: {
+                items: 3  // Orta boyut ekranlarda üç öğe
+            },
+            1000: {
+                items: 6  // Büyük ekranlarda beş öğe
+            },
+            1200: {
+                items: 6  // 1200 pikselden büyük ekranlarda 7 öğe
+            }
+        }
     });
+    $('#prevButton').on('click', function() {
+        owl.trigger('prev.owl.carousel');
+    });
+
+    // Sonraki buton işlevselliği
+    $('#nextButton').on('click', function() {
+        owl.trigger('next.owl.carousel');
+    });
+    
+});
+
 
     $(document).ready(function() {
 
