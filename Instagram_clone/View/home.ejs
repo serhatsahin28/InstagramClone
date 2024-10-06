@@ -5,6 +5,8 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Sidebar Örneği</title>
     <link rel="stylesheet" href="home.css">
     <link rel="stylesheet" href="sidebar.css">
@@ -27,7 +29,7 @@
     <%-include("sidebar")%>
     
     
-        <div class="content">
+        <div class="content" id="content">
             <div id="searchDivNav" class="searchDivNav">
                 <div class="modal-body row">
                     <p class="col-2">Ara:</p>
@@ -55,7 +57,7 @@
 
         <!--Stories Area-->
 
-        <div class="owl-carousel col-6 ">
+        <div class="owl-carousel " id="owl-carousel">
         
 <%
 if(sessionUserStories.length>0){
@@ -68,7 +70,7 @@ let storiesId=sessionUserStories[0]._id
 %>
             <div class="col" id="item">
                 <a href="/stories/<%=userName %>/<%=storiesId%>">
-                  <img class="img" src="/users_profile/<%=sessionProfilePicture %>" alt="User Image 1">
+                  <img id="itemImg" class="img" src="/users_profile/<%=sessionProfilePicture %>" alt="User Image 1">
                 </a>
                 <p id="storyUsername">Hikayen</p>
 
@@ -77,9 +79,9 @@ let storiesId=sessionUserStories[0]._id
 
               <%} else{ %>
 
-                <div class="col" id="item"  >
+                <div class="col" id="item">
                     <a href="/stories/<%=userName %>" data-bs-toggle="modal" data-bs-target="#storyAdd">
-                      <img class="img" src="/users_profile/<%=sessionProfilePicture %>" alt="User Image 1">
+                      <img id="itemImg" class="img" src="/users_profile/<%=sessionProfilePicture %>" alt="User Image 1">
                     </a>
                   <p id="storyUsername">Hikaye ekle</p>
 
@@ -97,7 +99,7 @@ let storiesId=sessionUserStories[0]._id
           %>
                 <div class="col" id="item">
                   <a href="/stories/<%= s.username %>/<%= s._id %>">
-                    <img class="img" src="/users_profile/<%= s.profilePicture %>" alt="User Image 1">
+                    <img id="itemImg" class="img" src="/users_profile/<%= s.profilePicture %>" alt="User Image 1">
                   </a>
                   <p id="storyUsername"><%=s.username%></p>
 
@@ -110,8 +112,8 @@ let storiesId=sessionUserStories[0]._id
           
         </div>
         
-                <button class="btn am-prev ">Prev</button>
-                <button class="btn am-next ">Next</button>
+                <button id="prevButton" class="btn am-prev ">Prev</button>
+                <button id="nextButton" class="btn am-next ">Next</button>
        
         <!--Stories Area Finish-->
 
@@ -135,7 +137,7 @@ let storiesId=sessionUserStories[0]._id
                         %>
                 
                         <div class="card " id="card">
-                            <div class="card-header  " id="card-header">
+                            <div class="card-header" id="card-header">
                                 <img class="card-img-top" id="card-img-top" src="/users_profile/<%=username.profilePhoto%>" alt="Card image cap">
                                 <a href="/<%=username.username%>" class="username" id="headerUserName">
                                     <%=username.username%>
@@ -143,7 +145,7 @@ let storiesId=sessionUserStories[0]._id
                                 <img class="threeDot" id="threeDot" src="/Icons/more.png">
                            
                             </div>
-                            <div class="card-body " id="card-body">
+                            <div class="card-body" id="card-body">
                                 <div id="carouselExampleFade-<%=counter%>" class="carousel slide">
                                     <div class="carousel-inner">
                                         <% if (photo1 !== "" && photo1 !== null) { %>
@@ -528,7 +530,7 @@ let storiesId=sessionUserStories[0]._id
                     items:3
                 },
                 1000:{
-                    items:8
+                    items:10
                 },
             },
            navText: [$('.am-prev'),$('.am-next')],

@@ -27,9 +27,10 @@ a:active {
 }
 
 .owl-carousel {
+    width: 120vh !important;
     margin-left: 47vh;
     margin-top: 17vh;
-    display: flex;
+
     /* Flexbox kullanarak yatay hizalama */
 }
 
@@ -370,6 +371,9 @@ a:active {
     font-size: 12px;
 }
 
+.title2 {
+    display: none;
+}
 
 #aLink {
     color: white;
@@ -476,7 +480,7 @@ a:active {
     height: 25px;
     height: 25px;
     margin-left: 2vh;
-    margin-top: -20vh;
+    margin-top: -27vh;
 }
 
 #commentFooter {
@@ -573,4 +577,155 @@ a:active {
     color: #ffffff;
     margin-left: 10px;
     font-size: 12px;
+}
+
+
+@media screen and (max-width:1024px) {
+    body {
+        overflow-x: hidden;
+
+    }
+
+
+    #content {
+
+        width: 200px;
+        display: hidden;
+    }
+
+    #button1 {
+        width: 100px;
+        margin-left: -180%;
+        display: hidden;
+    }
+
+    #owl-carousel {
+        margin-left: 150px;
+        width: 100% !important;
+
+    }
+
+    #item {
+        width: 100%;
+        height: 100%;
+
+    }
+
+
+
+    #itemImg {
+        height: 85px !important;
+        width: 85px !important;
+    }
+
+    .owl-item {
+        display: flex;
+    }
+
+
+    .subtitle {
+        display: none;
+    }
+
+
+
+    #sidebar {
+        width: 10%;
+
+    }
+
+
+    #subA>img {
+        width: 20%;
+        height: 30%;
+        margin-top: 30%;
+    }
+
+    .title {
+        display: none;
+    }
+
+    .title2 {
+        display: block;
+        height: 50px;
+        margin-left: 10%;
+        margin-top: 10%;
+    }
+
+    #prevButton {
+        background-color: #d07814 !important;
+    }
+
+    #nextButton {
+        background-color: #d07814 !important;
+        position: relative;
+    }
+
+    #postImage {
+        width: 50vh;
+        height: 50vh;
+        border-radius: 5px;
+        margin-top: 80px;
+        margin-left: 10px;
+        border: 1px solid grey;
+    }
+
+    #card {
+        margin-left: 200px;
+        width: 70%;
+        height: 55%;
+    }
+
+    #card-header {
+        width: 200px;
+    }
+
+    #card-body {
+
+        width: 100%;
+    }
+
+    #threeDot {
+        margin-left: 48vh;
+        margin-top: -50px;
+    }
+
+    #card-footer {
+
+        margin-top: -10vh !important;
+    }
+
+    #whoLikes {
+        margin-top: 10px;
+        margin-left: -50px;
+    }
+
+    #postIcon2 {
+        margin-top: 15px;
+    }
+
+    #commentModalPost{
+
+        width: 80%!important;
+        height: 50%; 
+        margin-left: 10vh;
+        margin-top: 20vh;
+    }
+#modal-content {
+    margin-left: 80vh;
+    background-color: #738184;
+}
+
+#commentsScreen{
+    background-color: #e90b0b;
+    margin-left: 50vh;
+    width: 250px;
+    height: 250px;
+}
+
+
+
+
+
+
 }
