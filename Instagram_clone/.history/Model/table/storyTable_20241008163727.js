@@ -1,59 +1,51 @@
-const dotenv = require('dotenv');
-dotenv.config();
 const mongoose = require("mongoose");
-
-mongoose.connect(process.env.MONGODB_URI).then(() => {
+mongoose.connect("mongodb+srv://serhat:123@cluster0.e6a3vn3.mongodb.net/instagram").then(() => {
     // console.log("MongoDB'ye bağlanıldı");
 }).catch((err) => {
     console.error("MongoDB'ye bağlanırken hata oluştu:", err);
 });
+
+
+
 const Schema = mongoose.Schema;
+const stories = new Schema({
 
-const message = new Schema({
-    senderId: {
+    user_id: {
         type: String,
         require: true
 
     },
-    senderUser: {
+    username: {
+        type: String,
+        require: true
+    },
+    profileName: {
         type: String,
         require: true
 
     },
-    senderImage: {
+    storie: {
         type: String,
         require: true
-
-
     },
-    message: {
-        type: String,
-        require: true
 
-    },
-    sentUserId: {
-        type: String,
-        require: true
-
-    },
-    sentUsername: {
+    profilePicture: {
 
         type: String,
         require: true
-
     },
-
-    sentUserImage: {
+    isActive: {
         type: String,
         require: true
 
     }
 
 
-
-
 });
 
 
-const messages = mongoose.model("messages", message, "messages");
-module.exports = messages;
+
+const story = mongoose.model("stories", stories, "stories");
+
+
+module.exports= story ;
