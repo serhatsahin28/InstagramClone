@@ -7,6 +7,8 @@ mongoose.connect(process.env.MONGODB_URI).then(() => {
 }).catch((err) => {
     console.error("MongoDB'ye bağlanırken hata oluştu:", err);
 });
+
+
 const Schema = mongoose.Schema
 const posts = new Schema({
     
