@@ -1,0 +1,554 @@
+.body {
+    background-color: black;
+}
+
+body {
+    background-color: black;
+    overflow-x: hidden;
+
+}
+
+
+.profile_photo {
+    margin-left: 67vh;
+    margin-top: 4vh;
+}
+
+.profile_photo>img {
+    border-radius: 100%;
+
+    width: 27vh;
+    height: 27vh;
+}
+
+
+
+.container-small {
+
+    display: flex;
+    margin-top: 6vh;
+
+    margin-left: -75vh;
+
+}
+
+.container-small>.username {
+    color: white;
+    margin-top: 8px;
+    margin-left: -15px;
+    font-size: 3vh;
+
+}
+
+.container-small>.btn {
+    background-color: grey;
+    color: white;
+    font-weight: 500;
+    height: 6vh;
+    border-radius: 10px;
+    margin-left: 2vh;
+
+}
+
+.container-small>.follow>.btn {
+    background-color: grey;
+    color: white;
+    font-weight: 500;
+    height: 6vh;
+    border-radius: 10px;
+    margin-left: 2vh;
+
+}
+
+.container-small>.follow>.form>.btn {
+    background-color: grey;
+    color: white;
+    font-weight: 500;
+    height: 6vh;
+    border-radius: 10px;
+    margin-left: 2vh;
+
+}
+
+.container-small>.follow>form>.btn {
+    background-color: grey;
+    color: white;
+    font-weight: 500;
+    height: 6vh;
+    border-radius: 10px;
+    margin-left: 2vh;
+
+}
+
+.container-small>.btn-img {
+    height: 4vh;
+    margin-left: 2.5vh;
+}
+
+.container-small>.btn-img>img {
+    width: 4vh;
+}
+
+.container-small>.info {
+    display: flex;
+
+}
+
+
+
+.container-small>.info>.post {
+    color: white;
+    margin-top: 10vh;
+}
+
+.container-small>.info>.one {
+    margin-left: -55vh;
+}
+
+
+.container-small>.info>.two {
+    margin-left: 5vh;
+}
+
+.container-small>.info>.three {
+    margin-left: 6vh;
+}
+
+.username2 {
+
+    color: white;
+    margin-top: 16vh;
+    margin-left: -55vh;
+}
+
+.textArea {
+    width: 285px;
+    color: white;
+    margin-top: 23vh;
+    margin-left: -19vh;
+
+}
+
+.stories {
+    display: flex;
+}
+
+.btn-storie {
+    margin-left: 63vh;
+    margin-top: 6vh;
+
+}
+
+
+
+
+.stories>.btn-storie>img {
+    width: 15vh;
+}
+
+
+.stories>.two {
+
+    margin-left: 8vh;
+
+}
+
+.stories>.add {
+    margin-left: 8vh;
+}
+
+.p-stories {
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 2vh;
+}
+
+.p-stories.add {
+    margin-left: 5.5vh;
+
+}
+
+
+.stories>.hrMid {
+    background-color: rgb(146, 147, 148);
+    width: 152vh;
+    margin-top: 35vh;
+    margin-left: -66vh;
+}
+
+.postArea>.row {
+
+    background-color: rgb(0, 0, 0);
+    height: 50vh;
+    width: 150vh;
+    margin-left: 60vh;
+    margin-top: 15vh;
+
+
+}
+
+#imgPost {
+
+    background-color: rgb(0, 0, 0);
+    width: 50vh;
+    height: 50vh;
+    border: 1px solid grey;
+}
+
+#modalEdit {
+    color: rgb(59, 58, 58);
+    background-color: rgb(255, 255, 255);
+    margin-top: 25vh;
+}
+
+.modal-title {
+    color: rgb(255, 255, 255);
+    text-align: center;
+}
+
+.modal-body>.btn {
+    border: 1px solid grey;
+
+}
+
+#postAdd {
+    margin-top: 10vh;
+    width: 70vh;
+    height: 70vh;
+    border-radius: 15px;
+    margin-left: 70vh;
+
+}
+
+
+#photoUploadContent {
+    background-color: #262626;
+    color: white;
+    width: 70vh;
+    height: 60vh;
+
+}
+
+/* Sidebar Arama div içerisindeki kodlar başlangıç*/
+
+#searchDivNav {
+    color: white;
+    background-color: rgb(0, 0, 0);
+    height: 100vh;
+    width: 65vh;
+    margin-left: 50vh;
+    position: fixed;
+    z-index: 999;
+    /* En ön planda olmasını sağlayacak bir değer */
+
+}
+
+#modal-body2 {
+    margin-left: 5px;
+    width: 65vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+}
+#UserInfo:hover {
+
+    background-color: #ffdfdf59;
+
+}
+
+#userNickName {
+    color: white;
+    margin-top: -41px;
+    margin-left: 50px;
+    width: 70vh;
+
+
+}
+#searchUser {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+
+}
+#userProfileName {
+    font-size: 13px;
+    font-weight: 600;
+    color: #9a9a9a;
+    margin-left: 50px;
+    margin-top: -21px;
+
+}
+/* Sidebar Arama div içerisindeki kodlar bitiş*/
+
+
+.rowOtherProfile{
+
+  margin-left: 60vh;
+  margin-top: 10vh;
+
+}
+
+
+#modal-content-comment {
+
+    width: 215%;
+    height: 90vh;
+    margin-left: -45vh;
+    margin-top: 5vh;
+    background-color: rgb(0, 0, 0);
+    color:white;
+
+}
+#modal-content {
+    background-color: #262626;
+    border-radius: 10px;
+    width: 75vh;
+    height: 75vh;
+}
+
+#modal-content-PhotoChange {
+    background-color: #262626;
+    border-radius: 10px;
+    width: 75vh;
+    height: 75vh;
+}
+#imgComment {
+    background-color: rgb(6, 6, 6);
+    height: 90vh;
+    width: 98vh;
+}
+
+#imageComment {
+    height: 90vh;
+    width: 98vh;
+
+}
+
+#noticeDivNav {
+    color: white;
+    background-color: #262626;
+    height: 100vh;
+    width: 65vh;
+    position: fixed;
+    top: 0;
+    left: 40vh;
+    z-index: 999;
+}
+#Notice-img {
+    width: 12vh;
+    height: 8vh;
+    border-radius: 100%;
+    margin-left: 1vh;
+    margin-top: 2vh;
+
+
+}
+#userNotice {
+
+    margin-top: -7vh;
+    margin-left: 10vh;
+}
+#accept {
+
+    margin-left: 35vh;
+    margin-top: -12vh;
+}
+
+#delete {
+
+    margin-left: 50vh;
+    margin-top: -19vh;
+}
+#userNoticeFollowers {
+
+    margin-left: 10vh;
+    margin-top: -6vh;
+}
+#commentsScreen {
+    background-color: rgb(0, 0, 0);
+    margin-left: 98vh;
+    margin-top: -90vh;
+    height: 90vh;
+}
+#commentHeader {
+    height: 10vh;
+    display: flex;
+}
+.commentIcons {
+    height: 25px;
+    height: 25px;
+    
+}
+#commentArea {
+    background-color: rgb(0, 0, 0);
+    height: 60vh;
+    overflow-y: scroll;
+    border: 1px solid grey;
+
+}
+
+#commentFooter {
+    background-color: #000000;
+    height: 10vh;
+    border: 1px solid grey;
+}
+#commentFooter2 {
+    background-color: #000000;
+    margin-top: 1vh;
+
+}
+
+#chatIconComment {
+    margin-left: 9vh;
+
+}
+
+#saveIconComment {
+    margin-left: 52vh;
+
+}
+
+#likesWhoInCommentTag{
+    text-decoration: none;
+    color: white;
+}
+
+#likesWhoInComment{
+    font-size:12px;
+    margin-left:2vh;
+    
+} 
+#commentForm{
+        background-color: #000000;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    }
+    #commentFormText{
+        background-color: #000000;
+        width: 90vh;
+        height: 6vh;
+        text-align: left;
+        color: white;
+        
+        }
+        
+        #commentFormButton{
+        
+            color: rgb(20, 86, 191);
+        
+        }
+
+
+        #modalLike {
+
+            width: 50px;
+            height: 50px;
+            border-radius: 100%;
+        }
+
+        #aLink {
+            color: white;
+            text-decoration: none;
+            margin-left: 2vh;
+        }
+        #modalLikeName {
+            color: white;
+            margin-top: -8vh;
+            margin-left: 10vh;
+        }
+
+        #imageCommentHeader {
+
+            height: 40px;
+            width: 40px;
+            border-radius: 100%;
+            margin-left: 3vh;
+            margin-top: 2vh;
+        
+        }
+
+        #commentUserArea {
+            background-color: #000000;
+            display: flex;
+        
+        }
+
+
+        #commentP {
+            margin-top: 3vh;
+            margin-left: 1vh;
+            color: white;
+        }
+
+
+        #imageCommentHeader2 {
+            height: 20px;
+            width: 20px;
+            margin-left: 55vh;
+            margin-top: 3vh;
+        
+        }
+        #modalLikeUserName {
+            color: white;
+            margin-top: -3vh;
+            margin-left: 10vh;
+            font-size: 12px;
+        }
+
+
+        #commentTextP {
+            font-size: 15px;
+            font-weight: 500;
+            margin-top: 3vh;
+            margin-left: 2vh;
+            color:white;
+        }
+        #likeIconComment{
+            height: 25px;
+            height: 25px;
+            margin-left:2vh;
+            margin-top: -20vh;
+    }
+    
+    #noticeUser{
+
+        color:white;
+        margin-left:15vh ;
+        margin-top: -6vh;
+    
+    }
+    
+#NoticeImg {
+    width: 12vh;
+    height: 8vh;
+    border-radius: 100%;
+    margin-left: 1vh;
+    margin-top: 2vh;
+
+
+}
+
+#accept {
+    background-color: blue;
+        margin-left: 35vh;
+        margin-top: -8vh;
+    }
+    
+    #delete {
+        background-color: grey;
+    
+        margin-left: 50vh;
+        margin-top: -15vh;
+    }
+
+    #followedModalBody{
+
+        overflow-y: scroll;
+    }
+
+    #followersModalBody{
+
+        overflow-y: scroll;
+    }

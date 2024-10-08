@@ -1,0 +1,528 @@
+body {
+    margin: 0;
+    text-decoration: none;
+    overflow-y: hidden;
+    overflow-x: hidden;
+
+}
+
+.body {
+    background-color: black;
+    text-decoration: none;
+
+
+}
+
+.sidebar {
+    text-decoration: none;
+    height: 100%;
+    width: 60px;
+    background-color: #000000;
+    position: fixed;
+    top: 0;
+    border-right: 0.1px solid rgba(156, 150, 150, 0.658);
+}
+
+.a {
+    color: white;
+    width: 120%;
+    height: 5%;
+    border-radius: 10px;
+    margin-left: -25%;
+    text-decoration: none;
+
+}
+
+
+
+.subtitle {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+
+    margin-left: 4vh;
+}
+
+
+.sidebarIcon {
+
+    color: rgb(245, 245, 245);
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+    margin-top: 5px;
+    text-decoration: none;
+
+}
+
+
+#profilePhoto {
+    border-radius: 100%;
+
+}
+
+
+.a:hover {
+    background-color: rgba(121, 124, 126, 0.233);
+    color: white;
+    text-decoration: none;
+}
+
+
+
+.title {
+
+    height: 4vh;
+    margin-left: 3vh;
+    margin-top: 4vh;
+    text-decoration: none;
+
+}
+
+a {
+    color: white;
+    text-decoration: none;
+
+}
+
+a:hover {
+    color: white !important;
+    text-decoration: none !important;
+}
+
+#modal-body2 {
+    margin-left: 5px;
+    overflow-y: scroll;
+
+}
+
+#modal-body3 {
+    margin-left: 5px;
+    overflow-y: scroll;
+
+}
+
+#modal-content {
+    background-color: #000000;
+    height: 75vh;
+
+}
+
+#userNickName {
+    color: white;
+    margin-top: -41px;
+    margin-left: 50px;
+    width: 70vh;
+
+}
+
+#userNickName3 {
+    color: white;
+    margin-top: -41px;
+    margin-left: 50px;
+    width: 70vh;
+
+}
+
+
+#userProfileName {
+    font-size: 13px;
+    font-weight: 600;
+    color: #9a9a9a;
+    margin-left: 50px;
+    margin-top: -21px;
+
+}
+
+#userProfileName3 {
+    font-size: 13px;
+    font-weight: 600;
+    color: #9a9a9a;
+    margin-left: 50px;
+    margin-top: -21px;
+
+}
+
+
+#UserInfo:hover {
+
+    background-color: #ffdfdf59;
+
+}
+
+#UserInfo3:hover {
+
+    background-color: #ffdfdf59;
+
+}
+
+#searchUser {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+
+}
+
+#searchUser3 {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+
+}
+
+
+.More {
+
+    margin-left: 5vh;
+    width: 50vh;
+    background-color: #fff8f8ef;
+}
+
+
+.messageBox {
+    border: 1px solid #333;
+    width: 67vh;
+    height: 90vh;
+    margin-left: 12vh;
+}
+
+#sidebarMessageBox {
+    width: 55vh;
+    margin-top: 0;
+    margin-left: 12vh;
+    overflow-y: scroll;
+    height: 74vh;
+    border: 1px solid #333;
+
+
+}
+
+
+#messageImg {
+
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    margin-left: 5vh;
+
+}
+
+
+#sessionName {
+    color: #ffffff;
+    font-weight: 700;
+    margin-left: 17vh;
+    margin-top: 5vh;
+}
+
+
+#createChat {
+
+    width: 30px;
+    height: 30px;
+
+    margin-left: 57vh;
+    margin-top: -13vh;
+}
+
+
+#profileName {
+
+    color: antiquewhite;
+    margin-top: -8vh;
+    margin-left: 15vh;
+}
+
+#lastMessage {
+    color: white;
+    font-size: 12px;
+    margin-left: 15vh;
+}
+
+#messagesBox2 {
+    z-index: 1000;
+    margin-left: 64.5vh;
+    width: 164vh;
+    height: 90vh;
+    margin-top: -90vh;
+
+}
+
+#profileInfo {
+    border: 1px solid rgb(117, 116, 116);
+    height: 10vh;
+    width: 100%;
+
+}
+
+#profileMessages {
+    height: 80vh;
+    width: 100%;
+}
+
+
+
+
+
+#profileInfoImage {
+
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    margin-left: 3vh;
+}
+
+#h1Profile {
+
+    color: #ffffff;
+    font-size: 15px;
+    margin-left: 13vh;
+    margin-top: -5vh;
+}
+
+#IconMessage {
+
+    margin-top: -5vh;
+    margin-left: 140vh;
+}
+
+#IconMessage>img {
+    width: 30px;
+    height: 30px;
+    margin-right: 20px;
+
+
+}
+
+#IconMessage>img {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+
+
+}
+
+
+#form {
+    margin-left: 30vh;
+    margin-top: 1vh;
+}
+
+#input {
+    border: 1px solid #a49c9c;
+    width: 100%;
+    height: 50px;
+    background-color: #000000;
+    border-radius: 25px;
+    color: #ffffff;
+}
+
+#buttonSend {
+    border-radius: 50px;
+    margin-left: -15vh;
+    margin-top: -55px;
+    background-color: #000000;
+    border: 0;
+    font-weight: bold;
+}
+
+/* Buton devre dışı olduğunda (disabled) */
+#buttonSend:disabled {
+    color: #a8c6ff; /* Solgun mavi renk */
+    cursor: not-allowed; /* Devre dışı durumda imleç değişimi */
+}
+
+/* Buton etkin olduğunda (enabled) */
+#buttonSend:not(:disabled) {
+    color: #3797f0; /* Açık mavi renk */
+}
+
+
+.message1Img {
+
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    margin-left: -6vh;
+    margin-top: 2vh;
+
+}
+
+.otherUserMessages {
+    display: flex;
+    color: #ffffff;
+    border-radius: 15px;
+    margin-left: 7vh;
+    margin-top: 5vh;
+}
+
+.otherMessageText1 {
+    
+    background-color: #333;
+    width: 95vh;
+    border-radius: 15px;
+
+}
+
+
+.sessionUserMessages {
+    display: flex;
+    color: #ffffff;
+    background-color: #3797f0;
+    border-radius: 15px;
+    width: 75vh;
+    margin-left: 85vh;
+    margin-top: 5vh;
+
+}
+
+#messageText{
+    margin-left: 5px;
+    margin-top: 5px;
+    margin-bottom:15px;
+}
+
+
+#messagesArea {
+    height: 100%;
+    width: 163vh;
+    margin-left: 0px;
+    overflow-y: scroll;
+
+}
+
+#postAdd {
+    margin-top: 10vh;
+    width: 70vh;
+    height: 70vh;
+    border-radius: 15px;
+    margin-left: 70vh;
+
+}
+
+
+#photoUploadContent {
+    background-color: #262626;
+    color: white;
+    width: 70vh;
+    height: 60vh;
+
+}
+
+.More {
+
+    margin-left: 5vh;
+    width: 50vh;
+    background-color: #fff8f834;
+}
+
+.moreDivArea {
+    position: fixed;
+    top: 50vh;
+    left: 20px;
+    width: 50vh;
+    border-radius: 15px;
+    z-index: 9999;
+    /* Diğer içeriklerin üzerinde görünmesini sağlar */
+    background-color: #665e5e;
+    /* Arka plan rengi */
+    padding: 10px;
+    /* İçeriği kenarlardan uzaklaştırır */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Gölge efekti */
+}
+
+
+
+#searchDivNav {
+    color: white;
+    background-color: rgb(0, 0, 0);
+    margin-top: -1vh;
+    height: 100vh;
+    width: 65vh;
+    margin-left: 10vh;
+    position: fixed;
+    z-index: 999;
+    /* En ön planda olmasını sağlayacak bir değer */
+
+}
+
+
+#noticeDivNav {
+    color: white;
+    background-color: #262626;
+    height: 100vh;
+    width: 65vh;
+    position: fixed;
+    top: 0;
+    left: 40vh;
+    z-index: 999;
+}
+
+#header2 {
+    color: white;
+    height: 5vh;
+    position: absolute;
+    display: flex;
+    margin-top: -4vh;
+    width: 55vh;
+    margin-left: 12vh;
+
+}
+
+#requestHeader {
+    margin-left: 30vh;
+    font-weight: 300;
+
+}
+
+#messagesHeader {
+    margin-left: 2vh;
+    font-weight: 600;
+
+}
+
+
+
+
+
+
+
+
+#emoji-button {
+    margin-left: -150px;
+    color: #3797f0;
+    border: none;
+    background: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.emoji-picker {
+    display: none;
+    /* Başlangıçta gizli */
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ffffff;
+    margin-top: -350px;
+    margin-left: -150px;
+    border-radius: 5px;
+    z-index: 50;
+    width: 300px;
+    height: 300px;
+    overflow-y: auto;
+    box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.1);
+}
+
+.emoji {
+    cursor: pointer;
+    font-size: 20px;
+    padding: 5px;
+}
+
+#img {
+    width: 30px;
+    height: 30px;
+    margin-right: 20px;
+
+
+}

@@ -1,0 +1,46 @@
+
+#body{
+    background-color: #f9f9f9;
+}
+#row{
+border: 1px solid grey ;
+height: 85vh;
+width: 59vh;
+margin-left: 62vh;
+margin-top: 4vh;
+}
+
+#titleImage{
+
+    width: 35vh;
+    height: 20vh; 
+    margin-top: 3vh;
+    margin-left:10vh;
+}
+#titleWrite{
+    color: #7c7373;
+    margin-top: -10vh;
+    margin-left: 8vh;
+    font-weight: 600;
+}
+
+#form{
+margin-left: 10vh;
+margin-top:0vh;
+
+
+}
+
+#form input {
+    display: block; /* Inputları blok element olarak ayarla */
+    margin-top:  15px; /* Her input öğesi içinde alt kısmına 10 piksel boşluk bırak */
+    width: 40vh;
+    margin-left:-3vh;
+    background-color: #fafafa;
+    border: 1px solid grey;
+    height: 6vh;
+    border-radius: 5px;
+
+}
+
+

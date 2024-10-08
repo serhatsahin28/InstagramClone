@@ -1,0 +1,626 @@
+.content {
+    margin-left: 48vh;
+    position: absolute;
+    display: flex;
+    font-size: 15px;
+    margin-top: -12vh;
+    font-weight: bolder;
+}
+
+#button1 {
+    color: rgb(255, 255, 255);
+    margin-left: 15px;
+    text-decoration: none;
+
+}
+
+#button2 {
+    color: rgb(255, 255, 255);
+    margin-left: 15px;
+    text-decoration: none;
+
+}
+
+a:active {
+    color: rgb(255, 6, 6);
+    /* Tıklanan bağlantıyı gri olarak belirle */
+}
+
+.hr {
+    background-color: rgba(255, 255, 255, 0.245);
+    margin-left: -40vh;
+    margin-top: 6vh;
+    width: 103vh;
+}
+
+.owl-carousel {
+    margin-left: 47vh;
+    margin-top: 17vh;
+    display: flex;
+    /* Flexbox kullanarak yatay hizalama */
+}
+
+.am-next {
+    background-color: rgba(255, 255, 255, 0.494);
+    margin-left: 105vh;
+    /* Piksel değerine ayarlandı */
+    margin-top: -25vh;
+    /* Piksel değerine ayarlandı */
+    color: #fafafa6c;
+}
+
+.am-prev {
+    border-radius: 55px;
+    background-color: #ffffff7e;
+    color: #c0afaf;
+    margin-top: -15vh;
+    /* Piksel değerine ayarlandı */
+    margin-left: -5vh;
+}
+
+
+#postImage {
+    width: 100vh;
+    height: 100vh;
+    border-radius: 5px;
+    margin-top: 0vh;
+    margin-left: -4vh;
+    border: 1px solid grey;
+
+}
+
+
+
+
+
+#card {
+    margin-left: 62vh;
+    margin-top: 30vh;
+    width: 67vh;
+    background-color: #000000;
+    height: 90vh;
+}
+
+
+#card-body {
+    width: 90vh;
+    margin-top: -8vh;
+    margin-left: -2vh;
+
+}
+
+#card-img-top {
+    width: 6vh;
+    height: 6vh;
+    border-radius: 100%;
+    background-color: #ffffff;
+    margin-left: 1vh;
+    margin-top: 0vh;
+
+
+}
+
+
+
+#headerUserName {
+    margin-top: -25vh;
+    color: white;
+    font-size: 15px;
+    text-decoration: none;
+}
+
+#threeDot {
+    width: 15px;
+    height: 15px;
+    margin-left: 80vh;
+    margin-top: -11vh;
+
+}
+
+.card-post {
+    width: 50px;
+    height: 10vh;
+}
+
+.postIcon {
+    width: 4vh;
+    margin-left: -2vh;
+
+}
+
+.commentBtn {
+    height: 50px;
+    width: 6vh;
+    margin-top: 70px;
+}
+
+.postIconA {
+    width: 4vh;
+    height: 4vh;
+    margin-top: 10vh;
+    margin-left: -2vh;
+
+}
+
+#postIcon2 {
+    margin-left: -1vh;
+}
+
+
+.directBtn {
+    height: 6vh;
+    margin-top: 10vh;
+}
+
+/* #postIcon4 {
+    margin-top: -15vh;
+    margin-left: 62vh;
+
+} */
+
+.saveBtn {
+    margin-left: 75vh;
+    margin-top: -15vh;
+}
+
+#postHr {
+    background-color: #9a9a9a64;
+    width: 70vh;
+    margin-left: 65vh;
+}
+
+
+
+.card-header {
+    width: 50vh;
+    margin-left: -3vh;
+    margin-top: -25vh;
+}
+
+#card-footer {
+    width: 50vh;
+    margin-left: 15px;
+    position: relative;
+    margin-top: -15vh;
+}
+
+
+
+#item>a>.img {
+    object-fit: cover;
+    width: 10vh;
+    height: 10vh;
+    border-radius: 100%;
+    border: #d07814 solid 2px;
+}
+
+
+
+
+#searchDivNav {
+    display: none;
+
+    color: white;
+    background-color: rgb(0, 0, 0);
+    margin-top: -5vh;
+    height: 100vh;
+    width: 65vh;
+    margin-left: -20vh;
+    position: fixed;
+    z-index: 999;
+    /* En ön planda olmasını sağlayacak bir değer */
+
+}
+
+
+#noticeDivNav {
+    overflow-y: scroll;
+    display: none;
+    color: white;
+    background-color: #262626;
+    height: 100vh;
+    width: 65vh;
+    position: fixed;
+    top: 0;
+    left: 40vh;
+    z-index: 999;
+}
+
+
+
+
+
+#modal-body2 {
+
+    margin-left: 5px;
+    width: 65vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+}
+
+#UserInfo:hover {
+
+    background-color: #ffdfdf59;
+
+}
+
+#searchUser {
+
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+
+}
+
+#userNickName {
+    color: white;
+    margin-top: -41px;
+    margin-left: 50px;
+    width: 70vh;
+
+
+}
+
+
+#userProfileName {
+    font-size: 13px;
+    font-weight: 600;
+    color: #9a9a9a;
+    margin-left: 50px;
+    margin-top: -21px;
+
+}
+
+#postAdd {
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    margin-left: 0vh;
+
+}
+
+
+#photoUploadContent {
+    background-color: #262626;
+    color: white;
+    width: 70vh;
+    height: 60vh;
+
+}
+
+
+#userNotice {
+
+    margin-top: -7vh;
+    margin-left: 10vh;
+}
+
+
+#NoticeImg {
+    width: 8vh;
+    height: 8vh;
+    border-radius: 100%;
+    margin-left: 1vh;
+    margin-top: 2vh;
+
+
+}
+
+
+#accept {
+    background-color: blue;
+    margin-left: 35vh;
+    margin-top: -8vh;
+}
+
+#delete {
+    background-color: grey;
+
+    margin-left: 50vh;
+    margin-top: -15vh;
+}
+
+#userNoticeFollowers {
+
+    margin-left: 10vh;
+    margin-top: -6vh;
+}
+
+#whoLikes {
+
+    color: white;
+    text-decoration: none;
+    margin-left: -5vh;
+    margin-top: -5vh;
+
+}
+
+#whoLikesInA-tag {
+    color: white;
+
+}
+
+#modal-content {
+    background-color: #262626;
+    border-radius: 10px;
+    width: 75vh;
+    height: 75vh;
+}
+
+#likesModalBody {
+
+    overflow-y: scroll;
+}
+
+#modal-title-likes {
+    color: white;
+}
+
+#modalLike {
+
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+}
+
+#modalLikeName {
+    color: white;
+    margin-top: -8vh;
+    margin-left: 10vh;
+}
+
+#modalLikeUserName {
+    color: white;
+    margin-top: -3vh;
+    margin-left: 10vh;
+    font-size: 12px;
+}
+
+
+#aLink {
+    color: white;
+    text-decoration: none;
+    margin-left: 2vh;
+}
+
+#modal-content-comment {
+
+    width: 215%;
+    height: 90vh;
+    margin-left: -45vh;
+    margin-top: 5vh;
+    background-color: rgb(0, 0, 0);
+    color: white;
+
+}
+
+#imgComment {
+    background-color: rgb(6, 6, 6);
+    height: 90vh;
+    width: 98vh;
+}
+
+#commentsScreen {
+    background-color: rgb(0, 0, 0);
+    margin-left: 98vh;
+    margin-top: -90vh;
+    height: 90vh;
+}
+
+#imageComment {
+    height: 90vh;
+    width: 98vh;
+
+}
+
+#commentHeader {
+    height: 10vh;
+    display: flex;
+}
+
+#imageCommentHeader {
+
+    height: 40px;
+    width: 40px;
+    border-radius: 100%;
+    margin-left: 3vh;
+    margin-top: 2vh;
+
+}
+
+#imageCommentHeader2 {
+    height: 20px;
+    width: 20px;
+    margin-left: 55vh;
+    margin-top: 3vh;
+
+}
+
+#commentP {
+    margin-top: 3vh;
+    margin-left: 1vh;
+    color: white;
+}
+
+#hrComment {
+    width: 100vh;
+    height: 1px;
+    margin-left: -92vh;
+    margin-top: 10vh;
+    background-color: #738184;
+}
+
+#commentArea {
+    background-color: rgb(0, 0, 0);
+    height: 60vh;
+    overflow-y: scroll;
+    border: 1px solid grey;
+
+}
+
+#commentUserArea {
+    background-color: #000000;
+    display: flex;
+
+}
+
+#commentTextP {
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 3vh;
+    margin-left: 2vh;
+    color: white;
+}
+
+.commentIcons {
+    height: 25px;
+    height: 25px;
+
+}
+
+#likeIconComment {
+    height: 25px;
+    height: 25px;
+    margin-left: 2vh;
+    margin-top: -20vh;
+}
+
+#commentFooter {
+    background-color: #000000;
+    height: 10vh;
+    border: 1px solid grey;
+}
+
+#commentFooter2 {
+    background-color: #000000;
+    margin-top: 1vh;
+
+}
+
+#saveIconComment {
+    margin-left: 52vh;
+
+}
+
+#directIconComment {
+    margin-left: 2vh;
+
+}
+
+#chatIconComment {
+    margin-left: 9vh;
+
+}
+
+
+#likesWhoInComment {
+    font-size: 12px;
+    margin-left: 2vh;
+
+}
+
+#likesWhoInCommentTag {
+    text-decoration: none;
+    color: white;
+}
+
+#commentForm {
+    background-color: #000000;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+}
+
+#commentFormText {
+    background-color: #000000;
+    width: 90vh;
+    height: 6vh;
+    text-align: left;
+    color: white;
+
+}
+
+#commentFormButton {
+
+    color: rgb(20, 86, 191);
+
+}
+
+
+.noticeUser {
+
+    color: white;
+    margin-left: 16vh;
+    margin-top: -6vh;
+}
+
+.noticeUser2 {
+
+    color: white;
+    margin-left: 16vh;
+    margin-top: -6vh;
+}
+
+.Notice-img {
+    width: 12vh;
+    height: 8vh;
+    border-radius: 100%;
+    margin-left: -3vh;
+    margin-top: 2vh;
+
+
+}
+
+.noticeDivNavAccept {
+    margin-top: -30px;
+}
+
+#storyUsername {
+    color: #ffffff;
+    margin-left: 10px;
+    font-size: 12px;
+}
+
+
+
+@media screen and (max-width:1024px) {
+
+    body {
+        overflow-x: hidden;
+    }
+
+    #content {
+        margin-left: 15%;
+        width: 80%;
+        display: inline-block;
+
+
+    }
+
+    #pages {
+        margin-left: 100%;
+        display: inline-block;
+
+    }
+
+    #owl-carousel {
+        background-color: #d07814;
+        margin-left: 65%;
+        height: 200px !important;
+    }
+
+    #imgStory1{
+        width: 100% !important;
+        height: 120px !important;
+    }
+    #imgStory2{
+        width: 100% !important;
+        height: 120px !important;
+
+    }
+
+
+
+
+}
