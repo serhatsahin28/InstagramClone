@@ -1,15 +1,18 @@
-
 const mongoose = require("mongoose");
 const dotenv = require('dotenv');
+dotenv.config();
+const dbUrl = process.env.MONGODB_URI; // .env dosyasından MongoDB URL'sini al
 
-dotenv.config();  
-
-
-mongoose.connect(process.env.MONGO_URI).then(() => {
-    // console.log("MongoDB'ye bağlanıldı");
+mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGODB_URI)
+.then(() => {
+    console.log("MongoDB'ye bağlanıldı");
 }).catch((err) => {
     console.error("MongoDB'ye bağlanırken hata oluştu:", err);
 });
+
+
+
 const Schema = mongoose.Schema
 const user = new Schema({
 
@@ -44,6 +47,8 @@ const user = new Schema({
     }
 
 })
+
+
 const users = mongoose.model("users", user, "users");
 
 module.exports = users;

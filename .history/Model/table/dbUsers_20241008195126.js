@@ -1,15 +1,18 @@
-
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
-dotenv.config();  
+dotenv.config(); // .env dosyasını yükle
 
-
-mongoose.connect(process.env.MONGO_URI).then(() => {
-    // console.log("MongoDB'ye bağlanıldı");
+const mongoURI = process.env.MONGO_URI; // Bağlantı dizesini alın
+mongoose.connect("mongodb+srv://REDACTED:REDACTED@REDACTED/serhat?retryWrites=true&w=majority")
+.then(() => {
+    console.log("MongoDB'ye bağlanıldı (dbUsers page)");
 }).catch((err) => {
-    console.error("MongoDB'ye bağlanırken hata oluştu:", err);
+    console.error("MongoDB'ye bağlanırken hata oluştu (dbUsers page):", err);
 });
+
+
+
 const Schema = mongoose.Schema
 const user = new Schema({
 
@@ -44,6 +47,8 @@ const user = new Schema({
     }
 
 })
+
+
 const users = mongoose.model("users", user, "users");
 
 module.exports = users;

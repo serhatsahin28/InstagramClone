@@ -14,7 +14,7 @@ app.use(express.json()); // JSON gövde verisi için
 app.set('views', path.join(__dirname, 'View'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("images"));//Define the img folder
-app.use(express.urlencoded({ extended: true })); // URL encoded veriler için
+
 app.use(express.static("scss"));
 
 //tables

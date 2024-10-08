@@ -1,15 +1,15 @@
-
 const mongoose = require("mongoose");
 const dotenv = require('dotenv');
+dotenv.config();
 
-dotenv.config();  
-
-
-mongoose.connect(process.env.MONGO_URI).then(() => {
+mongoose.connect(process.env.MONGODB_URI).then(() => {
     // console.log("MongoDB'ye bağlanıldı");
 }).catch((err) => {
     console.error("MongoDB'ye bağlanırken hata oluştu:", err);
 });
+
+
+
 const Schema = mongoose.Schema
 const user = new Schema({
 

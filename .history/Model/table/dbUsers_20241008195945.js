@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 dotenv.config();  
 
 
-mongoose.connect(process.env.MONGO_URI).then(() => {
+mongoose.connect("mongodb+srv://REDACTED:REDACTED@REDACTED/instagram").then(() => {
     // console.log("MongoDB'ye bağlanıldı");
 }).catch((err) => {
     console.error("MongoDB'ye bağlanırken hata oluştu:", err);

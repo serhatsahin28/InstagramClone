@@ -1,7 +1,9 @@
 const express = require("express");
 const app = express();
 const http = require('http');
-const PORT = process.env.PORT || 3000;
+const dotenv = require('dotenv');
+dotenv.config();
+const PORT = process.env.PORT ;
 const session = require("express-session");
 const path = require('path');
 const bodyParser = require("body-parser");
@@ -10,11 +12,11 @@ const socketio = require("socket.io");
 const server = http.createServer(app);
 const io = socketio(server);
 const multer = require('multer')
-app.use(express.json()); // JSON gövde verisi için
+
 app.set('views', path.join(__dirname, 'View'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("images"));//Define the img folder
-app.use(express.urlencoded({ extended: true })); // URL encoded veriler için
+
 app.use(express.static("scss"));
 
 //tables
@@ -383,6 +385,7 @@ app.get("/:name", (req, res) => {
     const username = req.params.name;
     const sessionUserName = req.session.user.username;
     const sessionProfileName = req.session.user.profileName;
+    console.log(req.body); // veya req.params, req.query
 
     a.profile(req, res, username, sessionUserName, sessionProfileName);
 

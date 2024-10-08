@@ -1,15 +1,16 @@
-
 const mongoose = require("mongoose");
 const dotenv = require('dotenv');
+dotenv.config();
 
-dotenv.config();  
-
-
-mongoose.connect(process.env.MONGO_URI).then(() => {
+mongoose.connect(process.env.MONGODB_URI)
+.then(() => {
     // console.log("MongoDB'ye bağlanıldı");
 }).catch((err) => {
     console.error("MongoDB'ye bağlanırken hata oluştu:", err);
 });
+
+
+
 const Schema = mongoose.Schema
 const user = new Schema({
 
@@ -44,6 +45,13 @@ const user = new Schema({
     }
 
 })
-const users = mongoose.model("users", user, "users");
 
+
+const users = mongoose.model("users", user, "users");
+if (!users) {
+    return res.status(404).send("Kullanıcı bulunamadı.");
+}
+
+// Kullanıcı mevcutsa, username'e erişim sağla
+console.log(user.username);
 module.exports = users;
