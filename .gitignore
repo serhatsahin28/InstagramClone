@@ -7,3 +7,6 @@ client/dist/
 
 # Gecici log dosyalari
 *.log
+
+# Editor/arac ayarlari
+.claude/
