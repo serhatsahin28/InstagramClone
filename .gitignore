@@ -4,3 +4,6 @@ node_modules/
 dist/
 client/node_modules/
 client/dist/
+
+# Gecici log dosyalari
+*.log
