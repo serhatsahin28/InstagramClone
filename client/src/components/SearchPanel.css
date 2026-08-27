@@ -1,0 +1,35 @@
+.search-panel-input-wrap {
+    position: relative;
+    padding: 0 1.5rem 1.5rem;
+    border-bottom: 1px solid #262626;
+}
+
+.search-panel-input-wrap input {
+    width: 100%;
+    padding: 0.6rem 2rem 0.6rem 0.9rem;
+    background: #262626;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 0.95rem;
+    outline: none;
+}
+
+.search-panel-input-wrap input::placeholder {
+    color: #8e8e8e;
+}
+
+.search-panel-clear {
+    position: absolute;
+    right: 2rem;
+    top: 0.5rem;
+    background: #363636;
+    border: none;
+    color: #fff;
+    border-radius: 50%;
+    width: 1.15rem;
+    height: 1.15rem;
+    font-size: 0.65rem;
+    line-height: 1;
+    cursor: pointer;
+}

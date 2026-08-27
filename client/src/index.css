@@ -1,0 +1,20 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, "Segoe UI", Roboto, sans-serif;
+  color: #fff;
+  background: #000;
+}
+
+#root {
+  min-height: 100svh;
+}
+
+.icon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}

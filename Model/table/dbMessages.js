@@ -1,12 +1,4 @@
-const dotenv = require('dotenv');
-dotenv.config();
-const mongoose = require("mongoose");
-
-mongoose.connect(process.env.MONGODB_URI).then(() => {
-    // console.log("MongoDB'ye bağlanıldı");
-}).catch((err) => {
-    console.error("MongoDB'ye bağlanırken hata oluştu:", err);
-});
+const mongoose = require("../db");
 const Schema = mongoose.Schema;
 
 const message = new Schema({
@@ -46,6 +38,12 @@ const message = new Schema({
     sentUserImage: {
         type: String,
         require: true
+
+    },
+
+    // Mesaj isteği kabul edildiğinde true olur; eski kayıtlarda tanımsızdır.
+    accepted: {
+        type: Boolean
 
     }
 

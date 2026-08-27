@@ -2,13 +2,29 @@ const User = require("../Model/table/dbUsers");
 const Post = require("../Model/table/postUser");
 const follow = require("../Model/table/follow");
 const story = require("../Model/table/storyTable");
+const bcrypt = require("bcryptjs");
 
 
 class UserModel {
     static async findUserByUsernameAndPassword(username, password) {
         try {
-            const result = await User.find({ username: username, password: password });
-            return result;
+            const user = await User.findOne({ username: username });
+            if (!user) return [];
+
+            const looksHashed = /^\$2[aby]\$/.test(user.password);
+
+            if (looksHashed) {
+                const isMatch = await bcrypt.compare(password, user.password);
+                return isMatch ? [user] : [];
+            }
+
+            // Eski kayıtlar düz metin şifreyle geldi; eşleşirse hash'e taşı.
+            if (user.password === password) {
+                user.password = await bcrypt.hash(password, 10);
+                await user.save();
+                return [user];
+            }
+            return [];
         } catch (err) {
             throw err;
         }
@@ -396,10 +412,11 @@ class UserModel {
     static async registerAddNewUser(email, userName, profileName, password) {
         try {
 
+            const hashedPassword = await bcrypt.hash(password, 10);
 
             const a = await User.create({
                 "username": userName,
-                "password": password,
+                "password": hashedPassword,
                 "profilePicture": "newProfile.png",
                 "description": "",
                 "profileName": profileName,
@@ -409,9 +426,11 @@ class UserModel {
 
             });
 
+            return a;
 
         } catch (error) {
             console.log("UserModel sayfası registerAddNewUser fonksiyonu: " + error);
+            throw error;
         }
 
     }

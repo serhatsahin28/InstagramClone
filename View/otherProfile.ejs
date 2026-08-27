@@ -371,7 +371,6 @@
                 document.addEventListener("DOMContentLoaded", function () {
                     const imageInput = document.querySelector('input[type="file"]');
                     const selectedImagesContainer = document.getElementById('selectedImages');
-
                     // Resim seçildiğinde işlenmesi gereken fonksiyon
                     imageInput.addEventListener('change', function (event) {
                         selectedImagesContainer.innerHTML = ''; // Seçilen resimlerin listesini temizle
@@ -804,7 +803,6 @@
                 var imgSrc = imgElement.src;
                 var url = new URL(imgSrc);
                 var newImgSrc = url.pathname;
-
 
 
 

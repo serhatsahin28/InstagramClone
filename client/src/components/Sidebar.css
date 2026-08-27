@@ -1,0 +1,209 @@
+.sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    border-right: 1px solid #262626;
+    background-color: #000;
+    padding: 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    z-index: 45;
+}
+
+/* Bildirimler paneli açıkken nav görünmez olur ama yeri korunur. */
+.sidebar.nav-hidden > .sidebar-brand-link,
+.sidebar.nav-hidden > .sidebar-links {
+    visibility: hidden;
+}
+
+.sidebar-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 35;
+}
+
+.sidebar-brand-link {
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.sidebar-brand {
+    width: 130px;
+    margin-left: 0.75rem;
+}
+
+.sidebar-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.sidebar-links li {
+    position: relative;
+}
+
+.sidebar-links a,
+.sidebar-links .sidebar-btn {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.65rem 0.75rem;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #fff;
+    background: none;
+    border: none;
+    text-align: left;
+    font-size: 1rem;
+    width: 100%;
+    cursor: pointer;
+}
+
+.sidebar-links .icon {
+    width: 24px;
+    height: 24px;
+}
+
+.icon-wrap {
+    position: relative;
+    display: inline-flex;
+    line-height: 0;
+    flex-shrink: 0;
+}
+
+.nav-badge {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    min-width: 17px;
+    height: 17px;
+    padding: 0 4px;
+    border-radius: 9px;
+    background: #ed4956;
+    color: #fff;
+    font-size: 0.62rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #000;
+}
+
+.nav-symbols {
+    margin-left: auto;
+    display: flex;
+    gap: 0.2rem;
+    font-size: 0.75rem;
+    line-height: 1;
+}
+
+.sidebar-links .icon.profile-icon {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.sidebar-links a:hover,
+.sidebar-links .sidebar-btn:hover {
+    background-color: #1a1a1a;
+}
+
+.sidebar-links a.active,
+.sidebar-links .sidebar-btn.active {
+    background-color: #1a1a1a;
+    font-weight: 700;
+}
+
+.sidebar-more-popover {
+    position: absolute;
+    bottom: 0;
+    left: 100%;
+    margin-left: 0.5rem;
+    background: #262626;
+    border: 1px solid #363636;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    z-index: 30;
+    min-width: 220px;
+    overflow: hidden;
+}
+
+.sidebar-more-popover a,
+.sidebar-more-popover button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 0.75rem 1rem;
+    color: #fff;
+    background: none;
+    border: none;
+    text-decoration: none;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.sidebar-more-popover a:hover,
+.sidebar-more-popover button:hover {
+    background: #363636;
+}
+
+@media (max-width: 900px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: fixed;
+        /* top sıfırlanmazsa bottom ile birlikte bar tüm ekranı kaplar. */
+        top: auto;
+        bottom: 0;
+        left: 0;
+        border-right: none;
+        border-top: 1px solid #262626;
+        padding: 0.4rem;
+        z-index: 10;
+        gap: 0;
+    }
+
+    .sidebar-brand-link {
+        display: none;
+    }
+
+    .sidebar-links {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .sidebar-links a,
+    .sidebar-links .sidebar-btn {
+        flex-direction: column;
+        gap: 0;
+        padding: 0.5rem 0.25rem;
+        justify-content: center;
+    }
+
+    /* Alt barda etiketler gizlenir, yalnızca ikonlar kalır. */
+    .sidebar-links a > span:not(.icon-wrap),
+    .sidebar-links .sidebar-btn > span:not(.icon-wrap):not(.nav-symbols) {
+        display: none;
+    }
+
+    .nav-symbols {
+        position: absolute;
+        top: -2px;
+        right: 2px;
+        margin-left: 0;
+        font-size: 0.55rem;
+    }
+
+    .sidebar-more-popover {
+        bottom: 100%;
+        left: auto;
+        right: 0;
+        margin-left: 0;
+        margin-bottom: 0.5rem;
+    }
+}

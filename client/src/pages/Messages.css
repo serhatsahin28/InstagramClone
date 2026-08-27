@@ -1,0 +1,265 @@
+.messages-page {
+    flex: 1;
+    display: flex;
+    height: 100vh;
+    background-color: #000;
+    color: #fff;
+    min-width: 0;
+}
+
+.messages-inbox {
+    width: 320px;
+    flex-shrink: 0;
+    border-right: 1px solid #262626;
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+.messages-inbox-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+}
+
+.messages-inbox-header h3 {
+    margin: 0;
+    font-size: 1.05rem;
+}
+
+.messages-new-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    line-height: 0;
+}
+
+.messages-new-btn img {
+    width: 22px;
+    height: 22px;
+}
+
+.messages-inbox-tabs {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid #262626;
+}
+
+.messages-inbox-tabs button {
+    background: none;
+    border: none;
+    color: #8e8e8e;
+    font-size: 0.9rem;
+    padding: 0 0 0.5rem;
+    cursor: pointer;
+}
+
+.messages-inbox-tabs button.active {
+    color: #fff;
+    font-weight: 700;
+    border-bottom: 2px solid #fff;
+}
+
+.messages-inbox-empty {
+    color: #8e8e8e;
+    font-size: 0.85rem;
+    padding: 1rem 0.5rem;
+    margin: 0;
+}
+
+.messages-inbox-entry {
+    margin-bottom: 0.25rem;
+}
+
+.messages-inbox-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem;
+    text-decoration: none;
+    color: #fff;
+    border-radius: 8px;
+}
+
+.messages-inbox-item:hover,
+.messages-inbox-item.active {
+    background: #1a1a1a;
+}
+
+.messages-inbox-item img {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.messages-inbox-item-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    flex: 1;
+}
+
+.messages-inbox-item-text .username {
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.messages-inbox-item-text .last-message {
+    font-size: 0.8rem;
+    color: #8e8e8e;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.messages-request-actions {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0 0.5rem 0.5rem 3.75rem;
+}
+
+.messages-request-actions button {
+    border: none;
+    border-radius: 6px;
+    padding: 0.3rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.messages-request-actions .accept {
+    background: #0095f6;
+    color: #fff;
+}
+
+.messages-request-actions .reject {
+    background: #363636;
+    color: #fff;
+}
+
+.messages-thread {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.messages-empty {
+    align-items: center;
+    justify-content: center;
+    color: #8e8e8e;
+}
+
+.messages-thread-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 1rem;
+    border-bottom: 1px solid #262626;
+    font-weight: 600;
+}
+
+.messages-thread-header span {
+    flex: 1;
+}
+
+.messages-thread-header-icons {
+    display: flex;
+    gap: 1.25rem;
+}
+
+.messages-thread-header-icons img {
+    width: 20px;
+    height: 20px;
+}
+
+.messages-thread-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.messages-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.message-bubble {
+    align-self: flex-start;
+    background: #262626;
+    color: #fff;
+    border-radius: 16px;
+    padding: 0.5rem 1rem;
+    max-width: 70%;
+    font-size: 0.9rem;
+    word-break: break-word;
+}
+
+.message-bubble.mine {
+    align-self: flex-end;
+    background: #0095f6;
+    color: #fff;
+}
+
+.messages-input-row {
+    display: flex;
+    gap: 0.5rem;
+    padding: 1rem;
+    border-top: 1px solid #262626;
+}
+
+.messages-input-row input {
+    flex: 1;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    border: 1px solid #262626;
+    background: #000;
+    color: #fff;
+    outline: none;
+}
+
+.messages-input-row button {
+    background: none;
+    color: #0095f6;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+@media (max-width: 900px) {
+    .messages-page {
+        flex-direction: column;
+        height: calc(100vh - 60px);
+        padding-bottom: 3.5rem;
+    }
+
+    .messages-inbox {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #262626;
+        max-height: 40vh;
+        flex-shrink: 0;
+    }
+
+    .messages-thread {
+        min-height: 0;
+    }
+
+    .messages-list {
+        min-height: 0;
+    }
+
+    .messages-input-row {
+        padding: 0.6rem 0.75rem;
+    }
+}

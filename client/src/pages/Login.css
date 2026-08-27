@@ -1,0 +1,133 @@
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    padding: 2rem 1rem;
+    background-color: #fafafa;
+}
+
+.login-illustration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 380px;
+    max-width: 100%;
+}
+
+.login-img {
+    background-color: black;
+    border-radius: 24px;
+    padding: 10px;
+    max-width: 60%;
+    height: auto;
+}
+
+.login-img-2 {
+    margin-left: -2.5rem;
+    margin-top: 3rem;
+}
+
+.login-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    max-width: 100%;
+}
+
+.login-card {
+    background-color: #f9f9f9;
+    border: 1px solid #dbdbdb;
+    border-radius: 4px;
+    padding: 2rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-title {
+    width: 200px;
+    max-width: 100%;
+    margin-bottom: 1.5rem;
+}
+
+.login-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.login-form input {
+    height: 2.5rem;
+    padding: 0 0.75rem;
+    background-color: rgba(231, 227, 227, 0.66);
+    border: 1px solid rgba(201, 199, 199, 0.34);
+    border-radius: 3px;
+    font-size: 0.9rem;
+}
+
+.login-form button {
+    height: 2.5rem;
+    margin-top: 0.5rem;
+    background-color: #4cb5f9;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    font-weight: 600;
+}
+
+.login-form button:disabled {
+    opacity: 0.6;
+}
+
+.login-error {
+    color: #ed4956;
+    font-size: 0.8rem;
+    text-align: center;
+    margin: 0;
+}
+
+.login-divider {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    color: #8e8e8e;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.login-divider hr {
+    flex: 1;
+    border-top: 1px solid #dbdbdb;
+}
+
+.login-register-box {
+    border: 1px solid #dbdbdb;
+    border-radius: 4px;
+    background-color: #fff;
+    margin-top: 1rem;
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+}
+
+.login-register-box a {
+    color: #4cb5f9;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+@media (max-width: 700px) {
+    .login-illustration {
+        display: none;
+    }
+}

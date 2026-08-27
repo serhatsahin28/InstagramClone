@@ -1,0 +1,133 @@
+.slide-panel {
+    position: fixed;
+    top: 0;
+    left: 240px;
+    height: 100vh;
+    width: 397px;
+    max-width: calc(100vw - 240px);
+    background: #000;
+    border-right: 1px solid #262626;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.6);
+    z-index: 40;
+    overflow: hidden;
+
+    transform: translateX(-100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
+.slide-panel.open {
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Sol navigasyonun yerini alan varyant: panel en sola yaslanır. */
+.slide-panel.replace-nav {
+    left: 0;
+    max-width: 100vw;
+}
+
+.slide-panel-inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.slide-panel-header {
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.slide-panel-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+.slide-panel-close {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0.25rem;
+}
+
+.slide-panel-close:hover {
+    color: #8e8e8e;
+}
+
+.slide-panel-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.75rem 0;
+}
+
+.slide-panel-hint {
+    color: #8e8e8e;
+    font-size: 0.85rem;
+    padding: 0.75rem 1.5rem;
+    margin: 0;
+}
+
+.slide-panel-row {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.6rem 1.5rem;
+    text-decoration: none;
+    color: #fff;
+}
+
+.slide-panel-row:hover {
+    background: #121212;
+}
+
+.slide-panel-row > img {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.slide-panel-row-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    flex: 1;
+}
+
+.slide-panel-row-text .username {
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.slide-panel-row-text .muted {
+    font-size: 0.875rem;
+    color: #8e8e8e;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+    .slide-panel {
+        left: 0;
+        width: 100%;
+        max-width: 100%;
+        /* Alt navigasyon barının üstünde kalsın. */
+        height: calc(100vh - 54px);
+        border-radius: 0;
+        border-right: none;
+    }
+}

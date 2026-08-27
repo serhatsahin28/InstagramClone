@@ -20,16 +20,16 @@ class postController {
         photos.slice(0, 4).forEach((photo, index) => {
             switch (index) {
                 case 0:
-                    photo1 = photo.originalname;
+                    photo1 = photo.filename;
                     break;
                 case 1:
-                    photo2 = photo.originalname;
+                    photo2 = photo.filename;
                     break;
                 case 2:
-                    photo3 = photo.originalname;
+                    photo3 = photo.filename;
                     break;
                 case 3:
-                    photo4 = photo.originalname;
+                    photo4 = photo.filename;
                     break;
                 default:
                     break;
@@ -43,7 +43,7 @@ class postController {
 
         const a = await postUser.postAdd(sessionUserName, user_id, profilePhoto, photo1, photo2, photo3, photo4, textArea);
 
-        res.redirect("/");
+        res.json({ message: "Gönderi eklendi", post: a });
 
 
     }
@@ -71,7 +71,7 @@ class postController {
     async uploadProfilePhoto(req, res, photos, sessionUserName) {
 
 
-        const newProfilePhoto = photos[0].originalname;
+        const newProfilePhoto = photos[0].filename;
         console.log(sessionUserName);
 
         const sessionUserQuery = await postUser.userInfo(sessionUserName);
@@ -81,7 +81,7 @@ class postController {
         const updateProfilePhoto = await postUser.updateProfilePhoto(sessionUserName, newProfilePhoto);
 
 
-        res.redirect("/" + sessionUserName);
+        res.json({ message: "Profil fotoğrafı güncellendi", profilePicture: newProfilePhoto });
 
 
     }
@@ -98,7 +98,7 @@ class postController {
         const textArea = req.body.biography;
         let newProfilePhoto = "";
         if (photos != undefined && photos != "") {
-            newProfilePhoto = photos[0].originalname;
+            newProfilePhoto = photos[0].filename;
 
 
         }
@@ -117,7 +117,7 @@ class postController {
 
 
 
-        res.redirect("/accounts/edit/");
+        res.json({ message: "Ayarlar güncellendi", profilePicture: newProfilePhoto, biography: textArea });
 
 
     }

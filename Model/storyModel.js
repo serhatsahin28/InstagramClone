@@ -5,17 +5,15 @@ const story = require("../Model/table/storyTable");
 
 class storyModel {
 
+    // Tıklanan hikayeyi id'siyle bulur.
     static async storySelected(sessionUserName, visitUsername, visitId) {
 
         try {
-            const storySelected = await story.find({
-                "username": visitUsername
-            });
+            const selected = await story.find({ "_id": visitId });
+            if (selected.length > 0) return selected;
 
-
-
-
-            return storySelected;
+            // id bulunamazsa kullanıcının ilk hikayesine düş.
+            return story.find({ "username": visitUsername });
         }
         catch (err) {
             console.log(err);
@@ -25,17 +23,27 @@ class storyModel {
     }
 
 
-    static async allStory(sessionUserName, visitUsername, visitId) {
+    // Takip edilenlerin hikayeleri + kendi hikayelerimiz, kronolojik sırada.
+    static async allStory(sessionUserName) {
 
         try {
             const followed = await follow.find({
                 "userName": sessionUserName,
                 "followed.situation": true
             });
-            const user = followed.map(item => item.followed[0].username);
+
+            const users = [];
+            for (const doc of followed) {
+                for (const f of doc.followed) {
+                    if (f.situation) users.push(f.username);
+                }
+            }
+            users.push(sessionUserName);
+
             const stories = await story.find({
-                "username": user
-            });
+                "username": { $in: users }
+            }).sort({ _id: 1 });
+
             return stories;
 
         }

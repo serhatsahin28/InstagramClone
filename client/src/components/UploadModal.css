@@ -1,0 +1,70 @@
+.upload-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    padding: 1rem;
+}
+
+.upload-modal {
+    background: #262626;
+    color: #fff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+}
+
+.upload-modal h3 {
+    margin-top: 0;
+}
+
+.upload-modal-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.upload-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.upload-hint {
+    font-size: 0.75rem;
+    color: #8e8e8e;
+}
+
+.upload-form textarea {
+    font-family: inherit;
+    padding: 0.5rem;
+    border: 1px solid #363636;
+    background: #000;
+    color: #fff;
+    border-radius: 6px;
+    resize: vertical;
+}
+
+.upload-form button[type="submit"] {
+    background: #0095f6;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.upload-form button[type="submit"]:disabled {
+    opacity: 0.6;
+}

@@ -1,0 +1,48 @@
+.home-layout {
+    display: flex;
+    min-height: 100vh;
+    background-color: #000;
+}
+
+.home-feed {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+
+    /* Instagram'daki gibi içerik sol navigasyonun hemen yanında başlar. */
+    align-items: flex-start;
+    padding: 1rem 1rem 4rem 2rem;
+}
+
+.post-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.empty-feed {
+    color: #8e8e8e;
+    margin-top: 2rem;
+}
+
+/* Tablet: içerik ortalanır, kenar boşluğu küçülür. */
+@media (max-width: 1100px) {
+    .home-feed {
+        align-items: center;
+        padding: 1rem 1rem 4rem;
+    }
+}
+
+/* Mobil/tablet: navigasyon alta iner, feed tam genişlik olur. */
+@media (max-width: 900px) {
+    .home-layout {
+        flex-direction: column;
+    }
+
+    .home-feed {
+        align-items: center;
+        padding: 0.5rem 0 5rem;
+        width: 100%;
+    }
+}

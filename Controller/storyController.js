@@ -6,69 +6,37 @@ class storyController {
 
         try {
 
-            const allStory = await storyModel.allStory(sessionUserName, visitUsername, visitId);
+            const allStory = await storyModel.allStory(sessionUserName);
             const storySelected = await storyModel.storySelected(sessionUserName, visitUsername, visitId);
+
+            const current = storySelected[0];
+            const currentIndex = allStory.findIndex((s) => String(s._id) === String(current._id));
 
             let nextResult = null;
             let prevResult = null;
 
-            let targetId = storySelected[0]._id;
-            let currentIndex = -1;
-
-            // Verinin index'ini bul
-            for (let i = 0; i < allStory.length; i++) {
-                if (allStory[i]._id.equals(targetId)) {
-                    currentIndex = i;
-                    break;
-                }
-            }
-
             if (currentIndex !== -1) {
-                let prevIndex = currentIndex - 1;
-                let nextIndex = currentIndex + 1;
-
-                // Önceki veriyi al
-                while (prevIndex >= 0) {
-                    if (allStory[prevIndex].username !== visitUsername) {
-                        prevResult = allStory[prevIndex];
-                        // console.log('prevResult:', prevResult);
-                        break; // Uygun bir önceki veri bulundu, döngüden çık
-                    } else {
-                        console.log('Önceki kullanıcıya ait veri yok, bir önceki index denenecek.');
-                        prevIndex--;
-
-                        // Döngüden çıkmadan önce sınırları kontrol et
-                        if (prevIndex < 0) {
-                            break;
-                        }
+                // Komşu hikayelerde farklı bir kullanıcıya ait ilk kaydı ara.
+                for (let i = currentIndex - 1; i >= 0; i--) {
+                    if (allStory[i].username !== current.username) {
+                        prevResult = allStory[i];
+                        break;
                     }
                 }
 
-                // Bir sonraki veriyi al
-                while (nextIndex < allStory.length) {
-                    if (allStory[nextIndex].username !== visitUsername) {
-                        nextResult = allStory[nextIndex];
-                        // console.log('nextResult:', nextResult);
-                        break; // Uygun bir sonraki veri bulundu, döngüden çık
-                    } else {
-                        console.log('Sonraki kullanıcıya ait veri yok, bir sonraki index denenecek.');
-                        nextIndex++;
+                for (let i = currentIndex + 1; i < allStory.length; i++) {
+                    if (allStory[i].username !== current.username) {
+                        nextResult = allStory[i];
+                        break;
                     }
                 }
-            } else {
-                console.log('Veri bulunamadı.');
             }
 
-
-            console.log("prevResult: " + prevResult);
-            console.log("nextResult: " + nextResult);
-
-
-
-            res.render("story", { allStory, storySelected, nextResult, sessionUserName, prevResult,visitId,visitUsername });
+            res.json({ allStory, storySelected, nextResult, sessionUserName, prevResult, visitId, visitUsername });
         }
         catch (error) {
             console.log(error);
+            res.status(500).json({ error: "Bir hata oluştu" });
 
         }
 
@@ -78,9 +46,9 @@ class storyController {
 
 
 async uploadStory(req,res,photos, sessionUserName){
-    const photosName=photos[0].originalname;
+    const photosName=photos[0].filename;
     const a=await storyModel.storyAdd(photosName,sessionUserName);
-res.redirect("/");
+    res.json({ message: "Story eklendi" });
 }
 
 async storyDelete(username,user_id){

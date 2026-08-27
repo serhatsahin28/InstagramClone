@@ -1,0 +1,123 @@
+.edit-profile-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 65;
+    padding: 1rem;
+}
+
+.edit-profile-modal {
+    background: #262626;
+    color: #fff;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 420px;
+    overflow: hidden;
+}
+
+.edit-profile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid #363636;
+}
+
+.edit-profile-header h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.edit-profile-header span {
+    width: 1rem;
+}
+
+.edit-profile-close {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.edit-profile-form {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.edit-profile-photo-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.edit-profile-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.edit-profile-photo-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.edit-profile-photo-text .username {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.edit-profile-photo-btn {
+    color: #0095f6;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.edit-profile-label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.edit-profile-label textarea {
+    font-family: inherit;
+    font-weight: 400;
+    padding: 0.6rem;
+    border: 1px solid #363636;
+    background: #000;
+    color: #fff;
+    border-radius: 8px;
+    resize: vertical;
+}
+
+.edit-profile-counter {
+    font-weight: 400;
+    font-size: 0.75rem;
+    color: #8e8e8e;
+    text-align: right;
+}
+
+.edit-profile-submit {
+    background: #0095f6;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.6rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.edit-profile-submit:disabled {
+    opacity: 0.6;
+}

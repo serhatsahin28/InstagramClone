@@ -1,0 +1,171 @@
+.settings-page {
+    flex: 1;
+    padding: 2rem 1rem 5rem 2rem;
+    max-width: 940px;
+    width: 100%;
+    background-color: #000;
+    color: #fff;
+}
+
+.settings-page h2 {
+    margin-top: 0;
+}
+
+.settings-tabs {
+    display: flex;
+    gap: 1.75rem;
+    border-bottom: 1px solid #262626;
+    margin-bottom: 1.5rem;
+}
+
+.settings-tabs button {
+    background: none;
+    border: none;
+    color: #8e8e8e;
+    font-size: 0.9rem;
+    padding: 0 0 0.75rem;
+    cursor: pointer;
+}
+
+.settings-tabs button.active {
+    color: #fff;
+    font-weight: 700;
+    border-bottom: 2px solid #fff;
+}
+
+.settings-empty {
+    color: #8e8e8e;
+    font-size: 0.9rem;
+}
+
+.settings-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    max-width: 700px;
+}
+
+.settings-grid-item {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.settings-grid-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.settings-comment-thumb {
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    line-height: 0;
+    flex-shrink: 0;
+}
+
+.settings-comments {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+}
+
+.settings-comment-row {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #1a1a1a;
+}
+
+.settings-comment-row img {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+.settings-comment-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+}
+
+.settings-comment-text .comment-body {
+    font-size: 0.9rem;
+}
+
+.settings-comment-text .comment-owner {
+    font-size: 0.78rem;
+    color: #8e8e8e;
+    text-decoration: none;
+}
+
+.settings-privacy {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    max-width: 600px;
+    padding: 1rem 0;
+}
+
+.settings-privacy-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.settings-privacy-text .title {
+    font-weight: 600;
+}
+
+.settings-privacy-text .muted {
+    color: #8e8e8e;
+    font-size: 0.82rem;
+}
+
+.toggle {
+    width: 44px;
+    height: 24px;
+    border-radius: 12px;
+    background: #363636;
+    border: none;
+    position: relative;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.toggle.on {
+    background: #0095f6;
+}
+
+.toggle-dot {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #fff;
+    transition: transform 0.15s;
+}
+
+.toggle.on .toggle-dot {
+    transform: translateX(20px);
+}
+
+@media (max-width: 900px) {
+    .settings-page {
+        padding: 1.5rem 1rem 5rem;
+    }
+}

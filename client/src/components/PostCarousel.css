@@ -1,0 +1,70 @@
+.post-carousel {
+    position: relative;
+    width: 100%;
+    /* Instagram'daki gibi dikey gönderilere de yer bırakan yükseklik. */
+    height: 600px;
+    max-height: 80vh;
+    border-radius: 4px;
+    background-color: #000;
+    border: 1px solid #262626;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.post-carousel-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.post-carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.2rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.post-carousel-btn.prev {
+    left: 0.5rem;
+}
+
+.post-carousel-btn.next {
+    right: 0.5rem;
+}
+
+.post-carousel-dots {
+    position: absolute;
+    bottom: 0.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.3rem;
+}
+
+.dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.dot.active {
+    background: #fff;
+}
+
+@media (max-width: 640px) {
+    .post-carousel {
+        height: min(100vw, 480px);
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+    }
+}

@@ -63,8 +63,7 @@
         
 <%
 if(sessionUserStories.length>0){
-let storiesId=sessionUserStories[0]._id
-
+let storiesId=sessionUserStories[0]._id;
     <!-- console.log("sessionUserStories değeri boş değil"); -->
 
 
@@ -148,38 +147,45 @@ let storiesId=sessionUserStories[0]._id
                            
                             </div>
                             <div class="card-body " id="card-body">
-                                <div id="carouselExampleFade-<%=counter%>" class="carousel slide">
-                                    <div class="carousel-inner">
-                                        <% if (photo1 !== "" && photo1 !== null) { %>
-                                            <div class="carousel-item active">
-                                                <img class="card-post-<%=counter%>" id="postImage" src="/posts/<%=photo1%>" alt="Card image cap">
-                                            </div>
-                                        <% } %>
-                                        <% if (photo2 !== "" && photo2 !== null) { %>
-                                            <div class="carousel-item">
-                                                <img class="card-post-<%=counter%>" id="postImage" src="/posts/<%=photo2%>" alt="Card image cap">
-                                            </div>
-                                        <% } %>
-                                        <% if (photo3 !== "" && photo3 !== null) { %>
-                                            <div class="carousel-item">
-                                                <img class="card-post-<%=counter%>" id="postImage" src="/posts/<%=photo3%>" alt="Card image cap">
-                                            </div>
-                                        <% } %>
-                                        <% if (photo4 !== "" && photo4 !== null) { %>
-                                            <div class="carousel-item">
-                                                <img class="card-post-<%=counter%>" id="postImage" src="/posts/<%=photo4%>" alt="Card image cap">
-                                            </div>
-                                        <% } %>
+                                <div id="carouselExampleFade-<%= counter %>" data-bs-wrap="false"  class="carousel slide" data-bs-ride="false" data-interval="false">
+                                    <div class="carousel-indicators">
+                                        <% 
+                                        const photos = [photo1, photo2, photo3, photo4];
+                                        photos.forEach((photo, index) => {
+                                            if (photo) { 
+                                        %>
+                                            <button type="button"  data-bs-target="#carouselExampleFade-<%= counter %>" data-bs-slide-to="<%= index %>" class="<%= index === 0 ? 'active' : '' %>" aria-current="<%= index === 0 ? 'true' : 'false' %>"></button>
+                                        <% 
+                                            } 
+                                        }); 
+                                        %>
                                     </div>
-                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade-<%=counter%>" data-bs-slide="prev">
+                                    
+                                    <div class="carousel-inner">
+                                        <% 
+                                        photos.forEach((photo, index) => {
+                                            if (photo) { 
+                                        %>
+                                            <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                                                <img class="card-post-<%= counter %>" id="postImage" src="/posts/<%= photo %>" alt="Card image cap">
+                                            </div>
+                                        <% 
+                                            } 
+                                        }); 
+                                        %>
+                                    </div>
+                                
+                                    <button class="carousel-control-prev <% if (photos.filter(photo => photo).length < 2) { %>d-none<% } %>" type="button" data-bs-target="#carouselExampleFade-<%= counter %>" data-bs-slide="prev">
                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                         <span class="visually-hidden">Previous</span>
                                     </button>
-                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade-<%=counter%>" data-bs-slide="next">
+                                    
+                                    <button class="carousel-control-next <% if (photos.filter(photo => photo).length < 2) { %>d-none<% } %>" type="button" data-bs-target="#carouselExampleFade-<%= counter %>" data-bs-slide="next">
                                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                         <span class="visually-hidden">Next</span>
                                     </button>
                                 </div>
+                                
                                 
                                 
                             </div>
@@ -366,7 +372,31 @@ let storiesId=sessionUserStories[0]._id
   <div class="modal-dialog" id="commentDialog">
     <div class="modal-content " id="modal-content-comment">
        <div class="imgComment " id="imgComment">
-       
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+          
+            <div class="carousel-inner">
+              <div class="carousel-item1 active">
+                <img class="d-block " src=".../800x400?auto=yes&bg=777&fg=555&text=First slide" alt="First slide">
+              </div>
+              <div class="carousel-item2">
+                <img class="d-block " src=".../800x400?auto=yes&bg=666&fg=444&text=Second slide" alt="Second slide">
+              </div>
+              <div class="carousel-item3">
+                <img class="d-block " src=".../800x400?auto=yes&bg=555&fg=333&text=Third slide" alt="Third slide">
+              </div>
+              <div class="carousel-item 4">
+                <img class="d-block " src=".../800x400?auto=yes&bg=555&fg=333&text=Third slide" alt="Third slide">
+              </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
         </div>
     <div class="commentsScreen" id="commentsScreen">
         <div class="commentHeader" id="commentHeader">
@@ -790,28 +820,98 @@ let LikePhotoResult=null;
 
 
 
+const commentFooter2 = document.getElementById("commentFooter2");
 
-
-const commentFooter2=document.getElementById("commentFooter2");
+socket.on("commentPostReturn", ({ query, IslikedSession2, IslikedSession, post_id, postInfo }) => {
+    const LikePhotoEx = document.getElementById("likeIconComment");
+    const modalContent = document.getElementById("imgComment");
     
-socket.on("commentPostReturn",({ query, IslikedSession2,IslikedSession,post_id,postInfo})=>{
-    const LikePhotoEx=document.getElementById("likeIconComment");
-    const modalContent=document.getElementById("imgComment");
+    const imagePost = postInfo[0].photos[0].photo1;
 
-// console.log(modalContent);
-// console.log(postInfo);
-const imagePost=postInfo[0].photos[0].photo1;
+    // Slider içeriği
+    modalContent.innerHTML = ""; // Önceki içeriği temizle
 
-var postImageDiv=document.createElement("img");
-postImageDiv.id="imageComment";
-postImageDiv.src="/posts/"+imagePost;
-document.getElementById("imgComment").innerHTML = "";
+    // Slider yapısı
+    var carouselDiv = document.createElement("div");
+    carouselDiv.id = "carouselExampleIndicators";
+    carouselDiv.className = "carousel slide";
+    carouselDiv.setAttribute("data-ride", "carousel"); // Otomatik geçiş için bırakıyoruz
 
- modalContent.appendChild(postImageDiv);
-// Modal kapanma olayını dinleme
-$('#commentModalPost').on('hidden.bs.modal', function () {
-    document.getElementById("imgComment").innerHTML = "";
-});
+    var carouselInner = document.createElement("div");
+    carouselInner.className = "carousel-inner";
+
+    // İlk resim
+    var carouselItemActive = document.createElement("div");
+    carouselItemActive.className = "carousel-item active";
+
+    var modalPostImg1 = document.createElement("img");
+    modalPostImg1.className = "d-block";
+    modalPostImg1.src = "/posts/" + imagePost;
+    modalPostImg1.id="carousel-item1";
+
+    carouselItemActive.appendChild(modalPostImg1);
+    carouselInner.appendChild(carouselItemActive);
+
+    // Diğer resimleri ekleyin
+    for (let i = 2; i <= 4; i++) {
+        if (postInfo[0].photos[0]["photo" + i] !== "") {
+            var carouselItem = document.createElement("div");
+            carouselItem.className = "carousel-item";
+            carouselItem.id="carouselCommentModal";
+            var modalPostImg = document.createElement("img");
+            modalPostImg.className = "d-block";
+            modalPostImg.src = "/posts/" + postInfo[0].photos[0]["photo" + i];
+
+            carouselItem.appendChild(modalPostImg);
+            carouselInner.appendChild(carouselItem);
+        }
+    }
+
+    // Önceki ve sonraki butonlar
+    var prevButton = document.createElement("a");
+    prevButton.className = "carousel-control-prev";
+    prevButton.href = "#carouselExampleIndicators";
+    prevButton.setAttribute("role", "button");
+    prevButton.setAttribute("data-slide", "prev");
+
+    var prevIcon = document.createElement("span");
+    prevIcon.className = "carousel-control-prev-icon";
+    prevIcon.setAttribute("aria-hidden", "true");
+    prevButton.appendChild(prevIcon);
+
+    var prevText = document.createElement("span");
+    prevText.className = "sr-only";
+    prevText.innerText = "Previous";
+    prevButton.appendChild(prevText);
+
+    var nextButton = document.createElement("a");
+    nextButton.className = "carousel-control-next";
+    nextButton.href = "#carouselExampleIndicators";
+    nextButton.setAttribute("role", "button");
+    nextButton.setAttribute("data-slide", "next");
+
+    var nextIcon = document.createElement("span");
+    nextIcon.className = "carousel-control-next-icon";
+    nextIcon.setAttribute("aria-hidden", "true");
+    nextButton.appendChild(nextIcon);
+
+    var nextText = document.createElement("span");
+    nextText.className = "sr-only";
+    nextText.innerText = "Next";
+    nextButton.appendChild(nextText);
+
+    // Tüm yapıyı modal içeriğine ekleyin
+    carouselDiv.appendChild(carouselInner);
+    carouselDiv.appendChild(prevButton);
+    carouselDiv.appendChild(nextButton);
+    modalContent.appendChild(carouselDiv);
+
+    // Modal kapanma olayını dinleme
+    $('#commentModalPost').on('hidden.bs.modal', function () {
+        document.getElementById("imgComment").innerHTML = "";
+    });
+
+
 
 
 
@@ -1268,6 +1368,41 @@ console.log("delete kısmı çalıştı");
 
 });
 
+    // Buraya JavaScript kodunu yerleştirin
+
+    document.addEventListener('DOMContentLoaded', function() {
+  const carousels = document.querySelectorAll('[id^="carouselExampleFade-"]');
+
+  carousels.forEach(carousel => {
+    const prevButton = carousel.querySelector('.carousel-control-prev');
+    const nextButton = carousel.querySelector('.carousel-control-next');
+    const slides = carousel.querySelectorAll('.carousel-item');
+
+    function checkButtons() {
+      const activeSlideIndex = Array.from(slides).findIndex(slide => slide.classList.contains('active'));
+
+      // İlk slayttaysa prev butonunu gizle
+      if (activeSlideIndex === 0) {
+        prevButton.style.display = 'none';
+      } else {
+        prevButton.style.display = 'block';
+      }
+
+      // Son slayttaysa next butonunu gizle
+      if (activeSlideIndex === slides.length - 1) {
+        nextButton.style.display = 'none';
+      } else {
+        nextButton.style.display = 'block';
+      }
+    }
+
+    // Slayt her değiştiğinde butonları kontrol et
+    carousel.addEventListener('slid.bs.carousel', checkButtons);
+
+    // Sayfa yüklendiğinde butonları kontrol et
+    checkButtons();
+  });
+});
 
 </script>
 

@@ -73,28 +73,27 @@ class Profile extends UserController {
 
 
       if (username == userName) {
-        res.render("profile", { result, posts, userName, sessionProfilePicture, userProfileName,followedProfile,followersProfile,findProfilePosts,noticeFollow,followersTrue });
+        res.json({ view: "profile", result, posts, userName, sessionProfilePicture, userProfileName, followedProfile, followersProfile, findProfilePosts, noticeFollow, followersTrue });
 
       }
       else {
         if (isPrivate == true && Isfollowed == true) {
-          res.render("otherProfile", { result, posts, userName, sessionProfileName, followData, sessionProfilePicture, userProfileName,followedProfile,followersProfile,findProfilePosts,noticeFollow,followersTrue});
+          res.json({ view: "otherProfile", result, posts, userName, sessionProfileName, followData, sessionProfilePicture, userProfileName, followedProfile, followersProfile, findProfilePosts, noticeFollow, followersTrue });
         }
-        else if(isPrivate!=true)
-        {
-          res.render("otherProfile", { result, posts, userName, sessionProfileName, followData, sessionProfilePicture, userProfileName,followedProfile,followersProfile,findProfilePosts,noticeFollow,followersTrue});
-
+        else if (isPrivate != true) {
+          res.json({ view: "otherProfile", result, posts, userName, sessionProfileName, followData, sessionProfilePicture, userProfileName, followedProfile, followersProfile, findProfilePosts, noticeFollow, followersTrue });
 
         }
         else {
 
-          res.render("privateOtherProfile", { result, posts, userName, sessionProfileName, followData, sessionProfilePicture, userProfileName,followedProfile,followersProfile,findProfilePosts,noticeFollow,followersTrue });
+          res.json({ view: "privateOtherProfile", result, posts, userName, sessionProfileName, followData, sessionProfilePicture, userProfileName, followedProfile, followersProfile, findProfilePosts, noticeFollow, followersTrue });
 
         }
       }
     }
     catch (err) {
       console.log(err);
+      res.status(500).json({ error: "Bir hata oluştu" });
 
     }
 
@@ -152,6 +151,52 @@ class Profile extends UserController {
     await UserModel.followRequest(sessionUserName, otherUserId, sessionUserProfile, otherUserName, profileName, profilePicture, userSessionPicture, sessionProfileName);
   }
 
+
+  // Bir kullanıcının takipçileri (onu takip edenler) veya takip ettikleri.
+  async followList(req, res, username, kind) {
+    try {
+      const follow = require("../Model/table/follow");
+      const User = require("../Model/table/dbUsers");
+
+      let usernames = [];
+
+      if (kind === "followers") {
+        const docs = await follow.find({ "followed.username": username, "followed.situation": true });
+        usernames = docs.map((d) => d.userName);
+      } else {
+        const docs = await follow.find({ userName: username, "followed.situation": true });
+        for (const doc of docs) {
+          for (const f of doc.followed) {
+            if (f.situation) usernames.push(f.username);
+          }
+        }
+      }
+
+      const users = await User.find(
+        { username: { $in: usernames } },
+        "username profileName profilePicture"
+      );
+
+      res.json({ users });
+    } catch (err) {
+      console.log("followList: " + err);
+      res.status(500).json({ error: "Liste alınamadı" });
+    }
+  }
+
+  async reqFollow(req, res, sessionUserName, userId, userName, userProfileName, userProfilePicture) {
+    try {
+      const sessionUserInfo = await UserModel.findUserByUsername(sessionUserName);
+      const sessionProfileName = sessionUserInfo[0].profileName;
+      const sessionUserPicture = sessionUserInfo[0].profilePicture;
+
+      await UserModel.followRequest(sessionUserName, userId, sessionUserName, userName, userProfileName, userProfilePicture, sessionUserPicture, sessionProfileName);
+      res.json({ message: "Takip isteği gönderildi" });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ error: "Bir hata oluştu" });
+    }
+  }
 
   async unfollowProfile(userName, formData) {
     const profileName = formData.profileName;

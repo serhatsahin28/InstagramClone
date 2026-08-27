@@ -109,6 +109,11 @@ a:active {
 
 }
 
+.carousel-item {
+    transition: transform 0.05s ease-in-out !important;
+    /* Geçiş animasyonunu 0.1 saniyeye indir */
+}
+
 #card-img-top {
     width: 6vh;
     height: 6vh;
@@ -651,6 +656,45 @@ a:active {
     /* Yükseklik otomatik */
 }
 
+
+#carousel-item1{
+    height: 500px;
+}
+.d-block{
+    height: 500px;
+    width: 100%;
+}
+
+#carouselCommentModal{
+height: 500px;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @media screen and (max-width:1024px) {
 
     body {
@@ -845,6 +889,20 @@ a:active {
 
 
 
+    #commentModalPost {
+        width: 90%;
+        margin-left: 5%;
+        margin-top: 25%;
+        height: 45%;
+        overflow-y: hidden;
+    }
+
+    #imageComment {
+        width: 35%;
+        height: 45%;
+        background-color: #d07814;
+        margin-left: 25%;
+    }
 
 
 
@@ -856,5 +914,7 @@ a:active {
 
 
 
-    
+
+
+
 }

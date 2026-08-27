@@ -1,74 +1,87 @@
-const express = require("express");
-const app = express();
-
 const a = require("../Model/messageModel");
+const messageTable = require("../Model/table/dbMessages");
+const follow = require("../Model/table/follow");
+const User = require("../Model/table/dbUsers");
+
+function timeOf(id) {
+    return id && id.getTimestamp ? id.getTimestamp().getTime() : 0;
+}
+
+// Oturum sahibinin karşılıklı yazıştığı her kullanıcı için tek bir konuşma özeti üretir.
+async function buildInbox(sessionUserName) {
+    const all = await a.directInBox(sessionUserName);
+
+    const followedDocs = await follow.find({ userName: sessionUserName, "followed.situation": true });
+    const iFollow = new Set();
+    for (const doc of followedDocs) {
+        for (const f of doc.followed) {
+            if (f.situation) iFollow.add(f.username);
+        }
+    }
+
+    const threads = new Map();
+
+    for (const msg of all) {
+        const isSender = msg.senderUser === sessionUserName;
+        const otherUsername = isSender ? msg.sentUsername : msg.senderUser;
+        const otherUserId = isSender ? msg.sentUserId : msg.senderId;
+        const otherUserImage = isSender ? msg.sentUserImage : msg.senderImage;
+
+        const time = timeOf(msg._id);
+        const existing = threads.get(otherUsername);
+
+        if (!existing || time > existing.lastTime) {
+            threads.set(otherUsername, {
+                _id: String(msg._id),
+                otherUsername,
+                otherUserId,
+                otherUserImage,
+                lastMessage: msg.message,
+                lastFromMe: isSender,
+                lastTime: time,
+                accepted: existing?.accepted || !!msg.accepted,
+                hasIncoming: existing?.hasIncoming || !isSender
+            });
+        } else {
+            existing.accepted = existing.accepted || !!msg.accepted;
+            existing.hasIncoming = existing.hasIncoming || !isSender;
+        }
+    }
+
+    const list = Array.from(threads.values()).sort((x, y) => y.lastTime - x.lastTime);
+
+    // Takip etmediğim ve henüz kabul etmediğim kişilerden gelenler "istek" sayılır.
+    const inbox = [];
+    const requests = [];
+    for (const t of list) {
+        const isRequest = !iFollow.has(t.otherUsername) && !t.accepted && t.hasIncoming;
+        (isRequest ? requests : inbox).push(t);
+    }
+
+    return { inbox, requests };
+}
 
 class messageController {
 
-
     async messageInbox(req, res, sessionUserName) {
-        const directInbox = await a.directInBox(sessionUserName);
-        const profilePicture = req.session.user.profilePicture;
-        const uniqueUserMap = new Map();
-
-        const newDirectInbox = directInbox.reduce((result, current) => {
-            const key = [current.sentUsername, current.senderUser].sort().join('-');
-
-            if (!uniqueUserMap.has(key)) {
-                uniqueUserMap.set(key, true);
-
-                result.push({
-                    _id: current._id,
-                    senderId: current.senderId,
-                    senderUser: current.senderUser,
-                    senderImage: current.senderImage,
-                    sentUsername: current.sentUsername,
-                    sentUserImage: current.sentUserImage,
-                    sentUserId: current.sentUserId,
-                });
-            }
-            return result;
-        }, []);
-
-
-        console.log("Mapped Direct messageInbox Inbox:", newDirectInbox);
-
-        res.render("messages", { newDirectInbox, sessionUserName,profilePicture });
-    }
-
-
-
-    async messageUser(req, res, sessionUserName, userId) {
-
         try {
-            const directInbox = await a.directInBox(sessionUserName);
-            let messagesInfo = await a.directUserMessages(sessionUserName, userId);
-            let messagesUser = await a.messagesUser(userId);
-            console.log("messagesUser: " + messagesUser);
-            // console.log(directInbox);
-            const uniqueUserMap = new Map();
+            const { inbox, requests } = await buildInbox(sessionUserName);
             const profilePicture = req.session.user.profilePicture;
 
+            res.json({ newDirectInbox: inbox, requests, sessionUserName, profilePicture });
+        } catch (err) {
+            console.log("messageInbox: " + err);
+            res.status(500).json({ error: "Bir hata oluştu" });
+        }
+    }
 
-            const newDirectInbox = directInbox.reduce((result, current) => {
-                const key = [current.sentUsername, current.senderUser].sort().join('-');
+    async messageUser(req, res, sessionUserName, userId) {
+        try {
+            const { inbox, requests } = await buildInbox(sessionUserName);
 
-                if (!uniqueUserMap.has(key)) {
-                    uniqueUserMap.set(key, true);
-
-                    result.push({
-                        _id: current._id,
-                        senderId: current.senderId,
-                        senderUser: current.senderUser,
-                        senderImage: current.senderImage,
-                        sentUsername: current.sentUsername,
-                        sentUserImage: current.sentUserImage,
-                        sentUserId: current.sentUserId,
-                    });
-                }
-                return result;
-            }, []);
-
+            const messagesInfo = await a.directUserMessages(sessionUserName, userId);
+            const messagesUser = await a.messagesUser(userId);
+            const profilePicture = req.session.user.profilePicture;
 
             const otherUser = {
                 otherUserId: messagesUser._id,
@@ -76,50 +89,80 @@ class messageController {
                 otherUserImage: messagesUser.profilePicture
             };
 
-
-
-
-
-
-            const sessionPicture = req.session.user.profilePicture;
-            res.render("messages", { newDirectInbox, sessionUserName, messagesInfo, messagesUser, sessionPicture, otherUser ,profilePicture});
-
-
+            res.json({
+                newDirectInbox: inbox,
+                requests,
+                sessionUserName,
+                messagesInfo,
+                messagesUser,
+                sessionPicture: profilePicture,
+                otherUser,
+                profilePicture
+            });
+        } catch (err) {
+            console.log("messageUser: " + err);
+            res.status(500).json({ error: "Bir hata oluştu" });
         }
-        catch (err) {
-
-            console.log(err);
-        }
-
-
     }
 
+    // Yeni mesaj başlatmak için seçilebilecek kullanıcılar: takip ettiklerim.
+    async candidates(req, res, sessionUserName) {
+        try {
+            const docs = await follow.find({ userName: sessionUserName, "followed.situation": true });
+            const usernames = [];
+            for (const doc of docs) {
+                for (const f of doc.followed) {
+                    if (f.situation) usernames.push(f.username);
+                }
+            }
 
+            const users = await User.find({ username: { $in: usernames } }, "username profileName profilePicture");
+            res.json({ users });
+        } catch (err) {
+            console.log("candidates: " + err);
+            res.status(500).json({ error: "Bir hata oluştu" });
+        }
+    }
 
+    async acceptRequest(req, res, sessionUserName, otherUsername) {
+        try {
+            await messageTable.updateMany(
+                {
+                    $or: [
+                        { senderUser: otherUsername, sentUsername: sessionUserName },
+                        { senderUser: sessionUserName, sentUsername: otherUsername }
+                    ]
+                },
+                { $set: { accepted: true } }
+            );
+            res.json({ message: "İstek kabul edildi" });
+        } catch (err) {
+            console.log("acceptRequest: " + err);
+            res.status(500).json({ error: "Bir hata oluştu" });
+        }
+    }
 
+    async deleteRequest(req, res, sessionUserName, otherUsername) {
+        try {
+            await messageTable.deleteMany({
+                $or: [
+                    { senderUser: otherUsername, sentUsername: sessionUserName },
+                    { senderUser: sessionUserName, sentUsername: otherUsername }
+                ]
+            });
+            res.json({ message: "İstek silindi" });
+        } catch (err) {
+            console.log("deleteRequest: " + err);
+            res.status(500).json({ error: "Bir hata oluştu" });
+        }
+    }
 
     async messageSent(visitedUsername, sessionUserName, newMessage) {
         const visitUser = await a.visitUser(visitedUsername);
         const sessionUser = await a.sessionUser(sessionUserName);
-        const allMessages = await a.fetchAllMessages(sessionUserName, visitedUsername);
 
-        const createNewMessage = await a.createNewMessage(sessionUserName, visitUser, sessionUser, newMessage);
-
-
+        await a.createNewMessage(sessionUserName, visitUser, sessionUser, newMessage);
     }
-
-
-
-
-
-
-
-
-
-
-
-
 }
-
 
 module.exports = messageController;

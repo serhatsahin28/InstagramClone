@@ -1,0 +1,93 @@
+.notification-row {
+    align-items: flex-start;
+}
+
+.notification-text {
+    font-size: 0.875rem;
+    line-height: 1.35;
+    color: #fff;
+    word-break: break-word;
+}
+
+.notification-user {
+    font-weight: 600;
+    color: #fff;
+    text-decoration: none;
+}
+
+.notification-user:hover {
+    text-decoration: underline;
+}
+
+.notification-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    flex-shrink: 0;
+}
+
+.notification-actions button {
+    border: none;
+    border-radius: 6px;
+    padding: 0.3rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.notification-actions .accept {
+    background: #0095f6;
+    color: #fff;
+}
+
+.notification-actions .reject {
+    background: #363636;
+    color: #fff;
+}
+
+.notification-divider {
+    height: 1px;
+    background: #262626;
+    margin: 0.75rem 1.5rem;
+}
+
+/* Birden fazla takip isteği tek satırda toplanır, tıklayınca açılır. */
+.requests-summary {
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+}
+
+.requests-avatars {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.requests-avatars img {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #000;
+    position: relative;
+}
+
+.requests-chevron {
+    color: #8e8e8e;
+    font-size: 1.3rem;
+    line-height: 1;
+    flex-shrink: 0;
+    transition: transform 0.15s ease;
+}
+
+.requests-chevron.open {
+    transform: rotate(90deg);
+}
+
+.requests-expanded {
+    border-left: 2px solid #262626;
+    margin-left: 2rem;
+}

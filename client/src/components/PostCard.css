@@ -1,0 +1,120 @@
+.post-card {
+    border-bottom: 1px solid #262626;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    background: #000;
+    max-width: 600px;
+    width: 100%;
+}
+
+.post-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.75rem 0.25rem;
+}
+
+.post-card-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.post-card-username {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #fff;
+    text-decoration: none;
+    flex: 1;
+}
+
+.post-card-dots {
+    width: 18px;
+    height: 18px;
+}
+
+.post-card-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.7rem 0.25rem 0.4rem;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    line-height: 0;
+}
+
+.icon-btn img {
+    width: 26px;
+    height: 26px;
+}
+
+/* Kaydet ikonu en sağa yaslanır. */
+.save-btn {
+    margin-left: auto;
+}
+
+.save-btn.saved img {
+    filter: drop-shadow(0 0 3px #fff);
+}
+
+.post-card-likes {
+    display: block;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.15rem 0.25rem;
+    cursor: pointer;
+}
+
+.post-card-likes:hover {
+    color: #8e8e8e;
+}
+
+.post-card-caption {
+    padding: 0.25rem 0.25rem;
+    font-size: 0.9rem;
+    margin: 0;
+    color: #fff;
+    line-height: 1.35;
+}
+
+.post-card-caption-user {
+    font-weight: 600;
+    color: #fff;
+    text-decoration: none;
+}
+
+.post-card-comments-link {
+    background: none;
+    border: none;
+    color: #8e8e8e;
+    font-size: 0.875rem;
+    padding: 0.25rem;
+    cursor: pointer;
+    display: block;
+}
+
+/* Telefonda kenardan kenara; tablette 600px'te sabit kalır. */
+@media (max-width: 640px) {
+    .post-card {
+        max-width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    .post-card-header,
+    .post-card-actions,
+    .post-card-caption,
+    .post-card-likes,
+    .post-card-comments-link {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+}

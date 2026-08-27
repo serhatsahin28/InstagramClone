@@ -1,0 +1,96 @@
+.user-list-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 66;
+    padding: 1rem;
+}
+
+.user-list-modal {
+    background: #262626;
+    color: #fff;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 400px;
+    max-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.user-list-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid #363636;
+}
+
+.user-list-header h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.user-list-header span {
+    width: 1rem;
+}
+
+.user-list-close {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.user-list-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.5rem 0;
+}
+
+.user-list-hint {
+    color: #8e8e8e;
+    font-size: 0.85rem;
+    padding: 1rem;
+    margin: 0;
+}
+
+.user-list-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    color: #fff;
+}
+
+.user-list-item:hover {
+    background: #1a1a1a;
+}
+
+.user-list-item img {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-list-item-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-list-item-text .username {
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.user-list-item-text .muted {
+    font-size: 0.8rem;
+    color: #8e8e8e;
+}
