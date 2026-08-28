@@ -1,5 +1,5 @@
-import { useEffect, useState, useCallback } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { api, profileImage } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import "./Story.css";
@@ -8,44 +8,119 @@ export default function Story() {
     const { username, id } = useParams();
     const navigate = useNavigate();
     const { feed } = useAuth();
-    const [data, setData] = useState(null);
 
-    const load = useCallback(() => {
-        api.get(`/stories/${username}/${id}`).then(setData);
-    }, [username, id]);
+    const [stories, setStories] = useState(null);
+    const [index, setIndex] = useState(0);
+
+    // Liste yalnizca bir kez cekilir; ileri/geri tamamen istemci tarafinda
+    // ilerledigi icin her gecis aninda olur, yeniden istek atilmaz.
+    const fetched = useRef(false);
 
     useEffect(() => {
-        load();
-    }, [load]);
+        if (fetched.current) return;
+        fetched.current = true;
+
+        api.get(`/stories/${username}/${id}`)
+            .then((res) => {
+                const list = res.allStory || [];
+                const start = list.findIndex((s) => String(s._id) === String(id));
+
+                setStories(list);
+                setIndex(start >= 0 ? start : 0);
+            })
+            .catch(() => setStories([]));
+    }, [username, id]);
+
+    const current = stories?.[index] || null;
+
+    // Adres cubugu goruntulenen hikayeyi yansitsin (yeniden istek atmadan).
+    useEffect(() => {
+        if (!current) return;
+        navigate(`/stories/${current.username}/${current._id}`, { replace: true });
+    }, [current, navigate]);
+
+    // Komsu gorseller onceden indirilir; gecis beklemesiz olur.
+    useEffect(() => {
+        if (!stories) return;
+
+        for (const i of [index + 1, index - 1]) {
+            const s = stories[i];
+            if (s) {
+                const img = new Image();
+                img.src = profileImage(s.storie);
+            }
+        }
+    }, [index, stories]);
+
+    const goPrev = useCallback(() => setIndex((i) => Math.max(0, i - 1)), []);
+    const goNext = useCallback(
+        () => setIndex((i) => Math.min((stories?.length || 1) - 1, i + 1)),
+        [stories]
+    );
+
+    useEffect(() => {
+        function onKey(e) {
+            if (e.key === "ArrowLeft") goPrev();
+            else if (e.key === "ArrowRight") goNext();
+            else if (e.key === "Escape") navigate("/");
+        }
+        window.addEventListener("keydown", onKey);
+        return () => window.removeEventListener("keydown", onKey);
+    }, [goPrev, goNext, navigate]);
 
     async function handleDelete() {
-        if (!data) return;
-        await api.delete(`/stories/${data.storySelected[0]._id}`, { storyId: data.storySelected[0]._id });
-        navigate("/");
+        if (!current) return;
+
+        await api.delete(`/stories/${current._id}`, { storyId: current._id });
+
+        const remaining = stories.filter((s) => s._id !== current._id);
+        if (remaining.length === 0) {
+            navigate("/");
+            return;
+        }
+
+        setStories(remaining);
+        setIndex(Math.min(index, remaining.length - 1));
     }
 
-    if (!data) return null;
+    if (!stories) return <div className="story-page" />;
+    if (!current) return null;
 
-    const story = data.storySelected[0];
-    const isOwn = story.username === feed?.userName;
+    const isOwn = current.username === feed?.userName;
+
+    // Ust cubuk, o an goruntulenen kullanicinin hikaye sayisini gosterir.
+    const sameUser = stories.filter((s) => s.username === current.username);
+    const sameUserIndex = sameUser.findIndex((s) => s._id === current._id);
 
     return (
         <div className="story-page">
             <div className="story-viewer">
+                <div className="story-progress">
+                    {sameUser.map((s, i) => (
+                        <span key={s._id} className={i <= sameUserIndex ? "seen" : undefined} />
+                    ))}
+                </div>
+
                 <button className="story-close" onClick={() => navigate("/")}>✕</button>
 
                 <header className="story-viewer-header">
-                    <img src={profileImage(story.profilePicture)} alt="" />
-                    <span>{story.username}</span>
+                    <img src={profileImage(current.profilePicture)} alt="" />
+                    <span>{current.username}</span>
                 </header>
 
-                <img className="story-viewer-image" src={profileImage(story.storie)} alt="" />
+                <img
+                    className="story-viewer-image"
+                    src={profileImage(current.storie)}
+                    alt=""
+                    // Aynı <img> yeniden kullanilinca eski kare kisa sure gorunuyordu.
+                    key={current._id}
+                />
 
-                {data.prevResult && (
-                    <Link className="story-nav prev" to={`/stories/${data.prevResult.username}/${data.prevResult._id}`}>‹</Link>
+                {index > 0 && (
+                    <button className="story-nav prev" onClick={goPrev} aria-label="Önceki">‹</button>
                 )}
-                {data.nextResult && (
-                    <Link className="story-nav next" to={`/stories/${data.nextResult.username}/${data.nextResult._id}`}>›</Link>
+                {index < stories.length - 1 && (
+                    <button className="story-nav next" onClick={goNext} aria-label="Sonraki">›</button>
                 )}
 
                 {isOwn && (

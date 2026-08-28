@@ -17,9 +17,31 @@
     background: #000;
 }
 
+/* Instagram'daki gibi ust segment cubugu: kullanicinin kac hikayesi var. */
+.story-progress {
+    position: absolute;
+    top: 0.6rem;
+    left: 0.75rem;
+    right: 0.75rem;
+    z-index: 3;
+    display: flex;
+    gap: 3px;
+}
+
+.story-progress span {
+    flex: 1;
+    height: 2px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.35);
+}
+
+.story-progress span.seen {
+    background: #fff;
+}
+
 .story-viewer-header {
     position: absolute;
-    top: 1rem;
+    top: 1.75rem;
     left: 1rem;
     z-index: 2;
     display: flex;
@@ -44,7 +66,7 @@
 
 .story-close {
     position: absolute;
-    top: 1rem;
+    top: 1.75rem;
     right: 1rem;
     z-index: 2;
     background: none;
@@ -61,13 +83,21 @@
     color: #fff;
     text-decoration: none;
     font-size: 2rem;
-    background: rgba(0, 0, 0, 0.3);
+    line-height: 1;
+    background: rgba(0, 0, 0, 0.45);
+    border: none;
     border-radius: 50%;
     width: 2.5rem;
     height: 2.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+    padding: 0;
+}
+
+.story-nav:hover {
+    background: rgba(0, 0, 0, 0.7);
 }
 
 .story-nav.prev {
