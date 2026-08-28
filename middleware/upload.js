@@ -76,23 +76,35 @@ function makeDiskStorage(destination) {
 // klasorunde tutulur. CLOUDINARY_FOLDER ile bu ad degistirilebilir.
 const CLOUD_FOLDER = (process.env.CLOUDINARY_FOLDER || "instagram-clone").replace(/^\/+|\/+$/g, "");
 
-function makeCloudStorage(folder) {
+function makeCloudStorage(folder, resourceType) {
     return new CloudinaryStorage({
         cloudinary,
         params: {
             folder: `${CLOUD_FOLDER}/${folder}`,
-            resource_type: "image",
+            resource_type: resourceType,
             public_id: () => crypto.randomUUID()
         }
     });
 }
 
-function makeStorage(diskDestination, cloudFolder) {
-    return useCloudinary ? makeCloudStorage(cloudFolder) : makeDiskStorage(diskDestination);
+function makeStorage(diskDestination, cloudFolder, resourceType = "image") {
+    return useCloudinary ? makeCloudStorage(cloudFolder, resourceType) : makeDiskStorage(diskDestination);
 }
 
 const uploadPost = multer({ storage: makeStorage("images/posts", "posts") });
 const uploadProfile = multer({ storage: makeStorage("images/users_profile", "users_profile") });
+
+// Reels: video dosyasi kabul eder. Cloudinary'de resource_type "video"
+// olarak yuklenir; yerel diskte diger yuklemelerle ayni sekilde saklanir.
+const uploadReel = multer({
+    storage: makeStorage("images/reels", "reels", "video"),
+    fileFilter: (req, file, cb) => {
+        if (!file.mimetype.startsWith("video/")) {
+            return cb(new Error("Sadece video dosyası yüklenebilir"));
+        }
+        cb(null, true);
+    }
+});
 
 // Cloudinary'de file.path tam URL, diskte ise sadece dosya adi doner.
 // Veritabanina her iki durumda da dogru deger yazilsin diye tek yerden okunur.
@@ -101,4 +113,4 @@ function storedFileName(file) {
     return useCloudinary ? file.path : file.filename;
 }
 
-module.exports = { uploadPost, uploadProfile, storedFileName, useCloudinary };
+module.exports = { uploadPost, uploadProfile, uploadReel, storedFileName, useCloudinary };

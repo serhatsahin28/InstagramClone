@@ -1,0 +1,105 @@
+.reel-card {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    height: calc(100vh - 2rem);
+    margin: 0 auto;
+    scroll-snap-align: center;
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.reel-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.reel-mute-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(0, 0, 0, 0.45);
+    border: none;
+    border-radius: 50%;
+    width: 2.25rem;
+    height: 2.25rem;
+    font-size: 1rem;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.reel-overlay-bottom {
+    position: absolute;
+    left: 0;
+    right: 4rem;
+    bottom: 1rem;
+    z-index: 2;
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    padding: 0 1rem;
+}
+
+.reel-user {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: #fff;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+}
+
+.reel-user img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.reel-caption {
+    margin: 0;
+    font-size: 0.85rem;
+}
+
+.reel-side-actions {
+    position: absolute;
+    right: 0.75rem;
+    bottom: 1rem;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.reel-side-actions button {
+    background: none;
+    border: none;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    cursor: pointer;
+}
+
+.reel-side-actions img {
+    width: 28px;
+    height: 28px;
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.8));
+}
+
+.reel-side-actions span {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.reel-delete-label {
+    color: #ed4956;
+    font-weight: 600;
+    font-size: 0.8rem;
+}

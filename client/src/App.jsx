@@ -14,7 +14,7 @@ import Messages from "./pages/Messages";
 import Settings from "./pages/Settings";
 import Explore from "./pages/Explore";
 import HashtagPage from "./pages/HashtagPage";
-import Placeholder from "./pages/Placeholder";
+import Reels from "./pages/Reels";
 
 function withAuth(element) {
     return <ProtectedRoute>{element}</ProtectedRoute>;
@@ -34,7 +34,7 @@ export default function App() {
                                 <Route path="/" element={withAuth(<Home />)} />
                                 <Route path="/explore" element={withAuth(<Explore />)} />
                                 <Route path="/explore/tags/:tag" element={withAuth(<HashtagPage />)} />
-                                <Route path="/reels" element={withAuth(<Placeholder title="Reels" />)} />
+                                <Route path="/reels" element={withAuth(<Reels />)} />
                                 <Route path="/direct/inbox" element={withAuth(<Messages />)} />
                                 <Route path="/direct/:id" element={withAuth(<Messages />)} />
                                 <Route path="/stories/:username/:id" element={withAuth(<Story />)} />
