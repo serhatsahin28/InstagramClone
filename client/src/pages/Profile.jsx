@@ -7,6 +7,7 @@ import Sidebar from "../components/Sidebar";
 import EditProfileModal from "../components/EditProfileModal";
 import UserListModal from "../components/UserListModal";
 import PostModal from "../components/PostModal";
+import HighlightViewer from "../components/HighlightViewer";
 import "./Profile.css";
 
 export default function Profile() {
@@ -19,6 +20,14 @@ export default function Profile() {
     const [showEdit, setShowEdit] = useState(false);
     const [userList, setUserList] = useState(null); // "followers" | "following"
     const [openPost, setOpenPost] = useState(null);
+    const [highlights, setHighlights] = useState([]);
+    const [openHighlight, setOpenHighlight] = useState(null);
+
+    const loadHighlights = useCallback(() => {
+        api.get(`/highlights/${username}`).then((res) => setHighlights(res.highlights || [])).catch(() => setHighlights([]));
+    }, [username]);
+
+    useEffect(() => { loadHighlights(); }, [loadHighlights]);
 
     const load = useCallback(() => {
         return api.get(`/users/${username}`).then((res) => {
@@ -135,6 +144,17 @@ export default function Profile() {
                     </div>
                 </header>
 
+                {highlights.length > 0 && (
+                    <div className="profile-highlights">
+                        {highlights.map((h) => (
+                            <button key={h._id} className="profile-highlight-item" onClick={() => setOpenHighlight(h)}>
+                                <img loading="lazy" decoding="async" src={profileImage(h.stories[0])} alt="" />
+                                <span>{h.title}</span>
+                            </button>
+                        ))}
+                    </div>
+                )}
+
                 {isPrivateLocked ? (
                     <p className="profile-private-note">Bu hesap gizli. Gönderileri görmek için takip etmelisin.</p>
                 ) : data.posts?.length ? (
@@ -182,6 +202,15 @@ export default function Profile() {
                     onEdited={() => load()}
                     likedByMe={likedPostIds.has(String(openPost._id))}
                     savedByMe={savedPostIds.has(String(openPost._id))}
+                />
+            )}
+
+            {openHighlight && (
+                <HighlightViewer
+                    highlight={openHighlight}
+                    isOwn={isOwn}
+                    onClose={() => setOpenHighlight(null)}
+                    onDeleted={loadHighlights}
                 />
             )}
         </div>

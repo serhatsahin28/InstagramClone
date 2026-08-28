@@ -69,6 +69,7 @@ app.use("/api/stories", require("./routes/stories"));
 app.use("/api/messages", require("./routes/messages"));
 app.use("/api/notifications", require("./routes/notifications"));
 app.use("/api/follow", require("./routes/follow"));
+app.use("/api/highlights", require("./routes/highlights"));
 
 const { useCloudinary } = require("./middleware/upload");
 

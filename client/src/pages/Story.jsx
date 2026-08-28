@@ -114,6 +114,19 @@ export default function Story() {
         setIndex(Math.min(index, remaining.length - 1));
     }
 
+    async function handleAddToHighlight() {
+        setShowMenu(false);
+        const title = window.prompt("Öne çıkan adı (yeni ya da mevcut bir isim yaz):");
+        if (!title || !title.trim()) return;
+
+        try {
+            await api.post("/highlights", { title, storyId: current._id });
+            window.alert(`"${title.trim()}" öne çıkanına eklendi.`);
+        } catch (err) {
+            window.alert(err.data?.error || "Eklenemedi");
+        }
+    }
+
     async function toggleLike() {
         const next = !liked;
         setLiked(next);
@@ -175,6 +188,7 @@ export default function Story() {
                         <>
                             <div className="story-menu-backdrop" onClick={() => setShowMenu(false)} />
                             <div className="story-menu-dropdown">
+                                <button onClick={handleAddToHighlight}>Öne Çıkar</button>
                                 <button onClick={handleDelete}>Sil</button>
                             </div>
                         </>
