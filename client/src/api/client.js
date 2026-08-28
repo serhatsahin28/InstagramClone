@@ -1,6 +1,20 @@
-// Production'da Vercel ortam değişkeninden gelir (VITE_API_BASE),
-// geliştirmede yerel backend'e düşer.
-export const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:3000";
+// Yayindaki backend adresi. Gizli bir bilgi degil; tarayiciya inen pakete
+// zaten gomuluyor, bu yuzden ortam degiskeni zorunlu tutulmuyor.
+const PRODUCTION_API = "https://instagram-clone-api-gwl1.onrender.com";
+const LOCAL_API = "http://localhost:3000";
+
+function resolveApiBase() {
+    // Ortam degiskeni verilmisse her zaman o kazanir.
+    if (import.meta.env.VITE_API_BASE) return import.meta.env.VITE_API_BASE;
+
+    // Yerelde calisiyorsak yerel backend'e, aksi halde yayindakine baglan.
+    const host = typeof window !== "undefined" ? window.location.hostname : "";
+    const isLocal = host === "localhost" || host === "127.0.0.1";
+
+    return isLocal ? LOCAL_API : PRODUCTION_API;
+}
+
+export const API_BASE = resolveApiBase();
 
 async function request(path, options = {}) {
     const res = await fetch(`${API_BASE}/api${path}`, {
