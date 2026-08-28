@@ -165,8 +165,7 @@ async postDelete(data){
 
 const sessionUserName=data.sessionUserName;
 const postId=data.imgId;
-console.log("postController.js sayfasında postDelete fonksiyonu içerisinde ");
-const deletePost=await postUser.deletePost(postId);
+return await postUser.deletePost(postId, sessionUserName);
 
 }
 

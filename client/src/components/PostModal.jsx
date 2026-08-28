@@ -2,7 +2,7 @@ import usePostActions from "../hooks/usePostActions";
 import CommentModal from "./CommentModal";
 
 // Izgaradan (profil, kaydedilenler, beğenilenler, yorumlar) açılan gönderi.
-export default function PostModal({ post, onClose, likedByMe, savedByMe }) {
+export default function PostModal({ post, onClose, onDeleted, likedByMe, savedByMe }) {
     const { liked, toggleLike, saved, toggleSave } = usePostActions(post, likedByMe, savedByMe);
 
     if (!post) return null;
@@ -11,6 +11,7 @@ export default function PostModal({ post, onClose, likedByMe, savedByMe }) {
         <CommentModal
             post={post}
             onClose={onClose}
+            onDeleted={onDeleted}
             liked={liked}
             onToggleLike={toggleLike}
             saved={saved}

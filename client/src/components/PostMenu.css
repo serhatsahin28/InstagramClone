@@ -1,0 +1,49 @@
+.post-menu {
+    position: relative;
+    display: inline-flex;
+    line-height: 0;
+}
+
+.post-menu-trigger {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    line-height: 0;
+    position: relative;
+    z-index: 2;
+}
+
+.post-menu-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+}
+
+.post-menu-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 3;
+    background: #262626;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+    white-space: nowrap;
+}
+
+.post-menu-dropdown button {
+    display: block;
+    width: 100%;
+    background: none;
+    border: none;
+    color: #ed4956;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.7rem 1.5rem;
+    cursor: pointer;
+}
+
+.post-menu-dropdown button:hover {
+    background: #363636;
+}

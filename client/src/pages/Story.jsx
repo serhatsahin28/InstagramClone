@@ -5,6 +5,8 @@ import { useAuth } from "../context/AuthContext";
 import StoryViewersModal from "../components/StoryViewersModal";
 import "./Story.css";
 
+const STORY_DURATION_MS = 15000;
+
 export default function Story() {
     const { username, id } = useParams();
     const navigate = useNavigate();
@@ -14,6 +16,7 @@ export default function Story() {
     const [index, setIndex] = useState(0);
     const [liked, setLiked] = useState(false);
     const [showViewers, setShowViewers] = useState(false);
+    const [showMenu, setShowMenu] = useState(false);
 
     // Liste yalnizca bir kez cekilir; ileri/geri tamamen istemci tarafinda
     // ilerledigi icin her gecis aninda olur, yeniden istek atilmaz.
@@ -47,6 +50,7 @@ export default function Story() {
         if (!current) return;
         setLiked(false);
         setShowViewers(false);
+        setShowMenu(false);
 
         api.post(`/stories/${current._id}/view`).catch(() => {});
 
@@ -76,6 +80,14 @@ export default function Story() {
         [stories]
     );
 
+    const isLast = !!stories && index >= stories.length - 1;
+
+    // 15 saniye dolunca otomatik sıradaki hikayeye geç; son hikayedeysek çık.
+    function handleTimerEnd() {
+        if (isLast) navigate("/");
+        else goNext();
+    }
+
     useEffect(() => {
         function onKey(e) {
             if (e.key === "ArrowLeft") goPrev();
@@ -88,6 +100,7 @@ export default function Story() {
 
     async function handleDelete() {
         if (!current) return;
+        setShowMenu(false);
 
         await api.delete(`/stories/${current._id}`, { storyId: current._id });
 
@@ -116,21 +129,57 @@ export default function Story() {
     if (!current) return null;
 
     const isOwn = current.username === feed?.userName;
+    const paused = showViewers || showMenu;
 
     // Ust cubuk, o an goruntulenen kullanicinin hikaye sayisini gosterir.
     const sameUser = stories.filter((s) => s.username === current.username);
     const sameUserIndex = sameUser.findIndex((s) => s._id === current._id);
 
+    const prevStory = stories[index - 1];
+    const nextStory = stories[index + 1];
+
     return (
         <div className="story-page">
             <div className="story-viewer">
+                {prevStory && (
+                    <img
+                        className="story-peek left"
+                        src={profileImage(prevStory.storie)}
+                        alt=""
+                        onClick={goPrev}
+                    />
+                )}
+
                 <div className="story-progress">
                     {sameUser.map((s, i) => (
-                        <span key={s._id} className={i <= sameUserIndex ? "seen" : undefined} />
+                        <span className="story-progress-track" key={s._id}>
+                            {i < sameUserIndex && <span className="story-progress-fill full" />}
+                            {i === sameUserIndex && (
+                                <span
+                                    className={paused ? "story-progress-fill playing paused" : "story-progress-fill playing"}
+                                    style={{ animationDuration: `${STORY_DURATION_MS}ms` }}
+                                    onAnimationEnd={handleTimerEnd}
+                                />
+                            )}
+                        </span>
                     ))}
                 </div>
 
-                <button className="story-close" onClick={() => navigate("/")}>✕</button>
+                <div className="story-top-actions">
+                    {isOwn && (
+                        <button className="story-menu-btn" onClick={() => setShowMenu((v) => !v)} aria-label="Daha fazla">⋮</button>
+                    )}
+                    <button className="story-close" onClick={() => navigate("/")}>✕</button>
+
+                    {showMenu && (
+                        <>
+                            <div className="story-menu-backdrop" onClick={() => setShowMenu(false)} />
+                            <div className="story-menu-dropdown">
+                                <button onClick={handleDelete}>Sil</button>
+                            </div>
+                        </>
+                    )}
+                </div>
 
                 <header className="story-viewer-header">
                     <img src={profileImage(current.profilePicture)} alt="" />
@@ -160,14 +209,20 @@ export default function Story() {
                     )}
 
                     {isOwn && (
-                        <>
-                            <button className="story-viewers-btn" onClick={() => setShowViewers(true)}>
-                                Görüntüleyenler
-                            </button>
-                            <button className="story-delete" onClick={handleDelete}>Sil</button>
-                        </>
+                        <button className="story-viewers-btn" onClick={() => setShowViewers(true)}>
+                            Görüntüleyenler
+                        </button>
                     )}
                 </div>
+
+                {nextStory && (
+                    <img
+                        className="story-peek right"
+                        src={profileImage(nextStory.storie)}
+                        alt=""
+                        onClick={goNext}
+                    />
+                )}
             </div>
 
             {showViewers && (

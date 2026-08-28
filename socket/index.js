@@ -11,6 +11,22 @@ const noticeController = require("../Controller/noticeController");
 module.exports = function registerSocket(io) {
     const changeStream = followPost.watch();
 
+    // Baglanti basina degil, bir kez kaydedilir; aksi halde her yeni socket
+    // bu stream'e ayri bir dinleyici ekliyor ve hicbiri temizlenmiyordu
+    // (EventEmitter memory leak - "MaxListenersExceededWarning").
+    changeStream.on("change", (change) => {
+        let notification;
+        if (change.operationType === "update") {
+            notification = `Bir kullanıcı güncellendi: ${change.documentKey._id}`;
+        } else if (change.operationType === "delete") {
+            notification = `Bir kullanıcı silindi: ${change.documentKey._id}`;
+        }
+
+        if (notification) {
+            io.emit("followNotification", change);
+        }
+    });
+
     io.on("connection", (socket) => {
         console.log("Kullanıcı bağlandı:", socket.id);
 
@@ -23,19 +39,6 @@ module.exports = function registerSocket(io) {
             if (!targetUsername) return;
             io.to(targetUsername).emit("notify", payload);
         }
-
-        changeStream.on("change", (change) => {
-            let notification;
-            if (change.operationType === "update") {
-                notification = `Bir kullanıcı güncellendi: ${change.documentKey._id}`;
-            } else if (change.operationType === "delete") {
-                notification = `Bir kullanıcı silindi: ${change.documentKey._id}`;
-            }
-
-            if (notification) {
-                io.emit("followNotification", change);
-            }
-        });
 
         socket.on("disconnect", () => {
             console.log("Bir kullanıcı ayrıldı");
@@ -148,12 +151,13 @@ module.exports = function registerSocket(io) {
             }
         });
 
-        socket.on("deletePost", (data) => {
+        socket.on("deletePost", async (data) => {
             try {
-                const sessionName = data.sessionUserName;
                 const a = new postController();
-                a.postDelete(data);
-                io.emit("returnDeletePost", sessionName);
+                const result = await a.postDelete(data);
+                if (result?.ok) {
+                    io.emit("returnDeletePost", { sessionName: data.sessionUserName, postId: data.imgId });
+                }
             } catch (error) {
                 console.error(error);
             }

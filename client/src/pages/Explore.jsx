@@ -55,6 +55,11 @@ export default function Explore() {
                 <PostModal
                     post={openPost}
                     onClose={() => setOpenPost(null)}
+                    onDeleted={() => {
+                        const id = openPost._id;
+                        setOpenPost(null);
+                        setPosts((prev) => prev?.filter((p) => p._id !== id) ?? prev);
+                    }}
                     likedByMe={likedPostIds.has(String(openPost._id))}
                     savedByMe={savedPostIds.has(String(openPost._id))}
                 />

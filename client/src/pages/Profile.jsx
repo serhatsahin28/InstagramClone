@@ -178,6 +178,7 @@ export default function Profile() {
                 <PostModal
                     post={openPost}
                     onClose={() => setOpenPost(null)}
+                    onDeleted={() => { setOpenPost(null); load(); }}
                     likedByMe={likedPostIds.has(String(openPost._id))}
                     savedByMe={savedPostIds.has(String(openPost._id))}
                 />

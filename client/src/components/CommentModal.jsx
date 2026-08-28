@@ -5,9 +5,11 @@ import { useSocket } from "../context/SocketContext";
 import PostCarousel from "./PostCarousel";
 import LikesModal from "./LikesModal";
 import ShareModal from "./ShareModal";
+import PostMenu from "./PostMenu";
+import { timeAgo } from "../utils/timeAgo";
 import "./CommentModal.css";
 
-export default function CommentModal({ post, onClose, liked, onToggleLike, saved, onToggleSave }) {
+export default function CommentModal({ post, onClose, onDeleted, liked, onToggleLike, saved, onToggleSave }) {
     const { feed } = useAuth();
     const socket = useSocket();
     const [comments, setComments] = useState([]);
@@ -69,8 +71,14 @@ export default function CommentModal({ post, onClose, liked, onToggleLike, saved
                         <img loading="lazy" decoding="async"
                 src={profileImage(post.profilePhoto)} alt="" />
                         <span>{post.username}</span>
-                        <img className="dots" loading="lazy" decoding="async"
-                src={`${API_BASE}/Icons/dots.png`} alt="" />
+                        <PostMenu
+                            post={post}
+                            className="dots"
+                            onDeleted={() => {
+                                onDeleted?.();
+                                onClose();
+                            }}
+                        />
                     </header>
 
                     <div className="comment-modal-list">
@@ -90,6 +98,8 @@ export default function CommentModal({ post, onClose, liked, onToggleLike, saved
                             </div>
                         )) : <p className="comment-empty">Henüz yorum yok.</p>}
                     </div>
+
+                    <span className="comment-modal-time">{timeAgo(post._id)}</span>
 
                     <div className="comment-modal-actions">
                         <button onClick={onToggleLike} title="Beğen">

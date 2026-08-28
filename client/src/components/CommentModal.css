@@ -131,6 +131,15 @@
     border-top: 1px solid #262626;
 }
 
+.comment-modal-time {
+    display: block;
+    color: #8e8e8e;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    padding: 0.5rem 1rem 0;
+}
+
 .comment-modal-actions button {
     background: none;
     border: none;

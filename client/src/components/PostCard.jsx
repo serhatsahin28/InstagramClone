@@ -6,6 +6,8 @@ import PostCarousel from "./PostCarousel";
 import CommentModal from "./CommentModal";
 import LikesModal from "./LikesModal";
 import ShareModal from "./ShareModal";
+import PostMenu from "./PostMenu";
+import { timeAgo } from "../utils/timeAgo";
 import "./PostCard.css";
 
 export default function PostCard({ post, likedByMe, savedByMe, eager = false }) {
@@ -13,10 +15,13 @@ export default function PostCard({ post, likedByMe, savedByMe, eager = false }) 
     const [showComments, setShowComments] = useState(false);
     const [showLikes, setShowLikes] = useState(false);
     const [showShare, setShowShare] = useState(false);
+    const [deleted, setDeleted] = useState(false);
 
     const photos = post.photos?.[0]
         ? [post.photos[0].photo1, post.photos[0].photo2, post.photos[0].photo3, post.photos[0].photo4]
         : [];
+
+    if (deleted) return null;
 
     return (
         <article className="post-card">
@@ -24,7 +29,7 @@ export default function PostCard({ post, likedByMe, savedByMe, eager = false }) 
                 <img className="post-card-avatar" loading="lazy" decoding="async"
                 src={profileImage(post.profilePhoto)} alt="" />
                 <Link to={`/${post.username}`} className="post-card-username">{post.username}</Link>
-                <img className="post-card-dots" src={`${API_BASE}/Icons/dots.png`} alt="" />
+                <PostMenu post={post} className="post-card-dots" onDeleted={() => setDeleted(true)} />
             </header>
 
             <PostCarousel photos={photos} eager={eager} />
@@ -75,10 +80,13 @@ export default function PostCard({ post, likedByMe, savedByMe, eager = false }) 
                 Yorumları gör
             </button>
 
+            <span className="post-card-time">{timeAgo(post._id)}</span>
+
             {showComments && (
                 <CommentModal
                     post={post}
                     onClose={() => setShowComments(false)}
+                    onDeleted={() => setDeleted(true)}
                     liked={liked}
                     onToggleLike={toggleLike}
                     saved={saved}

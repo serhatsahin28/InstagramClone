@@ -106,6 +106,15 @@
     display: block;
 }
 
+.post-card-time {
+    display: block;
+    color: #8e8e8e;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    padding: 0.3rem 0.25rem 0;
+}
+
 /* Telefonda kenardan kenara; tablette 600px'te sabit kalır. */
 @media (max-width: 640px) {
     .post-card {
@@ -117,7 +126,8 @@
     .post-card-actions,
     .post-card-caption,
     .post-card-likes,
-    .post-card-comments-link {
+    .post-card-comments-link,
+    .post-card-time {
         padding-left: 0.75rem;
         padding-right: 0.75rem;
     }

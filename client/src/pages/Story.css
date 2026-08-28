@@ -28,15 +28,39 @@
     gap: 3px;
 }
 
-.story-progress span {
+.story-progress-track {
     flex: 1;
     height: 2px;
     border-radius: 2px;
     background: rgba(255, 255, 255, 0.35);
+    overflow: hidden;
+    position: relative;
 }
 
-.story-progress span.seen {
+.story-progress-fill {
+    position: absolute;
+    inset: 0;
+    width: 0%;
     background: #fff;
+}
+
+.story-progress-fill.full {
+    width: 100%;
+}
+
+.story-progress-fill.playing {
+    animation-name: story-fill;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+.story-progress-fill.playing.paused {
+    animation-play-state: paused;
+}
+
+@keyframes story-fill {
+    from { width: 0%; }
+    to { width: 100%; }
 }
 
 .story-viewer-header {
@@ -75,16 +99,72 @@
     flex: 1;
 }
 
-.story-close {
+.story-top-actions {
     position: absolute;
     top: 1.75rem;
     right: 1rem;
-    z-index: 2;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+}
+
+.story-close {
+    position: relative;
+    z-index: 5;
     background: none;
     border: none;
     color: #fff;
     font-size: 1.4rem;
     cursor: pointer;
+    padding: 0;
+    line-height: 1;
+}
+
+.story-menu-btn {
+    position: relative;
+    z-index: 5;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.4rem;
+    cursor: pointer;
+    padding: 0 0.25rem;
+    line-height: 1;
+}
+
+.story-menu-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 3;
+}
+
+.story-menu-dropdown {
+    position: absolute;
+    top: 2.25rem;
+    right: 2.25rem;
+    z-index: 6;
+    background: #262626;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+.story-menu-dropdown button {
+    display: block;
+    width: 100%;
+    background: none;
+    border: none;
+    color: #ed4956;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.story-menu-dropdown button:hover {
+    background: #363636;
 }
 
 .story-nav {
@@ -159,12 +239,31 @@
     cursor: pointer;
 }
 
-.story-delete {
-    background: #ed4956;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 0.5rem 1rem;
-    font-weight: 600;
-    cursor: pointer;
+/* Genis ekranlarda onceki/sonraki hikayeden kucuk bir parca gorunur. */
+.story-peek {
+    display: none;
+}
+
+@media (min-width: 900px) {
+    .story-peek {
+        display: block;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 90px;
+        height: 70vh;
+        object-fit: cover;
+        border-radius: 12px;
+        opacity: 0.5;
+        filter: brightness(0.6);
+        cursor: pointer;
+    }
+
+    .story-peek.left {
+        right: calc(100% + 16px);
+    }
+
+    .story-peek.right {
+        left: calc(100% + 16px);
+    }
 }

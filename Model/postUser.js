@@ -216,11 +216,16 @@ if(findNewPost==""){
 
 
 
-static async deletePost(postId){
+// requestingUsername gonderi sahibi degilse silme islemi yapilmaz;
+// aksi halde postId bilen herhangi bir istemci baskasinin gonderisini silebilirdi.
+static async deletePost(postId, requestingUsername){
 
 try {
-    console.log("postUser.js sayfasında deletePost fonksiyonu içerisinde ");
-    console.log(postId);
+    const target = await Post.findById(postId);
+    if (!target || target.username !== requestingUsername) {
+        return { ok: false };
+    }
+
 const a=await Post.deleteOne({
 "_id":postId
 });
@@ -233,10 +238,11 @@ const b=await likePost.deleteMany({
         "post_id":postId
         });
 
-
+    return { ok: true };
 
 } catch (error) {
     console.log("postUser.js sayfasında deletePost fonksiyonu içerisinde: "+error);
+    return { ok: false };
     
 }
 

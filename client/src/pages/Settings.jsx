@@ -142,6 +142,12 @@ export default function Settings() {
                 <PostModal
                     post={openPost}
                     onClose={() => setOpenPost(null)}
+                    onDeleted={() => {
+                        const id = openPost._id;
+                        setOpenPost(null);
+                        setSaved((prev) => prev?.filter((p) => p._id !== id) ?? prev);
+                        setLiked((prev) => prev?.filter((p) => p._id !== id) ?? prev);
+                    }}
                     likedByMe={(feed?.userLikePostUser || []).some((l) => String(l.post_id) === String(openPost._id))}
                     savedByMe={(feed?.savedPostIds || []).includes(String(openPost._id))}
                 />
