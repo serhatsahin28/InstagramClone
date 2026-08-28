@@ -1,7 +1,8 @@
 {
-  "buildCommand": "cd client && npm install && npm run build",
+  "framework": null,
+  "installCommand": "npm install --prefix client",
+  "buildCommand": "npm run build --prefix client",
   "outputDirectory": "client/dist",
-  "installCommand": "echo 'bagimliliklar buildCommand icinde kuruluyor'",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]
