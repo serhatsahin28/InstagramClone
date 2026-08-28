@@ -17,17 +17,32 @@ class Profile extends UserController {
   async profile(req, res, username, sessionUserName, sessionProfileName) {
     try {
 
-      const result = await UserModel.findUserByUsername(username);
-      const posts = await UserModel.findPostByUser(username);
-      const followedUser = await UserModel.findAllFollowed(username, sessionUserName);//followedUser ile oturumu açık olan kullanıcı,profiline girilen kullanıcıyı takip ediyor mu kontrol ediyoruz
-      const followersUser = await UserModel.findAllFollowers(username, sessionUserName);//followersUser ile profiline girilen kullanıcıyı,session'ı açık olan kullanıcı takip ediyor mu kontrol ediyoruz
+      // Sorgular birbirinden bagimsiz; sirayla beklemek yerine tek turda
+      // calistirilir (9 gidis-donus yerine 1).
+      const [
+        result,
+        posts,
+        followedUser,   // oturum sahibi, profiline girilen kullaniciyi takip ediyor mu
+        followersUser,  // profiline girilen kullanici, oturum sahibini takip ediyor mu
+        followedProfile,
+        followersProfile,
+        findProfilePosts,
+        noticeFollow,
+        followersTrue
+      ] = await Promise.all([
+        UserModel.findUserByUsername(username),
+        UserModel.findPostByUser(username),
+        UserModel.findAllFollowed(username, sessionUserName),
+        UserModel.findAllFollowers(username, sessionUserName),
+        UserModel.findProfileFollowed(username),
+        UserModel.findProfileFollowers(username),
+        UserModel.findProfilePosts(username),
+        UserModel.findFollowSend(sessionUserName),
+        UserModel.findAllFollowersTrue(sessionUserName)
+      ]);
+
       const sessionProfilePicture = req.session.user.profilePicture;
       const userProfileName = req.session.user.profileName;
-      const followedProfile = await UserModel.findProfileFollowed(username);
-      const followersProfile = await UserModel.findProfileFollowers(username);
-      const findProfilePosts = await UserModel.findProfilePosts(username);
-      const noticeFollow = await UserModel.findFollowSend(sessionUserName);
-      const followersTrue = await UserModel.findAllFollowersTrue(sessionUserName);
 
 
       // res.json("followersUser"+followedUser);

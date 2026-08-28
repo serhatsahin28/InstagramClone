@@ -53,5 +53,9 @@ const message = new Schema({
 });
 
 
+// Sik kullanilan sorgu alanlari icin index; koleksiyon taramasini onler.
+message.index({ senderUser: 1 });
+message.index({ sentUsername: 1 });
+
 const messages = mongoose.model("messages", message, "messages");
 module.exports = messages;

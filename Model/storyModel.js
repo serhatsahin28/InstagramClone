@@ -44,7 +44,11 @@ class storyModel {
                 "username": { $in: users }
             }).sort({ _id: 1 });
 
-            return stories;
+            // Instagram'daki gibi once kendi hikayelerimiz, sonra digerleri.
+            const own = stories.filter((s) => s.username === sessionUserName);
+            const others = stories.filter((s) => s.username !== sessionUserName);
+
+            return [...own, ...others];
 
         }
         catch (err) {

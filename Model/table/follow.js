@@ -49,6 +49,10 @@ const followSchema  = new Schema({
 
 })
 
+// Sik kullanilan sorgu alanlari icin index; koleksiyon taramasini onler.
+followSchema.index({ userName: 1 });
+followSchema.index({ "followed.username": 1 });
+
 const follows = mongoose.model("follow", followSchema, "follow");
 
 module.exports = follows;

@@ -12,6 +12,9 @@ const savedPost = new Schema({
     }
 });
 
+// Sik kullanilan sorgu alanlari icin index; koleksiyon taramasini onler.
+savedPost.index({ username: 1 });
+
 const saved = mongoose.model("savedPost", savedPost, "savedPost");
 
 module.exports = saved;

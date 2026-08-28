@@ -43,6 +43,11 @@ const comment = new Schema({
 
 
 
+// Sik kullanilan sorgu alanlari icin index; koleksiyon taramasini onler.
+comment.index({ post_id: 1 });
+comment.index({ postOwnerUsername: 1 });
+comment.index({ "userWhoComment.username": 1 });
+
 const comments = mongoose.model("comment", comment, "comment");
 
 

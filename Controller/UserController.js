@@ -6,18 +6,31 @@ class UserController {
     // ...constructor ve diğer metodlar...
 
     async buildFeed(req, username) {
-        const result = await UserModel.findUserByUsername(username);
         const userName = req.session.user.username;
-        const stories = await UserModel.findAllStories(userName);
-        const sessionUserStories = await UserModel.findSessionStories(userName);
 
-        const posts = await UserModel.findAllPosts();
-        const followersTrue = await UserModel.findAllFollowersTrue(userName);
-        const noticeFollow = await UserModel.findFollowSend(userName);
-        const userLikePostUser = await postUser.userLikePosts(userName);
+        // Sorgular birbirinden bagimsiz; sirayla beklemek yerine tek turda
+        // calistirilir (8 gidis-donus yerine 1).
+        const [
+            result,
+            stories,
+            sessionUserStories,
+            posts,
+            followersTrue,
+            noticeFollow,
+            userLikePostUser,
+            savedDocs
+        ] = await Promise.all([
+            UserModel.findUserByUsername(username),
+            UserModel.findAllStories(userName),
+            UserModel.findSessionStories(userName),
+            UserModel.findAllPosts(),
+            UserModel.findAllFollowersTrue(userName),
+            UserModel.findFollowSend(userName),
+            postUser.userLikePosts(userName),
+            savedPost.find({ username: userName })
+        ]);
+
         const sessionProfilePicture = req.session.user.profilePicture;
-
-        const savedDocs = await savedPost.find({ username: userName });
         const savedPostIds = savedDocs.map((d) => String(d.post_id));
 
         return { userName, result, post: posts, stories, sessionProfilePicture, noticeFollow, followersTrue, userLikePostUser, sessionUserStories, savedPostIds };

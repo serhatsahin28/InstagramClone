@@ -37,6 +37,9 @@ const stories = new Schema({
 
 
 
+// Sik kullanilan sorgu alanlari icin index; koleksiyon taramasini onler.
+stories.index({ username: 1 });
+
 const story = mongoose.model("stories", stories, "stories");
 
 

@@ -46,6 +46,9 @@ const posts = new Schema({
 
     },
 })
+// Sik kullanilan sorgu alanlari icin index; koleksiyon taramasini onler.
+posts.index({ username: 1 });
+
 const post = mongoose.model("posts", posts, "posts");
 
 module.exports = post;

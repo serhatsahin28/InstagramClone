@@ -43,6 +43,11 @@ const likePost = new Schema({
 
 
 
+// Sik kullanilan sorgu alanlari icin index; koleksiyon taramasini onler.
+likePost.index({ post_id: 1 });
+likePost.index({ postOwnerUsername: 1 });
+likePost.index({ "userWhoLike.username": 1 });
+
 const likes = mongoose.model("likePost", likePost, "likePost");
 
 
