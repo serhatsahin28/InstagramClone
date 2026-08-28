@@ -12,9 +12,12 @@ class notificationController {
         try {
             const me = req.session.user.username;
 
-            const followDocs = await follow.find({ "followed.username": me });
-            const likes = await likePost.find({ postOwnerUsername: me });
-            const comments = await commentPost.find({ postOwnerUsername: me });
+            // Uc sorgu birbirinden bagimsiz; tek turda calistirilir.
+            const [followDocs, likes, comments] = await Promise.all([
+                follow.find({ "followed.username": me }),
+                likePost.find({ postOwnerUsername: me }),
+                commentPost.find({ postOwnerUsername: me })
+            ]);
 
             const items = [];
 

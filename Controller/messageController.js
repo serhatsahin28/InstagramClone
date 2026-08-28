@@ -9,9 +9,12 @@ function timeOf(id) {
 
 // Oturum sahibinin karşılıklı yazıştığı her kullanıcı için tek bir konuşma özeti üretir.
 async function buildInbox(sessionUserName) {
-    const all = await a.directInBox(sessionUserName);
+    // Iki sorgu birbirinden bagimsiz; tek turda calistirilir.
+    const [all, followedDocs] = await Promise.all([
+        a.directInBox(sessionUserName),
+        follow.find({ userName: sessionUserName, "followed.situation": true })
+    ]);
 
-    const followedDocs = await follow.find({ userName: sessionUserName, "followed.situation": true });
     const iFollow = new Set();
     for (const doc of followedDocs) {
         for (const f of doc.followed) {
@@ -77,10 +80,15 @@ class messageController {
 
     async messageUser(req, res, sessionUserName, userId) {
         try {
-            const { inbox, requests } = await buildInbox(sessionUserName);
+            // Gelen kutusu ve karsi kullanici birbirini beklemez. Mesajlar
+            // kullanici adina bagli oldugu icin tek adim sonra cekilir;
+            // boylece ayni kullaniciyi iki kez sorgulamiyoruz.
+            const [{ inbox, requests }, messagesUser] = await Promise.all([
+                buildInbox(sessionUserName),
+                a.messagesUser(userId)
+            ]);
 
-            const messagesInfo = await a.directUserMessages(sessionUserName, userId);
-            const messagesUser = await a.messagesUser(userId);
+            const messagesInfo = await a.fetchAllMessages(messagesUser.username, sessionUserName);
             const profilePicture = req.session.user.profilePicture;
 
             const otherUser = {
