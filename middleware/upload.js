@@ -22,7 +22,7 @@ if (useCloudinary) {
             api_secret: process.env.CLOUDINARY_API_SECRET
         });
     }
-    console.log("Gorseller Cloudinary'ye yuklenecek");
+    console.log(`Gorseller Cloudinary'ye yuklenecek (klasor: ${process.env.CLOUDINARY_FOLDER || "instagram-clone"})`);
 } else {
     console.log("Cloudinary ayarli degil; gorseller yerel diske yazilacak");
 }
@@ -39,11 +39,15 @@ function makeDiskStorage(destination) {
     });
 }
 
+// Ayni Cloudinary hesabinda baska projeler olabilir; yuklemeler kendi
+// klasorunde tutulur. CLOUDINARY_FOLDER ile bu ad degistirilebilir.
+const CLOUD_FOLDER = (process.env.CLOUDINARY_FOLDER || "instagram-clone").replace(/^\/+|\/+$/g, "");
+
 function makeCloudStorage(folder) {
     return new CloudinaryStorage({
         cloudinary,
         params: {
-            folder: `instagram-clone/${folder}`,
+            folder: `${CLOUD_FOLDER}/${folder}`,
             resource_type: "image",
             public_id: () => crypto.randomUUID()
         }

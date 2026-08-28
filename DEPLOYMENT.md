@@ -106,7 +106,17 @@ başlayınca silinir**. Repodaki mevcut görseller etkilenmez.
 
 4. **Save, rebuild, and deploy**
 
-Loglarda `Gorseller Cloudinary'ye yuklenecek` yazarsa aktif demektir.
+Loglarda `Gorseller Cloudinary'ye yuklenecek (klasor: instagram-clone)` yazarsa aktif demektir.
+
+### Aynı hesapta başka proje varsa
+
+Yüklemeler `instagram-clone/posts` ve `instagram-clone/users_profile` klasörlerine
+gider; diğer projelerinizin dosyalarıyla karışmaz. Klasör adını değiştirmek isterseniz
+isteğe bağlı bir değişken daha ekleyin:
+
+| Key | Value |
+|---|---|
+| `CLOUDINARY_FOLDER` | `istediginiz-klasor-adi` |
 Değişken tanımlı değilse uygulama eskisi gibi yerel diske yazmaya devam eder,
 yani yerel geliştirmede Cloudinary hesabına ihtiyaç yoktur.
 
