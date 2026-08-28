@@ -1,6 +1,8 @@
 // Yayindaki backend adresi. Gizli bir bilgi degil; tarayiciya inen pakete
 // zaten gomuluyor, bu yuzden ortam degiskeni zorunlu tutulmuyor.
-const PRODUCTION_API = "https://instagram-clone-api-gwl1.onrender.com";
+// Frankfurt bolgesindeki servis; veritabani da Avrupa'da oldugu icin
+// Washington'daki eski servise gore belirgin sekilde hizli.
+const PRODUCTION_API = "https://instagramclone-1xlb.onrender.com";
 const LOCAL_API = "http://localhost:3000";
 
 function resolveApiBase() {
