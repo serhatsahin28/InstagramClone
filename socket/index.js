@@ -101,7 +101,9 @@ module.exports = function registerSocket(io) {
                     }
                 });
 
-                io.emit("searchUser2", users);
+                // Sadece arayan kisiye don; io.emit ile herkese yayinlanirsa
+                // ayni anda arama yapan farkli kullanicilarin sonuclari karisir.
+                socket.emit("searchUser2", users);
             } catch (error) {
                 console.error(error);
             }
