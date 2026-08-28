@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { API_BASE } from "../api/client";
+import { profileImage } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import { useSocket } from "../context/SocketContext";
 import SearchPanel from "./SearchPanel";
@@ -131,7 +131,7 @@ export default function Sidebar() {
                 </li>
                 <li>
                     <NavLink to={`/${feed?.userName || ""}`} className={linkClass} onClick={closePanel}>
-                        <img className="icon profile-icon" src={`${API_BASE}/users_profile/${feed?.sessionProfilePicture}`} alt="" />
+                        <img className="icon profile-icon" src={profileImage(feed?.sessionProfilePicture)} alt="" />
                         <span>Profil</span>
                     </NavLink>
                 </li>

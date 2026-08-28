@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { API_BASE } from "../api/client";
+import { profileImage } from "../api/client";
 import usePostActions from "../hooks/usePostActions";
 import PostCarousel from "./PostCarousel";
 import CommentModal from "./CommentModal";
@@ -19,7 +19,7 @@ export default function PostCard({ post, likedByMe, savedByMe }) {
     return (
         <article className="post-card">
             <header className="post-card-header">
-                <img className="post-card-avatar" src={`${API_BASE}/users_profile/${post.profilePhoto}`} alt="" />
+                <img className="post-card-avatar" src={profileImage(post.profilePhoto)} alt="" />
                 <Link to={`/${post.username}`} className="post-card-username">{post.username}</Link>
                 <img className="post-card-dots" src={`${API_BASE}/Icons/dots.png`} alt="" />
             </header>

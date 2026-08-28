@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { API_BASE } from "../api/client";
+import { profileImage } from "../api/client";
 import { useSocket } from "../context/SocketContext";
 import "./LikesModal.css";
 
@@ -51,7 +51,7 @@ export default function LikesModal({ postId, onClose }) {
                     ) : (
                         users.map((u, i) => (
                             <Link key={i} to={`/${u.username}`} className="likes-item" onClick={onClose}>
-                                <img src={`${API_BASE}/users_profile/${u.userPicture}`} alt="" />
+                                <img src={profileImage(u.userPicture)} alt="" />
                                 <div className="likes-item-text">
                                     <span className="username">{u.username}</span>
                                     <span className="muted">{u.userProfileName}</span>

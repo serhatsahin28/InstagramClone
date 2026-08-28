@@ -16,6 +16,17 @@ function resolveApiBase() {
 
 export const API_BASE = resolveApiBase();
 
+// Gorsel adresi uretir. Cloudinary'ye yuklenenler tam URL olarak saklanir,
+// daha eski kayitlar ise sadece dosya adi icerir; ikisini de destekler.
+export function mediaUrl(value, folder) {
+    if (!value) return "";
+    if (/^https?:\/\//i.test(value)) return value;
+    return `${API_BASE}/${folder}/${value}`;
+}
+
+export const postImage = (name) => mediaUrl(name, "posts");
+export const profileImage = (name) => mediaUrl(name, "users_profile");
+
 async function request(path, options = {}) {
     const res = await fetch(`${API_BASE}/api${path}`, {
         credentials: "include",

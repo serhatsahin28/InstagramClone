@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { api, API_BASE } from "../api/client";
+import { api, profileImage } from "../api/client";
 import "./UserListModal.css";
 
 export default function UserListModal({ username, kind, onClose }) {
@@ -33,7 +33,7 @@ export default function UserListModal({ username, kind, onClose }) {
                     ) : (
                         users.map((u) => (
                             <Link key={u._id} to={`/${u.username}`} className="user-list-item" onClick={onClose}>
-                                <img src={`${API_BASE}/users_profile/${u.profilePicture}`} alt="" />
+                                <img src={profileImage(u.profilePicture)} alt="" />
                                 <div className="user-list-item-text">
                                     <span className="username">{u.username}</span>
                                     <span className="muted">{u.profileName}</span>

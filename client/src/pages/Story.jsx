@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { api, API_BASE } from "../api/client";
+import { api, profileImage } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import "./Story.css";
 
@@ -35,11 +35,11 @@ export default function Story() {
                 <button className="story-close" onClick={() => navigate("/")}>✕</button>
 
                 <header className="story-viewer-header">
-                    <img src={`${API_BASE}/users_profile/${story.profilePicture}`} alt="" />
+                    <img src={profileImage(story.profilePicture)} alt="" />
                     <span>{story.username}</span>
                 </header>
 
-                <img className="story-viewer-image" src={`${API_BASE}/users_profile/${story.storie}`} alt="" />
+                <img className="story-viewer-image" src={profileImage(story.storie)} alt="" />
 
                 {data.prevResult && (
                     <Link className="story-nav prev" to={`/stories/${data.prevResult.username}/${data.prevResult._id}`}>‹</Link>

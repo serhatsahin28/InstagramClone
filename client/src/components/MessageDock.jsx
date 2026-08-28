@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { api, API_BASE } from "../api/client";
+import { api, profileImage } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import { useSocket } from "../context/SocketContext";
 import "./MessageDock.css";
@@ -93,7 +93,7 @@ export default function MessageDock() {
             <button className="message-dock-bar" onClick={() => setOpen(!open)}>
                 {active ? (
                     <>
-                        <img src={`${API_BASE}/users_profile/${active.otherUserImage}`} alt="" />
+                        <img src={profileImage(active.otherUserImage)} alt="" />
                         <span>{active.otherUsername}</span>
                     </>
                 ) : (
@@ -114,7 +114,7 @@ export default function MessageDock() {
                             ) : (
                                 threads.map((t) => (
                                     <button key={t._id} className="message-dock-thread" onClick={() => setActive(t)}>
-                                        <img src={`${API_BASE}/users_profile/${t.otherUserImage}`} alt="" />
+                                        <img src={profileImage(t.otherUserImage)} alt="" />
                                         <div className="message-dock-thread-text">
                                             <span className="username">{t.otherUsername}</span>
                                             <span className="last">{t.lastFromMe ? "Sen: " : ""}{t.lastMessage}</span>

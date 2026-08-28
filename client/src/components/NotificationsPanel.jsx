@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { api, API_BASE } from "../api/client";
+import { api, profileImage } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import { useSocket } from "../context/SocketContext";
 import SlidePanel from "./SlidePanel";
@@ -60,7 +60,7 @@ export default function NotificationsPanel({ open, onClose }) {
     function renderRequestRow(item) {
         return (
             <div key={item.id} className="slide-panel-row notification-row">
-                <img src={`${API_BASE}/users_profile/${item.profilePicture}`} alt="" />
+                <img src={profileImage(item.profilePicture)} alt="" />
                 <div className="slide-panel-row-text">
                     <span className="notification-text">
                         <Link to={`/${item.username}`} onClick={onClose} className="notification-user">
@@ -98,7 +98,7 @@ export default function NotificationsPanel({ open, onClose }) {
                                         {requests.slice(0, 3).map((r, i) => (
                                             <img
                                                 key={r.id}
-                                                src={`${API_BASE}/users_profile/${r.profilePicture}`}
+                                                src={profileImage(r.profilePicture)}
                                                 alt=""
                                                 style={{ zIndex: 3 - i, marginLeft: i === 0 ? 0 : "-16px" }}
                                             />
@@ -127,7 +127,7 @@ export default function NotificationsPanel({ open, onClose }) {
 
                         {others.map((item) => (
                             <div key={item.id} className="slide-panel-row notification-row">
-                                <img src={`${API_BASE}/users_profile/${item.profilePicture}`} alt="" />
+                                <img src={profileImage(item.profilePicture)} alt="" />
                                 <div className="slide-panel-row-text">
                                     <span className="notification-text">
                                         <Link to={`/${item.username}`} onClick={onClose} className="notification-user">

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { api, API_BASE } from "../api/client";
+import { api, profileImage } from "../api/client";
 import "./NewMessageModal.css";
 
 export default function NewMessageModal({ onClose }) {
@@ -59,7 +59,7 @@ export default function NewMessageModal({ onClose }) {
                                 className={selected?._id === user._id ? "new-message-item selected" : "new-message-item"}
                                 onClick={() => setSelected(user)}
                             >
-                                <img src={`${API_BASE}/users_profile/${user.profilePicture}`} alt="" />
+                                <img src={profileImage(user.profilePicture)} alt="" />
                                 <div className="new-message-item-text">
                                     <span className="username">{user.username}</span>
                                     <span className="muted">{user.profileName}</span>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { API_BASE } from "../api/client";
+import { postImage } from "../api/client";
 import "./PostCarousel.css";
 
 export default function PostCarousel({ photos }) {
@@ -18,7 +18,7 @@ export default function PostCarousel({ photos }) {
 
     return (
         <div className="post-carousel">
-            <img className="post-carousel-image" src={`${API_BASE}/posts/${validPhotos[index]}`} alt="" />
+            <img className="post-carousel-image" src={postImage(validPhotos[index])} alt="" />
 
             {validPhotos.length > 1 && (
                 <>

@@ -2,6 +2,7 @@
 const express = require("express");
 const app = express();
 const postUser = require("../Model/postUser");
+const { storedFileName } = require("../middleware/upload");
 
 
 class postController {
@@ -20,16 +21,16 @@ class postController {
         photos.slice(0, 4).forEach((photo, index) => {
             switch (index) {
                 case 0:
-                    photo1 = photo.filename;
+                    photo1 = storedFileName(photo);
                     break;
                 case 1:
-                    photo2 = photo.filename;
+                    photo2 = storedFileName(photo);
                     break;
                 case 2:
-                    photo3 = photo.filename;
+                    photo3 = storedFileName(photo);
                     break;
                 case 3:
-                    photo4 = photo.filename;
+                    photo4 = storedFileName(photo);
                     break;
                 default:
                     break;
@@ -71,7 +72,7 @@ class postController {
     async uploadProfilePhoto(req, res, photos, sessionUserName) {
 
 
-        const newProfilePhoto = photos[0].filename;
+        const newProfilePhoto = storedFileName(photos[0]);
         console.log(sessionUserName);
 
         const sessionUserQuery = await postUser.userInfo(sessionUserName);
@@ -98,7 +99,7 @@ class postController {
         const textArea = req.body.biography;
         let newProfilePhoto = "";
         if (photos != undefined && photos != "") {
-            newProfilePhoto = photos[0].filename;
+            newProfilePhoto = storedFileName(photos[0]);
 
 
         }

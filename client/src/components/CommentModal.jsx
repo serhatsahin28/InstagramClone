@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { API_BASE } from "../api/client";
+import { postImage, profileImage } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import { useSocket } from "../context/SocketContext";
 import LikesModal from "./LikesModal";
@@ -52,11 +52,11 @@ export default function CommentModal({ post, onClose, liked, onToggleLike, saved
         <div className="comment-modal-overlay" onClick={onClose}>
             <div className="comment-modal" onClick={(e) => e.stopPropagation()}>
                 <button className="comment-modal-close" onClick={onClose}>✕</button>
-                <img className="comment-modal-image" src={`${API_BASE}/posts/${post.photos[0].photo1}`} alt="" />
+                <img className="comment-modal-image" src={postImage(post.photos[0].photo1)} alt="" />
 
                 <div className="comment-modal-side">
                     <header className="comment-modal-header">
-                        <img src={`${API_BASE}/users_profile/${post.profilePhoto}`} alt="" />
+                        <img src={profileImage(post.profilePhoto)} alt="" />
                         <span>{post.username}</span>
                         <img className="dots" src={`${API_BASE}/Icons/dots.png`} alt="" />
                     </header>
@@ -64,14 +64,14 @@ export default function CommentModal({ post, onClose, liked, onToggleLike, saved
                     <div className="comment-modal-list">
                         {post.description && (
                             <div className="comment-item comment-caption">
-                                <img className="comment-item-avatar" src={`${API_BASE}/users_profile/${post.profilePhoto}`} alt="" />
+                                <img className="comment-item-avatar" src={profileImage(post.profilePhoto)} alt="" />
                                 <span><strong>{post.username}</strong> {post.description}</span>
                             </div>
                         )}
 
                         {allComments.length ? allComments.map((c, i) => (
                             <div key={i} className="comment-item">
-                                <img className="comment-item-avatar" src={`${API_BASE}/users_profile/${c.userPicture}`} alt="" />
+                                <img className="comment-item-avatar" src={profileImage(c.userPicture)} alt="" />
                                 <span><strong>{c.username}</strong> {c.userComment}</span>
                             </div>
                         )) : <p className="comment-empty">Henüz yorum yok.</p>}

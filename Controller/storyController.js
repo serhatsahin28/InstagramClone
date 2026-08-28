@@ -1,5 +1,6 @@
 const storyModel = require("../Model/storyModel");
 const ObjectId = require('mongoose').ObjectId;
+const { storedFileName } = require("../middleware/upload");
 class storyController {
 
     async story(req, res, sessionUserName, visitUsername, visitId) {
@@ -46,7 +47,7 @@ class storyController {
 
 
 async uploadStory(req,res,photos, sessionUserName){
-    const photosName=photos[0].filename;
+    const photosName=storedFileName(photos[0]);
     const a=await storyModel.storyAdd(photosName,sessionUserName);
     res.json({ message: "Story eklendi" });
 }

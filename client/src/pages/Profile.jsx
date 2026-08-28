@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams, Link } from "react-router-dom";
-import { api, API_BASE } from "../api/client";
+import { api, postImage, profileImage } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import { useSocket } from "../context/SocketContext";
 import Sidebar from "../components/Sidebar";
@@ -98,7 +98,7 @@ export default function Profile() {
             <Sidebar />
             <main className="profile-page">
                 <header className="profile-header">
-                    <img className="profile-avatar" src={`${API_BASE}/users_profile/${target.profilePicture}`} alt="" />
+                    <img className="profile-avatar" src={profileImage(target.profilePicture)} alt="" />
                     <div className="profile-info">
                         <div className="profile-title-row">
                             <h2>{target.username}</h2>
@@ -144,7 +144,7 @@ export default function Profile() {
                                 className="profile-grid-item"
                                 onClick={() => setOpenPost(post)}
                             >
-                                <img src={`${API_BASE}/posts/${post.photos[0].photo1}`} alt="" />
+                                <img src={postImage(post.photos[0].photo1)} alt="" />
                             </button>
                         ))}
                     </div>

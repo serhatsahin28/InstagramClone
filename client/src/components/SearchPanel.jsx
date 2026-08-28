@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { API_BASE } from "../api/client";
+import { profileImage } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import { useSocket } from "../context/SocketContext";
 import SlidePanel from "./SlidePanel";
@@ -72,7 +72,7 @@ export default function SearchPanel({ open, onClose }) {
                             className="slide-panel-row"
                             onClick={onClose}
                         >
-                            <img src={`${API_BASE}/users_profile/${user.profilePicture}`} alt="" />
+                            <img src={profileImage(user.profilePicture)} alt="" />
                             <div className="slide-panel-row-text">
                                 <span className="username">{user.username}</span>
                                 <span className="muted">{user.profileName}</span>

@@ -88,10 +88,34 @@ curl https://<servis-adi>.onrender.com/health
 
 ---
 
+---
+
+## 5. Görsel depolama (Cloudinary)
+
+Render'ın diski geçicidir; bu adım yapılmazsa **yüklenen fotoğraflar servis yeniden
+başlayınca silinir**. Repodaki mevcut görseller etkilenmez.
+
+1. **https://cloudinary.com** → ücretsiz hesap açın
+2. Dashboard'da **API Environment variable** satırını bulun. Şuna benzer:
+   `CLOUDINARY_URL=cloudinary://123456789:abcdefgh@my-cloud`
+3. Render → servisiniz → **Environment** → yeni değişken:
+
+   | Key | Value |
+   |---|---|
+   | `CLOUDINARY_URL` | `cloudinary://...` (baştaki `CLOUDINARY_URL=` kısmı olmadan) |
+
+4. **Save, rebuild, and deploy**
+
+Loglarda `Gorseller Cloudinary'ye yuklenecek` yazarsa aktif demektir.
+Değişken tanımlı değilse uygulama eskisi gibi yerel diske yazmaya devam eder,
+yani yerel geliştirmede Cloudinary hesabına ihtiyaç yoktur.
+
+> Eski görseller dosya adıyla, yeni yüklenenler tam URL olarak saklanır; arayüz
+> ikisini de destekler, geçmiş veriler bozulmaz.
+
+---
+
 ## Bilinen sınırlamalar
 
-- **Yüklenen fotoğraflar kalıcı değil.** Render'ın diski geçicidir; yeni yüklenen gönderi
-  ve profil fotoğrafları servis yeniden başlayınca silinir. Repodaki mevcut görseller durur.
-  Kalıcı çözüm için Cloudinary veya S3'e geçilmelidir.
 - **Ücretsiz Render planı uyur.** 15 dakika hareketsizlikten sonra servis durur; ilk istek
   ~30 saniye sürebilir. Oturumlar MongoDB'de saklandığı için uyanınca kaybolmaz.

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { API_BASE } from "../api/client";
+import { profileImage } from "../api/client";
 import { useSocket } from "../context/SocketContext";
 import "./NotificationToasts.css";
 
@@ -59,7 +59,7 @@ export default function NotificationToasts({ suppressed }) {
                         <span className="toast-icon">{style.icon}</span>
 
                         {t.profilePicture && (
-                            <img className="toast-avatar" src={`${API_BASE}/users_profile/${t.profilePicture}`} alt="" />
+                            <img className="toast-avatar" src={profileImage(t.profilePicture)} alt="" />
                         )}
 
                         <span className="toast-text">
