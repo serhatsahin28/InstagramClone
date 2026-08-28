@@ -19,6 +19,12 @@
     text-decoration: underline;
 }
 
+.notification-time {
+    font-size: 0.75rem;
+    color: #8e8e8e;
+    margin-top: 0.15rem;
+}
+
 .notification-actions {
     display: flex;
     flex-direction: column;

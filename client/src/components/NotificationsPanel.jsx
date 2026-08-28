@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { api, profileImage } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import { useSocket } from "../context/SocketContext";
+import { timeAgo } from "../utils/timeAgo";
 import SlidePanel from "./SlidePanel";
 import "./NotificationsPanel.css";
 
@@ -69,6 +70,7 @@ export default function NotificationsPanel({ open, onClose }) {
                         </Link>{" "}
                         sana takip isteği gönderdi
                     </span>
+                    <span className="notification-time">{timeAgo(item.time)}</span>
                 </div>
                 <div className="notification-actions">
                     <button className="accept" onClick={() => handleAccept(item.username)}>Onayla</button>
@@ -137,6 +139,7 @@ export default function NotificationsPanel({ open, onClose }) {
                                         </Link>{" "}
                                         {describe(item)}
                                     </span>
+                                    <span className="notification-time">{timeAgo(item.time)}</span>
                                 </div>
                             </div>
                         ))}
