@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { api, profileImage } from "../api/client";
+import { API_BASE, api, profileImage } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import { useSocket } from "../context/SocketContext";
 import "./MessageDock.css";

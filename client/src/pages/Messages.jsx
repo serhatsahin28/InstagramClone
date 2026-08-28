@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { api, profileImage } from "../api/client";
+import { API_BASE, api, profileImage } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import { useSocket } from "../context/SocketContext";
 import Sidebar from "../components/Sidebar";

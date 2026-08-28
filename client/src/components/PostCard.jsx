@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { profileImage } from "../api/client";
+import { API_BASE, profileImage } from "../api/client";
 import usePostActions from "../hooks/usePostActions";
 import PostCarousel from "./PostCarousel";
 import CommentModal from "./CommentModal";

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { api } from "../api/client";
-import { API_BASE } from "../api/client";
+import { API_BASE, api } from "../api/client";
 import "./Register.css";
 
 export default function Register() {

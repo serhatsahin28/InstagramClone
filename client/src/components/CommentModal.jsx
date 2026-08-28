@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { postImage, profileImage } from "../api/client";
+import { API_BASE, postImage, profileImage } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import { useSocket } from "../context/SocketContext";
 import LikesModal from "./LikesModal";
