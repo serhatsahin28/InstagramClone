@@ -242,6 +242,26 @@ module.exports = function registerSocket(io) {
             }
         });
 
+        // Bir yorumu begen/begenmekten vazgec (toggle).
+        socket.on("commentLike", async ({ commentId, sessionUserName }) => {
+            try {
+                const target = await commentPost.findById(commentId);
+                if (!target) return;
+
+                const alreadyLiked = target.likes?.some((l) => l.username === sessionUserName);
+                if (alreadyLiked) {
+                    await commentPost.updateOne({ _id: commentId }, { $pull: { likes: { username: sessionUserName } } });
+                } else {
+                    await commentPost.updateOne({ _id: commentId }, { $push: { likes: { username: sessionUserName } } });
+                }
+
+                const newQuery = await commentPost.find({ post_id: target.post_id }).sort({ _id: -1 });
+                io.emit("commentPostReturn2", newQuery);
+            } catch (error) {
+                console.error(error);
+            }
+        });
+
         socket.on("follower", async (sessionUserName) => {
             const usersInfo = await followPost.find({ "followed.username": sessionUserName, "followed.situation": true });
             io.emit("followerReturn", usersInfo);

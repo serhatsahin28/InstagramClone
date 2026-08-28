@@ -53,7 +53,7 @@ export default function CommentModal({ post, onClose, onDeleted, onEdited, liked
         setText("");
     }
 
-    const allComments = comments.flatMap((c) => c.userWhoComment.map((u) => ({ ...u, id: c._id })));
+    const allComments = comments.flatMap((c) => c.userWhoComment.map((u) => ({ ...u, id: c._id, likes: c.likes || [] })));
 
     const photos = post.photos?.[0]
         ? [post.photos[0].photo1, post.photos[0].photo2, post.photos[0].photo3, post.photos[0].photo4]
@@ -101,14 +101,27 @@ export default function CommentModal({ post, onClose, onDeleted, onEdited, liked
                                 <img className="comment-item-avatar" loading="lazy" decoding="async"
                 src={profileImage(c.userPicture)} alt="" />
                                 <span className="comment-item-text"><strong>{c.username}</strong> {c.userComment}</span>
-                                {(c.username === feed?.userName || post.username === feed?.userName) && (
+                                <div className="comment-item-side">
                                     <button
-                                        className="comment-item-delete"
-                                        onClick={() => socket?.emit("commentDelete", { commentId: c.id, sessionUserName: feed.userName })}
+                                        className="comment-item-like"
+                                        onClick={() => socket?.emit("commentLike", { commentId: c.id, sessionUserName: feed.userName })}
                                     >
-                                        Sil
+                                        <img
+                                            loading="lazy" decoding="async"
+                                            src={`${API_BASE}/Icons/${c.likes.some((l) => l.username === feed?.userName) ? "redHeart.png" : "heart.png"}`}
+                                            alt=""
+                                        />
+                                        {c.likes.length > 0 && <span className="comment-item-like-count">{c.likes.length}</span>}
                                     </button>
-                                )}
+                                    {(c.username === feed?.userName || post.username === feed?.userName) && (
+                                        <button
+                                            className="comment-item-delete"
+                                            onClick={() => socket?.emit("commentDelete", { commentId: c.id, sessionUserName: feed.userName })}
+                                        >
+                                            Sil
+                                        </button>
+                                    )}
+                                </div>
                             </div>
                         )) : <p className="comment-empty">Henüz yorum yok.</p>}
                     </div>

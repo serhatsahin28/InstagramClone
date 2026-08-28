@@ -34,6 +34,13 @@ const comment = new Schema({
 
 
 
+    ],
+
+    // Bu yorumu begenen kullanicilar.
+    likes: [
+        {
+            username: { type: String, required: true }
+        }
     ]
 
 

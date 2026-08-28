@@ -110,6 +110,33 @@
     min-width: 0;
 }
 
+.comment-item-side {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.comment-item-like {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.comment-item-like img {
+    width: 13px;
+    height: 13px;
+}
+
+.comment-item-like-count {
+    font-size: 0.7rem;
+    color: #8e8e8e;
+}
+
 .comment-item-delete {
     background: none;
     border: none;
