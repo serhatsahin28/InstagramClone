@@ -1,21 +1,54 @@
 const multer = require("multer");
 const crypto = require("crypto");
 const path = require("path");
-const { v2: cloudinary } = require("cloudinary");
-const { CloudinaryStorage } = require("multer-storage-cloudinary");
 
-// Cloudinary bilgileri tanimliysa gorseller buluta yuklenir. Tanimli degilse
-// (yerel gelistirme) eskisi gibi images/ klasorune yazilir.
-const useCloudinary = Boolean(
-    process.env.CLOUDINARY_URL ||
-    (process.env.CLOUDINARY_CLOUD_NAME &&
-        process.env.CLOUDINARY_API_KEY &&
-        process.env.CLOUDINARY_API_SECRET)
+// Panele yapistirilirken deger sik sik "CLOUDINARY_URL=..." veya tirnakli
+// gelebiliyor. Cloudinary kutuphanesi bozuk degeri gorunce require anininda
+// exception atip tum servisi dusurdugu icin once temizliyoruz.
+function normalizeCloudinaryUrl(raw) {
+    if (!raw) return "";
+
+    return raw
+        .trim()
+        .replace(/^CLOUDINARY_URL\s*=\s*/i, "")
+        .replace(/^["']|["']$/g, "")
+        .trim();
+}
+
+const cloudinaryUrl = normalizeCloudinaryUrl(process.env.CLOUDINARY_URL);
+const hasValidUrl = cloudinaryUrl.startsWith("cloudinary://");
+
+if (process.env.CLOUDINARY_URL && !hasValidUrl) {
+    console.warn(
+        "CLOUDINARY_URL gecersiz ('cloudinary://' ile baslamali). " +
+        "Gorseller yerel diske yazilacak."
+    );
+}
+
+// Temizlenmis degeri geri yaziyoruz; kutuphane require aninda burayi okuyor.
+if (hasValidUrl) {
+    process.env.CLOUDINARY_URL = cloudinaryUrl;
+} else {
+    delete process.env.CLOUDINARY_URL;
+}
+
+const hasKeyPair = Boolean(
+    process.env.CLOUDINARY_CLOUD_NAME &&
+    process.env.CLOUDINARY_API_KEY &&
+    process.env.CLOUDINARY_API_SECRET
 );
 
+const useCloudinary = hasValidUrl || hasKeyPair;
+
+let cloudinary = null;
+let CloudinaryStorage = null;
+
 if (useCloudinary) {
+    ({ v2: cloudinary } = require("cloudinary"));
+    ({ CloudinaryStorage } = require("multer-storage-cloudinary"));
+
     // CLOUDINARY_URL verilmisse kutuphane onu kendisi okur.
-    if (!process.env.CLOUDINARY_URL) {
+    if (!hasValidUrl) {
         cloudinary.config({
             cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
             api_key: process.env.CLOUDINARY_API_KEY,
