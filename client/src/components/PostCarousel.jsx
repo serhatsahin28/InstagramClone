@@ -2,7 +2,7 @@ import { useState } from "react";
 import { postImage } from "../api/client";
 import "./PostCarousel.css";
 
-export default function PostCarousel({ photos }) {
+export default function PostCarousel({ photos, eager = false }) {
     const [index, setIndex] = useState(0);
     const validPhotos = photos.filter(Boolean);
 
@@ -18,7 +18,16 @@ export default function PostCarousel({ photos }) {
 
     return (
         <div className="post-carousel">
-            <img className="post-carousel-image" src={postImage(validPhotos[index])} alt="" />
+            <img
+                className="post-carousel-image"
+                src={postImage(validPhotos[index])}
+                alt=""
+                // Ekranda gorunmeyen gonderiler indirilmez; ilk gonderi
+                // hemen yuklenir ki sayfa acilir acilmaz dolu gorunsun.
+                loading={eager ? "eager" : "lazy"}
+                fetchpriority={eager ? "high" : "auto"}
+                decoding="async"
+            />
 
             {validPhotos.length > 1 && (
                 <>

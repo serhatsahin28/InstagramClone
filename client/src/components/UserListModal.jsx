@@ -33,7 +33,7 @@ export default function UserListModal({ username, kind, onClose }) {
                     ) : (
                         users.map((u) => (
                             <Link key={u._id} to={`/${u.username}`} className="user-list-item" onClick={onClose}>
-                                <img src={profileImage(u.profilePicture)} alt="" />
+                                <img src={profileImage(u.profilePicture)} alt="" loading="lazy" decoding="async" />
                                 <div className="user-list-item-text">
                                     <span className="username">{u.username}</span>
                                     <span className="muted">{u.profileName}</span>

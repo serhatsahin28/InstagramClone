@@ -16,16 +16,28 @@ function resolveApiBase() {
 
 export const API_BASE = resolveApiBase();
 
+// Cloudinary adreslerine donusum parametreleri eklenir: modern format (webp/avif),
+// otomatik kalite ve ekranda kullanilan genislik. Orijinal dosyayi indirmek yerine
+// kucultulmus surum gelir. Render diskindeki eski gorseller donusturulemez.
+function withCloudinaryTransform(url, width) {
+    if (!width || !url.includes("/image/upload/")) return url;
+    return url.replace("/image/upload/", `/image/upload/f_auto,q_auto,w_${width},c_limit/`);
+}
+
 // Gorsel adresi uretir. Cloudinary'ye yuklenenler tam URL olarak saklanir,
 // daha eski kayitlar ise sadece dosya adi icerir; ikisini de destekler.
-export function mediaUrl(value, folder) {
+export function mediaUrl(value, folder, width) {
     if (!value) return "";
-    if (/^https?:\/\//i.test(value)) return value;
+    if (/^https?:\/\//i.test(value)) return withCloudinaryTransform(value, width);
     return `${API_BASE}/${folder}/${value}`;
 }
 
-export const postImage = (name) => mediaUrl(name, "posts");
-export const profileImage = (name) => mediaUrl(name, "users_profile");
+// Gonderi gorselleri en fazla 600px genislikte gosteriliyor; 2x ekranlar icin 1200.
+export const postImage = (name) => mediaUrl(name, "posts", 1200);
+export const profileImage = (name) => mediaUrl(name, "users_profile", 320);
+
+// Kucuk kareler (izgara, avatar listeleri) icin daha da kucuk surum.
+export const thumbImage = (name) => mediaUrl(name, "posts", 400);
 
 async function request(path, options = {}) {
     const res = await fetch(`${API_BASE}/api${path}`, {

@@ -25,12 +25,13 @@ export default function Home() {
 
                 <div className="post-list">
                     {feed.post?.length ? (
-                        feed.post.map((post) => (
+                        feed.post.map((post, i) => (
                             <PostCard
                                 key={post._id}
                                 post={post}
                                 likedByMe={likedPostIds.has(String(post._id))}
                                 savedByMe={savedPostIds.has(String(post._id))}
+                                eager={i === 0}
                             />
                         ))
                     ) : (

@@ -52,26 +52,26 @@ export default function CommentModal({ post, onClose, liked, onToggleLike, saved
         <div className="comment-modal-overlay" onClick={onClose}>
             <div className="comment-modal" onClick={(e) => e.stopPropagation()}>
                 <button className="comment-modal-close" onClick={onClose}>✕</button>
-                <img className="comment-modal-image" src={postImage(post.photos[0].photo1)} alt="" />
+                <img className="comment-modal-image" src={postImage(post.photos[0].photo1)} alt="" decoding="async" />
 
                 <div className="comment-modal-side">
                     <header className="comment-modal-header">
-                        <img src={profileImage(post.profilePhoto)} alt="" />
+                        <img src={profileImage(post.profilePhoto)} alt="" loading="lazy" decoding="async" />
                         <span>{post.username}</span>
-                        <img className="dots" src={`${API_BASE}/Icons/dots.png`} alt="" />
+                        <img className="dots" src={`${API_BASE}/Icons/dots.png`} alt="" loading="lazy" decoding="async" />
                     </header>
 
                     <div className="comment-modal-list">
                         {post.description && (
                             <div className="comment-item comment-caption">
-                                <img className="comment-item-avatar" src={profileImage(post.profilePhoto)} alt="" />
+                                <img className="comment-item-avatar" src={profileImage(post.profilePhoto)} alt="" loading="lazy" decoding="async" />
                                 <span><strong>{post.username}</strong> {post.description}</span>
                             </div>
                         )}
 
                         {allComments.length ? allComments.map((c, i) => (
                             <div key={i} className="comment-item">
-                                <img className="comment-item-avatar" src={profileImage(c.userPicture)} alt="" />
+                                <img className="comment-item-avatar" src={profileImage(c.userPicture)} alt="" loading="lazy" decoding="async" />
                                 <span><strong>{c.username}</strong> {c.userComment}</span>
                             </div>
                         )) : <p className="comment-empty">Henüz yorum yok.</p>}
@@ -79,17 +79,17 @@ export default function CommentModal({ post, onClose, liked, onToggleLike, saved
 
                     <div className="comment-modal-actions">
                         <button onClick={onToggleLike} title="Beğen">
-                            <img src={`${API_BASE}/Icons/${liked ? "redHeart.png" : "heart.png"}`} alt="" />
+                            <img src={`${API_BASE}/Icons/${liked ? "redHeart.png" : "heart.png"}`} alt="" loading="lazy" decoding="async" />
                         </button>
                         <button title="Gönder">
-                            <img src={`${API_BASE}/Icons/direct-instagram.png`} alt="" />
+                            <img src={`${API_BASE}/Icons/direct-instagram.png`} alt="" loading="lazy" decoding="async" />
                         </button>
                         <button
                             className={saved ? "bookmark-btn saved" : "bookmark-btn"}
                             onClick={onToggleSave}
                             title={saved ? "Kaydedildi" : "Kaydet"}
                         >
-                            <img src={`${API_BASE}/Icons/bookmark.png`} alt="" />
+                            <img src={`${API_BASE}/Icons/bookmark.png`} alt="" loading="lazy" decoding="async" />
                         </button>
                     </div>
 

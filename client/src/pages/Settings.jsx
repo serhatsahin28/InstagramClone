@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { api, postImage } from "../api/client";
+import { api, thumbImage } from "../api/client";
 import Sidebar from "../components/Sidebar";
 import PostModal from "../components/PostModal";
 import { useAuth } from "../context/AuthContext";
@@ -22,7 +22,7 @@ function PostGrid({ posts, emptyText, onOpen }) {
         <div className="settings-grid">
             {posts.map((post) => (
                 <button key={post._id} className="settings-grid-item" onClick={() => onOpen(post)}>
-                    <img src={postImage(post.photos[0].photo1)} alt="" />
+                    <img src={thumbImage(post.photos[0].photo1)} alt="" loading="lazy" decoding="async" />
                 </button>
             ))}
         </div>
@@ -97,7 +97,7 @@ export default function Settings() {
                                 <div key={item.id} className="settings-comment-row">
                                     {item.post?.photos?.[0]?.photo1 && (
                                         <button className="settings-comment-thumb" onClick={() => setOpenPost(item.post)}>
-                                            <img src={postImage(item.post.photos[0].photo1)} alt="" />
+                                            <img src={thumbImage(item.post.photos[0].photo1)} alt="" loading="lazy" decoding="async" />
                                         </button>
                                     )}
                                     <div className="settings-comment-text">

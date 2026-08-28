@@ -93,12 +93,12 @@ export default function MessageDock() {
             <button className="message-dock-bar" onClick={() => setOpen(!open)}>
                 {active ? (
                     <>
-                        <img src={profileImage(active.otherUserImage)} alt="" />
+                        <img src={profileImage(active.otherUserImage)} alt="" loading="lazy" decoding="async" />
                         <span>{active.otherUsername}</span>
                     </>
                 ) : (
                     <>
-                        <img src={`${API_BASE}/Icons/chat.png`} alt="" />
+                        <img src={`${API_BASE}/Icons/chat.png`} alt="" loading="lazy" decoding="async" />
                         <span>Mesajlar</span>
                     </>
                 )}
@@ -114,7 +114,7 @@ export default function MessageDock() {
                             ) : (
                                 threads.map((t) => (
                                     <button key={t._id} className="message-dock-thread" onClick={() => setActive(t)}>
-                                        <img src={profileImage(t.otherUserImage)} alt="" />
+                                        <img src={profileImage(t.otherUserImage)} alt="" loading="lazy" decoding="async" />
                                         <div className="message-dock-thread-text">
                                             <span className="username">{t.otherUsername}</span>
                                             <span className="last">{t.lastFromMe ? "Sen: " : ""}{t.lastMessage}</span>

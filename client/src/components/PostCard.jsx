@@ -7,7 +7,7 @@ import CommentModal from "./CommentModal";
 import LikesModal from "./LikesModal";
 import "./PostCard.css";
 
-export default function PostCard({ post, likedByMe, savedByMe }) {
+export default function PostCard({ post, likedByMe, savedByMe, eager = false }) {
     const { liked, toggleLike, saved, toggleSave } = usePostActions(post, likedByMe, savedByMe);
     const [showComments, setShowComments] = useState(false);
     const [showLikes, setShowLikes] = useState(false);
@@ -19,12 +19,12 @@ export default function PostCard({ post, likedByMe, savedByMe }) {
     return (
         <article className="post-card">
             <header className="post-card-header">
-                <img className="post-card-avatar" src={profileImage(post.profilePhoto)} alt="" />
+                <img className="post-card-avatar" src={profileImage(post.profilePhoto)} alt="" loading="lazy" decoding="async" />
                 <Link to={`/${post.username}`} className="post-card-username">{post.username}</Link>
                 <img className="post-card-dots" src={`${API_BASE}/Icons/dots.png`} alt="" />
             </header>
 
-            <PostCarousel photos={photos} />
+            <PostCarousel photos={photos} eager={eager} />
 
             <div className="post-card-actions">
                 <button className="icon-btn" onClick={toggleLike} title="Beğen">
