@@ -221,6 +221,25 @@ module.exports = function registerSocket(io) {
             }
         });
 
+        // Yorumu sadece yazan kisi ya da gonderi sahibi silebilir.
+        socket.on("commentDelete", async ({ commentId, sessionUserName }) => {
+            try {
+                const target = await commentPost.findById(commentId);
+                if (!target) return;
+
+                const author = target.userWhoComment?.[0]?.username;
+                const isAuthor = author === sessionUserName;
+                const isPostOwner = target.postOwnerUsername === sessionUserName;
+                if (!isAuthor && !isPostOwner) return;
+
+                await commentPost.deleteOne({ _id: commentId });
+                const newQuery = await commentPost.find({ post_id: target.post_id }).sort({ _id: -1 });
+                io.emit("commentPostReturn2", newQuery);
+            } catch (error) {
+                console.error(error);
+            }
+        });
+
         socket.on("follower", async (sessionUserName) => {
             const usersInfo = await followPost.find({ "followed.username": sessionUserName, "followed.situation": true });
             io.emit("followerReturn", usersInfo);

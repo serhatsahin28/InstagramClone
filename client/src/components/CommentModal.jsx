@@ -94,7 +94,15 @@ export default function CommentModal({ post, onClose, onDeleted, liked, onToggle
                             <div key={i} className="comment-item">
                                 <img className="comment-item-avatar" loading="lazy" decoding="async"
                 src={profileImage(c.userPicture)} alt="" />
-                                <span><strong>{c.username}</strong> {c.userComment}</span>
+                                <span className="comment-item-text"><strong>{c.username}</strong> {c.userComment}</span>
+                                {(c.username === feed?.userName || post.username === feed?.userName) && (
+                                    <button
+                                        className="comment-item-delete"
+                                        onClick={() => socket?.emit("commentDelete", { commentId: c.id, sessionUserName: feed.userName })}
+                                    >
+                                        Sil
+                                    </button>
+                                )}
                             </div>
                         )) : <p className="comment-empty">Henüz yorum yok.</p>}
                     </div>
