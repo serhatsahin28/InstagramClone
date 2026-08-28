@@ -59,11 +59,9 @@
     margin-left: auto;
 }
 
-/* Kaydedilince ikon dolu beyaz gösterilir (mask adresi JSX'te API_BASE ile
-   inline veriliyor), kaydedilmemişken sade çizgi kalır. */
-.save-btn.saved img {
-    background-color: #fff;
-    filter: none;
+/* Kaydedilince gerçekten dolu görünmesi için SaveIcon bileşeni bir SVG
+   çizer; kaydedilmemişken orijinal ince çizgili PNG kullanılır. */
+.save-btn.saved svg {
     transform: scale(1.08);
 }
 

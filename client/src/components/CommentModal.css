@@ -176,9 +176,7 @@
     margin-left: auto;
 }
 
-.comment-modal-actions .bookmark-btn.saved img {
-    background-color: #fff;
-    filter: none;
+.comment-modal-actions .bookmark-btn.saved svg {
     transform: scale(1.08);
 }
 

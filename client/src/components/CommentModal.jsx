@@ -6,6 +6,7 @@ import PostCarousel from "./PostCarousel";
 import LikesModal from "./LikesModal";
 import ShareModal from "./ShareModal";
 import PostMenu from "./PostMenu";
+import SaveIcon from "./SaveIcon";
 import { timeAgo } from "../utils/timeAgo";
 import "./CommentModal.css";
 
@@ -128,22 +129,7 @@ export default function CommentModal({ post, onClose, onDeleted, onEdited, liked
                             onClick={onToggleSave}
                             title={saved ? "Kaydedildi" : "Kaydet"}
                         >
-                            <img
-                                loading="lazy"
-                                decoding="async"
-                                src={`${API_BASE}/Icons/bookmark.png`}
-                                alt=""
-                                style={saved ? {
-                                    WebkitMaskImage: `url(${API_BASE}/Icons/bookmark.png)`,
-                                    maskImage: `url(${API_BASE}/Icons/bookmark.png)`,
-                                    WebkitMaskSize: "contain",
-                                    maskSize: "contain",
-                                    WebkitMaskRepeat: "no-repeat",
-                                    maskRepeat: "no-repeat",
-                                    WebkitMaskPosition: "center",
-                                    maskPosition: "center"
-                                } : undefined}
-                            />
+                            <SaveIcon saved={saved} />
                         </button>
                     </div>
 

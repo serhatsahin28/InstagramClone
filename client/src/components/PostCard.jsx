@@ -7,6 +7,7 @@ import CommentModal from "./CommentModal";
 import LikesModal from "./LikesModal";
 import ShareModal from "./ShareModal";
 import PostMenu from "./PostMenu";
+import SaveIcon from "./SaveIcon";
 import { timeAgo } from "../utils/timeAgo";
 import "./PostCard.css";
 
@@ -45,7 +46,7 @@ export default function PostCard({ post, likedByMe, savedByMe, eager = false }) 
                     <img src={`${API_BASE}/Icons/${liked ? "redHeart.png" : "heart.png"}`} alt="beğen" />
                 </button>
                 <button className="icon-btn" onClick={() => setShowComments(true)} title="Yorum yap">
-                    <img src={`${API_BASE}/Icons/chat.png`} alt="yorum" />
+                    <img src={`${API_BASE}/Icons/icon_chat.png`} alt="yorum" />
                 </button>
                 <button className="icon-btn" onClick={() => setShowShare(true)} title="Gönder">
                     <img src={`${API_BASE}/Icons/direct-instagram.png`} alt="gönder" />
@@ -56,20 +57,7 @@ export default function PostCard({ post, likedByMe, savedByMe, eager = false }) 
                     onClick={toggleSave}
                     title={saved ? "Kaydedildi" : "Kaydet"}
                 >
-                    <img
-                        src={`${API_BASE}/Icons/bookmark.png`}
-                        alt="kaydet"
-                        style={saved ? {
-                            WebkitMaskImage: `url(${API_BASE}/Icons/bookmark.png)`,
-                            maskImage: `url(${API_BASE}/Icons/bookmark.png)`,
-                            WebkitMaskSize: "contain",
-                            maskSize: "contain",
-                            WebkitMaskRepeat: "no-repeat",
-                            maskRepeat: "no-repeat",
-                            WebkitMaskPosition: "center",
-                            maskPosition: "center"
-                        } : undefined}
-                    />
+                    <SaveIcon saved={saved} />
                 </button>
             </div>
 
