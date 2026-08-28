@@ -40,3 +40,13 @@ body {
   height: 22px;
   object-fit: contain;
 }
+
+.hashtag-link {
+  color: #0095f6;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.hashtag-link:hover {
+  text-decoration: underline;
+}

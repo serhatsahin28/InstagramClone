@@ -7,6 +7,7 @@ import LikesModal from "./LikesModal";
 import ShareModal from "./ShareModal";
 import PostMenu from "./PostMenu";
 import SaveIcon from "./SaveIcon";
+import Caption from "./Caption";
 import { timeAgo } from "../utils/timeAgo";
 import "./CommentModal.css";
 
@@ -138,7 +139,7 @@ export default function CommentModal({ post, onClose, onDeleted, onEdited, liked
                             <div className="comment-item comment-caption">
                                 <img className="comment-item-avatar" loading="lazy" decoding="async"
                 src={profileImage(post.profilePhoto)} alt="" />
-                                <span><strong>{post.username}</strong> {description}</span>
+                                <span><strong>{post.username}</strong> <Caption text={description} /></span>
                             </div>
                         )}
 

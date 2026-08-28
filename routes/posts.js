@@ -23,6 +23,10 @@ router.get("/my-comments", (req, res) => {
     new libraryController().comments(req, res);
 });
 
+router.get("/hashtag/:tag", (req, res) => {
+    new postController().getByHashtag(req, res, req.params.tag);
+});
+
 router.post("/:id/save", (req, res) => {
     new libraryController().toggleSave(req, res, req.params.id, true);
 });

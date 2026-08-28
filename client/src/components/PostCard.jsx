@@ -8,6 +8,7 @@ import LikesModal from "./LikesModal";
 import ShareModal from "./ShareModal";
 import PostMenu from "./PostMenu";
 import SaveIcon from "./SaveIcon";
+import Caption from "./Caption";
 import { timeAgo } from "../utils/timeAgo";
 import "./PostCard.css";
 
@@ -67,7 +68,7 @@ export default function PostCard({ post, likedByMe, savedByMe, eager = false }) 
 
             <p className="post-card-caption">
                 <Link to={`/${post.username}`} className="post-card-caption-user">{post.username}</Link>
-                {description ? ` ${description}` : ""}
+                {description ? <> <Caption text={description} /></> : ""}
             </p>
 
             <button className="post-card-comments-link" onClick={() => setShowComments(true)}>

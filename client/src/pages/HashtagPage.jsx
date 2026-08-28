@@ -1,0 +1,76 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { api, API_BASE, thumbImage } from "../api/client";
+import { useAuth } from "../context/AuthContext";
+import Sidebar from "../components/Sidebar";
+import PostModal from "../components/PostModal";
+import "./Explore.css";
+
+// Bir hashtag'i caption'inda gecen tum gonderiler; Kesfet ile ayni
+// izgara duzenini kullanir.
+export default function HashtagPage() {
+    const { tag } = useParams();
+    const { feed } = useAuth();
+    const [posts, setPosts] = useState(null);
+    const [openPost, setOpenPost] = useState(null);
+
+    useEffect(() => {
+        setPosts(null);
+        api.get(`/posts/hashtag/${tag}`)
+            .then((res) => setPosts(res.posts || []))
+            .catch(() => setPosts([]));
+    }, [tag]);
+
+    const likedPostIds = new Set((feed?.userLikePostUser || []).map((l) => String(l.post_id)));
+    const savedPostIds = new Set(feed?.savedPostIds || []);
+
+    return (
+        <div className="home-layout">
+            <Sidebar />
+            <main className="explore-page">
+                <h2 className="explore-title">#{tag}</h2>
+
+                {posts === null ? null : posts.length === 0 ? (
+                    <p className="explore-empty">Bu hashtag ile paylaşılmış gönderi yok.</p>
+                ) : (
+                    <div className="explore-grid">
+                        {posts.map((post) => {
+                            const p = post.photos?.[0] || {};
+                            const isMulti = [p.photo2, p.photo3, p.photo4].some(Boolean);
+                            return (
+                                <button
+                                    key={post._id}
+                                    className="explore-grid-item"
+                                    onClick={() => setOpenPost(post)}
+                                >
+                                    {isMulti && (
+                                        <img className="explore-grid-multi" src={`${API_BASE}/Icons/instagramPost.png`} alt="" />
+                                    )}
+                                    <img loading="lazy" decoding="async" src={thumbImage(p.photo1)} alt="" />
+                                </button>
+                            );
+                        })}
+                    </div>
+                )}
+            </main>
+
+            {openPost && (
+                <PostModal
+                    post={openPost}
+                    onClose={() => setOpenPost(null)}
+                    onDeleted={() => {
+                        const id = openPost._id;
+                        setOpenPost(null);
+                        setPosts((prev) => prev?.filter((p) => p._id !== id) ?? prev);
+                    }}
+                    onEdited={(description) => {
+                        const id = openPost._id;
+                        setPosts((prev) => prev?.map((p) => (p._id === id ? { ...p, description } : p)) ?? prev);
+                    }}
+                    likedByMe={likedPostIds.has(String(openPost._id))}
+                    savedByMe={savedPostIds.has(String(openPost._id))}
+                />
+            )}
+        </div>
+    );
+}

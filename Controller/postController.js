@@ -150,6 +150,20 @@ class postController {
         }
     }
 
+    // Aciklamasinda verilen #hashtag'i gecen gonderiler; kelime sinirlariyla
+    // eslesir (ornegin "#cat" "#category" ile karismaz).
+    async getByHashtag(req, res, tag) {
+        try {
+            const escaped = tag.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+            const pattern = new RegExp(`(^|\\s)#${escaped}(\\s|$)`, "i");
+            const posts = await Post.find({ description: pattern }).sort({ _id: -1 });
+            res.json({ posts });
+        } catch (error) {
+            console.log("postController getByHashtag: " + error);
+            res.status(500).json({ error: "Gönderiler alınamadı" });
+        }
+    }
+
     async getOne(req, res, postId) {
         try {
             const post = await Post.findById(postId);

@@ -13,6 +13,7 @@ import Story from "./pages/Story";
 import Messages from "./pages/Messages";
 import Settings from "./pages/Settings";
 import Explore from "./pages/Explore";
+import HashtagPage from "./pages/HashtagPage";
 import Placeholder from "./pages/Placeholder";
 
 function withAuth(element) {
@@ -32,6 +33,7 @@ export default function App() {
                                 <Route path="/forgot-password" element={<ForgotPassword />} />
                                 <Route path="/" element={withAuth(<Home />)} />
                                 <Route path="/explore" element={withAuth(<Explore />)} />
+                                <Route path="/explore/tags/:tag" element={withAuth(<HashtagPage />)} />
                                 <Route path="/reels" element={withAuth(<Placeholder title="Reels" />)} />
                                 <Route path="/direct/inbox" element={withAuth(<Messages />)} />
                                 <Route path="/direct/:id" element={withAuth(<Messages />)} />
