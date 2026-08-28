@@ -19,7 +19,8 @@ export default function PostCard({ post, likedByMe, savedByMe, eager = false }) 
     return (
         <article className="post-card">
             <header className="post-card-header">
-                <img className="post-card-avatar" src={profileImage(post.profilePhoto)} alt="" loading="lazy" decoding="async" />
+                <img className="post-card-avatar" loading="lazy" decoding="async"
+                src={profileImage(post.profilePhoto)} alt="" />
                 <Link to={`/${post.username}`} className="post-card-username">{post.username}</Link>
                 <img className="post-card-dots" src={`${API_BASE}/Icons/dots.png`} alt="" />
             </header>

@@ -72,7 +72,8 @@ export default function SearchPanel({ open, onClose }) {
                             className="slide-panel-row"
                             onClick={onClose}
                         >
-                            <img src={profileImage(user.profilePicture)} alt="" loading="lazy" decoding="async" />
+                            <img loading="lazy" decoding="async"
+                src={profileImage(user.profilePicture)} alt="" />
                             <div className="slide-panel-row-text">
                                 <span className="username">{user.username}</span>
                                 <span className="muted">{user.profileName}</span>

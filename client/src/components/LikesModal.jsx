@@ -51,7 +51,8 @@ export default function LikesModal({ postId, onClose }) {
                     ) : (
                         users.map((u, i) => (
                             <Link key={i} to={`/${u.username}`} className="likes-item" onClick={onClose}>
-                                <img src={profileImage(u.userPicture)} alt="" loading="lazy" decoding="async" />
+                                <img loading="lazy" decoding="async"
+                src={profileImage(u.userPicture)} alt="" />
                                 <div className="likes-item-text">
                                     <span className="username">{u.username}</span>
                                     <span className="muted">{u.userProfileName}</span>

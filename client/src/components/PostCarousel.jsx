@@ -18,15 +18,18 @@ export default function PostCarousel({ photos, eager = false }) {
 
     return (
         <div className="post-carousel">
+            {/*
+                loading niteligi src'den ONCE gelmeli: React nitelikleri JSX
+                sirasiyla atiyor, src once atanirsa tarayici indirmeye baslayip
+                lazy'yi kacir. Ilk gonderi eager yuklenir ki sayfa dolu acilsin.
+            */}
             <img
                 className="post-carousel-image"
+                loading={eager ? "eager" : "lazy"}
+                decoding="async"
+                fetchpriority={eager ? "high" : "auto"}
                 src={postImage(validPhotos[index])}
                 alt=""
-                // Ekranda gorunmeyen gonderiler indirilmez; ilk gonderi
-                // hemen yuklenir ki sayfa acilir acilmaz dolu gorunsun.
-                loading={eager ? "eager" : "lazy"}
-                fetchpriority={eager ? "high" : "auto"}
-                decoding="async"
             />
 
             {validPhotos.length > 1 && (

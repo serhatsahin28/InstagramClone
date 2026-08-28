@@ -53,19 +53,22 @@ export default function StoryBar({ stories, sessionUserStories, sessionUserName,
             <div className="story-track" ref={trackRef} onScroll={updateArrows}>
                 {sessionUserStories?.length > 0 ? (
                     <Link to={`/stories/${sessionUserName}/${sessionUserStories[0]._id}`} className="story-item">
-                        <img src={profileImage(sessionProfilePicture)} alt="" loading="lazy" decoding="async" />
+                        <img loading="lazy" decoding="async"
+                src={profileImage(sessionProfilePicture)} alt="" />
                         <span>Hikayen</span>
                     </Link>
                 ) : (
                     <div className="story-item">
-                        <img src={profileImage(sessionProfilePicture)} alt="" loading="lazy" decoding="async" />
+                        <img loading="lazy" decoding="async"
+                src={profileImage(sessionProfilePicture)} alt="" />
                         <span>Hikayen</span>
                     </div>
                 )}
 
                 {others.map((story) => (
                     <Link key={story._id} to={`/stories/${story.username}/${story._id}`} className="story-item">
-                        <img src={profileImage(story.profilePicture)} alt="" loading="lazy" decoding="async" />
+                        <img loading="lazy" decoding="async"
+                src={profileImage(story.profilePicture)} alt="" />
                         <span>{story.username}</span>
                     </Link>
                 ))}

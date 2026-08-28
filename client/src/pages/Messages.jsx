@@ -107,7 +107,8 @@ export default function Messages() {
                     <div className="messages-inbox-header">
                         <h3>{feed?.userName}</h3>
                         <button className="messages-new-btn" onClick={() => setShowNewMessage(true)} title="Yeni mesaj">
-                            <img src={`${API_BASE}/Icons/createChat.png`} alt="Yeni mesaj" loading="lazy" decoding="async" />
+                            <img loading="lazy" decoding="async"
+                src={`${API_BASE}/Icons/createChat.png`} alt="Yeni mesaj" />
                         </button>
                     </div>
 
@@ -138,7 +139,8 @@ export default function Messages() {
                                 to={`/direct/${item.otherUserId}`}
                                 className={id === item.otherUserId ? "messages-inbox-item active" : "messages-inbox-item"}
                             >
-                                <img src={profileImage(item.otherUserImage)} alt="" loading="lazy" decoding="async" />
+                                <img loading="lazy" decoding="async"
+                src={profileImage(item.otherUserImage)} alt="" />
                                 <div className="messages-inbox-item-text">
                                     <span className="username">{item.otherUsername}</span>
                                     <span className="last-message">
@@ -164,12 +166,16 @@ export default function Messages() {
                 {data.otherUser ? (
                     <section className="messages-thread">
                         <header className="messages-thread-header">
-                            <img className="messages-thread-avatar" src={profileImage(data.otherUser.otherUserImage)} alt="" loading="lazy" decoding="async" />
+                            <img className="messages-thread-avatar" loading="lazy" decoding="async"
+                src={profileImage(data.otherUser.otherUserImage)} alt="" />
                             <span>{data.otherUser.otherUsername}</span>
                             <div className="messages-thread-header-icons">
-                                <img src={`${API_BASE}/Icons/phoneCall.png`} alt="" loading="lazy" decoding="async" />
-                                <img src={`${API_BASE}/Icons/camRecorder.png`} alt="" loading="lazy" decoding="async" />
-                                <img src={`${API_BASE}/Icons/info.png`} alt="" loading="lazy" decoding="async" />
+                                <img loading="lazy" decoding="async"
+                src={`${API_BASE}/Icons/phoneCall.png`} alt="" />
+                                <img loading="lazy" decoding="async"
+                src={`${API_BASE}/Icons/camRecorder.png`} alt="" />
+                                <img loading="lazy" decoding="async"
+                src={`${API_BASE}/Icons/info.png`} alt="" />
                             </div>
                         </header>
 

@@ -98,7 +98,8 @@ export default function Profile() {
             <Sidebar />
             <main className="profile-page">
                 <header className="profile-header">
-                    <img className="profile-avatar" src={profileImage(target.profilePicture)} alt="" loading="lazy" decoding="async" />
+                    <img className="profile-avatar" loading="lazy" decoding="async"
+                src={profileImage(target.profilePicture)} alt="" />
                     <div className="profile-info">
                         <div className="profile-title-row">
                             <h2>{target.username}</h2>
@@ -144,7 +145,8 @@ export default function Profile() {
                                 className="profile-grid-item"
                                 onClick={() => setOpenPost(post)}
                             >
-                                <img src={thumbImage(post.photos[0].photo1)} alt="" loading="lazy" decoding="async" />
+                                <img loading="lazy" decoding="async"
+                src={thumbImage(post.photos[0].photo1)} alt="" />
                             </button>
                         ))}
                     </div>

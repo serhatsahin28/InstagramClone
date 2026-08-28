@@ -59,7 +59,8 @@ export default function NewMessageModal({ onClose }) {
                                 className={selected?._id === user._id ? "new-message-item selected" : "new-message-item"}
                                 onClick={() => setSelected(user)}
                             >
-                                <img src={profileImage(user.profilePicture)} alt="" loading="lazy" decoding="async" />
+                                <img loading="lazy" decoding="async"
+                src={profileImage(user.profilePicture)} alt="" />
                                 <div className="new-message-item-text">
                                     <span className="username">{user.username}</span>
                                     <span className="muted">{user.profileName}</span>

@@ -22,7 +22,8 @@ function PostGrid({ posts, emptyText, onOpen }) {
         <div className="settings-grid">
             {posts.map((post) => (
                 <button key={post._id} className="settings-grid-item" onClick={() => onOpen(post)}>
-                    <img src={thumbImage(post.photos[0].photo1)} alt="" loading="lazy" decoding="async" />
+                    <img loading="lazy" decoding="async"
+                src={thumbImage(post.photos[0].photo1)} alt="" />
                 </button>
             ))}
         </div>
@@ -97,7 +98,8 @@ export default function Settings() {
                                 <div key={item.id} className="settings-comment-row">
                                     {item.post?.photos?.[0]?.photo1 && (
                                         <button className="settings-comment-thumb" onClick={() => setOpenPost(item.post)}>
-                                            <img src={thumbImage(item.post.photos[0].photo1)} alt="" loading="lazy" decoding="async" />
+                                            <img loading="lazy" decoding="async"
+                src={thumbImage(item.post.photos[0].photo1)} alt="" />
                                         </button>
                                     )}
                                     <div className="settings-comment-text">
