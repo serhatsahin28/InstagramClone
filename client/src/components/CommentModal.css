@@ -223,6 +223,48 @@
     color: #8e8e8e;
 }
 
+.comment-thread {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.comment-reply {
+    margin-left: 2.4rem;
+}
+
+.comment-item-reply-btn {
+    background: none;
+    border: none;
+    color: #8e8e8e;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 0.5rem;
+}
+
+.comment-item-reply-btn:hover {
+    color: #fff;
+}
+
+.comment-reply-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #1a1a1a;
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    color: #8e8e8e;
+}
+
+.comment-reply-banner button {
+    background: none;
+    border: none;
+    color: #8e8e8e;
+    cursor: pointer;
+}
+
 .comment-form {
     display: flex;
     align-items: center;

@@ -193,10 +193,12 @@ module.exports = function registerSocket(io) {
                 const newComment = newCommentData.newComment;
                 const usernamePostOwner = newCommentData.usernamePostOwner;
                 const sessionUserPicture = newCommentData.sessionUserPicture;
+                const parentId = newCommentData.parentId || undefined;
 
                 await commentPost.create({
                     post_id: post_id,
                     postOwnerUsername: usernamePostOwner,
+                    parentId,
                     userWhoComment: [
                         {
                             username: sessionUserName,

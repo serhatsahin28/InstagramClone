@@ -41,7 +41,12 @@ const comment = new Schema({
         {
             username: { type: String, required: true }
         }
-    ]
+    ],
+
+    // Bir yanit ise, yanit verilen ust yorumun _id'si; ust seviye yorumlarda bos.
+    parentId: {
+        type: String
+    }
 
 
 

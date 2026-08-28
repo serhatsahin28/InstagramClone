@@ -18,6 +18,7 @@ export default function CommentModal({ post, onClose, onDeleted, onEdited, liked
     const [showLikes, setShowLikes] = useState(false);
     const [showShare, setShowShare] = useState(false);
     const [description, setDescription] = useState(post.description);
+    const [replyTo, setReplyTo] = useState(null); // { id, username } | null
 
     useEffect(() => {
         if (!socket) return;
@@ -48,12 +49,57 @@ export default function CommentModal({ post, onClose, onDeleted, onEdited, liked
             sessionUserName: feed.userName,
             newComment: text,
             usernamePostOwner: post.username,
-            sessionUserPicture: feed.sessionProfilePicture
+            sessionUserPicture: feed.sessionProfilePicture,
+            parentId: replyTo?.id
         });
         setText("");
+        setReplyTo(null);
     }
 
-    const allComments = comments.flatMap((c) => c.userWhoComment.map((u) => ({ ...u, id: c._id, likes: c.likes || [] })));
+    const allComments = comments.flatMap((c) => c.userWhoComment.map((u) => ({
+        ...u, id: c._id, likes: c.likes || [], parentId: c.parentId
+    })));
+    const topLevelComments = allComments.filter((c) => !c.parentId);
+    const repliesByParent = {};
+    for (const c of allComments) {
+        if (c.parentId) (repliesByParent[c.parentId] ||= []).push(c);
+    }
+
+    function renderComment(c, isReply) {
+        return (
+            <div key={c.id} className={isReply ? "comment-item comment-reply" : "comment-item"}>
+                <img className="comment-item-avatar" loading="lazy" decoding="async"
+                    src={profileImage(c.userPicture)} alt="" />
+                <span className="comment-item-text">
+                    <strong>{c.username}</strong> {c.userComment}
+                    <button className="comment-item-reply-btn" onClick={() => setReplyTo({ id: c.id, username: c.username })}>
+                        Yanıtla
+                    </button>
+                </span>
+                <div className="comment-item-side">
+                    <button
+                        className="comment-item-like"
+                        onClick={() => socket?.emit("commentLike", { commentId: c.id, sessionUserName: feed.userName })}
+                    >
+                        <img
+                            loading="lazy" decoding="async"
+                            src={`${API_BASE}/Icons/${c.likes.some((l) => l.username === feed?.userName) ? "redHeart.png" : "heart.png"}`}
+                            alt=""
+                        />
+                        {c.likes.length > 0 && <span className="comment-item-like-count">{c.likes.length}</span>}
+                    </button>
+                    {(c.username === feed?.userName || post.username === feed?.userName) && (
+                        <button
+                            className="comment-item-delete"
+                            onClick={() => socket?.emit("commentDelete", { commentId: c.id, sessionUserName: feed.userName })}
+                        >
+                            Sil
+                        </button>
+                    )}
+                </div>
+            </div>
+        );
+    }
 
     const photos = post.photos?.[0]
         ? [post.photos[0].photo1, post.photos[0].photo2, post.photos[0].photo3, post.photos[0].photo4]
@@ -96,32 +142,10 @@ export default function CommentModal({ post, onClose, onDeleted, onEdited, liked
                             </div>
                         )}
 
-                        {allComments.length ? allComments.map((c, i) => (
-                            <div key={i} className="comment-item">
-                                <img className="comment-item-avatar" loading="lazy" decoding="async"
-                src={profileImage(c.userPicture)} alt="" />
-                                <span className="comment-item-text"><strong>{c.username}</strong> {c.userComment}</span>
-                                <div className="comment-item-side">
-                                    <button
-                                        className="comment-item-like"
-                                        onClick={() => socket?.emit("commentLike", { commentId: c.id, sessionUserName: feed.userName })}
-                                    >
-                                        <img
-                                            loading="lazy" decoding="async"
-                                            src={`${API_BASE}/Icons/${c.likes.some((l) => l.username === feed?.userName) ? "redHeart.png" : "heart.png"}`}
-                                            alt=""
-                                        />
-                                        {c.likes.length > 0 && <span className="comment-item-like-count">{c.likes.length}</span>}
-                                    </button>
-                                    {(c.username === feed?.userName || post.username === feed?.userName) && (
-                                        <button
-                                            className="comment-item-delete"
-                                            onClick={() => socket?.emit("commentDelete", { commentId: c.id, sessionUserName: feed.userName })}
-                                        >
-                                            Sil
-                                        </button>
-                                    )}
-                                </div>
+                        {topLevelComments.length ? topLevelComments.map((c) => (
+                            <div key={c.id} className="comment-thread">
+                                {renderComment(c, false)}
+                                {repliesByParent[c.id]?.map((r) => renderComment(r, true))}
                             </div>
                         )) : <p className="comment-empty">Henüz yorum yok.</p>}
                     </div>
@@ -150,10 +174,17 @@ export default function CommentModal({ post, onClose, onDeleted, onEdited, liked
                         Beğenmeleri görüntüle
                     </button>
 
+                    {replyTo && (
+                        <div className="comment-reply-banner">
+                            <span>@{replyTo.username} kullanıcısına yanıt veriyorsun</span>
+                            <button onClick={() => setReplyTo(null)}>✕</button>
+                        </div>
+                    )}
+
                     <form className="comment-form" onSubmit={handleSend}>
                         <input
                             type="text"
-                            placeholder="Yorum ekle..."
+                            placeholder={replyTo ? "Yanıt yaz..." : "Yorum ekle..."}
                             value={text}
                             onChange={(e) => setText(e.target.value)}
                         />
