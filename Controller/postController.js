@@ -161,6 +161,22 @@ class postController {
         }
     }
 
+    // Sadece gonderi sahibi kendi caption'ini duzenleyebilir.
+    async updateDescription(req, res, postId, sessionUserName, description) {
+        try {
+            const post = await Post.findById(postId);
+            if (!post) return res.status(404).json({ error: "Gönderi bulunamadı" });
+            if (post.username !== sessionUserName) return res.status(403).json({ error: "Bu gönderiyi düzenleyemezsin" });
+
+            post.description = typeof description === "string" ? description.trim() : "";
+            await post.save();
+            res.json({ post });
+        } catch (error) {
+            console.log("postController updateDescription: " + error);
+            res.status(500).json({ error: "Gönderi güncellenemedi" });
+        }
+    }
+
 async postDelete(data){
 
 const sessionUserName=data.sessionUserName;

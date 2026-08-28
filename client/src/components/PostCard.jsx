@@ -16,6 +16,7 @@ export default function PostCard({ post, likedByMe, savedByMe, eager = false }) 
     const [showLikes, setShowLikes] = useState(false);
     const [showShare, setShowShare] = useState(false);
     const [deleted, setDeleted] = useState(false);
+    const [description, setDescription] = useState(post.description);
 
     const photos = post.photos?.[0]
         ? [post.photos[0].photo1, post.photos[0].photo2, post.photos[0].photo3, post.photos[0].photo4]
@@ -29,7 +30,12 @@ export default function PostCard({ post, likedByMe, savedByMe, eager = false }) 
                 <img className="post-card-avatar" loading="lazy" decoding="async"
                 src={profileImage(post.profilePhoto)} alt="" />
                 <Link to={`/${post.username}`} className="post-card-username">{post.username}</Link>
-                <PostMenu post={post} className="post-card-dots" onDeleted={() => setDeleted(true)} />
+                <PostMenu
+                    post={{ ...post, description }}
+                    className="post-card-dots"
+                    onDeleted={() => setDeleted(true)}
+                    onEdited={setDescription}
+                />
             </header>
 
             <PostCarousel photos={photos} eager={eager} />
@@ -73,7 +79,7 @@ export default function PostCard({ post, likedByMe, savedByMe, eager = false }) 
 
             <p className="post-card-caption">
                 <Link to={`/${post.username}`} className="post-card-caption-user">{post.username}</Link>
-                {post.description ? ` ${post.description}` : ""}
+                {description ? ` ${description}` : ""}
             </p>
 
             <button className="post-card-comments-link" onClick={() => setShowComments(true)}>
@@ -84,9 +90,10 @@ export default function PostCard({ post, likedByMe, savedByMe, eager = false }) 
 
             {showComments && (
                 <CommentModal
-                    post={post}
+                    post={{ ...post, description }}
                     onClose={() => setShowComments(false)}
                     onDeleted={() => setDeleted(true)}
+                    onEdited={setDescription}
                     liked={liked}
                     onToggleLike={toggleLike}
                     saved={saved}

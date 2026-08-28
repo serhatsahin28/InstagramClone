@@ -1,0 +1,72 @@
+.edit-caption-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 60;
+    padding: 1.5rem;
+}
+
+.edit-caption-modal {
+    background: #262626;
+    color: #fff;
+    border-radius: 12px;
+    padding: 1.25rem;
+    width: 100%;
+    max-width: 420px;
+}
+
+.edit-caption-modal h3 {
+    margin: 0 0 0.75rem;
+    font-size: 1rem;
+}
+
+.edit-caption-modal textarea {
+    width: 100%;
+    resize: vertical;
+    background: #000;
+    color: #fff;
+    border: 1px solid #363636;
+    border-radius: 8px;
+    padding: 0.6rem;
+    font-size: 0.9rem;
+    font-family: inherit;
+}
+
+.edit-caption-error {
+    color: #ed4956;
+    font-size: 0.8rem;
+    margin: 0.5rem 0 0;
+}
+
+.edit-caption-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.edit-caption-actions button {
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.edit-caption-cancel {
+    background: none;
+    color: #8e8e8e;
+}
+
+.edit-caption-save {
+    background: #0095f6;
+    color: #fff;
+}
+
+.edit-caption-save:disabled {
+    opacity: 0.6;
+    cursor: default;
+}

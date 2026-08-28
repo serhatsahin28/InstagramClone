@@ -37,11 +37,17 @@
     width: 100%;
     background: none;
     border: none;
-    color: #ed4956;
+    color: #fff;
     font-weight: 600;
     font-size: 0.9rem;
     padding: 0.7rem 1.5rem;
     cursor: pointer;
+    border-bottom: 1px solid #363636;
+}
+
+.post-menu-dropdown button:last-child {
+    border-bottom: none;
+    color: #ed4956;
 }
 
 .post-menu-dropdown button:hover {

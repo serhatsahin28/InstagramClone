@@ -39,6 +39,11 @@ router.get("/:id", (req, res) => {
     new postController().getOne(req, res, req.params.id);
 });
 
+router.put("/:id", (req, res) => {
+    const sessionUserName = req.session.user.username;
+    new postController().updateDescription(req, res, req.params.id, sessionUserName, req.body.description);
+});
+
 router.post("/upload", uploadPost.array("photos", 4), (req, res) => {
     const a = new postController();
     const photos = req.files;

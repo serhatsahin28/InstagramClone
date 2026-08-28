@@ -148,6 +148,12 @@ export default function Settings() {
                         setSaved((prev) => prev?.filter((p) => p._id !== id) ?? prev);
                         setLiked((prev) => prev?.filter((p) => p._id !== id) ?? prev);
                     }}
+                    onEdited={(description) => {
+                        const id = openPost._id;
+                        const patch = (p) => (p._id === id ? { ...p, description } : p);
+                        setSaved((prev) => prev?.map(patch) ?? prev);
+                        setLiked((prev) => prev?.map(patch) ?? prev);
+                    }}
                     likedByMe={(feed?.userLikePostUser || []).some((l) => String(l.post_id) === String(openPost._id))}
                     savedByMe={(feed?.savedPostIds || []).includes(String(openPost._id))}
                 />

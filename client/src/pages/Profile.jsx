@@ -179,6 +179,7 @@ export default function Profile() {
                     post={openPost}
                     onClose={() => setOpenPost(null)}
                     onDeleted={() => { setOpenPost(null); load(); }}
+                    onEdited={() => load()}
                     likedByMe={likedPostIds.has(String(openPost._id))}
                     savedByMe={savedPostIds.has(String(openPost._id))}
                 />

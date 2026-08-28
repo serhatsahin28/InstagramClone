@@ -83,5 +83,6 @@ async function request(path, options = {}) {
 export const api = {
     get: (path) => request(path),
     post: (path, body) => request(path, { method: "POST", body: body instanceof FormData ? body : JSON.stringify(body) }),
+    put: (path, body) => request(path, { method: "PUT", body: body instanceof FormData ? body : JSON.stringify(body) }),
     delete: (path, body) => request(path, { method: "DELETE", body: body instanceof FormData ? body : JSON.stringify(body) })
 };

@@ -9,13 +9,14 @@ import PostMenu from "./PostMenu";
 import { timeAgo } from "../utils/timeAgo";
 import "./CommentModal.css";
 
-export default function CommentModal({ post, onClose, onDeleted, liked, onToggleLike, saved, onToggleSave }) {
+export default function CommentModal({ post, onClose, onDeleted, onEdited, liked, onToggleLike, saved, onToggleSave }) {
     const { feed } = useAuth();
     const socket = useSocket();
     const [comments, setComments] = useState([]);
     const [text, setText] = useState("");
     const [showLikes, setShowLikes] = useState(false);
     const [showShare, setShowShare] = useState(false);
+    const [description, setDescription] = useState(post.description);
 
     useEffect(() => {
         if (!socket) return;
@@ -72,21 +73,25 @@ export default function CommentModal({ post, onClose, onDeleted, liked, onToggle
                 src={profileImage(post.profilePhoto)} alt="" />
                         <span>{post.username}</span>
                         <PostMenu
-                            post={post}
+                            post={{ ...post, description }}
                             className="dots"
                             onDeleted={() => {
                                 onDeleted?.();
                                 onClose();
                             }}
+                            onEdited={(next) => {
+                                setDescription(next);
+                                onEdited?.(next);
+                            }}
                         />
                     </header>
 
                     <div className="comment-modal-list">
-                        {post.description && (
+                        {description && (
                             <div className="comment-item comment-caption">
                                 <img className="comment-item-avatar" loading="lazy" decoding="async"
                 src={profileImage(post.profilePhoto)} alt="" />
-                                <span><strong>{post.username}</strong> {post.description}</span>
+                                <span><strong>{post.username}</strong> {description}</span>
                             </div>
                         )}
 

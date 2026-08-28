@@ -60,6 +60,10 @@ export default function Explore() {
                         setOpenPost(null);
                         setPosts((prev) => prev?.filter((p) => p._id !== id) ?? prev);
                     }}
+                    onEdited={(description) => {
+                        const id = openPost._id;
+                        setPosts((prev) => prev?.map((p) => (p._id === id ? { ...p, description } : p)) ?? prev);
+                    }}
                     likedByMe={likedPostIds.has(String(openPost._id))}
                     savedByMe={savedPostIds.has(String(openPost._id))}
                 />

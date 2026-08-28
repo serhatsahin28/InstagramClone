@@ -2,13 +2,15 @@ import { useState } from "react";
 import { API_BASE } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import { useSocket } from "../context/SocketContext";
+import EditCaptionModal from "./EditCaptionModal";
 import "./PostMenu.css";
 
-// Gönderi başlığındaki "..." simgesi; sadece kendi gönderinde "Sil" seçeneği açılır.
-export default function PostMenu({ post, className, onDeleted }) {
+// Gönderi başlığındaki "..." simgesi; sadece kendi gönderinde menü açılır.
+export default function PostMenu({ post, className, onDeleted, onEdited }) {
     const { feed } = useAuth();
     const socket = useSocket();
     const [open, setOpen] = useState(false);
+    const [showEdit, setShowEdit] = useState(false);
     const isOwn = post.username === feed?.userName;
 
     if (!isOwn) {
@@ -31,9 +33,18 @@ export default function PostMenu({ post, className, onDeleted }) {
                 <>
                     <div className="post-menu-backdrop" onClick={() => setOpen(false)} />
                     <div className="post-menu-dropdown">
+                        <button onClick={() => { setOpen(false); setShowEdit(true); }}>Düzenle</button>
                         <button onClick={handleDelete}>Sil</button>
                     </div>
                 </>
+            )}
+
+            {showEdit && (
+                <EditCaptionModal
+                    post={post}
+                    onClose={() => setShowEdit(false)}
+                    onSaved={(description) => onEdited?.(description)}
+                />
             )}
         </div>
     );
