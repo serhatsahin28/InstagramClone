@@ -3,6 +3,8 @@ const express = require("express");
 const app = express();
 const postUser = require("../Model/postUser");
 const { storedFileName } = require("../middleware/upload");
+const likePost = require("../Model/table/likePost");
+const Post = require("../Model/table/postUser");
 
 
 class postController {
@@ -123,6 +125,41 @@ class postController {
 
     }
 
+
+    // Beğenenler listesi: socket üzerinden herkese yayın yapmak yerine
+    // doğrudan, hedefe özel ve indeksli tek sorgu (belirgin şekilde hızlı).
+    async getLikes(req, res, postId) {
+        try {
+            const docs = await likePost.find({ post_id: postId }, "userWhoLike");
+            const users = docs.flatMap((d) => d.userWhoLike);
+            res.json({ users });
+        } catch (error) {
+            console.log("postController getLikes: " + error);
+            res.status(500).json({ error: "Beğeniler alınamadı" });
+        }
+    }
+
+    // Keşfet: takip durumundan bağımsız, rastgele karışık gönderiler.
+    async explore(req, res) {
+        try {
+            const posts = await Post.aggregate([{ $sample: { size: 60 } }]);
+            res.json({ posts });
+        } catch (error) {
+            console.log("postController explore: " + error);
+            res.status(500).json({ error: "Keşfet yüklenemedi" });
+        }
+    }
+
+    async getOne(req, res, postId) {
+        try {
+            const post = await Post.findById(postId);
+            if (!post) return res.status(404).json({ error: "Gönderi bulunamadı" });
+            res.json({ post });
+        } catch (error) {
+            console.log("postController getOne: " + error);
+            res.status(500).json({ error: "Gönderi alınamadı" });
+        }
+    }
 
 async postDelete(data){
 

@@ -84,7 +84,7 @@ module.exports = function registerSocket(io) {
             const sessionUserName = formData.sessionUserName;
             const newMessage = formData.message;
             const a = new messageController();
-            a.messageSent(visitedUsername, sessionUserName, newMessage);
+            a.messageSent(visitedUsername, sessionUserName, newMessage, formData.sharedPostId);
 
             io.emit("submitForm2", formData);
         });

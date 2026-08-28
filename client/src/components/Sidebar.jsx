@@ -3,6 +3,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { API_BASE, profileImage } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import { useSocket } from "../context/SocketContext";
+import { useMessages } from "../context/MessagesContext";
 import SearchPanel from "./SearchPanel";
 import NotificationsPanel from "./NotificationsPanel";
 import NotificationToasts from "./NotificationToasts";
@@ -13,6 +14,7 @@ import "./Sidebar.css";
 export default function Sidebar() {
     const { feed, logout } = useAuth();
     const socket = useSocket();
+    const { totalUnread } = useMessages();
     const navigate = useNavigate();
     const [showUpload, setShowUpload] = useState(false);
     const [showMore, setShowMore] = useState(false);
@@ -97,7 +99,12 @@ export default function Sidebar() {
                 </li>
                 <li>
                     <NavLink to="/direct/inbox" className={linkClass} onClick={closePanel}>
-                        <img className="icon" src={`${API_BASE}/Icons/chat.png`} alt="" />
+                        <span className="icon-wrap">
+                            <img className="icon" src={`${API_BASE}/Icons/chat.png`} alt="" />
+                            {totalUnread > 0 && (
+                                <span className="nav-badge">{totalUnread > 99 ? "99+" : totalUnread}</span>
+                            )}
+                        </span>
                         <span>Mesajlar</span>
                     </NavLink>
                 </li>

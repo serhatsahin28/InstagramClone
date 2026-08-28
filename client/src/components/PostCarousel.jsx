@@ -9,11 +9,11 @@ export default function PostCarousel({ photos, eager = false }) {
     if (validPhotos.length === 0) return null;
 
     function prev() {
-        setIndex((i) => (i === 0 ? validPhotos.length - 1 : i - 1));
+        setIndex((i) => Math.max(0, i - 1));
     }
 
     function next() {
-        setIndex((i) => (i === validPhotos.length - 1 ? 0 : i + 1));
+        setIndex((i) => Math.min(validPhotos.length - 1, i + 1));
     }
 
     return (
@@ -34,8 +34,13 @@ export default function PostCarousel({ photos, eager = false }) {
 
             {validPhotos.length > 1 && (
                 <>
-                    <button className="post-carousel-btn prev" onClick={prev} aria-label="Önceki">‹</button>
-                    <button className="post-carousel-btn next" onClick={next} aria-label="Sonraki">›</button>
+                    {/* İlk resimde önceki, son resimde sonraki butonu gösterilmez. */}
+                    {index > 0 && (
+                        <button className="post-carousel-btn prev" onClick={prev} aria-label="Önceki">‹</button>
+                    )}
+                    {index < validPhotos.length - 1 && (
+                        <button className="post-carousel-btn next" onClick={next} aria-label="Sonraki">›</button>
+                    )}
                     <div className="post-carousel-dots">
                         {validPhotos.map((_, i) => (
                             <span key={i} className={i === index ? "dot active" : "dot"} />

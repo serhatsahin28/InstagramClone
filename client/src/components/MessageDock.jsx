@@ -1,43 +1,43 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { API_BASE, api, profileImage } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import { useSocket } from "../context/SocketContext";
+import { useMessages } from "../context/MessagesContext";
+import SharedPostPreview from "./SharedPostPreview";
 import "./MessageDock.css";
 
 export default function MessageDock() {
     const { feed } = useAuth();
     const socket = useSocket();
     const location = useLocation();
+    const { threads, totalUnread, refresh, markThreadReadLocally } = useMessages();
 
     const [open, setOpen] = useState(false);
-    const [threads, setThreads] = useState([]);
     const [active, setActive] = useState(null);
     const [messages, setMessages] = useState([]);
+
     const [text, setText] = useState("");
 
     const listRef = useRef(null);
     const didInitialScroll = useRef(false);
 
-    const loadInbox = useCallback(() => {
-        api.get("/messages/inbox")
-            .then((res) => setThreads(res.newDirectInbox || []))
-            .catch(() => setThreads([]));
-    }, []);
+    // Sohbet listesi artık MessagesProvider tarafından uygulama açılışında
+    // önceden çekiliyor; burada tekrar istek atmaya gerek yok, dock anında açılır.
 
-    useEffect(() => {
-        if (open) loadInbox();
-    }, [open, loadInbox]);
-
-    // Bir sohbet seçilince o konuşmanın mesajlarını getir.
+    // Bir sohbet seçilince o konuşmanın mesajlarını getir; bu istek aynı
+    // zamanda sunucuda okunmamışları okunmuş işaretler.
     useEffect(() => {
         if (!active) return;
         didInitialScroll.current = false;
 
         api.get(`/messages/${active.otherUserId}`)
-            .then((res) => setMessages(res.messagesInfo || []))
+            .then((res) => {
+                setMessages(res.messagesInfo || []);
+                markThreadReadLocally(active.otherUsername);
+            })
             .catch(() => setMessages([]));
-    }, [active]);
+    }, [active, markThreadReadLocally]);
 
     useEffect(() => {
         if (!socket || !active) return;
@@ -52,7 +52,8 @@ export default function MessageDock() {
 
             setMessages((prev) => [...prev, {
                 senderUser: formData.sessionUserName,
-                message: formData.message
+                message: formData.message,
+                sharedPostId: formData.sharedPostId
             }]);
         }
 
@@ -85,22 +86,31 @@ export default function MessageDock() {
         setText("");
     }
 
+    function handleOpen() {
+        const next = !open;
+        setOpen(next);
+        if (next) refresh();
+    }
+
     // Mesajlar sayfasındayken dock gereksiz.
     if (location.pathname.startsWith("/direct")) return null;
 
     return (
         <div className={open ? "message-dock open" : "message-dock"}>
-            <button className="message-dock-bar" onClick={() => setOpen(!open)}>
+            <button className="message-dock-bar" onClick={handleOpen}>
                 {active ? (
                     <>
-                        <img loading="lazy" decoding="async"
-                src={profileImage(active.otherUserImage)} alt="" />
+                        <img loading="lazy" decoding="async" src={profileImage(active.otherUserImage)} alt="" />
                         <span>{active.otherUsername}</span>
                     </>
                 ) : (
                     <>
-                        <img loading="lazy" decoding="async"
-                src={`${API_BASE}/Icons/chat.png`} alt="" />
+                        <span className="message-dock-icon-wrap">
+                            <img loading="lazy" decoding="async" src={`${API_BASE}/Icons/chat.png`} alt="" />
+                            {totalUnread > 0 && (
+                                <span className="message-dock-badge">{totalUnread > 99 ? "99+" : totalUnread}</span>
+                            )}
+                        </span>
                         <span>Mesajlar</span>
                     </>
                 )}
@@ -116,12 +126,14 @@ export default function MessageDock() {
                             ) : (
                                 threads.map((t) => (
                                     <button key={t._id} className="message-dock-thread" onClick={() => setActive(t)}>
-                                        <img loading="lazy" decoding="async"
-                src={profileImage(t.otherUserImage)} alt="" />
+                                        <img loading="lazy" decoding="async" src={profileImage(t.otherUserImage)} alt="" />
                                         <div className="message-dock-thread-text">
                                             <span className="username">{t.otherUsername}</span>
                                             <span className="last">{t.lastFromMe ? "Sen: " : ""}{t.lastMessage}</span>
                                         </div>
+                                        {t.unreadCount > 0 && (
+                                            <span className="message-dock-badge">{t.unreadCount > 99 ? "99+" : t.unreadCount}</span>
+                                        )}
                                     </button>
                                 ))
                             )}
@@ -138,7 +150,7 @@ export default function MessageDock() {
                                         key={m._id || i}
                                         className={m.senderUser === feed.userName ? "dock-bubble mine" : "dock-bubble"}
                                     >
-                                        {m.message}
+                                        {m.sharedPostId ? <SharedPostPreview postId={m.sharedPostId} /> : m.message}
                                     </div>
                                 ))}
                             </div>

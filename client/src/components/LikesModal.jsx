@@ -1,32 +1,30 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { profileImage } from "../api/client";
-import { useSocket } from "../context/SocketContext";
+import { api, profileImage } from "../api/client";
 import "./LikesModal.css";
 
 export default function LikesModal({ postId, onClose }) {
-    const socket = useSocket();
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (!socket) return;
+        let active = true;
 
-        socket.emit("likeSee", postId);
+        // Doğrudan REST çağrısı; eski socket yayını herkese emit ettiği için
+        // gereksiz beklemeye sebep oluyordu.
+        api.get(`/posts/${postId}/likes`)
+            .then((res) => {
+                if (active) setUsers(res.users || []);
+            })
+            .catch(() => {
+                if (active) setUsers([]);
+            })
+            .finally(() => {
+                if (active) setLoading(false);
+            });
 
-        function onResult(docs) {
-            const list = [];
-            for (const doc of docs || []) {
-                if (String(doc.post_id) !== String(postId)) continue;
-                for (const u of doc.userWhoLike) list.push(u);
-            }
-            setUsers(list);
-            setLoading(false);
-        }
-
-        socket.on("likeSeeReturn", onResult);
-        return () => socket.off("likeSeeReturn", onResult);
-    }, [socket, postId]);
+        return () => { active = false; };
+    }, [postId]);
 
     return (
         <div className="likes-overlay" onClick={onClose}>
@@ -51,8 +49,7 @@ export default function LikesModal({ postId, onClose }) {
                     ) : (
                         users.map((u, i) => (
                             <Link key={i} to={`/${u.username}`} className="likes-item" onClick={onClose}>
-                                <img loading="lazy" decoding="async"
-                src={profileImage(u.userPicture)} alt="" />
+                                <img loading="lazy" decoding="async" src={profileImage(u.userPicture)} alt="" />
                                 <div className="likes-item-text">
                                     <span className="username">{u.username}</span>
                                     <span className="muted">{u.userProfileName}</span>

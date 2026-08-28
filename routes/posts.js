@@ -7,6 +7,10 @@ const libraryController = require("../Controller/libraryController");
 
 router.use(requireAuth);
 
+router.get("/explore", (req, res) => {
+    new postController().explore(req, res);
+});
+
 router.get("/saved", (req, res) => {
     new libraryController().saved(req, res);
 });
@@ -25,6 +29,14 @@ router.post("/:id/save", (req, res) => {
 
 router.delete("/:id/save", (req, res) => {
     new libraryController().toggleSave(req, res, req.params.id, false);
+});
+
+router.get("/:id/likes", (req, res) => {
+    new postController().getLikes(req, res, req.params.id);
+});
+
+router.get("/:id", (req, res) => {
+    new postController().getOne(req, res, req.params.id);
 });
 
 router.post("/upload", uploadPost.array("photos", 4), (req, res) => {

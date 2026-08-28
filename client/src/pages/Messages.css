@@ -193,6 +193,36 @@
     gap: 0.5rem;
 }
 
+.shared-post-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: inherit;
+}
+
+.shared-post-preview img {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.shared-post-preview span {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #0095f6;
+}
+
+.shared-post-missing {
+    color: #8e8e8e;
+    font-style: italic;
+}
+
 .message-bubble {
     align-self: flex-start;
     background: #262626;

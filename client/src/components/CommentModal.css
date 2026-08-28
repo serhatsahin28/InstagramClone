@@ -36,12 +36,22 @@
     z-index: 2;
 }
 
-.comment-modal-image {
+.comment-modal-image-wrap {
     flex: 1.6;
     min-width: 0;
     height: 100%;
-    object-fit: contain;
     background: #000;
+}
+
+.comment-modal-image-wrap .post-carousel {
+    height: 100%;
+    max-height: none;
+    border: none;
+    border-radius: 0;
+}
+
+.comment-modal-image-wrap .post-carousel-image {
+    object-fit: contain;
 }
 
 .comment-modal-side {
@@ -139,7 +149,9 @@
 }
 
 .comment-modal-actions .bookmark-btn.saved img {
-    filter: drop-shadow(0 0 3px #fff);
+    background-color: #f5c518;
+    filter: none;
+    transform: scale(1.08);
 }
 
 .comment-view-likes {
@@ -189,7 +201,7 @@
         height: 92vh;
     }
 
-    .comment-modal-image {
+    .comment-modal-image-wrap {
         flex: 0 0 45%;
         width: 100%;
     }

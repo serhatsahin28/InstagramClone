@@ -10,6 +10,11 @@ router.get("/inbox", (req, res) => {
     a.messageInbox(req, res, req.session.user.username);
 });
 
+router.get("/unread-count", (req, res) => {
+    const a = new messageController();
+    a.unreadCount(req, res, req.session.user.username);
+});
+
 router.get("/candidates", (req, res) => {
     const a = new messageController();
     a.candidates(req, res, req.session.user.username);

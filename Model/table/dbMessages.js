@@ -45,6 +45,18 @@ const message = new Schema({
     accepted: {
         type: Boolean
 
+    },
+
+    // Alıcı bu mesajı henüz görmediyse false. Eski kayıtlarda tanımsız
+    // olanlar okunmuş sayılır (bildirim gürültüsü yapmasın diye).
+    read: {
+        type: Boolean,
+        default: true
+    },
+
+    // Bir gönderi paylaşıldığında dolu olur.
+    sharedPostId: {
+        type: String
     }
 
 

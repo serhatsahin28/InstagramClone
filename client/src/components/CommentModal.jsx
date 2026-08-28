@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { API_BASE, postImage, profileImage } from "../api/client";
+import { API_BASE, profileImage } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import { useSocket } from "../context/SocketContext";
+import PostCarousel from "./PostCarousel";
 import LikesModal from "./LikesModal";
+import ShareModal from "./ShareModal";
 import "./CommentModal.css";
 
 export default function CommentModal({ post, onClose, liked, onToggleLike, saved, onToggleSave }) {
@@ -11,6 +13,7 @@ export default function CommentModal({ post, onClose, liked, onToggleLike, saved
     const [comments, setComments] = useState([]);
     const [text, setText] = useState("");
     const [showLikes, setShowLikes] = useState(false);
+    const [showShare, setShowShare] = useState(false);
 
     useEffect(() => {
         if (!socket) return;
@@ -48,11 +51,18 @@ export default function CommentModal({ post, onClose, liked, onToggleLike, saved
 
     const allComments = comments.flatMap((c) => c.userWhoComment.map((u) => ({ ...u, id: c._id })));
 
+    const photos = post.photos?.[0]
+        ? [post.photos[0].photo1, post.photos[0].photo2, post.photos[0].photo3, post.photos[0].photo4]
+        : [];
+
     return (
         <div className="comment-modal-overlay" onClick={onClose}>
             <div className="comment-modal" onClick={(e) => e.stopPropagation()}>
                 <button className="comment-modal-close" onClick={onClose}>✕</button>
-                <img className="comment-modal-image" src={postImage(post.photos[0].photo1)} alt="" decoding="async" />
+
+                <div className="comment-modal-image-wrap">
+                    <PostCarousel photos={photos} eager />
+                </div>
 
                 <div className="comment-modal-side">
                     <header className="comment-modal-header">
@@ -86,7 +96,7 @@ export default function CommentModal({ post, onClose, liked, onToggleLike, saved
                             <img loading="lazy" decoding="async"
                 src={`${API_BASE}/Icons/${liked ? "redHeart.png" : "heart.png"}`} alt="" />
                         </button>
-                        <button title="Gönder">
+                        <button onClick={() => setShowShare(true)} title="Gönder">
                             <img loading="lazy" decoding="async"
                 src={`${API_BASE}/Icons/direct-instagram.png`} alt="" />
                         </button>
@@ -95,8 +105,22 @@ export default function CommentModal({ post, onClose, liked, onToggleLike, saved
                             onClick={onToggleSave}
                             title={saved ? "Kaydedildi" : "Kaydet"}
                         >
-                            <img loading="lazy" decoding="async"
-                src={`${API_BASE}/Icons/bookmark.png`} alt="" />
+                            <img
+                                loading="lazy"
+                                decoding="async"
+                                src={`${API_BASE}/Icons/bookmark.png`}
+                                alt=""
+                                style={saved ? {
+                                    WebkitMaskImage: `url(${API_BASE}/Icons/bookmark.png)`,
+                                    maskImage: `url(${API_BASE}/Icons/bookmark.png)`,
+                                    WebkitMaskSize: "contain",
+                                    maskSize: "contain",
+                                    WebkitMaskRepeat: "no-repeat",
+                                    maskRepeat: "no-repeat",
+                                    WebkitMaskPosition: "center",
+                                    maskPosition: "center"
+                                } : undefined}
+                            />
                         </button>
                     </div>
 
@@ -117,6 +141,7 @@ export default function CommentModal({ post, onClose, liked, onToggleLike, saved
             </div>
 
             {showLikes && <LikesModal postId={post._id} onClose={() => setShowLikes(false)} />}
+            {showShare && <ShareModal post={post} onClose={() => setShowShare(false)} />}
         </div>
     );
 }

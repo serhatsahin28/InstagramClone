@@ -43,7 +43,8 @@ class UserModel {
 
     static async findPostByUser(username) {
         try {
-            const post = await Post.find({ username: username });
+            // En son yüklenen gönderi en üstte gösterilir.
+            const post = await Post.find({ username: username }).sort({ _id: -1 });
             return post;
         } catch (err) {
             throw err;

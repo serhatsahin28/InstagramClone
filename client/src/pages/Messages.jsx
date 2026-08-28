@@ -3,8 +3,10 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { API_BASE, api, profileImage } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import { useSocket } from "../context/SocketContext";
+import { useMessages } from "../context/MessagesContext";
 import Sidebar from "../components/Sidebar";
 import NewMessageModal from "../components/NewMessageModal";
+import SharedPostPreview from "../components/SharedPostPreview";
 import "./Messages.css";
 
 export default function Messages() {
@@ -12,6 +14,7 @@ export default function Messages() {
     const { feed } = useAuth();
     const socket = useSocket();
     const navigate = useNavigate();
+    const { refresh: refreshUnread, markThreadReadLocally } = useMessages();
 
     const [data, setData] = useState(null);
     const [messages, setMessages] = useState([]);
@@ -27,8 +30,11 @@ export default function Messages() {
         return api.get(path).then((res) => {
             setData(res);
             setMessages(res.messagesInfo || []);
+            // Bir sohbet açıldıysa sunucuda okunmuş işaretlendi; rozetleri eşitle.
+            if (res.otherUser) markThreadReadLocally(res.otherUser.otherUsername);
+            else refreshUnread();
         });
-    }, [id]);
+    }, [id, markThreadReadLocally, refreshUnread]);
 
     useEffect(() => {
         didInitialScroll.current = false;
@@ -46,7 +52,8 @@ export default function Messages() {
 
             setMessages((prev) => [...prev, {
                 senderUser: formData.sessionUserName,
-                message: formData.message
+                message: formData.message,
+                sharedPostId: formData.sharedPostId
             }]);
         }
         socket.on("submitForm2", onIncoming);
@@ -185,7 +192,7 @@ export default function Messages() {
                                     key={m._id || i}
                                     className={m.senderUser === feed.userName ? "message-bubble mine" : "message-bubble"}
                                 >
-                                    {m.message}
+                                    {m.sharedPostId ? <SharedPostPreview postId={m.sharedPostId} /> : m.message}
                                 </div>
                             ))}
                         </div>

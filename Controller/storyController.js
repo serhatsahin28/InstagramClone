@@ -1,6 +1,9 @@
 const storyModel = require("../Model/storyModel");
 const ObjectId = require('mongoose').ObjectId;
 const { storedFileName } = require("../middleware/upload");
+const storyLike = require("../Model/table/storyLike");
+const storyView = require("../Model/table/storyView");
+const User = require("../Model/table/dbUsers");
 class storyController {
 
     async story(req, res, sessionUserName, visitUsername, visitId) {
@@ -54,6 +57,95 @@ async uploadStory(req,res,photos, sessionUserName){
 
 async storyDelete(username,user_id){
     const a=await storyModel.storyDelete(username,user_id);
+}
+
+// Hikaye açıldığında kaydedilir; kendi hikayeni izlemen sayılmaz.
+async view(req, res, storyId, sessionUserName) {
+    try {
+        const owner = await storyModel.storySelected(sessionUserName, null, storyId);
+        if (owner[0] && owner[0].username === sessionUserName) {
+            return res.json({ message: "kendi hikayen" });
+        }
+
+        const user = await User.findOne({ username: sessionUserName });
+        await storyView.updateOne(
+            { story_id: storyId, "viewers.username": { $ne: sessionUserName } },
+            {
+                $setOnInsert: { story_id: storyId },
+                $push: {
+                    viewers: {
+                        username: sessionUserName,
+                        userPicture: user?.profilePicture,
+                        userProfileName: user?.profileName,
+                        viewedAt: new Date()
+                    }
+                }
+            },
+            { upsert: true }
+        );
+
+        res.json({ message: "görüntülendi" });
+    } catch (error) {
+        console.log("storyController view: " + error);
+        res.status(500).json({ error: "Bir hata oluştu" });
+    }
+}
+
+async toggleLike(req, res, storyId, sessionUserName, like) {
+    try {
+        if (like) {
+            const user = await User.findOne({ username: sessionUserName });
+            const existing = await storyLike.findOne({ story_id: storyId, "userWhoLike.username": sessionUserName });
+            if (!existing) {
+                await storyLike.updateOne(
+                    { story_id: storyId },
+                    {
+                        $setOnInsert: { story_id: storyId },
+                        $push: {
+                            userWhoLike: {
+                                username: sessionUserName,
+                                userPicture: user?.profilePicture,
+                                userProfileName: user?.profileName
+                            }
+                        }
+                    },
+                    { upsert: true }
+                );
+            }
+        } else {
+            await storyLike.updateOne(
+                { story_id: storyId },
+                { $pull: { userWhoLike: { username: sessionUserName } } }
+            );
+        }
+
+        res.json({ liked: !!like });
+    } catch (error) {
+        console.log("storyController toggleLike: " + error);
+        res.status(500).json({ error: "Bir hata oluştu" });
+    }
+}
+
+// Görüntüleyenler listesi; her satırda o kişi beğenmiş mi bilgisi de var.
+async viewers(req, res, storyId) {
+    try {
+        const [viewDoc, likeDoc] = await Promise.all([
+            storyView.findOne({ story_id: storyId }),
+            storyLike.findOne({ story_id: storyId })
+        ]);
+
+        const likedUsernames = new Set((likeDoc?.userWhoLike || []).map((u) => u.username));
+
+        const viewers = (viewDoc?.viewers || [])
+            .slice()
+            .sort((a, b) => new Date(b.viewedAt) - new Date(a.viewedAt))
+            .map((v) => ({ ...v.toObject(), liked: likedUsernames.has(v.username) }));
+
+        res.json({ viewers, likeCount: likedUsernames.size });
+    } catch (error) {
+        console.log("storyController viewers: " + error);
+        res.status(500).json({ error: "Bir hata oluştu" });
+    }
 }
 
 

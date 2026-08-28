@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams, Link } from "react-router-dom";
-import { api, thumbImage, profileImage } from "../api/client";
+import { api, API_BASE, thumbImage, profileImage } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import { useSocket } from "../context/SocketContext";
 import Sidebar from "../components/Sidebar";
@@ -139,16 +139,23 @@ export default function Profile() {
                     <p className="profile-private-note">Bu hesap gizli. Gönderileri görmek için takip etmelisin.</p>
                 ) : data.posts?.length ? (
                     <div className="profile-grid">
-                        {data.posts.map((post) => (
-                            <button
-                                key={post._id}
-                                className="profile-grid-item"
-                                onClick={() => setOpenPost(post)}
-                            >
-                                <img loading="lazy" decoding="async"
-                src={thumbImage(post.photos[0].photo1)} alt="" />
-                            </button>
-                        ))}
+                        {data.posts.map((post) => {
+                            const p = post.photos?.[0] || {};
+                            const isMulti = [p.photo2, p.photo3, p.photo4].some(Boolean);
+                            return (
+                                <button
+                                    key={post._id}
+                                    className="profile-grid-item"
+                                    onClick={() => setOpenPost(post)}
+                                >
+                                    {isMulti && (
+                                        <img className="profile-grid-multi" src={`${API_BASE}/Icons/instagramPost.png`} alt="" />
+                                    )}
+                                    <img loading="lazy" decoding="async"
+                src={thumbImage(p.photo1)} alt="" />
+                                </button>
+                            );
+                        })}
                     </div>
                 ) : (
                     <p className="profile-empty-note">Henüz gönderi yok.</p>

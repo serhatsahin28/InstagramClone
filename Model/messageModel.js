@@ -109,7 +109,7 @@ class messages {
 
     }
 
-    static async createNewMessage(sessionUserName, visitUser, sessionUser, newMessage) {
+    static async createNewMessage(sessionUserName, visitUser, sessionUser, newMessage, sharedPostId) {
 
 
         try {
@@ -127,11 +127,14 @@ class messages {
                 "message": newMessage,
                 "sentUserId": sentUserId,
                 "sentUsername": sentUsername,
-                "sentUserImage": sentUserImage
+                "sentUserImage": sentUserImage,
+                "read": false,
+                "sharedPostId": sharedPostId || undefined
             }
 
             );
 
+            return a;
 
         }
         catch (err) {
@@ -140,6 +143,18 @@ class messages {
 
 
 
+    }
+
+    // Bir sohbetteki, karşı taraftan gelen tüm mesajları okunmuş yapar.
+    static async markThreadRead(sessionUserName, otherUsername) {
+        try {
+            await messageModel.updateMany(
+                { senderUser: otherUsername, sentUsername: sessionUserName, read: false },
+                { $set: { read: true } }
+            );
+        } catch (err) {
+            console.log("markThreadRead: " + err);
+        }
     }
 
 

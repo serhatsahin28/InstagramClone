@@ -59,8 +59,12 @@
     margin-left: auto;
 }
 
+/* Kaydedilince ikon dolu/altın renkte gösterilir (mask adresi JSX'te
+   API_BASE ile inline veriliyor), kaydedilmemişken sade beyaz çizgi kalır. */
 .save-btn.saved img {
-    filter: drop-shadow(0 0 3px #fff);
+    background-color: #f5c518;
+    filter: none;
+    transform: scale(1.08);
 }
 
 .post-card-likes {

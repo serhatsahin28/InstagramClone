@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { api, profileImage } from "../api/client";
+import { useParams, useNavigate, Link } from "react-router-dom";
+import { API_BASE, api, profileImage } from "../api/client";
 import { useAuth } from "../context/AuthContext";
+import StoryViewersModal from "../components/StoryViewersModal";
 import "./Story.css";
 
 export default function Story() {
@@ -11,6 +12,8 @@ export default function Story() {
 
     const [stories, setStories] = useState(null);
     const [index, setIndex] = useState(0);
+    const [liked, setLiked] = useState(false);
+    const [showViewers, setShowViewers] = useState(false);
 
     // Liste yalnizca bir kez cekilir; ileri/geri tamamen istemci tarafinda
     // ilerledigi icin her gecis aninda olur, yeniden istek atilmaz.
@@ -38,6 +41,21 @@ export default function Story() {
         if (!current) return;
         navigate(`/stories/${current.username}/${current._id}`, { replace: true });
     }, [current, navigate]);
+
+    // Görüntüleme kaydı + beğeni durumu, gösterilen hikaye değiştikçe tazelenir.
+    useEffect(() => {
+        if (!current) return;
+        setLiked(false);
+        setShowViewers(false);
+
+        api.post(`/stories/${current._id}/view`).catch(() => {});
+
+        if (current.username === feed?.userName) {
+            api.get(`/stories/${current._id}/viewers`)
+                .then((res) => setLiked(!!res.viewers?.find((v) => v.username === feed.userName && v.liked)))
+                .catch(() => {});
+        }
+    }, [current, feed]);
 
     // Komsu gorseller onceden indirilir; gecis beklemesiz olur.
     useEffect(() => {
@@ -83,6 +101,17 @@ export default function Story() {
         setIndex(Math.min(index, remaining.length - 1));
     }
 
+    async function toggleLike() {
+        const next = !liked;
+        setLiked(next);
+        try {
+            if (next) await api.post(`/stories/${current._id}/like`);
+            else await api.delete(`/stories/${current._id}/like`);
+        } catch {
+            setLiked(!next);
+        }
+    }
+
     if (!stories) return <div className="story-page" />;
     if (!current) return null;
 
@@ -105,7 +134,7 @@ export default function Story() {
 
                 <header className="story-viewer-header">
                     <img src={profileImage(current.profilePicture)} alt="" />
-                    <span>{current.username}</span>
+                    <Link to={`/${current.username}`} className="story-viewer-username">{current.username}</Link>
                 </header>
 
                 <img
@@ -123,10 +152,27 @@ export default function Story() {
                     <button className="story-nav next" onClick={goNext} aria-label="Sonraki">›</button>
                 )}
 
-                {isOwn && (
-                    <button className="story-delete" onClick={handleDelete}>Hikayeyi Sil</button>
-                )}
+                <div className="story-footer">
+                    {!isOwn && (
+                        <button className="story-like-btn" onClick={toggleLike} title="Beğen">
+                            <img src={`${API_BASE}/Icons/${liked ? "redHeart.png" : "heart.png"}`} alt="beğen" />
+                        </button>
+                    )}
+
+                    {isOwn && (
+                        <>
+                            <button className="story-viewers-btn" onClick={() => setShowViewers(true)}>
+                                Görüntüleyenler
+                            </button>
+                            <button className="story-delete" onClick={handleDelete}>Sil</button>
+                        </>
+                    )}
+                </div>
             </div>
+
+            {showViewers && (
+                <StoryViewersModal storyId={current._id} onClose={() => setShowViewers(false)} />
+            )}
         </div>
     );
 }

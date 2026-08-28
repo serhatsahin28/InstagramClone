@@ -29,6 +29,7 @@ async function buildInbox(sessionUserName) {
         const otherUsername = isSender ? msg.sentUsername : msg.senderUser;
         const otherUserId = isSender ? msg.sentUserId : msg.senderId;
         const otherUserImage = isSender ? msg.sentUserImage : msg.senderImage;
+        const isUnread = !isSender && msg.read === false;
 
         const time = timeOf(msg._id);
         const existing = threads.get(otherUsername);
@@ -43,11 +44,13 @@ async function buildInbox(sessionUserName) {
                 lastFromMe: isSender,
                 lastTime: time,
                 accepted: existing?.accepted || !!msg.accepted,
-                hasIncoming: existing?.hasIncoming || !isSender
+                hasIncoming: existing?.hasIncoming || !isSender,
+                unreadCount: (existing?.unreadCount || 0) + (isUnread ? 1 : 0)
             });
         } else {
             existing.accepted = existing.accepted || !!msg.accepted;
             existing.hasIncoming = existing.hasIncoming || !isSender;
+            existing.unreadCount += isUnread ? 1 : 0;
         }
     }
 
@@ -61,19 +64,32 @@ async function buildInbox(sessionUserName) {
         (isRequest ? requests : inbox).push(t);
     }
 
-    return { inbox, requests };
+    const totalUnread = inbox.reduce((sum, t) => sum + t.unreadCount, 0);
+
+    return { inbox, requests, totalUnread };
 }
 
 class messageController {
 
     async messageInbox(req, res, sessionUserName) {
         try {
-            const { inbox, requests } = await buildInbox(sessionUserName);
+            const { inbox, requests, totalUnread } = await buildInbox(sessionUserName);
             const profilePicture = req.session.user.profilePicture;
 
-            res.json({ newDirectInbox: inbox, requests, sessionUserName, profilePicture });
+            res.json({ newDirectInbox: inbox, requests, totalUnread, sessionUserName, profilePicture });
         } catch (err) {
             console.log("messageInbox: " + err);
+            res.status(500).json({ error: "Bir hata oluştu" });
+        }
+    }
+
+    // Sadece rozet için: sayfayı açmadan okunmamış toplam mesaj sayısı.
+    async unreadCount(req, res, sessionUserName) {
+        try {
+            const { totalUnread } = await buildInbox(sessionUserName);
+            res.json({ totalUnread });
+        } catch (err) {
+            console.log("unreadCount: " + err);
             res.status(500).json({ error: "Bir hata oluştu" });
         }
     }
@@ -89,6 +105,10 @@ class messageController {
             ]);
 
             const messagesInfo = await a.fetchAllMessages(messagesUser.username, sessionUserName);
+
+            // Sohbeti açtı; karşıdan gelen mesajlar okunmuş sayılır.
+            await a.markThreadRead(sessionUserName, messagesUser.username);
+
             const profilePicture = req.session.user.profilePicture;
 
             const otherUser = {
@@ -165,11 +185,11 @@ class messageController {
         }
     }
 
-    async messageSent(visitedUsername, sessionUserName, newMessage) {
+    async messageSent(visitedUsername, sessionUserName, newMessage, sharedPostId) {
         const visitUser = await a.visitUser(visitedUsername);
         const sessionUser = await a.sessionUser(sessionUserName);
 
-        await a.createNewMessage(sessionUserName, visitUser, sessionUser, newMessage);
+        return a.createNewMessage(sessionUserName, visitUser, sessionUser, newMessage, sharedPostId);
     }
 }
 

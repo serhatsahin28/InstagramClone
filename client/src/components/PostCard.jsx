@@ -5,12 +5,14 @@ import usePostActions from "../hooks/usePostActions";
 import PostCarousel from "./PostCarousel";
 import CommentModal from "./CommentModal";
 import LikesModal from "./LikesModal";
+import ShareModal from "./ShareModal";
 import "./PostCard.css";
 
 export default function PostCard({ post, likedByMe, savedByMe, eager = false }) {
     const { liked, toggleLike, saved, toggleSave } = usePostActions(post, likedByMe, savedByMe);
     const [showComments, setShowComments] = useState(false);
     const [showLikes, setShowLikes] = useState(false);
+    const [showShare, setShowShare] = useState(false);
 
     const photos = post.photos?.[0]
         ? [post.photos[0].photo1, post.photos[0].photo2, post.photos[0].photo3, post.photos[0].photo4]
@@ -34,7 +36,7 @@ export default function PostCard({ post, likedByMe, savedByMe, eager = false }) 
                 <button className="icon-btn" onClick={() => setShowComments(true)} title="Yorum yap">
                     <img src={`${API_BASE}/Icons/chat.png`} alt="yorum" />
                 </button>
-                <button className="icon-btn" title="Gönder">
+                <button className="icon-btn" onClick={() => setShowShare(true)} title="Gönder">
                     <img src={`${API_BASE}/Icons/direct-instagram.png`} alt="gönder" />
                 </button>
 
@@ -43,7 +45,20 @@ export default function PostCard({ post, likedByMe, savedByMe, eager = false }) 
                     onClick={toggleSave}
                     title={saved ? "Kaydedildi" : "Kaydet"}
                 >
-                    <img src={`${API_BASE}/Icons/bookmark.png`} alt="kaydet" />
+                    <img
+                        src={`${API_BASE}/Icons/bookmark.png`}
+                        alt="kaydet"
+                        style={saved ? {
+                            WebkitMaskImage: `url(${API_BASE}/Icons/bookmark.png)`,
+                            maskImage: `url(${API_BASE}/Icons/bookmark.png)`,
+                            WebkitMaskSize: "contain",
+                            maskSize: "contain",
+                            WebkitMaskRepeat: "no-repeat",
+                            maskRepeat: "no-repeat",
+                            WebkitMaskPosition: "center",
+                            maskPosition: "center"
+                        } : undefined}
+                    />
                 </button>
             </div>
 
@@ -72,6 +87,7 @@ export default function PostCard({ post, likedByMe, savedByMe, eager = false }) 
             )}
 
             {showLikes && <LikesModal postId={post._id} onClose={() => setShowLikes(false)} />}
+            {showShare && <ShareModal post={post} onClose={() => setShowShare(false)} />}
         </article>
     );
 }

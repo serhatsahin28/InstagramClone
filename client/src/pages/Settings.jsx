@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { api, thumbImage } from "../api/client";
+import { api, API_BASE, thumbImage } from "../api/client";
 import Sidebar from "../components/Sidebar";
 import PostModal from "../components/PostModal";
 import { useAuth } from "../context/AuthContext";
@@ -20,12 +20,19 @@ function PostGrid({ posts, emptyText, onOpen }) {
 
     return (
         <div className="settings-grid">
-            {posts.map((post) => (
-                <button key={post._id} className="settings-grid-item" onClick={() => onOpen(post)}>
-                    <img loading="lazy" decoding="async"
-                src={thumbImage(post.photos[0].photo1)} alt="" />
-                </button>
-            ))}
+            {posts.map((post) => {
+                const p = post.photos?.[0] || {};
+                const isMulti = [p.photo2, p.photo3, p.photo4].some(Boolean);
+                return (
+                    <button key={post._id} className="settings-grid-item" onClick={() => onOpen(post)}>
+                        {isMulti && (
+                            <img className="profile-grid-multi" src={`${API_BASE}/Icons/instagramPost.png`} alt="" />
+                        )}
+                        <img loading="lazy" decoding="async"
+                src={thumbImage(p.photo1)} alt="" />
+                    </button>
+                );
+            })}
         </div>
     );
 }
