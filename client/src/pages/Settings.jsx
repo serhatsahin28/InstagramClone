@@ -4,6 +4,7 @@ import { api, API_BASE, thumbImage } from "../api/client";
 import Sidebar from "../components/Sidebar";
 import PostModal from "../components/PostModal";
 import { useAuth } from "../context/AuthContext";
+import { useTheme } from "../context/ThemeContext";
 import "./Settings.css";
 
 const TABS = [
@@ -11,6 +12,7 @@ const TABS = [
     { key: "liked", label: "Beğenilenler" },
     { key: "comments", label: "Yorumlar" },
     { key: "privacy", label: "Gizli hesap" },
+    { key: "theme", label: "Görünüm" },
     { key: "account", label: "Hesap" }
 ];
 
@@ -40,6 +42,7 @@ function PostGrid({ posts, emptyText, onOpen }) {
 
 export default function Settings() {
     const { feed } = useAuth();
+    const { theme, toggleTheme } = useTheme();
     const [tab, setTab] = useState("saved");
     const [openPost, setOpenPost] = useState(null);
     const [saved, setSaved] = useState(null);
@@ -158,6 +161,20 @@ export default function Settings() {
                             </span>
                         </div>
                         <button className={isPrivate ? "toggle on" : "toggle"} onClick={handlePrivacyToggle}>
+                            <span className="toggle-dot" />
+                        </button>
+                    </div>
+                )}
+
+                {tab === "theme" && (
+                    <div className="settings-privacy">
+                        <div className="settings-privacy-text">
+                            <span className="title">Koyu tema</span>
+                            <span className="muted">
+                                Açıkken uygulama koyu renklerde görünür.
+                            </span>
+                        </div>
+                        <button className={theme === "dark" ? "toggle on" : "toggle"} onClick={toggleTheme}>
                             <span className="toggle-dot" />
                         </button>
                     </div>

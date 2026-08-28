@@ -5,8 +5,8 @@
     max-width: 935px;
     margin: 0 auto;
     width: 100%;
-    background-color: #000;
-    color: #fff;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
 }
 
 .profile-header {
@@ -39,7 +39,7 @@
 .profile-title-row h2 {
     margin: 0;
     font-weight: 400;
-    color: #fff;
+    color: var(--text-primary);
 }
 
 .profile-edit-btn,
@@ -47,9 +47,9 @@
     padding: 0.4rem 1rem;
     border-radius: 6px;
     border: none;
-    background: #363636;
+    background: var(--border-color);
     text-decoration: none;
-    color: #fff;
+    color: var(--text-primary);
     font-size: 0.85rem;
     font-weight: 600;
     cursor: pointer;
@@ -60,7 +60,7 @@
 }
 
 .profile-follow-btn.following {
-    background: #363636;
+    background: var(--border-color);
 }
 
 .profile-stats {
@@ -82,28 +82,28 @@
 
 .profile-private-note {
     text-align: center;
-    color: #8e8e8e;
+    color: var(--text-secondary);
     margin-top: 3rem;
 }
 
 .profile-stat-btn {
     background: none;
     border: none;
-    color: #fff;
+    color: var(--text-primary);
     font-size: 0.9rem;
     padding: 0;
     cursor: pointer;
 }
 
 .profile-stat-btn:hover {
-    color: #8e8e8e;
+    color: var(--text-secondary);
 }
 
 .profile-empty-note {
     text-align: center;
-    color: #8e8e8e;
+    color: var(--text-secondary);
     margin-top: 3rem;
-    border-top: 1px solid #262626;
+    border-top: 1px solid var(--bg-secondary);
     padding-top: 3rem;
 }
 
@@ -111,7 +111,7 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 4px;
-    border-top: 1px solid #262626;
+    border-top: 1px solid var(--bg-secondary);
     padding-top: 1rem;
 }
 

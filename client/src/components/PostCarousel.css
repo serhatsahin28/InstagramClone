@@ -5,8 +5,8 @@
     height: 600px;
     max-height: 80vh;
     border-radius: 4px;
-    background-color: #000;
-    border: 1px solid #262626;
+    background-color: var(--bg-primary);
+    border: 1px solid var(--bg-secondary);
     border-radius: 4px;
     overflow: hidden;
 }
@@ -57,6 +57,7 @@
 }
 
 .dot.active {
+    /* Fotografin ustunde durdugu icin temadan bagimsiz beyaz kalir. */
     background: #fff;
 }
 

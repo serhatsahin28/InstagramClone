@@ -1,8 +1,8 @@
 .sidebar {
     width: 240px;
     flex-shrink: 0;
-    border-right: 1px solid #262626;
-    background-color: #000;
+    border-right: 1px solid var(--bg-secondary);
+    background-color: var(--bg-primary);
     padding: 1.5rem 1rem;
     display: flex;
     flex-direction: column;
@@ -56,7 +56,7 @@
     padding: 0.65rem 0.75rem;
     border-radius: 8px;
     text-decoration: none;
-    color: #fff;
+    color: var(--text-primary);
     background: none;
     border: none;
     text-align: left;
@@ -86,13 +86,13 @@
     padding: 0 4px;
     border-radius: 9px;
     background: #ed4956;
-    color: #fff;
+    color: var(--text-primary);
     font-size: 0.62rem;
     font-weight: 700;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid #000;
+    border: 2px solid var(--bg-primary);
 }
 
 .nav-symbols {
@@ -110,12 +110,12 @@
 
 .sidebar-links a:hover,
 .sidebar-links .sidebar-btn:hover {
-    background-color: #1a1a1a;
+    background-color: var(--bg-tertiary);
 }
 
 .sidebar-links a.active,
 .sidebar-links .sidebar-btn.active {
-    background-color: #1a1a1a;
+    background-color: var(--bg-tertiary);
     font-weight: 700;
 }
 
@@ -124,8 +124,8 @@
     bottom: 0;
     left: 100%;
     margin-left: 0.5rem;
-    background: #262626;
-    border: 1px solid #363636;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
     z-index: 30;
@@ -139,7 +139,7 @@
     width: 100%;
     text-align: left;
     padding: 0.75rem 1rem;
-    color: #fff;
+    color: var(--text-primary);
     background: none;
     border: none;
     text-decoration: none;
@@ -149,7 +149,7 @@
 
 .sidebar-more-popover a:hover,
 .sidebar-more-popover button:hover {
-    background: #363636;
+    background: var(--border-color);
 }
 
 @media (max-width: 900px) {
@@ -162,7 +162,7 @@
         bottom: 0;
         left: 0;
         border-right: none;
-        border-top: 1px solid #262626;
+        border-top: 1px solid var(--bg-secondary);
         padding: 0.4rem;
         z-index: 10;
         gap: 0;

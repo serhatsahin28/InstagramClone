@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ThemeProvider } from "./context/ThemeContext";
 import { AuthProvider } from "./context/AuthContext";
 import { SocketProvider } from "./context/SocketContext";
 import { MessagesProvider } from "./context/MessagesContext";
@@ -21,25 +22,27 @@ function withAuth(element) {
 export default function App() {
     return (
         <BrowserRouter>
-            <AuthProvider>
-                <SocketProvider>
-                    <MessagesProvider>
-                        <Routes>
-                            <Route path="/login" element={<Login />} />
-                            <Route path="/register" element={<Register />} />
-                            <Route path="/forgot-password" element={<ForgotPassword />} />
-                            <Route path="/" element={withAuth(<Home />)} />
-                            <Route path="/explore" element={withAuth(<Explore />)} />
-                            <Route path="/reels" element={withAuth(<Placeholder title="Reels" />)} />
-                            <Route path="/direct/inbox" element={withAuth(<Messages />)} />
-                            <Route path="/direct/:id" element={withAuth(<Messages />)} />
-                            <Route path="/stories/:username/:id" element={withAuth(<Story />)} />
-                            <Route path="/accounts/edit" element={withAuth(<Settings />)} />
-                            <Route path="/:username" element={withAuth(<Profile />)} />
-                        </Routes>
-                    </MessagesProvider>
-                </SocketProvider>
-            </AuthProvider>
+            <ThemeProvider>
+                <AuthProvider>
+                    <SocketProvider>
+                        <MessagesProvider>
+                            <Routes>
+                                <Route path="/login" element={<Login />} />
+                                <Route path="/register" element={<Register />} />
+                                <Route path="/forgot-password" element={<ForgotPassword />} />
+                                <Route path="/" element={withAuth(<Home />)} />
+                                <Route path="/explore" element={withAuth(<Explore />)} />
+                                <Route path="/reels" element={withAuth(<Placeholder title="Reels" />)} />
+                                <Route path="/direct/inbox" element={withAuth(<Messages />)} />
+                                <Route path="/direct/:id" element={withAuth(<Messages />)} />
+                                <Route path="/stories/:username/:id" element={withAuth(<Story />)} />
+                                <Route path="/accounts/edit" element={withAuth(<Settings />)} />
+                                <Route path="/:username" element={withAuth(<Profile />)} />
+                            </Routes>
+                        </MessagesProvider>
+                    </SocketProvider>
+                </AuthProvider>
+            </ThemeProvider>
         </BrowserRouter>
     );
 }

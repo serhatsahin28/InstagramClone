@@ -2,7 +2,7 @@
     position: relative;
     width: 100%;
     max-width: 600px;
-    border-bottom: 1px solid #262626;
+    border-bottom: 1px solid var(--bg-secondary);
     margin-bottom: 1rem;
 }
 
@@ -32,7 +32,7 @@
     align-items: center;
     gap: 0.3rem;
     text-decoration: none;
-    color: #fff;
+    color: var(--text-primary);
     flex-shrink: 0;
     width: 70px;
     scroll-snap-align: start;
@@ -66,7 +66,7 @@
     border-radius: 50%;
     border: none;
     background: rgba(255, 255, 255, 0.9);
-    color: #262626;
+    color: var(--bg-secondary);
     font-size: 1.1rem;
     line-height: 1;
     cursor: pointer;

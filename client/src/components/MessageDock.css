@@ -4,8 +4,8 @@
     bottom: 0;
     width: 340px;
     max-width: calc(100vw - 3rem);
-    background: #262626;
-    border: 1px solid #363636;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
     border-bottom: none;
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
@@ -24,7 +24,7 @@
     padding: 0.75rem 1rem;
     background: none;
     border: none;
-    color: #fff;
+    color: var(--text-primary);
     font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
@@ -46,7 +46,7 @@
 
 .message-dock-badge {
     background: #ed4956;
-    color: #fff;
+    color: var(--text-primary);
     font-size: 0.65rem;
     font-weight: 700;
     border-radius: 9px;
@@ -63,7 +63,7 @@
     position: absolute;
     top: -6px;
     right: -8px;
-    border: 2px solid #262626;
+    border: 2px solid var(--bg-secondary);
 }
 
 .message-dock-bar span:not(.message-dock-chevron):not(.message-dock-icon-wrap) {
@@ -75,7 +75,7 @@
 }
 
 .message-dock-chevron {
-    color: #8e8e8e;
+    color: var(--text-secondary);
     font-size: 0.75rem;
 }
 
@@ -83,7 +83,7 @@
     display: flex;
     flex-direction: column;
     height: 380px;
-    border-top: 1px solid #363636;
+    border-top: 1px solid var(--border-color);
 }
 
 .message-dock-list {
@@ -92,7 +92,7 @@
 }
 
 .message-dock-hint {
-    color: #8e8e8e;
+    color: var(--text-secondary);
     font-size: 0.85rem;
     padding: 1rem;
     margin: 0;
@@ -106,13 +106,13 @@
     padding: 0.6rem 0.9rem;
     background: none;
     border: none;
-    color: #fff;
+    color: var(--text-primary);
     cursor: pointer;
     text-align: left;
 }
 
 .message-dock-thread:hover {
-    background: #1a1a1a;
+    background: var(--bg-tertiary);
 }
 
 .message-dock-thread img {
@@ -136,7 +136,7 @@
 
 .message-dock-thread-text .last {
     font-size: 0.75rem;
-    color: #8e8e8e;
+    color: var(--text-secondary);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -145,8 +145,8 @@
 .message-dock-back {
     background: none;
     border: none;
-    border-bottom: 1px solid #363636;
-    color: #8e8e8e;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-secondary);
     font-size: 0.8rem;
     padding: 0.5rem 0.9rem;
     text-align: left;
@@ -169,7 +169,7 @@
 
 .dock-bubble {
     align-self: flex-start;
-    background: #363636;
+    background: var(--border-color);
     border-radius: 14px;
     padding: 0.4rem 0.75rem;
     max-width: 80%;
@@ -186,7 +186,7 @@
     display: flex;
     gap: 0.4rem;
     padding: 0.6rem;
-    border-top: 1px solid #363636;
+    border-top: 1px solid var(--border-color);
 }
 
 .message-dock-form input {
@@ -194,9 +194,9 @@
     min-width: 0;
     padding: 0.45rem 0.75rem;
     border-radius: 16px;
-    border: 1px solid #363636;
-    background: #000;
-    color: #fff;
+    border: 1px solid var(--border-color);
+    background: var(--bg-primary);
+    color: var(--text-primary);
     font-size: 0.82rem;
     outline: none;
 }

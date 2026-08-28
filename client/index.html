@@ -7,6 +7,14 @@
     <title>client</title>
   </head>
   <body>
+    <script>
+      // Tema secimi ilk boyamadan once uygulanir; aksi halde acik tema
+      // secilmisken kisa bir koyu "yanip sonme" gorulur.
+      try {
+        var t = localStorage.getItem("theme");
+        if (t === "light") document.documentElement.setAttribute("data-theme", "light");
+      } catch (e) {}
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

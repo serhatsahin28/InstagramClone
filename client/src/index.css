@@ -1,3 +1,25 @@
+/* Tema degiskenleri: varsayilan (data-theme yoksa) koyu tema, projenin
+   orijinal tasarimi. Acik tema [data-theme="light"] ile devreye girer
+   (bkz. ThemeContext). Marka renkleri (mavi buton, kirmizi tehlike/kalp)
+   iki temada da ayni kaldigi icin degisken degil. */
+:root {
+  --bg-primary: #000;
+  --bg-secondary: #262626;
+  --bg-tertiary: #1a1a1a;
+  --border-color: #363636;
+  --text-primary: #fff;
+  --text-secondary: #8e8e8e;
+}
+
+:root[data-theme="light"] {
+  --bg-primary: #fafafa;
+  --bg-secondary: #fff;
+  --bg-tertiary: #efefef;
+  --border-color: #dbdbdb;
+  --text-primary: #262626;
+  --text-secondary: #737373;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -5,8 +27,8 @@
 body {
   margin: 0;
   font-family: system-ui, "Segoe UI", Roboto, sans-serif;
-  color: #fff;
-  background: #000;
+  color: var(--text-primary);
+  background: var(--bg-primary);
 }
 
 #root {

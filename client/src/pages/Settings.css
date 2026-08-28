@@ -3,8 +3,8 @@
     padding: 2rem 1rem 5rem 2rem;
     max-width: 940px;
     width: 100%;
-    background-color: #000;
-    color: #fff;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
 }
 
 .settings-page h2 {
@@ -14,27 +14,27 @@
 .settings-tabs {
     display: flex;
     gap: 1.75rem;
-    border-bottom: 1px solid #262626;
+    border-bottom: 1px solid var(--bg-secondary);
     margin-bottom: 1.5rem;
 }
 
 .settings-tabs button {
     background: none;
     border: none;
-    color: #8e8e8e;
+    color: var(--text-secondary);
     font-size: 0.9rem;
     padding: 0 0 0.75rem;
     cursor: pointer;
 }
 
 .settings-tabs button.active {
-    color: #fff;
+    color: var(--text-primary);
     font-weight: 700;
-    border-bottom: 2px solid #fff;
+    border-bottom: 2px solid var(--text-primary);
 }
 
 .settings-empty {
-    color: #8e8e8e;
+    color: var(--text-secondary);
     font-size: 0.9rem;
 }
 
@@ -93,7 +93,7 @@
     align-items: center;
     gap: 0.85rem;
     padding: 0.75rem 0;
-    border-bottom: 1px solid #1a1a1a;
+    border-bottom: 1px solid var(--bg-tertiary);
 }
 
 .settings-comment-row img {
@@ -117,7 +117,7 @@
 
 .settings-comment-text .comment-owner {
     font-size: 0.78rem;
-    color: #8e8e8e;
+    color: var(--text-secondary);
     text-decoration: none;
 }
 
@@ -141,7 +141,7 @@
 }
 
 .settings-privacy-text .muted {
-    color: #8e8e8e;
+    color: var(--text-secondary);
     font-size: 0.82rem;
 }
 
@@ -149,7 +149,7 @@
     width: 44px;
     height: 24px;
     border-radius: 12px;
-    background: #363636;
+    background: var(--border-color);
     border: none;
     position: relative;
     cursor: pointer;
@@ -167,6 +167,7 @@
     width: 20px;
     height: 20px;
     border-radius: 50%;
+    /* Anahtarin kendisi her zaman beyaz gorunur; temadan bagimsiz. */
     background: #fff;
     transition: transform 0.15s;
 }
@@ -189,7 +190,7 @@
 }
 
 .settings-danger-zone .muted {
-    color: #8e8e8e;
+    color: var(--text-secondary);
     font-size: 0.82rem;
     line-height: 1.4;
 }
@@ -198,9 +199,9 @@
     height: 2.5rem;
     padding: 0 0.75rem;
     border-radius: 6px;
-    border: 1px solid #363636;
-    background: #000;
-    color: #fff;
+    border: 1px solid var(--border-color);
+    background: var(--bg-primary);
+    color: var(--text-primary);
 }
 
 .settings-danger-error {
@@ -211,7 +212,7 @@
 
 .settings-danger-btn {
     background: #ed4956;
-    color: #fff;
+    color: var(--text-primary);
     border: none;
     border-radius: 6px;
     padding: 0.6rem 1rem;

@@ -10,8 +10,8 @@
 }
 
 .user-list-modal {
-    background: #262626;
-    color: #fff;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
     border-radius: 12px;
     width: 100%;
     max-width: 400px;
@@ -26,7 +26,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 0.85rem 1rem;
-    border-bottom: 1px solid #363636;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .user-list-header h3 {
@@ -42,7 +42,7 @@
 .user-list-close {
     background: none;
     border: none;
-    color: #fff;
+    color: var(--text-primary);
     font-size: 1rem;
     cursor: pointer;
 }
@@ -54,7 +54,7 @@
 }
 
 .user-list-hint {
-    color: #8e8e8e;
+    color: var(--text-secondary);
     font-size: 0.85rem;
     padding: 1rem;
     margin: 0;
@@ -66,11 +66,11 @@
     gap: 0.75rem;
     padding: 0.5rem 1rem;
     text-decoration: none;
-    color: #fff;
+    color: var(--text-primary);
 }
 
 .user-list-item:hover {
-    background: #1a1a1a;
+    background: var(--bg-tertiary);
 }
 
 .user-list-item img {
@@ -92,5 +92,5 @@
 
 .user-list-item-text .muted {
     font-size: 0.8rem;
-    color: #8e8e8e;
+    color: var(--text-secondary);
 }

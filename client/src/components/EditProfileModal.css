@@ -10,8 +10,8 @@
 }
 
 .edit-profile-modal {
-    background: #262626;
-    color: #fff;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
     border-radius: 12px;
     width: 100%;
     max-width: 420px;
@@ -23,7 +23,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 0.85rem 1rem;
-    border-bottom: 1px solid #363636;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .edit-profile-header h3 {
@@ -39,7 +39,7 @@
 .edit-profile-close {
     background: none;
     border: none;
-    color: #fff;
+    color: var(--text-primary);
     font-size: 1rem;
     cursor: pointer;
 }
@@ -94,9 +94,9 @@
     font-family: inherit;
     font-weight: 400;
     padding: 0.6rem;
-    border: 1px solid #363636;
-    background: #000;
-    color: #fff;
+    border: 1px solid var(--border-color);
+    background: var(--bg-primary);
+    color: var(--text-primary);
     border-radius: 8px;
     resize: vertical;
 }
@@ -104,13 +104,13 @@
 .edit-profile-counter {
     font-weight: 400;
     font-size: 0.75rem;
-    color: #8e8e8e;
+    color: var(--text-secondary);
     text-align: right;
 }
 
 .edit-profile-submit {
     background: #0095f6;
-    color: #fff;
+    color: var(--text-primary);
     border: none;
     border-radius: 8px;
     padding: 0.6rem;

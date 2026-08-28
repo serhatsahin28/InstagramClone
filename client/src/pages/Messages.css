@@ -2,15 +2,15 @@
     flex: 1;
     display: flex;
     height: 100vh;
-    background-color: #000;
-    color: #fff;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
     min-width: 0;
 }
 
 .messages-inbox {
     width: 320px;
     flex-shrink: 0;
-    border-right: 1px solid #262626;
+    border-right: 1px solid var(--bg-secondary);
     padding: 1rem;
     overflow-y: auto;
 }
@@ -44,26 +44,26 @@
     display: flex;
     gap: 1.5rem;
     margin-bottom: 0.75rem;
-    border-bottom: 1px solid #262626;
+    border-bottom: 1px solid var(--bg-secondary);
 }
 
 .messages-inbox-tabs button {
     background: none;
     border: none;
-    color: #8e8e8e;
+    color: var(--text-secondary);
     font-size: 0.9rem;
     padding: 0 0 0.5rem;
     cursor: pointer;
 }
 
 .messages-inbox-tabs button.active {
-    color: #fff;
+    color: var(--text-primary);
     font-weight: 700;
-    border-bottom: 2px solid #fff;
+    border-bottom: 2px solid var(--text-primary);
 }
 
 .messages-inbox-empty {
-    color: #8e8e8e;
+    color: var(--text-secondary);
     font-size: 0.85rem;
     padding: 1rem 0.5rem;
     margin: 0;
@@ -79,13 +79,13 @@
     gap: 0.75rem;
     padding: 0.5rem;
     text-decoration: none;
-    color: #fff;
+    color: var(--text-primary);
     border-radius: 8px;
 }
 
 .messages-inbox-item:hover,
 .messages-inbox-item.active {
-    background: #1a1a1a;
+    background: var(--bg-tertiary);
 }
 
 .messages-inbox-item img {
@@ -110,7 +110,7 @@
 
 .messages-inbox-item-text .last-message {
     font-size: 0.8rem;
-    color: #8e8e8e;
+    color: var(--text-secondary);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -133,12 +133,12 @@
 
 .messages-request-actions .accept {
     background: #0095f6;
-    color: #fff;
+    color: var(--text-primary);
 }
 
 .messages-request-actions .reject {
-    background: #363636;
-    color: #fff;
+    background: var(--border-color);
+    color: var(--text-primary);
 }
 
 .messages-thread {
@@ -151,7 +151,7 @@
 .messages-empty {
     align-items: center;
     justify-content: center;
-    color: #8e8e8e;
+    color: var(--text-secondary);
 }
 
 .messages-thread-header {
@@ -159,7 +159,7 @@
     align-items: center;
     gap: 0.6rem;
     padding: 1rem;
-    border-bottom: 1px solid #262626;
+    border-bottom: 1px solid var(--bg-secondary);
     font-weight: 600;
 }
 
@@ -219,14 +219,14 @@
 }
 
 .shared-post-missing {
-    color: #8e8e8e;
+    color: var(--text-secondary);
     font-style: italic;
 }
 
 .message-bubble {
     align-self: flex-start;
-    background: #262626;
-    color: #fff;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
     border-radius: 16px;
     padding: 0.5rem 1rem;
     max-width: 70%;
@@ -237,23 +237,23 @@
 .message-bubble.mine {
     align-self: flex-end;
     background: #0095f6;
-    color: #fff;
+    color: var(--text-primary);
 }
 
 .messages-input-row {
     display: flex;
     gap: 0.5rem;
     padding: 1rem;
-    border-top: 1px solid #262626;
+    border-top: 1px solid var(--bg-secondary);
 }
 
 .messages-input-row input {
     flex: 1;
     padding: 0.5rem 1rem;
     border-radius: 20px;
-    border: 1px solid #262626;
-    background: #000;
-    color: #fff;
+    border: 1px solid var(--bg-secondary);
+    background: var(--bg-primary);
+    color: var(--text-primary);
     outline: none;
 }
 
@@ -276,7 +276,7 @@
     .messages-inbox {
         width: 100%;
         border-right: none;
-        border-bottom: 1px solid #262626;
+        border-bottom: 1px solid var(--bg-secondary);
         max-height: 40vh;
         flex-shrink: 0;
     }

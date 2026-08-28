@@ -1,7 +1,7 @@
 .home-layout {
     display: flex;
     min-height: 100vh;
-    background-color: #000;
+    background-color: var(--bg-primary);
 }
 
 .home-feed {
@@ -22,7 +22,7 @@
 }
 
 .empty-feed {
-    color: #8e8e8e;
+    color: var(--text-secondary);
     margin-top: 2rem;
 }
 

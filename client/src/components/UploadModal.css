@@ -10,8 +10,8 @@
 }
 
 .upload-modal {
-    background: #262626;
-    color: #fff;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
     border-radius: 8px;
     padding: 1.5rem;
     width: 100%;
@@ -29,7 +29,7 @@
     right: 0.75rem;
     background: none;
     border: none;
-    color: #fff;
+    color: var(--text-primary);
     font-size: 1.1rem;
     cursor: pointer;
 }
@@ -42,22 +42,22 @@
 
 .upload-hint {
     font-size: 0.75rem;
-    color: #8e8e8e;
+    color: var(--text-secondary);
 }
 
 .upload-form textarea {
     font-family: inherit;
     padding: 0.5rem;
-    border: 1px solid #363636;
-    background: #000;
-    color: #fff;
+    border: 1px solid var(--border-color);
+    background: var(--bg-primary);
+    color: var(--text-primary);
     border-radius: 6px;
     resize: vertical;
 }
 
 .upload-form button[type="submit"] {
     background: #0095f6;
-    color: #fff;
+    color: var(--text-primary);
     border: none;
     border-radius: 6px;
     padding: 0.5rem;

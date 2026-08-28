@@ -10,8 +10,8 @@
 }
 
 .edit-caption-modal {
-    background: #262626;
-    color: #fff;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
     border-radius: 12px;
     padding: 1.25rem;
     width: 100%;
@@ -26,9 +26,9 @@
 .edit-caption-modal textarea {
     width: 100%;
     resize: vertical;
-    background: #000;
-    color: #fff;
-    border: 1px solid #363636;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
     border-radius: 8px;
     padding: 0.6rem;
     font-size: 0.9rem;
@@ -58,12 +58,12 @@
 
 .edit-caption-cancel {
     background: none;
-    color: #8e8e8e;
+    color: var(--text-secondary);
 }
 
 .edit-caption-save {
     background: #0095f6;
-    color: #fff;
+    color: var(--text-primary);
 }
 
 .edit-caption-save:disabled {
