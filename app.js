@@ -13,22 +13,26 @@ require("dotenv").config();
 require("./Model/db");
 
 const isProduction = process.env.NODE_ENV === "production";
-const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || "http://localhost:5173";
+
+// Tarayıcı Origin başlığını sondaki "/" olmadan gönderir. Panele yanlışlıkla
+// "/" ile yazılan adres CORS'u sessizce bozduğu için burada normalize ediyoruz.
+// Virgülle ayırarak birden fazla adres de verilebilir.
+const CLIENT_ORIGIN = (process.env.CLIENT_ORIGIN || "http://localhost:5173")
+    .split(",")
+    .map((origin) => origin.trim().replace(/\/+$/, ""))
+    .filter(Boolean);
 
 // Render gibi ters vekil arkasında güvenli çerez üretebilmek için gerekli.
 if (isProduction) app.set("trust proxy", 1);
 
-const io = socketio(server, {
-    cors: {
-        origin: CLIENT_ORIGIN,
-        credentials: true
-    }
-});
-
-app.use(cors({
+const corsOptions = {
     origin: CLIENT_ORIGIN,
     credentials: true
-}));
+};
+
+const io = socketio(server, { cors: corsOptions });
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("images"));
