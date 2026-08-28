@@ -138,6 +138,25 @@ class UserController {
 
     }
 
+    // Hesabi ve tum verilerini geri donusumsuz siler; sifre onayi gerektirir.
+    async deleteAccount(req, res, userName, password) {
+        if (typeof password !== "string" || password.trim() === "") {
+            return res.status(400).json({ error: "Şifreni girmelisin" });
+        }
+
+        try {
+            const result = await UserModel.deleteAccount(userName, password);
+            if (!result.ok) return res.status(400).json({ error: result.error });
+
+            req.session.destroy(() => {
+                res.json({ message: "Hesabın silindi" });
+            });
+        } catch (err) {
+            console.log("UserController deleteAccount: " + err);
+            res.status(500).json({ error: "Hesap silinemedi" });
+        }
+    }
+
     // Guvenlik sorusu cevabi eslesirse yeni sifre kaydedilir.
     async resetPassword(req, res, userName, securityAnswer, newPassword) {
         const isFilled = (v) => typeof v === "string" && v.trim() !== "";

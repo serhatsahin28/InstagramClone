@@ -32,6 +32,12 @@ router.post("/privacy-setting", (req, res) => {
     a.privatePublicSettings(req, res, username, isPrivate);
 });
 
+router.delete("/me", (req, res) => {
+    const userName = req.session.user.username;
+    const a = new UserController();
+    a.deleteAccount(req, res, userName, req.body.password);
+});
+
 router.get("/:username/followers", (req, res) => {
     new Profile().followList(req, res, req.params.username, "followers");
 });

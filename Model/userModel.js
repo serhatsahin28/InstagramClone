@@ -2,6 +2,12 @@ const User = require("../Model/table/dbUsers");
 const Post = require("../Model/table/postUser");
 const follow = require("../Model/table/follow");
 const story = require("../Model/table/storyTable");
+const likePost = require("../Model/table/likePost");
+const commentPost = require("../Model/table/commentPost");
+const storyLike = require("../Model/table/storyLike");
+const storyView = require("../Model/table/storyView");
+const dbMessages = require("../Model/table/dbMessages");
+const savedPost = require("../Model/table/savedPost");
 const bcrypt = require("bcryptjs");
 
 
@@ -450,6 +456,41 @@ class UserModel {
             throw error;
         }
 
+    }
+
+    // Hesap silme: kullanicinin tum verileri (gonderiler, begeniler, yorumlar,
+    // hikayeler, mesajlar, takip iliskileri, kayitlar) geri donusumsuz silinir.
+    static async deleteAccount(userName, password) {
+        const user = await User.findOne({ username: userName });
+        if (!user) return { ok: false, error: "Kullanıcı bulunamadı" };
+
+        const matches = await bcrypt.compare(password, user.password);
+        if (!matches) return { ok: false, error: "Şifre hatalı" };
+
+        const myPosts = await Post.find({ username: userName }, "_id");
+        const myPostIds = myPosts.map((p) => String(p._id));
+        const myStories = await story.find({ username: userName }, "_id");
+        const myStoryIds = myStories.map((s) => String(s._id));
+
+        await Promise.all([
+            Post.deleteMany({ username: userName }),
+            likePost.deleteMany({ post_id: { $in: myPostIds } }),
+            likePost.updateMany({}, { $pull: { userWhoLike: { username: userName } } }),
+            commentPost.deleteMany({ post_id: { $in: myPostIds } }),
+            commentPost.deleteMany({ "userWhoComment.username": userName }),
+            story.deleteMany({ username: userName }),
+            storyLike.deleteMany({ story_id: { $in: myStoryIds } }),
+            storyLike.updateMany({}, { $pull: { userWhoLike: { username: userName } } }),
+            storyView.deleteMany({ story_id: { $in: myStoryIds } }),
+            storyView.updateMany({}, { $pull: { viewers: { username: userName } } }),
+            follow.deleteOne({ userName: userName }),
+            follow.updateMany({}, { $pull: { followed: { username: userName } } }),
+            dbMessages.deleteMany({ $or: [{ senderUser: userName }, { sentUsername: userName }] }),
+            savedPost.deleteMany({ username: userName }),
+            User.deleteOne({ username: userName })
+        ]);
+
+        return { ok: true };
     }
 
     // Sifre sifirlama: guvenlik sorusu cevabi eslesirse yeni sifre kaydedilir.

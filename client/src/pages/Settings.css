@@ -175,6 +175,55 @@
     transform: translateX(20px);
 }
 
+.settings-danger-zone {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    max-width: 400px;
+    padding: 1rem 0;
+}
+
+.settings-danger-zone .title {
+    font-weight: 600;
+    color: #ed4956;
+}
+
+.settings-danger-zone .muted {
+    color: #8e8e8e;
+    font-size: 0.82rem;
+    line-height: 1.4;
+}
+
+.settings-danger-zone input {
+    height: 2.5rem;
+    padding: 0 0.75rem;
+    border-radius: 6px;
+    border: 1px solid #363636;
+    background: #000;
+    color: #fff;
+}
+
+.settings-danger-error {
+    color: #ed4956;
+    font-size: 0.8rem;
+    margin: 0;
+}
+
+.settings-danger-btn {
+    background: #ed4956;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.6rem 1rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.settings-danger-btn:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
 @media (max-width: 900px) {
     .settings-page {
         padding: 1.5rem 1rem 5rem;
