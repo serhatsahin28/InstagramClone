@@ -91,6 +91,14 @@
     margin: 0;
 }
 
+.login-forgot-link {
+    display: block;
+    text-align: center;
+    color: #00376b;
+    font-size: 0.85rem;
+    margin-top: 1rem;
+}
+
 .login-divider {
     width: 100%;
     display: flex;

@@ -425,10 +425,12 @@ class UserModel {
     }
 
 
-    static async registerAddNewUser(email, userName, profileName, password) {
+    static async registerAddNewUser(email, userName, profileName, password, securityAnswer) {
         try {
 
             const hashedPassword = await bcrypt.hash(password, 10);
+            // Buyuk/kucuk harf ve bosluk farki eslesmeyi bozmasin.
+            const securityAnswerHash = await bcrypt.hash(securityAnswer.trim().toLowerCase(), 10);
 
             const a = await User.create({
                 "username": userName,
@@ -436,9 +438,8 @@ class UserModel {
                 "profilePicture": "newProfile.png",
                 "description": "",
                 "profileName": profileName,
-                "isPrivate": false
-
-
+                "isPrivate": false,
+                "securityAnswerHash": securityAnswerHash
 
             });
 
@@ -449,6 +450,24 @@ class UserModel {
             throw error;
         }
 
+    }
+
+    // Sifre sifirlama: guvenlik sorusu cevabi eslesirse yeni sifre kaydedilir.
+    static async resetPassword(userName, securityAnswer, newPassword) {
+        try {
+            const user = await User.findOne({ username: userName });
+            if (!user || !user.securityAnswerHash) return false;
+
+            const matches = await bcrypt.compare(securityAnswer.trim().toLowerCase(), user.securityAnswerHash);
+            if (!matches) return false;
+
+            user.password = await bcrypt.hash(newPassword, 10);
+            await user.save();
+            return true;
+        } catch (error) {
+            console.log("UserModel sayfası resetPassword fonksiyonu: " + error);
+            throw error;
+        }
     }
 
 

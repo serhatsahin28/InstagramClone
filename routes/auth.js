@@ -22,9 +22,15 @@ router.post("/logout", (req, res) => {
 });
 
 router.post("/register", (req, res) => {
-    const { email, userName, profileName, password } = req.body;
+    const { email, userName, profileName, password, securityAnswer } = req.body;
     const userControllerInstance = new UserController();
-    userControllerInstance.registerUserAdd(req, res, email, userName, profileName, password);
+    userControllerInstance.registerUserAdd(req, res, email, userName, profileName, password, securityAnswer);
+});
+
+router.post("/reset-password", (req, res) => {
+    const { userName, securityAnswer, newPassword } = req.body;
+    const userControllerInstance = new UserController();
+    userControllerInstance.resetPassword(req, res, userName, securityAnswer, newPassword);
 });
 
 module.exports = router;

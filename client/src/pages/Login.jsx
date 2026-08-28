@@ -56,6 +56,8 @@ export default function Login() {
                         </button>
                     </form>
 
+                    <Link to="/forgot-password" className="login-forgot-link">Şifreni mi unuttun?</Link>
+
                     <div className="login-divider">
                         <hr /><span>YA DA</span><hr />
                     </div>

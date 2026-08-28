@@ -118,11 +118,15 @@ class UserController {
     }
 
 
-    async registerUserAdd(req, res, email, userName, profileName, password) {
+    async registerUserAdd(req, res, email, userName, profileName, password, securityAnswer) {
 
-        if (userName != "" && profileName != "" && email != "" && password != "") {
+        // Onceden "!= \"\"" ile kontrol ediliyordu; alan hic gonderilmediginde
+        // (undefined) bu kontrol yanlislikla gecerdi ve kullanilamaz "hayalet"
+        // hesaplar olusuyordu. Artik gercek bir dolu-string kontrolu yapiliyor.
+        const isFilled = (v) => typeof v === "string" && v.trim() !== "";
+        if ([userName, profileName, email, password, securityAnswer].every(isFilled)) {
             try {
-                await UserModel.registerAddNewUser(email, userName, profileName, password);
+                await UserModel.registerAddNewUser(email, userName, profileName, password, securityAnswer);
                 res.json({ message: "Kayıt başarılı" });
             } catch (err) {
                 res.status(500).json({ error: "Kayıt sırasında hata oluştu" });
@@ -132,6 +136,22 @@ class UserController {
             res.status(400).json({ error: "Tüm alanlar zorunludur" });
         }
 
+    }
+
+    // Guvenlik sorusu cevabi eslesirse yeni sifre kaydedilir.
+    async resetPassword(req, res, userName, securityAnswer, newPassword) {
+        const isFilled = (v) => typeof v === "string" && v.trim() !== "";
+        if (![userName, securityAnswer, newPassword].every(isFilled)) {
+            return res.status(400).json({ error: "Tüm alanlar zorunludur" });
+        }
+
+        try {
+            const ok = await UserModel.resetPassword(userName, securityAnswer, newPassword);
+            if (!ok) return res.status(400).json({ error: "Kullanıcı adı veya güvenlik sorusu cevabı hatalı" });
+            res.json({ message: "Şifren güncellendi" });
+        } catch (err) {
+            res.status(500).json({ error: "Şifre sıfırlanamadı" });
+        }
     }
 
 

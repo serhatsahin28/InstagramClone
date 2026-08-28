@@ -30,6 +30,11 @@ const user = new Schema({
     isPrivate: {
         type: Boolean,
         require: true
+    },
+    // Sifre sifirlama icin; e-posta gonderimi olmadigindan guvenlik sorusu
+    // cevabinin hash'i kullaniliyor. Eski hesaplarda bulunmayabilir.
+    securityAnswerHash: {
+        type: String
     }
 
 })

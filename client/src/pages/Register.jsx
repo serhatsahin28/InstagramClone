@@ -4,7 +4,7 @@ import { API_BASE, api } from "../api/client";
 import "./Register.css";
 
 export default function Register() {
-    const [form, setForm] = useState({ email: "", userName: "", profileName: "", password: "" });
+    const [form, setForm] = useState({ email: "", userName: "", profileName: "", password: "", securityAnswer: "" });
     const [error, setError] = useState("");
     const [submitting, setSubmitting] = useState(false);
     const navigate = useNavigate();
@@ -38,6 +38,19 @@ export default function Register() {
                     <input type="text" name="userName" placeholder="username" value={form.userName} onChange={handleChange} required />
                     <input type="text" name="profileName" placeholder="Ad-soyad" value={form.profileName} onChange={handleChange} required />
                     <input type="password" name="password" placeholder="password" value={form.password} onChange={handleChange} required />
+
+                    <label className="register-security-label">
+                        Güvenlik sorusu: Annenizin kızlık soyadı nedir?
+                    </label>
+                    <input
+                        type="text"
+                        name="securityAnswer"
+                        placeholder="Şifreni unutursan bu cevapla sıfırlarsın"
+                        value={form.securityAnswer}
+                        onChange={handleChange}
+                        required
+                    />
+
                     {error && <p className="register-error">{error}</p>}
                     <button type="submit" disabled={submitting}>
                         {submitting ? "Kaydolunuyor..." : "Kaydol"}

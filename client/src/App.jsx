@@ -5,6 +5,7 @@ import { MessagesProvider } from "./context/MessagesContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import ForgotPassword from "./pages/ForgotPassword";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import Story from "./pages/Story";
@@ -26,6 +27,7 @@ export default function App() {
                         <Routes>
                             <Route path="/login" element={<Login />} />
                             <Route path="/register" element={<Register />} />
+                            <Route path="/forgot-password" element={<ForgotPassword />} />
                             <Route path="/" element={withAuth(<Home />)} />
                             <Route path="/explore" element={withAuth(<Explore />)} />
                             <Route path="/reels" element={withAuth(<Placeholder title="Reels" />)} />
