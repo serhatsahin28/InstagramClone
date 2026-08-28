@@ -59,10 +59,10 @@
     margin-left: auto;
 }
 
-/* Kaydedilince ikon dolu/altın renkte gösterilir (mask adresi JSX'te
-   API_BASE ile inline veriliyor), kaydedilmemişken sade beyaz çizgi kalır. */
+/* Kaydedilince ikon dolu beyaz gösterilir (mask adresi JSX'te API_BASE ile
+   inline veriliyor), kaydedilmemişken sade çizgi kalır. */
 .save-btn.saved img {
-    background-color: #f5c518;
+    background-color: #fff;
     filter: none;
     transform: scale(1.08);
 }

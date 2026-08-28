@@ -106,7 +106,7 @@ export default function MessageDock() {
                 ) : (
                     <>
                         <span className="message-dock-icon-wrap">
-                            <img loading="lazy" decoding="async" src={`${API_BASE}/Icons/chat.png`} alt="" />
+                            <img loading="lazy" decoding="async" src={`${API_BASE}/Icons/icon_chat.png`} alt="" />
                             {totalUnread > 0 && (
                                 <span className="message-dock-badge">{totalUnread > 99 ? "99+" : totalUnread}</span>
                             )}
