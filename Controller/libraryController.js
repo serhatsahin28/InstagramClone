@@ -3,9 +3,14 @@ const likePost = require("../Model/table/likePost");
 const commentPost = require("../Model/table/commentPost");
 const Post = require("../Model/table/postUser");
 
+// MongoDB'nin $in sorgusu verilen id sirasini korumaz; bu yuzden sonuc
+// istenen sirada (en son kaydedilen/begenilen once) donmuyordu. Postlari
+// ceken sorgudan sonra orijinal sirayla yeniden diziyoruz.
 async function postsByIds(ids) {
     if (ids.length === 0) return [];
-    return Post.find({ _id: { $in: ids } });
+    const posts = await Post.find({ _id: { $in: ids } });
+    const byId = new Map(posts.map((p) => [String(p._id), p]));
+    return ids.map((id) => byId.get(String(id))).filter(Boolean);
 }
 
 class libraryController {
