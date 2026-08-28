@@ -125,7 +125,49 @@ yani yerel geliştirmede Cloudinary hesabına ihtiyaç yoktur.
 
 ---
 
+## 6. Hızlandırma: sunucuyu Frankfurt'a taşımak (opsiyonel)
+
+Servis Washington'da (`iad1`) çalışıyorsa Türkiye'den gelen her istek okyanus aşırı
+gidiyor ve tek başına ~0.6 saniye ekliyor. Frankfurt'a taşımak bunu ~0.1 saniyeye
+düşürür. **Kodda hiçbir değişiklik gerekmez**, yalnızca yeni bir servis oluşturulur.
+
+### Önce: Atlas hangi bölgede?
+
+Atlas → cluster adının altında bölge yazar (ör. *AWS / eu-central-1 (Frankfurt)*).
+Sunucuyu veritabanıyla **aynı bölgeye** koymak ikinci bir hızlanma sağlar; Render ile
+Atlas arasındaki her sorgu turu da kısalır.
+
+### Adımlar
+
+1. Render → **New +** → **Web Service** → aynı repo (`InstagramClone`), dal `main`
+2. Formda **Region** olarak **Frankfurt (EU Central)** seçin. Diğer alanlar aynı:
+
+   | Alan | Değer |
+   |---|---|
+   | Name | `instagram-clone-api-eu` |
+   | Root Directory | *boş* |
+   | Build Command | `npm install` |
+   | Start Command | `node app.js` |
+   | Health Check Path | `/health` |
+
+3. Eski servisteki **tüm ortam değişkenlerini** yeni servise kopyalayın
+   (`MONGODB_URI`, `SESSION_SECRET`, `NODE_ENV`, `CLIENT_ORIGIN`, `CLOUDINARY_URL`)
+4. Deploy edin, yeni adresi not alın (`https://instagram-clone-api-eu-xxxx.onrender.com`)
+5. **Frontend'i yeni adrese yönlendirin.** İki yoldan biri:
+   - Vercel → **Environment Variables** → `VITE_API_BASE` = yeni adres
+     (visibility: **Config**, Secret değil) → yeniden deploy
+   - veya `client/src/api/client.js` içindeki `PRODUCTION_API` sabitini güncelleyip push edin
+6. Yeni serviste `CLIENT_ORIGIN`'in Vercel adresiniz olduğundan emin olun
+7. Her şey çalıştığını doğrulayınca eski servisi **Settings → Delete Service** ile silin
+
+> Ücretsiz planda bir servisin bölgesi sonradan değiştirilemez; bu yüzden yeni servis
+> oluşturup eskisini silmek gerekiyor. Veritabanı ve görseller ortak olduğu için
+> veri taşımaya gerek yoktur.
+
+---
+
 ## Bilinen sınırlamalar
 
 - **Ücretsiz Render planı uyur.** 15 dakika hareketsizlikten sonra servis durur; ilk istek
   ~30 saniye sürebilir. Oturumlar MongoDB'de saklandığı için uyanınca kaybolmaz.
+  Bölge değiştirmek bunu çözmez; tek çözüm ücretli plandır.
