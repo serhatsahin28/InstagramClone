@@ -68,6 +68,15 @@ app.use("/api/follow", require("./routes/follow"));
 
 app.get("/health", (req, res) => res.json({ ok: true }));
 
+// Burasi yalnizca API sunucusu; arayuz ayri bir adreste yayinlanir.
+app.get("/", (req, res) => {
+    res.json({
+        service: "Instagram Clone API",
+        status: "calisiyor",
+        note: "Arayuz icin frontend adresini kullanin."
+    });
+});
+
 server.listen(PORT, () => {
     console.log("port dinleniyor: " + PORT);
 });
