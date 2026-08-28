@@ -99,6 +99,21 @@
     flex: 1;
 }
 
+.story-viewer-text {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 6rem;
+    z-index: 2;
+    text-align: center;
+    color: #fff;
+    font-weight: 600;
+    padding: 0 1.5rem;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
 .story-top-actions {
     position: absolute;
     top: 1.75rem;

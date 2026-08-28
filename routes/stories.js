@@ -10,7 +10,7 @@ router.post("/upload", uploadProfile.array("photos", 1), (req, res) => {
     const a = new storyController();
     const photos = req.files;
     const sessionUserName = req.session.user.username;
-    a.uploadStory(req, res, photos, sessionUserName);
+    a.uploadStory(req, res, photos, sessionUserName, req.body.text);
 });
 
 router.post("/:id/view", (req, res) => {

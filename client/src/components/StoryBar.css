@@ -36,6 +36,35 @@
     flex-shrink: 0;
     width: 70px;
     scroll-snap-align: start;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.story-item-avatar-wrap {
+    position: relative;
+    display: inline-flex;
+}
+
+.story-add-btn {
+    position: absolute;
+    right: -2px;
+    bottom: -2px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #0095f6;
+    color: #fff;
+    border: 2px solid var(--bg-primary);
+    font-size: 0.85rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
 }
 
 .story-item img {

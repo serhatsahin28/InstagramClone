@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { profileImage } from "../api/client";
+import StoryUploadModal from "./StoryUploadModal";
 import "./StoryBar.css";
 
 function groupByUser(stories) {
@@ -16,6 +17,7 @@ export default function StoryBar({ stories, sessionUserStories, sessionUserName,
     const trackRef = useRef(null);
     const [canPrev, setCanPrev] = useState(false);
     const [canNext, setCanNext] = useState(false);
+    const [showUpload, setShowUpload] = useState(false);
 
     const updateArrows = useCallback(() => {
         const el = trackRef.current;
@@ -52,17 +54,31 @@ export default function StoryBar({ stories, sessionUserStories, sessionUserName,
 
             <div className="story-track" ref={trackRef} onScroll={updateArrows}>
                 {sessionUserStories?.length > 0 ? (
-                    <Link to={`/stories/${sessionUserName}/${sessionUserStories[0]._id}`} className="story-item">
-                        <img loading="lazy" decoding="async"
-                src={profileImage(sessionProfilePicture)} alt="" />
-                        <span>Hikayen</span>
-                    </Link>
-                ) : (
                     <div className="story-item">
-                        <img loading="lazy" decoding="async"
+                        <span className="story-item-avatar-wrap">
+                            <Link to={`/stories/${sessionUserName}/${sessionUserStories[0]._id}`}>
+                                <img loading="lazy" decoding="async"
                 src={profileImage(sessionProfilePicture)} alt="" />
+                            </Link>
+                            <button
+                                className="story-add-btn"
+                                onClick={() => setShowUpload(true)}
+                                aria-label="Yeni hikaye ekle"
+                            >
+                                +
+                            </button>
+                        </span>
                         <span>Hikayen</span>
                     </div>
+                ) : (
+                    <button className="story-item" onClick={() => setShowUpload(true)}>
+                        <span className="story-item-avatar-wrap">
+                            <img loading="lazy" decoding="async"
+                src={profileImage(sessionProfilePicture)} alt="" />
+                            <span className="story-add-btn">+</span>
+                        </span>
+                        <span>Hikayen</span>
+                    </button>
                 )}
 
                 {others.map((story) => (
@@ -79,6 +95,8 @@ export default function StoryBar({ stories, sessionUserStories, sessionUserName,
                     ›
                 </button>
             )}
+
+            {showUpload && <StoryUploadModal onClose={() => setShowUpload(false)} />}
         </div>
     );
 }

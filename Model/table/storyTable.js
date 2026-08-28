@@ -30,6 +30,10 @@ const stories = new Schema({
         type: String,
         require: true
 
+    },
+    // Gorselin uzerine yazilan istege bagli metin.
+    text: {
+        type: String
     }
 
 

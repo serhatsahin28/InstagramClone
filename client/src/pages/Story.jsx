@@ -208,6 +208,8 @@ export default function Story() {
                     key={current._id}
                 />
 
+                {current.text && <div className="story-viewer-text">{current.text}</div>}
+
                 {index > 0 && (
                     <button className="story-nav prev" onClick={goPrev} aria-label="Önceki">‹</button>
                 )}

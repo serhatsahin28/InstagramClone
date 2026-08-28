@@ -59,17 +59,16 @@ class storyModel {
     }
 
 
-    static async storyAdd(photosName, sessionUserName) {
+    static async storyAdd(photosName, sessionUserName, text) {
 
         try {
             const userQuery = await User.find({
                 "username": sessionUserName
             });
-            console.log(userQuery);
             const user_id = userQuery[0]._id;
             const profileName = userQuery[0].profileName;
             const profilePicture = userQuery[0].profilePicture;
-   
+
 
             const addStory=await story.create({
             "user_id":user_id,
@@ -77,7 +76,8 @@ class storyModel {
             "profileName":profileName,
             "storie":photosName,
             "profilePicture":profilePicture,
-            "isActive":"1"
+            "isActive":"1",
+            "text": text || undefined
 
             });
 

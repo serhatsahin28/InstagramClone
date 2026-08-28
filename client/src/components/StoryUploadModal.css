@@ -1,0 +1,126 @@
+.story-upload-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    padding: 1rem;
+}
+
+.story-upload-modal {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border-radius: 8px;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 380px;
+    position: relative;
+}
+
+.story-upload-modal h3 {
+    margin-top: 0;
+}
+
+.story-upload-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.story-upload-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.story-upload-picker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    border: 2px dashed var(--border-color);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+.story-upload-picker input {
+    display: none;
+}
+
+.story-upload-preview {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    max-height: 420px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #000;
+}
+
+.story-upload-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.story-upload-preview-text {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 1rem;
+    text-align: center;
+    color: #fff;
+    font-weight: 600;
+    padding: 0 1rem;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.story-upload-form textarea {
+    font-family: inherit;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border-radius: 6px;
+    resize: vertical;
+}
+
+.story-upload-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.story-upload-change {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+    cursor: pointer;
+    padding: 0;
+}
+
+.story-upload-actions button[type="submit"] {
+    background: #0095f6;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 1.25rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.story-upload-actions button[type="submit"]:disabled {
+    opacity: 0.6;
+}

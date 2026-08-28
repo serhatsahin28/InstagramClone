@@ -49,9 +49,9 @@ class storyController {
 
 
 
-async uploadStory(req,res,photos, sessionUserName){
+async uploadStory(req,res,photos, sessionUserName, text){
     const photosName=storedFileName(photos[0]);
-    const a=await storyModel.storyAdd(photosName,sessionUserName);
+    const a=await storyModel.storyAdd(photosName,sessionUserName,text);
     res.json({ message: "Story eklendi" });
 }
 
