@@ -431,12 +431,10 @@ class UserModel {
     }
 
 
-    static async registerAddNewUser(email, userName, profileName, password, securityAnswer) {
+    static async registerAddNewUser(email, userName, profileName, password) {
         try {
 
             const hashedPassword = await bcrypt.hash(password, 10);
-            // Buyuk/kucuk harf ve bosluk farki eslesmeyi bozmasin.
-            const securityAnswerHash = await bcrypt.hash(securityAnswer.trim().toLowerCase(), 10);
 
             const a = await User.create({
                 "username": userName,
@@ -445,7 +443,7 @@ class UserModel {
                 "description": "",
                 "profileName": profileName,
                 "isPrivate": false,
-                "securityAnswerHash": securityAnswerHash
+                "email": email.trim().toLowerCase()
 
             });
 
@@ -493,16 +491,34 @@ class UserModel {
         return { ok: true };
     }
 
-    // Sifre sifirlama: guvenlik sorusu cevabi eslesirse yeni sifre kaydedilir.
-    static async resetPassword(userName, securityAnswer, newPassword) {
+    // Sifre sifirlama - adim 1: kullanicinin e-postasina 6 haneli kod gonderilir.
+    // Hesabin var olup olmadigini disariya sizdirmamak icin cagiran taraf
+    // (controller) her zaman ayni genel mesaji dondurur.
+    static async requestPasswordReset(userName) {
+        const user = await User.findOne({ username: userName });
+        if (!user || !user.email) return null;
+
+        const code = String(Math.floor(100000 + Math.random() * 900000));
+        user.resetCodeHash = await bcrypt.hash(code, 10);
+        user.resetCodeExpires = new Date(Date.now() + 15 * 60 * 1000);
+        await user.save();
+
+        return { email: user.email, code };
+    }
+
+    // Sifre sifirlama - adim 2: kod dogruysa ve suresi gecmediyse sifre guncellenir.
+    static async resetPassword(userName, code, newPassword) {
         try {
             const user = await User.findOne({ username: userName });
-            if (!user || !user.securityAnswerHash) return false;
+            if (!user || !user.resetCodeHash || !user.resetCodeExpires) return false;
+            if (user.resetCodeExpires.getTime() < Date.now()) return false;
 
-            const matches = await bcrypt.compare(securityAnswer.trim().toLowerCase(), user.securityAnswerHash);
+            const matches = await bcrypt.compare(code, user.resetCodeHash);
             if (!matches) return false;
 
             user.password = await bcrypt.hash(newPassword, 10);
+            user.resetCodeHash = undefined;
+            user.resetCodeExpires = undefined;
             await user.save();
             return true;
         } catch (error) {

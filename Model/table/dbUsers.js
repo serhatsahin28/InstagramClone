@@ -31,10 +31,16 @@ const user = new Schema({
         type: Boolean,
         require: true
     },
-    // Sifre sifirlama icin; e-posta gonderimi olmadigindan guvenlik sorusu
-    // cevabinin hash'i kullaniliyor. Eski hesaplarda bulunmayabilir.
-    securityAnswerHash: {
+    // Sifre sifirlama kodunun gonderilecegi adres. Eski hesaplarda bulunmayabilir.
+    email: {
         type: String
+    },
+    // Sifre sifirlama: 6 haneli kodun hash'i ve son gecerlilik zamani.
+    resetCodeHash: {
+        type: String
+    },
+    resetCodeExpires: {
+        type: Date
     }
 
 })

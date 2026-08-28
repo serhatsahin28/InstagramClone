@@ -22,15 +22,21 @@ router.post("/logout", (req, res) => {
 });
 
 router.post("/register", (req, res) => {
-    const { email, userName, profileName, password, securityAnswer } = req.body;
+    const { email, userName, profileName, password } = req.body;
     const userControllerInstance = new UserController();
-    userControllerInstance.registerUserAdd(req, res, email, userName, profileName, password, securityAnswer);
+    userControllerInstance.registerUserAdd(req, res, email, userName, profileName, password);
+});
+
+router.post("/forgot-password", (req, res) => {
+    const { userName } = req.body;
+    const userControllerInstance = new UserController();
+    userControllerInstance.requestPasswordReset(req, res, userName);
 });
 
 router.post("/reset-password", (req, res) => {
-    const { userName, securityAnswer, newPassword } = req.body;
+    const { userName, code, newPassword } = req.body;
     const userControllerInstance = new UserController();
-    userControllerInstance.resetPassword(req, res, userName, securityAnswer, newPassword);
+    userControllerInstance.resetPassword(req, res, userName, code, newPassword);
 });
 
 module.exports = router;

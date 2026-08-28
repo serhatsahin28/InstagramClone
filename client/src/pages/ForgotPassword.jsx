@@ -1,23 +1,42 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { api, API_BASE } from "../api/client";
 import "./Login.css";
 
+// 2 adimli akis: (1) kullanici adiyla e-postaya kod isteme, (2) kod + yeni
+// sifreyle sifirlama. E-posta gonderimi gercekten yapiliyor (bkz. Model/mailer.js);
+// SMTP ayarlanmamissa sunucu konsoluna yazilir (yerel gelistirme icin).
 export default function ForgotPassword() {
+    const [step, setStep] = useState(1);
     const [userName, setUserName] = useState("");
-    const [securityAnswer, setSecurityAnswer] = useState("");
+    const [code, setCode] = useState("");
     const [newPassword, setNewPassword] = useState("");
+    const [info, setInfo] = useState("");
     const [error, setError] = useState("");
     const [success, setSuccess] = useState(false);
     const [submitting, setSubmitting] = useState(false);
-    const navigate = useNavigate();
 
-    async function handleSubmit(e) {
+    async function handleRequestCode(e) {
         e.preventDefault();
         setError("");
         setSubmitting(true);
         try {
-            await api.post("/auth/reset-password", { userName, securityAnswer, newPassword });
+            const res = await api.post("/auth/forgot-password", { userName });
+            setInfo(res.message);
+            setStep(2);
+        } catch (err) {
+            setError(err.data?.error || "İstek gönderilemedi");
+        } finally {
+            setSubmitting(false);
+        }
+    }
+
+    async function handleResetPassword(e) {
+        e.preventDefault();
+        setError("");
+        setSubmitting(true);
+        try {
+            await api.post("/auth/reset-password", { userName, code, newPassword });
             setSuccess(true);
         } catch (err) {
             setError(err.data?.error || "Şifre sıfırlanamadı");
@@ -38,28 +57,36 @@ export default function ForgotPassword() {
                     <img className="login-title" src={`${API_BASE}/Instagram_title.png`} alt="Instagram" />
 
                     {success ? (
-                        <>
-                            <p style={{ textAlign: "center", margin: "1rem 0" }}>
-                                Şifren güncellendi. Şimdi giriş yapabilirsin.
+                        <p style={{ textAlign: "center", margin: "1rem 0" }}>
+                            Şifren güncellendi. Şimdi giriş yapabilirsin.
+                        </p>
+                    ) : step === 1 ? (
+                        <form className="login-form" onSubmit={handleRequestCode}>
+                            <p style={{ textAlign: "center", color: "#8e8e8e", fontSize: "0.85rem", margin: 0 }}>
+                                Kullanıcı adını gir, kayıtlı e-postana bir kod gönderelim.
                             </p>
-                            <Link to="/login" className="login-forgot-link">Girişe dön</Link>
-                        </>
-                    ) : (
-                        <form className="login-form" onSubmit={handleSubmit}>
                             <input
                                 type="text"
                                 placeholder="Kullanıcı adı"
                                 value={userName}
                                 onChange={(e) => setUserName(e.target.value)}
                             />
-                            <label className="register-security-label" style={{ color: "#fff" }}>
-                                Güvenlik sorusu: Annenizin kızlık soyadı nedir?
-                            </label>
+                            {error && <p className="login-error">{error}</p>}
+                            <button type="submit" disabled={submitting}>
+                                {submitting ? "Gönderiliyor..." : "Kod gönder"}
+                            </button>
+                        </form>
+                    ) : (
+                        <form className="login-form" onSubmit={handleResetPassword}>
+                            <p style={{ textAlign: "center", color: "#8e8e8e", fontSize: "0.85rem", margin: 0 }}>
+                                {info}
+                            </p>
                             <input
                                 type="text"
-                                placeholder="Cevabın"
-                                value={securityAnswer}
-                                onChange={(e) => setSecurityAnswer(e.target.value)}
+                                inputMode="numeric"
+                                placeholder="6 haneli kod"
+                                value={code}
+                                onChange={(e) => setCode(e.target.value)}
                             />
                             <input
                                 type="password"

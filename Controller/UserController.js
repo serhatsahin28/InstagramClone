@@ -1,6 +1,7 @@
 const UserModel = require('../Model/userModel');
 const postUser = require('../Model/postUser');
 const savedPost = require('../Model/table/savedPost');
+const { sendResetCodeEmail } = require('../Model/mailer');
 
 class UserController {
     // ...constructor ve diğer metodlar...
@@ -118,15 +119,15 @@ class UserController {
     }
 
 
-    async registerUserAdd(req, res, email, userName, profileName, password, securityAnswer) {
+    async registerUserAdd(req, res, email, userName, profileName, password) {
 
         // Onceden "!= \"\"" ile kontrol ediliyordu; alan hic gonderilmediginde
         // (undefined) bu kontrol yanlislikla gecerdi ve kullanilamaz "hayalet"
         // hesaplar olusuyordu. Artik gercek bir dolu-string kontrolu yapiliyor.
         const isFilled = (v) => typeof v === "string" && v.trim() !== "";
-        if ([userName, profileName, email, password, securityAnswer].every(isFilled)) {
+        if ([userName, profileName, email, password].every(isFilled)) {
             try {
-                await UserModel.registerAddNewUser(email, userName, profileName, password, securityAnswer);
+                await UserModel.registerAddNewUser(email, userName, profileName, password);
                 res.json({ message: "Kayıt başarılı" });
             } catch (err) {
                 res.status(500).json({ error: "Kayıt sırasında hata oluştu" });
@@ -157,16 +158,38 @@ class UserController {
         }
     }
 
-    // Guvenlik sorusu cevabi eslesirse yeni sifre kaydedilir.
-    async resetPassword(req, res, userName, securityAnswer, newPassword) {
+    // Adim 1: kullanicinin e-postasina 6 haneli kod gonderilir. Hesabin var
+    // olup olmadigini sizdirmamak icin her zaman ayni genel mesaj donulur.
+    async requestPasswordReset(req, res, userName) {
+        if (typeof userName !== "string" || userName.trim() === "") {
+            return res.status(400).json({ error: "Kullanıcı adını girmelisin" });
+        }
+
+        try {
+            const result = await UserModel.requestPasswordReset(userName.trim());
+            if (result) {
+                await sendResetCodeEmail(result.email, result.code).catch((err) => {
+                    console.log("requestPasswordReset mail gonderim hatasi: " + err);
+                });
+            }
+            // Hesap yoksa veya e-postasi kayitli degilse de ayni mesaj donulur.
+            res.json({ message: "Hesabınla ilişkili bir e-posta varsa, sıfırlama kodu gönderildi." });
+        } catch (err) {
+            console.log("UserController requestPasswordReset: " + err);
+            res.status(500).json({ error: "İstek gönderilemedi" });
+        }
+    }
+
+    // Adim 2: kod dogruysa (ve suresi gecmediyse) yeni sifre kaydedilir.
+    async resetPassword(req, res, userName, code, newPassword) {
         const isFilled = (v) => typeof v === "string" && v.trim() !== "";
-        if (![userName, securityAnswer, newPassword].every(isFilled)) {
+        if (![userName, code, newPassword].every(isFilled)) {
             return res.status(400).json({ error: "Tüm alanlar zorunludur" });
         }
 
         try {
-            const ok = await UserModel.resetPassword(userName, securityAnswer, newPassword);
-            if (!ok) return res.status(400).json({ error: "Kullanıcı adı veya güvenlik sorusu cevabı hatalı" });
+            const ok = await UserModel.resetPassword(userName, code.trim(), newPassword);
+            if (!ok) return res.status(400).json({ error: "Kod hatalı veya süresi dolmuş" });
             res.json({ message: "Şifren güncellendi" });
         } catch (err) {
             res.status(500).json({ error: "Şifre sıfırlanamadı" });
