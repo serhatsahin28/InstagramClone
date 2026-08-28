@@ -18,6 +18,23 @@ function resolveApiBase() {
 
 export const API_BASE = resolveApiBase();
 
+// Oturum cerezi siteler arasi (Vercel <-> Render) gonderildigi icin gizli
+// sekme / sıkı gizlilik ayarlarinda ucuncu taraf cerez olarak engelleniyordu.
+// Bunu asmak icin kimlik dogrulama gerektiren istekler ayni origin uzerinden
+// (vercel.json'daki /api rewrite'i ile) gonderiliyor; boylece cerez birinci
+// taraf sayiliyor. Gorsel/ikon adresleri (API_BASE) bundan etkilenmez, cunku
+// onlar cerez gerektirmiyor ve dogrudan Render'dan servis edilmeye devam eder.
+function resolveApiRoot() {
+    if (import.meta.env.VITE_API_BASE) return import.meta.env.VITE_API_BASE;
+
+    const host = typeof window !== "undefined" ? window.location.hostname : "";
+    const isLocal = host === "localhost" || host === "127.0.0.1";
+
+    return isLocal ? LOCAL_API : "";
+}
+
+const API_ROOT = resolveApiRoot();
+
 // Cloudinary adreslerine donusum parametreleri eklenir: modern format (webp/avif),
 // otomatik kalite ve ekranda kullanilan genislik. Orijinal dosyayi indirmek yerine
 // kucultulmus surum gelir. Render diskindeki eski gorseller donusturulemez.
@@ -42,7 +59,7 @@ export const profileImage = (name) => mediaUrl(name, "users_profile", 320);
 export const thumbImage = (name) => mediaUrl(name, "posts", 400);
 
 async function request(path, options = {}) {
-    const res = await fetch(`${API_BASE}/api${path}`, {
+    const res = await fetch(`${API_ROOT}/api${path}`, {
         credentials: "include",
         headers: options.body && !(options.body instanceof FormData)
             ? { "Content-Type": "application/json" }
