@@ -23,7 +23,7 @@ class UserController {
             UserModel.findUserByUsername(username),
             UserModel.findAllStories(userName),
             UserModel.findSessionStories(userName),
-            UserModel.findAllPosts(),
+            UserModel.findAllPosts(userName),
             UserModel.findAllFollowersTrue(userName),
             UserModel.findFollowSend(userName),
             postUser.userLikePosts(userName),

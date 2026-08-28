@@ -51,12 +51,22 @@ class UserModel {
         }
     }
 
-    static async findAllPosts() {
+    // Ana akis sadece takip edilen kullanicilarin (ve kendi) gonderilerini gosterir.
+    static async findAllPosts(sessionUserName) {
         try {
-
-           
-            const posts = await Post.find({
+            const followedDocs = await follow.find({
+                "userName": sessionUserName,
+                "followed.situation": true
             });
+
+            const usernames = new Set([sessionUserName]);
+            for (const doc of followedDocs) {
+                for (const f of doc.followed) {
+                    if (f.situation) usernames.add(f.username);
+                }
+            }
+
+            const posts = await Post.find({ username: { $in: Array.from(usernames) } }).sort({ _id: -1 });
             return posts;
         } catch (err) {
             throw err;
@@ -225,11 +235,16 @@ class UserModel {
                 "userName": userName,
                 "followed.situation": true
             });
-            const user = followed.map(item => item.followed[0].username);
 
+            const usernames = [];
+            for (const doc of followed) {
+                for (const f of doc.followed) {
+                    if (f.situation) usernames.push(f.username);
+                }
+            }
 
             const stories = await story.find({
-                "username": user
+                "username": { $in: usernames }
             });
             return stories;
 
