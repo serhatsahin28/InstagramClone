@@ -70,7 +70,14 @@ app.use("/api/messages", require("./routes/messages"));
 app.use("/api/notifications", require("./routes/notifications"));
 app.use("/api/follow", require("./routes/follow"));
 
-app.get("/health", (req, res) => res.json({ ok: true }));
+const { useCloudinary } = require("./middleware/upload");
+
+// Gorsellerin nereye yazildigini disaridan gorebilmek icin; gizli bilgi icermez.
+app.get("/health", (req, res) => res.json({
+    ok: true,
+    storage: useCloudinary ? "cloudinary" : "disk",
+    cloudinaryFolder: useCloudinary ? (process.env.CLOUDINARY_FOLDER || "instagram-clone") : null
+}));
 
 // Burasi yalnizca API sunucusu; arayuz ayri bir adreste yayinlanir.
 app.get("/", (req, res) => {
