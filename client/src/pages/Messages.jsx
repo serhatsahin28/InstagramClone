@@ -137,22 +137,31 @@ export default function Messages() {
 
                     {threads?.map((item) => (
                         <div key={item._id} className="messages-inbox-entry">
-                            <Link
-                                to={`/direct/${item.otherUserId}`}
+                            <div
                                 className={id === item.otherUserId ? "messages-inbox-item active" : "messages-inbox-item"}
+                                onClick={() => navigate(`/direct/${item.otherUserId}`)}
                             >
-                                <img loading="lazy" decoding="async"
+                                <Link
+                                    to={`/${item.otherUsername}`}
+                                    onClick={(e) => e.stopPropagation()}
+                                >
+                                    <img loading="lazy" decoding="async"
                 src={profileImage(item.otherUserImage)} alt="" />
+                                </Link>
                                 <div className="messages-inbox-item-text">
-                                    <span className={item.unreadCount > 0 ? "username unread" : "username"}>
+                                    <Link
+                                        to={`/${item.otherUsername}`}
+                                        className={item.unreadCount > 0 ? "username unread" : "username"}
+                                        onClick={(e) => e.stopPropagation()}
+                                    >
                                         {item.otherUsername}
-                                    </span>
+                                    </Link>
                                     <span className={item.unreadCount > 0 ? "last-message unread" : "last-message"}>
                                         {item.lastFromMe ? "Sen: " : ""}{item.lastMessage}
                                     </span>
                                 </div>
                                 {item.unreadCount > 0 && <span className="messages-inbox-unread-dot" />}
-                            </Link>
+                            </div>
 
                             {tab === "requests" && (
                                 <div className="messages-request-actions">
@@ -179,9 +188,11 @@ export default function Messages() {
                             >
                                 ‹
                             </button>
-                            <img className="messages-thread-avatar" loading="lazy" decoding="async"
+                            <Link to={`/${data.otherUser.otherUsername}`} className="messages-thread-identity">
+                                <img className="messages-thread-avatar" loading="lazy" decoding="async"
                 src={profileImage(data.otherUser.otherUserImage)} alt="" />
-                            <span>{data.otherUser.otherUsername}</span>
+                                <span>{data.otherUser.otherUsername}</span>
+                            </Link>
                             <div className="messages-thread-header-icons">
                                 <img loading="lazy" decoding="async"
                 src={`${API_BASE}/Icons/phoneCall.png`} alt="" />

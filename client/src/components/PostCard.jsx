@@ -12,7 +12,7 @@ import Caption from "./Caption";
 import { timeAgo } from "../utils/timeAgo";
 import "./PostCard.css";
 
-export default function PostCard({ post, likedByMe, savedByMe, eager = false, onDeleted, onEdited }) {
+export default function PostCard({ post, likedByMe, savedByMe, eager = false, onDeleted, onEdited, onHidden }) {
     const { liked, toggleLike, saved, toggleSave } = usePostActions(post, likedByMe, savedByMe);
     const [showComments, setShowComments] = useState(false);
     const [showLikes, setShowLikes] = useState(false);
@@ -37,6 +37,7 @@ export default function PostCard({ post, likedByMe, savedByMe, eager = false, on
                     className="post-card-dots"
                     onDeleted={() => { setDeleted(true); onDeleted?.(); }}
                     onEdited={(next) => { setDescription(next); onEdited?.(next); }}
+                    onHidden={() => { setDeleted(true); onHidden?.(); }}
                 />
             </header>
 
@@ -83,6 +84,7 @@ export default function PostCard({ post, likedByMe, savedByMe, eager = false, on
                     onClose={() => setShowComments(false)}
                     onDeleted={() => { setDeleted(true); onDeleted?.(); }}
                     onEdited={(next) => { setDescription(next); onEdited?.(next); }}
+                    onHidden={() => { setDeleted(true); onHidden?.(); }}
                     liked={liked}
                     onToggleLike={toggleLike}
                     saved={saved}

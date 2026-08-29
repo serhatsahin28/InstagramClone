@@ -38,6 +38,14 @@ router.delete("/me", (req, res) => {
     a.deleteAccount(req, res, userName, req.body.password);
 });
 
+router.post("/:username/block", (req, res) => {
+    new Profile().blockUser(req, res, req.session.user.username, req.params.username);
+});
+
+router.delete("/:username/block", (req, res) => {
+    new Profile().unblockUser(req, res, req.session.user.username, req.params.username);
+});
+
 router.get("/:username/followers", (req, res) => {
     new Profile().followList(req, res, req.params.username, "followers");
 });

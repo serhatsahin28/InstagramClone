@@ -60,6 +60,11 @@ export default function Explore() {
                         setOpenPost(null);
                         setPosts((prev) => prev?.filter((p) => p._id !== id) ?? prev);
                     }}
+                    onHidden={() => {
+                        const id = openPost._id;
+                        setOpenPost(null);
+                        setPosts((prev) => prev?.filter((p) => p._id !== id) ?? prev);
+                    }}
                     onEdited={(description) => {
                         const id = openPost._id;
                         setPosts((prev) => prev?.map((p) => (p._id === id ? { ...p, description } : p)) ?? prev);

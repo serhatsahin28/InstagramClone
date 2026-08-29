@@ -81,7 +81,8 @@
 }
 
 .profile-edit-btn,
-.profile-follow-btn {
+.profile-follow-btn,
+.profile-message-btn {
     padding: 0.4rem 1rem;
     border-radius: 6px;
     border: none;
@@ -99,6 +100,73 @@
 
 .profile-follow-btn.following {
     background: var(--border-color);
+}
+
+.profile-block-btn {
+    color: #ed4956;
+}
+
+/* Masaustunde Ayarlar/Cikis Yap sol menudeki "Daha fazla" uzerinden
+   erisilebiliyor; mobilde alt navbarda o secenek olmadigi icin buraya
+   (sadece kendi profilinde, sadece mobilde) kucuk bir menu eklenir. */
+.profile-mobile-menu {
+    display: none;
+    position: relative;
+}
+
+.profile-mobile-menu-btn {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 0.4rem 0.6rem;
+}
+
+.profile-mobile-menu-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 9;
+}
+
+.profile-mobile-menu-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 10;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+    white-space: nowrap;
+}
+
+.profile-mobile-menu-dropdown a,
+.profile-mobile-menu-dropdown button {
+    display: block;
+    width: 100%;
+    background: none;
+    border: none;
+    text-decoration: none;
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.7rem 1.5rem;
+    cursor: pointer;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.profile-mobile-menu-dropdown a:last-child,
+.profile-mobile-menu-dropdown button:last-child {
+    border-bottom: none;
+    color: #ed4956;
+}
+
+@media (max-width: 900px) {
+    .profile-mobile-menu {
+        display: block;
+    }
 }
 
 .profile-stats {

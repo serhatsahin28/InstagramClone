@@ -4,7 +4,7 @@ import "./PostModal.css";
 // Izgaradan (profil, kaydedilenler, beğenilenler, arama, paylaşılan gönderi)
 // açılan gönderi; ana akışta göründüğü gibi tek gönderi kartı gösterilir,
 // yorumlar otomatik açılmaz.
-export default function PostModal({ post, onClose, onDeleted, onEdited, likedByMe, savedByMe }) {
+export default function PostModal({ post, onClose, onDeleted, onEdited, onHidden, likedByMe, savedByMe }) {
     if (!post) return null;
 
     return (
@@ -18,6 +18,7 @@ export default function PostModal({ post, onClose, onDeleted, onEdited, likedByM
                     eager
                     onDeleted={() => { onDeleted?.(); onClose(); }}
                     onEdited={onEdited}
+                    onHidden={() => { onHidden?.(); onClose(); }}
                 />
             </div>
         </div>

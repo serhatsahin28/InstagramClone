@@ -81,6 +81,13 @@
     text-decoration: none;
     color: var(--text-primary);
     border-radius: 8px;
+    cursor: pointer;
+}
+
+.messages-inbox-item-text .username {
+    text-decoration: none;
+    color: inherit;
+    width: fit-content;
 }
 
 .messages-inbox-item:hover,
@@ -189,8 +196,14 @@
     font-weight: 600;
 }
 
-.messages-thread-header span {
+.messages-thread-identity {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
     flex: 1;
+    min-width: 0;
+    text-decoration: none;
+    color: var(--text-primary);
 }
 
 .messages-thread-header-icons {

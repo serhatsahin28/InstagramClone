@@ -8,6 +8,8 @@ const storyLike = require("../Model/table/storyLike");
 const storyView = require("../Model/table/storyView");
 const dbMessages = require("../Model/table/dbMessages");
 const savedPost = require("../Model/table/savedPost");
+const hiddenPost = require("../Model/table/hiddenPost");
+const blockModel = require("../Model/blockModel");
 const bcrypt = require("bcryptjs");
 
 
@@ -57,13 +59,15 @@ class UserModel {
         }
     }
 
-    // Ana akis sadece takip edilen kullanicilarin (ve kendi) gonderilerini gosterir.
+    // Ana akis sadece takip edilen kullanicilarin (ve kendi) gonderilerini gosterir;
+    // "ilgilenmiyorum" denilen ve engellenen kullanicilarin gonderileri haric tutulur.
     static async findAllPosts(sessionUserName) {
         try {
-            const followedDocs = await follow.find({
-                "userName": sessionUserName,
-                "followed.situation": true
-            });
+            const [followedDocs, hidden, blockedUsernames] = await Promise.all([
+                follow.find({ "userName": sessionUserName, "followed.situation": true }),
+                hiddenPost.find({ username: sessionUserName }, "post_id"),
+                blockModel.blockedEitherWayUsernames(sessionUserName)
+            ]);
 
             const usernames = new Set([sessionUserName]);
             for (const doc of followedDocs) {
@@ -71,9 +75,12 @@ class UserModel {
                     if (f.situation) usernames.add(f.username);
                 }
             }
+            for (const blocked of blockedUsernames) usernames.delete(blocked);
+
+            const hiddenIds = new Set(hidden.map((h) => h.post_id));
 
             const posts = await Post.find({ username: { $in: Array.from(usernames) } }).sort({ _id: -1 });
-            return posts;
+            return posts.filter((p) => !hiddenIds.has(String(p._id)));
         } catch (err) {
             throw err;
         }

@@ -1,10 +1,13 @@
 
 const express = require("express");
 const app = express();
+const mongoose = require("mongoose");
 const postUser = require("../Model/postUser");
 const { storedFileName } = require("../middleware/upload");
 const likePost = require("../Model/table/likePost");
 const Post = require("../Model/table/postUser");
+const hiddenPost = require("../Model/table/hiddenPost");
+const blockModel = require("../Model/blockModel");
 
 
 class postController {
@@ -139,14 +142,46 @@ class postController {
         }
     }
 
-    // Keşfet: takip durumundan bağımsız, rastgele karışık gönderiler.
-    async explore(req, res) {
+    // Keşfet: takip durumundan bağımsız, rastgele karışık gönderiler;
+    // gizlenen ve engellenen kullanıcıların gönderileri hariç tutulur.
+    async explore(req, res, sessionUserName) {
         try {
-            const posts = await Post.aggregate([{ $sample: { size: 60 } }]);
+            const [hidden, blockedUsernames] = await Promise.all([
+                hiddenPost.find({ username: sessionUserName }, "post_id"),
+                blockModel.blockedEitherWayUsernames(sessionUserName)
+            ]);
+            const hiddenIds = hidden
+                .filter((h) => mongoose.isValidObjectId(h.post_id))
+                .map((h) => new mongoose.Types.ObjectId(h.post_id));
+
+            const pipeline = [];
+            const and = [];
+            if (hiddenIds.length) and.push({ _id: { $nin: hiddenIds } });
+            if (blockedUsernames.length) and.push({ username: { $nin: blockedUsernames } });
+            if (and.length) pipeline.push({ $match: { $and: and } });
+            pipeline.push({ $sample: { size: 60 } });
+
+            const posts = await Post.aggregate(pipeline);
             res.json({ posts });
         } catch (error) {
             console.log("postController explore: " + error);
             res.status(500).json({ error: "Keşfet yüklenemedi" });
+        }
+    }
+
+    // Anasayfa akışında "İlgilenmiyorum": gönderi sadece bu kullanıcının
+    // akışından gizlenir, başkaları ve gönderi sahibi hâlâ görür.
+    async hidePost(req, res, sessionUserName, postId) {
+        try {
+            await hiddenPost.updateOne(
+                { username: sessionUserName, post_id: postId },
+                { $setOnInsert: { username: sessionUserName, post_id: postId } },
+                { upsert: true }
+            );
+            res.json({ message: "Gönderi gizlendi" });
+        } catch (error) {
+            console.log("postController hidePost: " + error);
+            res.status(500).json({ error: "Gönderi gizlenemedi" });
         }
     }
 

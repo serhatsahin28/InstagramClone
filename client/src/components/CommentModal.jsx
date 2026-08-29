@@ -12,7 +12,7 @@ import Caption from "./Caption";
 import { timeAgo } from "../utils/timeAgo";
 import "./CommentModal.css";
 
-export default function CommentModal({ post, onClose, onDeleted, onEdited, liked, onToggleLike, saved, onToggleSave }) {
+export default function CommentModal({ post, onClose, onDeleted, onEdited, onHidden, liked, onToggleLike, saved, onToggleSave }) {
     const { feed } = useAuth();
     const socket = useSocket();
     const [comments, setComments] = useState([]);
@@ -73,7 +73,7 @@ export default function CommentModal({ post, onClose, onDeleted, onEdited, liked
                 <img className="comment-item-avatar" loading="lazy" decoding="async"
                     src={profileImage(c.userPicture)} alt="" />
                 <span className="comment-item-text">
-                    <Link to={`/${c.username}`} className="comment-item-username"><strong>{c.username}</strong></Link> {c.userComment}
+                    <Link to={`/${c.username}`} className="comment-item-username"><strong>{c.username}</strong></Link> <Caption text={c.userComment} />
                     <button className="comment-item-reply-btn" onClick={() => setReplyTo({ id: c.id, username: c.username })}>
                         Yanıtla
                     </button>
@@ -131,6 +131,10 @@ export default function CommentModal({ post, onClose, onDeleted, onEdited, liked
                             onEdited={(next) => {
                                 setDescription(next);
                                 onEdited?.(next);
+                            }}
+                            onHidden={() => {
+                                onHidden?.();
+                                onClose();
                             }}
                         />
                     </header>

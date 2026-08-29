@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { API_BASE, profileImage } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import { useSocket } from "../context/SocketContext";
+import Caption from "./Caption";
 import "./ReelCommentsDrawer.css";
 
 // CommentModal ile ayni socket olaylarini (commentPost/commentMessageAdd/
@@ -62,7 +63,7 @@ export default function ReelCommentsDrawer({ reel, onClose }) {
                     {allComments.length ? allComments.map((c) => (
                         <div key={c.id} className="reel-comment-item">
                             <img loading="lazy" decoding="async" src={profileImage(c.userPicture)} alt="" />
-                            <span className="reel-comment-text"><Link to={`/${c.username}`} className="reel-comment-username"><strong>{c.username}</strong></Link> {c.userComment}</span>
+                            <span className="reel-comment-text"><Link to={`/${c.username}`} className="reel-comment-username"><strong>{c.username}</strong></Link> <Caption text={c.userComment} /></span>
                             <div className="reel-comment-side">
                                 <button
                                     className="reel-comment-like"

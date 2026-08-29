@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { api, API_BASE, thumbImage, profileImage } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import { useSocket } from "../context/SocketContext";
@@ -12,8 +12,9 @@ import "./Profile.css";
 
 export default function Profile() {
     const { username } = useParams();
-    const { feed: sessionFeed, refresh } = useAuth();
+    const { feed: sessionFeed, refresh, logout } = useAuth();
     const socket = useSocket();
+    const navigate = useNavigate();
     const [data, setData] = useState(null);
     // "none" | "pending" (gizli hesaba gönderilmiş istek) | "following"
     const [relation, setRelation] = useState("none");
@@ -22,6 +23,12 @@ export default function Profile() {
     const [openPost, setOpenPost] = useState(null);
     const [highlights, setHighlights] = useState([]);
     const [openHighlight, setOpenHighlight] = useState(null);
+    const [showMobileMenu, setShowMobileMenu] = useState(false);
+
+    async function handleLogout() {
+        await logout();
+        navigate("/login");
+    }
 
     const loadHighlights = useCallback(() => {
         api.get(`/highlights/${username}`).then((res) => setHighlights(res.highlights || [])).catch(() => setHighlights([]));
@@ -92,10 +99,55 @@ export default function Profile() {
         setRelation("none");
     }
 
+    async function handleBlock() {
+        if (!data) return;
+        const target = data.result[0];
+        if (!window.confirm(`${target.username} adlı kullanıcıyı engellemek istediğine emin misin?`)) return;
+        await api.post(`/users/${target.username}/block`);
+        await load();
+    }
+
+    async function handleUnblock() {
+        if (!data) return;
+        const target = data.result[0];
+        await api.delete(`/users/${target.username}/block`);
+        await load();
+    }
+
     // Sadece ilk yüklemede boş ekran; sonraki tazelemelerde içerik korunur.
     if (!data) return null;
 
     const target = data.result[0];
+
+    if (data.view === "blockedProfile") {
+        return (
+            <div className="home-layout">
+                <Sidebar />
+                <main className="profile-page">
+                    <header className="profile-header">
+                        <img className="profile-avatar" loading="lazy" decoding="async"
+                src={profileImage(target.profilePicture)} alt="" />
+                        <div className="profile-info">
+                            <div className="profile-title-row">
+                                <h2>{target.username}</h2>
+                                {data.iBlocked && (
+                                    <button className="profile-follow-btn following" onClick={handleUnblock}>
+                                        Engeli Kaldır
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+                    </header>
+                    <p className="profile-private-note">
+                        {data.iBlocked
+                            ? "Bu kullanıcıyı engelledin. Gönderilerini ve profilini göremezsin."
+                            : "Bu profil şu anda görüntülenemiyor."}
+                    </p>
+                </main>
+            </div>
+        );
+    }
+
     const isOwn = data.view === "profile";
     const isPrivateLocked = data.view === "privateOtherProfile";
 
@@ -117,6 +169,26 @@ export default function Profile() {
                                     Profili Düzenle
                                 </button>
                             )}
+                            {isOwn && (
+                                <div className="profile-mobile-menu">
+                                    <button
+                                        className="profile-mobile-menu-btn"
+                                        onClick={() => setShowMobileMenu((v) => !v)}
+                                        aria-label="Daha fazla"
+                                    >
+                                        ☰
+                                    </button>
+                                    {showMobileMenu && (
+                                        <>
+                                            <div className="profile-mobile-menu-backdrop" onClick={() => setShowMobileMenu(false)} />
+                                            <div className="profile-mobile-menu-dropdown">
+                                                <Link to="/accounts/edit" onClick={() => setShowMobileMenu(false)}>Ayarlar</Link>
+                                                <button onClick={handleLogout}>Çıkış Yap</button>
+                                            </div>
+                                        </>
+                                    )}
+                                </div>
+                            )}
 
                             {!isOwn && relation === "following" && (
                                 <button className="profile-follow-btn following" onClick={handleUnfollow}>Takiptesin</button>
@@ -127,6 +199,19 @@ export default function Profile() {
                             {!isOwn && relation === "none" && (
                                 <button className="profile-follow-btn" onClick={handleFollow}>
                                     {target.isPrivate ? "Takip İsteği Gönder" : "Takip Et"}
+                                </button>
+                            )}
+                            {!isOwn && (
+                                <button
+                                    className="profile-message-btn"
+                                    onClick={() => navigate(`/direct/${target._id}`)}
+                                >
+                                    Mesaj Gönder
+                                </button>
+                            )}
+                            {!isOwn && (
+                                <button className="profile-block-btn" onClick={handleBlock}>
+                                    Engelle
                                 </button>
                             )}
                         </div>

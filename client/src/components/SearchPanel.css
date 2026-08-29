@@ -33,3 +33,22 @@
     line-height: 1;
     cursor: pointer;
 }
+
+/* Masaustunde arama bosken sadece ipucu metni gorunur; Kesfet izgarasi
+   ayrica sol menudeki "Kesfet" sayfasindan erisilebildigi icin burada
+   gizli kalir. Mobilde ise o sayfaya alt navbardan ulasilamadigi icin
+   izgara burada, arama cubugunun hemen altinda gosterilir. */
+.search-panel-explore {
+    display: none;
+}
+
+@media (max-width: 900px) {
+    .search-panel-hint-desktop {
+        display: none;
+    }
+
+    .search-panel-explore {
+        display: block;
+        padding: 0 0.5rem;
+    }
+}

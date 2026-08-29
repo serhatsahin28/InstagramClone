@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { api, profileImage } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import { useSocket } from "../context/SocketContext";
@@ -93,12 +93,22 @@ export default function MessageDock() {
 
     return (
         <div className={open ? "message-dock open" : "message-dock"}>
-            <button className="message-dock-bar" onClick={handleOpen}>
+            <div
+                className="message-dock-bar"
+                role="button"
+                tabIndex={0}
+                onClick={handleOpen}
+                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") handleOpen(); }}
+            >
                 {active ? (
-                    <>
+                    <Link
+                        to={`/${active.otherUsername}`}
+                        className="message-dock-active-identity"
+                        onClick={(e) => e.stopPropagation()}
+                    >
                         <img loading="lazy" decoding="async" src={profileImage(active.otherUserImage)} alt="" />
                         <span>{active.otherUsername}</span>
-                    </>
+                    </Link>
                 ) : (
                     <>
                         <span className="message-dock-icon-wrap">
@@ -111,7 +121,7 @@ export default function MessageDock() {
                     </>
                 )}
                 <span className="message-dock-chevron">{open ? "▾" : "▴"}</span>
-            </button>
+            </div>
 
             {open && (
                 <div className="message-dock-body">
@@ -121,16 +131,31 @@ export default function MessageDock() {
                                 <p className="message-dock-hint">Henüz mesajın yok.</p>
                             ) : (
                                 threads.map((t) => (
-                                    <button key={t._id} className="message-dock-thread" onClick={() => setActive(t)}>
-                                        <img loading="lazy" decoding="async" src={profileImage(t.otherUserImage)} alt="" />
+                                    <div
+                                        key={t._id}
+                                        className="message-dock-thread"
+                                        role="button"
+                                        tabIndex={0}
+                                        onClick={() => setActive(t)}
+                                        onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") setActive(t); }}
+                                    >
+                                        <Link to={`/${t.otherUsername}`} onClick={(e) => e.stopPropagation()}>
+                                            <img loading="lazy" decoding="async" src={profileImage(t.otherUserImage)} alt="" />
+                                        </Link>
                                         <div className="message-dock-thread-text">
-                                            <span className="username">{t.otherUsername}</span>
+                                            <Link
+                                                to={`/${t.otherUsername}`}
+                                                className="username"
+                                                onClick={(e) => e.stopPropagation()}
+                                            >
+                                                {t.otherUsername}
+                                            </Link>
                                             <span className="last">{t.lastFromMe ? "Sen: " : ""}{t.lastMessage}</span>
                                         </div>
                                         {t.unreadCount > 0 && (
                                             <span className="message-dock-badge">{t.unreadCount > 99 ? "99+" : t.unreadCount}</span>
                                         )}
-                                    </button>
+                                    </div>
                                 ))
                             )}
                         </div>

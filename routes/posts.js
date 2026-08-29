@@ -8,7 +8,11 @@ const libraryController = require("../Controller/libraryController");
 router.use(requireAuth);
 
 router.get("/explore", (req, res) => {
-    new postController().explore(req, res);
+    new postController().explore(req, res, req.session.user.username);
+});
+
+router.post("/:id/hide", (req, res) => {
+    new postController().hidePost(req, res, req.session.user.username, req.params.id);
 });
 
 router.get("/saved", (req, res) => {

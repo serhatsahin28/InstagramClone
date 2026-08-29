@@ -66,6 +66,16 @@
     border: 2px solid var(--bg-secondary);
 }
 
+.message-dock-active-identity {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex: 1;
+    min-width: 0;
+    text-decoration: none;
+    color: inherit;
+}
+
 .message-dock-bar span:not(.message-dock-chevron):not(.message-dock-icon-wrap) {
     flex: 1;
     text-align: left;
@@ -132,6 +142,9 @@
 .message-dock-thread-text .username {
     font-size: 0.85rem;
     font-weight: 600;
+    text-decoration: none;
+    color: inherit;
+    width: fit-content;
 }
 
 .message-dock-thread-text .last {

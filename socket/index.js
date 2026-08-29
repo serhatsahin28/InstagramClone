@@ -7,6 +7,7 @@ const Profile = require("../Controller/profileController");
 const messageController = require("../Controller/messageController");
 const postController = require("../Controller/postController");
 const noticeController = require("../Controller/noticeController");
+const blockModel = require("../Model/blockModel");
 
 module.exports = function registerSocket(io) {
     const changeStream = followPost.watch();
@@ -82,10 +83,14 @@ module.exports = function registerSocket(io) {
             });
         });
 
-        socket.on("submitForm", (formData) => {
+        socket.on("submitForm", async (formData) => {
             const visitedUsername = formData.username;
             const sessionUserName = formData.sessionUserName;
             const newMessage = formData.message;
+
+            const blocked = await blockModel.isBlockedEitherWay(sessionUserName, visitedUsername);
+            if (blocked) return;
+
             const a = new messageController();
             a.messageSent(visitedUsername, sessionUserName, newMessage, formData.sharedPostId);
 

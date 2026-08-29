@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const UserModel = require("../Model/userModel");
 const UserController = require("./UserController");
+const blockModel = require("../Model/blockModel");
 
 const bodyParser = require("body-parser");
 
@@ -17,10 +18,23 @@ class Profile extends UserController {
   async profile(req, res, username, sessionUserName, sessionProfileName) {
     try {
 
-      // Sorgular birbirinden bagimsiz; sirayla beklemek yerine tek turda
-      // calistirilir (9 gidis-donus yerine 1).
+      const result = await UserModel.findUserByUsername(username);
+      if (!result || result.length === 0) {
+        return res.status(404).json({ error: "Kullanıcı bulunamadı" });
+      }
+
+      // Engellenen/engelleyen bir hesabin profilini normal sekilde gostermeyiz;
+      // gonderi/takip sorgularina hic girmeden erken donulur.
+      if (username !== sessionUserName) {
+        const blocked = await blockModel.isBlockedEitherWay(sessionUserName, username);
+        if (blocked) {
+          const iBlocked = await blockModel.didIBlock(sessionUserName, username);
+          return res.json({ view: "blockedProfile", result, userName: sessionUserName, iBlocked });
+        }
+      }
+
+      // Kalan sorgular birbirinden bagimsiz; tek turda calistirilir.
       const [
-        result,
         posts,
         followedUser,   // oturum sahibi, profiline girilen kullaniciyi takip ediyor mu
         followersUser,  // profiline girilen kullanici, oturum sahibini takip ediyor mu
@@ -30,7 +44,6 @@ class Profile extends UserController {
         noticeFollow,
         followersTrue
       ] = await Promise.all([
-        UserModel.findUserByUsername(username),
         UserModel.findPostByUser(username),
         UserModel.findAllFollowed(username, sessionUserName),
         UserModel.findAllFollowers(username, sessionUserName),
@@ -40,10 +53,6 @@ class Profile extends UserController {
         UserModel.findFollowSend(sessionUserName),
         UserModel.findAllFollowersTrue(sessionUserName)
       ]);
-
-      if (!result || result.length === 0) {
-        return res.status(404).json({ error: "Kullanıcı bulunamadı" });
-      }
 
       const sessionProfilePicture = req.session.user.profilePicture;
       const userProfileName = req.session.user.profileName;
@@ -200,6 +209,27 @@ class Profile extends UserController {
     } catch (err) {
       console.log("followList: " + err);
       res.status(500).json({ error: "Liste alınamadı" });
+    }
+  }
+
+  async blockUser(req, res, sessionUserName, targetUsername) {
+    try {
+      const result = await blockModel.blockUser(sessionUserName, targetUsername);
+      if (!result.ok) return res.status(400).json({ error: result.error });
+      res.json({ message: "Kullanıcı engellendi" });
+    } catch (err) {
+      console.log("blockUser: " + err);
+      res.status(500).json({ error: "Bir hata oluştu" });
+    }
+  }
+
+  async unblockUser(req, res, sessionUserName, targetUsername) {
+    try {
+      await blockModel.unblockUser(sessionUserName, targetUsername);
+      res.json({ message: "Engel kaldırıldı" });
+    } catch (err) {
+      console.log("unblockUser: " + err);
+      res.status(500).json({ error: "Bir hata oluştu" });
     }
   }
 
