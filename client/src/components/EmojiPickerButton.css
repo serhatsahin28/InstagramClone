@@ -4,12 +4,18 @@
 }
 
 .emoji-picker-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
     background: none;
     border: none;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     line-height: 1;
     cursor: pointer;
-    padding: 0.25rem;
+    padding: 0;
 }
 
 .emoji-picker-panel {

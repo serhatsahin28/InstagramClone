@@ -40,6 +40,27 @@ export default function Messages() {
         load();
     }, [load]);
 
+    // Mobilde klavye acildiginda "100dvh" her tarayicida gercek gorunur
+    // yuksekligi kucultmuyor; sabit konumlu sohbet ekrani klavyenin
+    // arkasinda kalip son mesaj/gonder butonu yarim gorunebiliyordu.
+    // visualViewport klavye dahil gercek yuksekligi verir.
+    useEffect(() => {
+        if (!window.visualViewport) return;
+
+        function updateHeight() {
+            document.documentElement.style.setProperty("--dm-vh", `${window.visualViewport.height}px`);
+        }
+
+        updateHeight();
+        window.visualViewport.addEventListener("resize", updateHeight);
+        window.visualViewport.addEventListener("scroll", updateHeight);
+        return () => {
+            window.visualViewport.removeEventListener("resize", updateHeight);
+            window.visualViewport.removeEventListener("scroll", updateHeight);
+            document.documentElement.style.removeProperty("--dm-vh");
+        };
+    }, []);
+
     useEffect(() => {
         if (!socket || !data?.otherUser) return;
         function onIncoming(formData) {

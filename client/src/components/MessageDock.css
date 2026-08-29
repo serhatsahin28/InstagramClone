@@ -215,6 +215,7 @@
 }
 
 .message-dock-form button {
+    flex-shrink: 0;
     background: none;
     border: none;
     color: #0095f6;

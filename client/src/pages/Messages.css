@@ -288,6 +288,7 @@
 
 .messages-input-row input {
     flex: 1;
+    min-width: 0;
     padding: 0.5rem 1rem;
     border-radius: 20px;
     border: 1px solid var(--bg-secondary);
@@ -297,6 +298,7 @@
 }
 
 .messages-input-row button {
+    flex-shrink: 0;
     background: none;
     color: #0095f6;
     border: none;
@@ -310,6 +312,7 @@
         flex-direction: column;
         height: 100vh;
         height: 100dvh;
+        height: var(--dm-vh, 100dvh);
     }
 
     /* Mobilde tek panel: ya sohbet listesi ya da acik sohbet gorunur,
@@ -339,6 +342,7 @@
         background: var(--bg-primary);
         height: 100vh;
         height: 100dvh;
+        height: var(--dm-vh, 100dvh);
     }
 
     .messages-thread-back {
