@@ -1,5 +1,6 @@
 .story-page {
     min-height: 100vh;
+    min-height: 100dvh;
     background: #000;
     display: flex;
     align-items: center;
@@ -10,8 +11,13 @@
     position: relative;
     width: 100%;
     max-width: 420px;
+    /* dvh, mobil tarayicinin adres cubugu acilip kapandiginda gercek
+       gorunur yuksekligi kullanir; aksi halde alt bar (begen/goruntule)
+       tarayici arayuzunun altinda kalip kaydirma gerektiriyordu. */
     height: 100vh;
+    height: 100dvh;
     max-height: 100vh;
+    max-height: 100dvh;
     display: flex;
     flex-direction: column;
     background: #000;
@@ -222,7 +228,9 @@
 
 .story-footer {
     position: absolute;
-    bottom: 1rem;
+    /* iOS'ta alt ev tusu/gesture cubugunun ustune tasar; guvenlik alani
+       yoksa normal 1rem bosluk kalir. */
+    bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
     left: 0;
     right: 0;
     z-index: 2;

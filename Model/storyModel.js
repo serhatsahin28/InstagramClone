@@ -40,13 +40,28 @@ class storyModel {
             }
             users.push(sessionUserName);
 
+            // Once en yeniden en eskiye tum hikayeler cekilir, sonra
+            // kullaniciya gore gruplanir. Duz kronolojik siralama tek basina
+            // yeterli degil: farkli kullanicilarin hikayeleri (ornegin A2,
+            // B1, A1 sirasinda) birbirine karisip A'nin halkasini izlerken
+            // araya B'nin hikayesi giriyordu. Gruplama sayesinde her
+            // kullanicinin kendi hikayeleri (en yeniden en eskiye) bir arada
+            // kalir; kullanicilar arasi sira da en son paylasima gore olur
+            // (Map, ilk goruldugu sirayi korur - bu da her kullanicinin en
+            // yeni hikayesinin geldigi an oldugu icin dogru sirayi verir).
             const stories = await story.find({
                 "username": { $in: users }
-            }).sort({ _id: 1 });
+            }).sort({ _id: -1 });
 
-            // Instagram'daki gibi once kendi hikayelerimiz, sonra digerleri.
-            const own = stories.filter((s) => s.username === sessionUserName);
-            const others = stories.filter((s) => s.username !== sessionUserName);
+            const byUser = new Map();
+            for (const s of stories) {
+                if (!byUser.has(s.username)) byUser.set(s.username, []);
+                byUser.get(s.username).push(s);
+            }
+
+            const own = byUser.get(sessionUserName) || [];
+            byUser.delete(sessionUserName);
+            const others = [].concat(...byUser.values());
 
             return [...own, ...others];
 

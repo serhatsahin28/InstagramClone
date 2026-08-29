@@ -249,9 +249,13 @@ class UserModel {
                 }
             }
 
+            // En yeni hikaye once gelecek sekilde siralanir; StoryBar'daki
+            // groupByUser ilk gordugunu aldigi icin boylece hem kullanicilar
+            // en son paylasima gore siralanir hem de her kullanicinin
+            // gosterilen kapak gorseli en guncel hikayesi olur.
             const stories = await story.find({
                 "username": { $in: usernames }
-            });
+            }).sort({ _id: -1 });
             return stories;
 
         }
