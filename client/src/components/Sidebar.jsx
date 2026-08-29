@@ -9,6 +9,7 @@ import NotificationsPanel from "./NotificationsPanel";
 import NotificationToasts from "./NotificationToasts";
 import MessageDock from "./MessageDock";
 import UploadModal from "./UploadModal";
+import DmIcon from "./DmIcon";
 import "./Sidebar.css";
 
 export default function Sidebar() {
@@ -100,7 +101,7 @@ export default function Sidebar() {
                 <li>
                     <NavLink to="/direct/inbox" className={linkClass} onClick={closePanel}>
                         <span className="icon-wrap">
-                            <img className="icon" src={`${API_BASE}/Icons/icon_chat.png`} alt="" />
+                            <DmIcon size={24} />
                             {totalUnread > 0 && (
                                 <span className="nav-badge">{totalUnread > 99 ? "99+" : totalUnread}</span>
                             )}
