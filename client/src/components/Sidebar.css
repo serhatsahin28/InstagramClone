@@ -212,4 +212,11 @@
         margin-left: 0;
         margin-bottom: 0.5rem;
     }
+
+    /* Alt navigasyon çubuğunda yalnızca temel 6 öge kalır: anasayfa, arama,
+       reels, gönderi paylaşma, mesajlar, profil. Keşfet/Bildirimler/Daha
+       fazla masaüstü kenar çubuğunda kalmaya devam eder. */
+    .sidebar-mobile-hide {
+        display: none;
+    }
 }

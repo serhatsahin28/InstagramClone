@@ -85,7 +85,7 @@ export default function Sidebar() {
                         <span>Ara</span>
                     </button>
                 </li>
-                <li>
+                <li className="sidebar-mobile-hide">
                     <NavLink to="/explore" className={linkClass} onClick={closePanel}>
                         <img className="icon" src={`${API_BASE}/Icons/discovery.png`} alt="" />
                         <span>Keşfet</span>
@@ -108,7 +108,7 @@ export default function Sidebar() {
                         <span>Mesajlar</span>
                     </NavLink>
                 </li>
-                <li>
+                <li className="sidebar-mobile-hide">
                     <button
                         className={panel === "notifications" ? "sidebar-btn active" : "sidebar-btn"}
                         onClick={() => togglePanel("notifications")}
@@ -142,7 +142,7 @@ export default function Sidebar() {
                         <span>Profil</span>
                     </NavLink>
                 </li>
-                <li className="sidebar-more">
+                <li className="sidebar-more sidebar-mobile-hide">
                     <button className="sidebar-btn" onClick={() => setShowMore(!showMore)}>
                         <img className="icon" src={`${API_BASE}/Icons/menu.png`} alt="" />
                         <span>Daha fazla</span>

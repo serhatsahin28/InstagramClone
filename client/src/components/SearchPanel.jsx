@@ -43,7 +43,7 @@ export default function SearchPanel({ open, onClose }) {
     }
 
     return (
-        <SlidePanel open={open} title="Ara">
+        <SlidePanel open={open} title="Ara" onClose={onClose}>
             <div className="search-panel-input-wrap">
                 <input
                     ref={inputRef}
