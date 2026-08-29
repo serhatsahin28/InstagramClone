@@ -41,6 +41,10 @@ class Profile extends UserController {
         UserModel.findAllFollowersTrue(sessionUserName)
       ]);
 
+      if (!result || result.length === 0) {
+        return res.status(404).json({ error: "Kullanıcı bulunamadı" });
+      }
+
       const sessionProfilePicture = req.session.user.profilePicture;
       const userProfileName = req.session.user.profileName;
 

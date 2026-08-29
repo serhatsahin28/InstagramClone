@@ -7,6 +7,7 @@ import { useMessages } from "../context/MessagesContext";
 import Sidebar from "../components/Sidebar";
 import NewMessageModal from "../components/NewMessageModal";
 import SharedPostPreview from "../components/SharedPostPreview";
+import EmojiPickerButton from "../components/EmojiPickerButton";
 import "./Messages.css";
 
 export default function Messages() {
@@ -23,7 +24,6 @@ export default function Messages() {
     const [showNewMessage, setShowNewMessage] = useState(false);
 
     const listRef = useRef(null);
-    const didInitialScroll = useRef(false);
 
     const load = useCallback(() => {
         const path = id ? `/messages/${id}` : "/messages/inbox";
@@ -37,7 +37,6 @@ export default function Messages() {
     }, [id, markThreadReadLocally, refreshUnread]);
 
     useEffect(() => {
-        didInitialScroll.current = false;
         load();
     }, [load]);
 
@@ -60,18 +59,14 @@ export default function Messages() {
         return () => socket.off("submitForm2", onIncoming);
     }, [socket, data, feed]);
 
-    // Sohbet ilk açıldığında animasyonsuz doğrudan en alta konumlan;
-    // sonraki yeni mesajlarda yumuşak kaydır.
+    // Her zaman en alta (en son mesaja) konumlan; requestAnimationFrame'e
+    // bagli "smooth" kaydirma, sekme arka plandayken veya art arda hizli
+    // mesaj gelince tamamlanmayabiliyordu, bu yuzden dogrudan atlanir.
     useEffect(() => {
         const el = listRef.current;
         if (!el || messages.length === 0) return;
 
-        if (!didInitialScroll.current) {
-            el.scrollTop = el.scrollHeight;
-            didInitialScroll.current = true;
-        } else {
-            el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
-        }
+        el.scrollTop = el.scrollHeight;
     }, [messages]);
 
     function handleSend(e) {
@@ -109,7 +104,7 @@ export default function Messages() {
     return (
         <div className="home-layout">
             <Sidebar />
-            <main className="messages-page">
+            <main className={data.otherUser ? "messages-page chat-open" : "messages-page"}>
                 <aside className="messages-inbox">
                     <div className="messages-inbox-header">
                         <h3>{feed?.userName}</h3>
@@ -149,11 +144,14 @@ export default function Messages() {
                                 <img loading="lazy" decoding="async"
                 src={profileImage(item.otherUserImage)} alt="" />
                                 <div className="messages-inbox-item-text">
-                                    <span className="username">{item.otherUsername}</span>
-                                    <span className="last-message">
+                                    <span className={item.unreadCount > 0 ? "username unread" : "username"}>
+                                        {item.otherUsername}
+                                    </span>
+                                    <span className={item.unreadCount > 0 ? "last-message unread" : "last-message"}>
                                         {item.lastFromMe ? "Sen: " : ""}{item.lastMessage}
                                     </span>
                                 </div>
+                                {item.unreadCount > 0 && <span className="messages-inbox-unread-dot" />}
                             </Link>
 
                             {tab === "requests" && (
@@ -173,6 +171,14 @@ export default function Messages() {
                 {data.otherUser ? (
                     <section className="messages-thread">
                         <header className="messages-thread-header">
+                            <button
+                                type="button"
+                                className="messages-thread-back"
+                                onClick={() => navigate("/direct/inbox")}
+                                aria-label="Sohbet listesine dön"
+                            >
+                                ‹
+                            </button>
                             <img className="messages-thread-avatar" loading="lazy" decoding="async"
                 src={profileImage(data.otherUser.otherUserImage)} alt="" />
                             <span>{data.otherUser.otherUsername}</span>
@@ -198,6 +204,7 @@ export default function Messages() {
                         </div>
 
                         <form className="messages-input-row" onSubmit={handleSend}>
+                            <EmojiPickerButton onSelect={(emoji) => setText((t) => t + emoji)} />
                             <input
                                 type="text"
                                 placeholder="Bir şey yaz..."

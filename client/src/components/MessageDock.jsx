@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { API_BASE, api, profileImage } from "../api/client";
+import { api, profileImage } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import { useSocket } from "../context/SocketContext";
 import { useMessages } from "../context/MessagesContext";
 import SharedPostPreview from "./SharedPostPreview";
+import DmIcon from "./DmIcon";
+import EmojiPickerButton from "./EmojiPickerButton";
 import "./MessageDock.css";
 
 export default function MessageDock() {
@@ -20,7 +22,6 @@ export default function MessageDock() {
     const [text, setText] = useState("");
 
     const listRef = useRef(null);
-    const didInitialScroll = useRef(false);
 
     // Sohbet listesi artık MessagesProvider tarafından uygulama açılışında
     // önceden çekiliyor; burada tekrar istek atmaya gerek yok, dock anında açılır.
@@ -29,7 +30,6 @@ export default function MessageDock() {
     // zamanda sunucuda okunmamışları okunmuş işaretler.
     useEffect(() => {
         if (!active) return;
-        didInitialScroll.current = false;
 
         api.get(`/messages/${active.otherUserId}`)
             .then((res) => {
@@ -61,16 +61,12 @@ export default function MessageDock() {
         return () => socket.off("submitForm2", onIncoming);
     }, [socket, active, feed]);
 
+    // Her zaman en alta konumlan (bkz. Messages.jsx'teki ayni not).
     useEffect(() => {
         const el = listRef.current;
         if (!el || messages.length === 0) return;
 
-        if (!didInitialScroll.current) {
-            el.scrollTop = el.scrollHeight;
-            didInitialScroll.current = true;
-        } else {
-            el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
-        }
+        el.scrollTop = el.scrollHeight;
     }, [messages]);
 
     function handleSend(e) {
@@ -106,7 +102,7 @@ export default function MessageDock() {
                 ) : (
                     <>
                         <span className="message-dock-icon-wrap">
-                            <img loading="lazy" decoding="async" src={`${API_BASE}/Icons/direct-instagram.png`} alt="" />
+                            <DmIcon size={24} />
                             {totalUnread > 0 && (
                                 <span className="message-dock-badge">{totalUnread > 99 ? "99+" : totalUnread}</span>
                             )}
@@ -156,6 +152,7 @@ export default function MessageDock() {
                             </div>
 
                             <form className="message-dock-form" onSubmit={handleSend}>
+                                <EmojiPickerButton onSelect={(emoji) => setText((t) => t + emoji)} />
                                 <input
                                     type="text"
                                     placeholder="Bir şey yaz..."

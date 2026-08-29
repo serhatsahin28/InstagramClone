@@ -116,6 +116,32 @@
     white-space: nowrap;
 }
 
+.messages-inbox-item-text .username.unread,
+.messages-inbox-item-text .last-message.unread {
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+.messages-inbox-unread-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #0095f6;
+    flex-shrink: 0;
+    margin-left: 0.4rem;
+}
+
+.messages-thread-back {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.6rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 0.5rem 0 0;
+}
+
 .messages-request-actions {
     display: flex;
     gap: 0.5rem;
@@ -269,20 +295,41 @@
 @media (max-width: 900px) {
     .messages-page {
         flex-direction: column;
-        height: calc(100vh - 60px);
-        padding-bottom: 3.5rem;
+        height: 100vh;
+        height: 100dvh;
     }
 
+    /* Mobilde tek panel: ya sohbet listesi ya da acik sohbet gorunur,
+       ikisi asla ayni anda gozukmez. */
     .messages-inbox {
         width: 100%;
         border-right: none;
-        border-bottom: 1px solid var(--bg-secondary);
-        max-height: 40vh;
-        flex-shrink: 0;
+        max-height: none;
+        flex: 1;
+        min-height: 0;
     }
 
     .messages-thread {
+        display: none;
         min-height: 0;
+    }
+
+    .messages-page.chat-open .messages-inbox {
+        display: none;
+    }
+
+    .messages-page.chat-open .messages-thread {
+        display: flex;
+        position: fixed;
+        inset: 0;
+        z-index: 30;
+        background: var(--bg-primary);
+        height: 100vh;
+        height: 100dvh;
+    }
+
+    .messages-thread-back {
+        display: block;
     }
 
     .messages-list {
@@ -291,5 +338,6 @@
 
     .messages-input-row {
         padding: 0.6rem 0.75rem;
+        padding-bottom: calc(0.6rem + env(safe-area-inset-bottom, 0px));
     }
 }

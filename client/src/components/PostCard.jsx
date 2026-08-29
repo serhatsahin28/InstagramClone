@@ -12,7 +12,7 @@ import Caption from "./Caption";
 import { timeAgo } from "../utils/timeAgo";
 import "./PostCard.css";
 
-export default function PostCard({ post, likedByMe, savedByMe, eager = false }) {
+export default function PostCard({ post, likedByMe, savedByMe, eager = false, onDeleted, onEdited }) {
     const { liked, toggleLike, saved, toggleSave } = usePostActions(post, likedByMe, savedByMe);
     const [showComments, setShowComments] = useState(false);
     const [showLikes, setShowLikes] = useState(false);
@@ -35,8 +35,8 @@ export default function PostCard({ post, likedByMe, savedByMe, eager = false }) 
                 <PostMenu
                     post={{ ...post, description }}
                     className="post-card-dots"
-                    onDeleted={() => setDeleted(true)}
-                    onEdited={setDescription}
+                    onDeleted={() => { setDeleted(true); onDeleted?.(); }}
+                    onEdited={(next) => { setDescription(next); onEdited?.(next); }}
                 />
             </header>
 
@@ -81,8 +81,8 @@ export default function PostCard({ post, likedByMe, savedByMe, eager = false }) 
                 <CommentModal
                     post={{ ...post, description }}
                     onClose={() => setShowComments(false)}
-                    onDeleted={() => setDeleted(true)}
-                    onEdited={setDescription}
+                    onDeleted={() => { setDeleted(true); onDeleted?.(); }}
+                    onEdited={(next) => { setDescription(next); onEdited?.(next); }}
                     liked={liked}
                     onToggleLike={toggleLike}
                     saved={saved}
