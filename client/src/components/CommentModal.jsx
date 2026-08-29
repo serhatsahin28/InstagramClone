@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { API_BASE, profileImage } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import { useSocket } from "../context/SocketContext";
@@ -72,7 +73,7 @@ export default function CommentModal({ post, onClose, onDeleted, onEdited, liked
                 <img className="comment-item-avatar" loading="lazy" decoding="async"
                     src={profileImage(c.userPicture)} alt="" />
                 <span className="comment-item-text">
-                    <strong>{c.username}</strong> {c.userComment}
+                    <Link to={`/${c.username}`} className="comment-item-username"><strong>{c.username}</strong></Link> {c.userComment}
                     <button className="comment-item-reply-btn" onClick={() => setReplyTo({ id: c.id, username: c.username })}>
                         Yanıtla
                     </button>
@@ -119,7 +120,7 @@ export default function CommentModal({ post, onClose, onDeleted, onEdited, liked
                     <header className="comment-modal-header">
                         <img loading="lazy" decoding="async"
                 src={profileImage(post.profilePhoto)} alt="" />
-                        <span>{post.username}</span>
+                        <Link to={`/${post.username}`} className="comment-modal-username">{post.username}</Link>
                         <PostMenu
                             post={{ ...post, description }}
                             className="dots"
@@ -139,7 +140,7 @@ export default function CommentModal({ post, onClose, onDeleted, onEdited, liked
                             <div className="comment-item comment-caption">
                                 <img className="comment-item-avatar" loading="lazy" decoding="async"
                 src={profileImage(post.profilePhoto)} alt="" />
-                                <span><strong>{post.username}</strong> <Caption text={description} /></span>
+                                <span><Link to={`/${post.username}`} className="comment-item-username"><strong>{post.username}</strong></Link> <Caption text={description} /></span>
                             </div>
                         )}
 

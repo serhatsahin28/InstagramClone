@@ -72,6 +72,15 @@
     min-width: 0;
 }
 
+.reel-comment-username {
+    color: var(--text-primary);
+    text-decoration: none;
+}
+
+.reel-comment-username:hover {
+    text-decoration: underline;
+}
+
 .reel-comment-side {
     display: flex;
     align-items: center;

@@ -35,6 +35,12 @@
     margin-left: 0.75rem;
 }
 
+/* Logo dosyasi siyah arka planli/beyaz yazili; acik temada ters cevrilince
+   beyaz arka planli/siyah yaziya donusuyor. */
+:root[data-theme="light"] .sidebar-brand {
+    filter: invert(1);
+}
+
 .sidebar-links {
     list-style: none;
     padding: 0;

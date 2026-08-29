@@ -41,6 +41,13 @@ body {
   object-fit: contain;
 }
 
+/* Ikon setinin tamami koyu tema icin (beyaz cizgili) hazirlanmis. Acik
+   temada gorunur olsunlar diye renkleri ters cevriliyor (beyaz -> siyah).
+   redHeart.png kasitli olarak kirmizi renkli oldugu icin haric tutuluyor. */
+:root[data-theme="light"] img[src*="/Icons/"]:not([src*="redHeart"]) {
+  filter: invert(1);
+}
+
 .hashtag-link {
   color: #0095f6;
   text-decoration: none;

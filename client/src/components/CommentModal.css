@@ -79,8 +79,23 @@
     object-fit: cover;
 }
 
-.comment-modal-header span {
+.comment-modal-username {
     flex: 1;
+    color: var(--text-primary);
+    text-decoration: none;
+}
+
+.comment-modal-username:hover {
+    text-decoration: underline;
+}
+
+.comment-item-username {
+    color: var(--text-primary);
+    text-decoration: none;
+}
+
+.comment-item-username:hover {
+    text-decoration: underline;
 }
 
 .comment-modal-header .dots {

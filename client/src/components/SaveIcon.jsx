@@ -14,9 +14,10 @@ export default function SaveIcon({ saved, size = 26 }) {
             width={size}
             height={size}
             viewBox="0 0 24 24"
-            fill="#fff"
+            fill="currentColor"
             xmlns="http://www.w3.org/2000/svg"
             aria-label="kaydedildi"
+            style={{ color: "var(--text-primary)" }}
         >
             <path d="M6 2c-.552 0-1 .448-1 1v18l7-5 7 5V3c0-.552-.448-1-1-1H6z" />
         </svg>
