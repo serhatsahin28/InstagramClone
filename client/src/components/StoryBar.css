@@ -120,23 +120,30 @@
     }
 }
 
-/* Telefonda hikaye barı tam genişlik ve daha kompakt. */
+/* Telefonda hikaye barı tam genişlik; daireler masaüstünden de büyük
+   olacak şekilde daha belirgin gösterilir. */
 @media (max-width: 640px) {
     .story-bar {
         max-width: 100%;
     }
 
     .story-track {
-        padding: 0.75rem 0.75rem;
-        gap: 0.85rem;
+        padding: 0.85rem 0.75rem;
+        gap: 0.9rem;
     }
 
     .story-item {
-        width: 64px;
+        width: 84px;
     }
 
     .story-item img {
-        width: 52px;
-        height: 52px;
+        width: 72px;
+        height: 72px;
+    }
+
+    .story-add-btn {
+        width: 24px;
+        height: 24px;
+        font-size: 1rem;
     }
 }
