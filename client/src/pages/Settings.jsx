@@ -5,6 +5,7 @@ import Sidebar from "../components/Sidebar";
 import PostModal from "../components/PostModal";
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
+import Spinner from "../components/Spinner";
 import "./Settings.css";
 
 const TABS = [
@@ -17,7 +18,8 @@ const TABS = [
 ];
 
 function PostGrid({ posts, emptyText, onOpen }) {
-    if (!posts || posts.length === 0) {
+    if (posts === null) return <Spinner />;
+    if (posts.length === 0) {
         return <p className="settings-empty">{emptyText}</p>;
     }
 
@@ -128,7 +130,7 @@ export default function Settings() {
                 )}
 
                 {tab === "comments" && (
-                    comments && comments.length > 0 ? (
+                    comments === null ? <Spinner /> : comments.length > 0 ? (
                         <div className="settings-comments">
                             {comments.map((item) => (
                                 <div key={item.id} className="settings-comment-row">

@@ -3,6 +3,7 @@ import { api } from "../api/client";
 import Sidebar from "../components/Sidebar";
 import ReelCard from "../components/ReelCard";
 import ReelUploadModal from "../components/ReelUploadModal";
+import Spinner from "../components/Spinner";
 import "./Reels.css";
 
 export default function Reels() {
@@ -23,7 +24,7 @@ export default function Reels() {
                     + Reel Ekle
                 </button>
 
-                {reels === null ? null : reels.length === 0 ? (
+                {reels === null ? <Spinner /> : reels.length === 0 ? (
                     <p className="reels-empty">Henüz reel yok. İlk paylaşan sen ol!</p>
                 ) : (
                     <div className="reels-feed">

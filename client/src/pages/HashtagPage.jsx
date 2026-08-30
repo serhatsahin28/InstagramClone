@@ -4,6 +4,7 @@ import { api, API_BASE, thumbImage } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import Sidebar from "../components/Sidebar";
 import PostModal from "../components/PostModal";
+import Spinner from "../components/Spinner";
 import "./Explore.css";
 
 // Bir hashtag'i caption'inda gecen tum gonderiler; Kesfet ile ayni
@@ -30,7 +31,7 @@ export default function HashtagPage() {
             <main className="explore-page">
                 <h2 className="explore-title">#{tag}</h2>
 
-                {posts === null ? null : posts.length === 0 ? (
+                {posts === null ? <Spinner /> : posts.length === 0 ? (
                     <p className="explore-empty">Bu hashtag ile paylaşılmış gönderi yok.</p>
                 ) : (
                     <div className="explore-grid">

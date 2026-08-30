@@ -8,6 +8,7 @@ import Sidebar from "../components/Sidebar";
 import NewMessageModal from "../components/NewMessageModal";
 import SharedPostPreview from "../components/SharedPostPreview";
 import EmojiPickerButton from "../components/EmojiPickerButton";
+import Spinner from "../components/Spinner";
 import "./Messages.css";
 
 export default function Messages() {
@@ -118,7 +119,16 @@ export default function Messages() {
         }
     }
 
-    if (!data) return null;
+    if (!data) {
+        return (
+            <div className="home-layout">
+                <Sidebar />
+                <main className="messages-page">
+                    <Spinner />
+                </main>
+            </div>
+        );
+    }
 
     const threads = tab === "messages" ? data.newDirectInbox : data.requests;
 

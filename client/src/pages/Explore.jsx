@@ -3,6 +3,7 @@ import { api, API_BASE, thumbImage } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import Sidebar from "../components/Sidebar";
 import PostModal from "../components/PostModal";
+import Spinner from "../components/Spinner";
 import "./Explore.css";
 
 // Takip durumundan bağımsız, rastgele karışık gönderiler. Normal akışta
@@ -27,7 +28,7 @@ export default function Explore() {
             <main className="explore-page">
                 <h2 className="explore-title">Keşfet</h2>
 
-                {posts === null ? null : posts.length === 0 ? (
+                {posts === null ? <Spinner /> : posts.length === 0 ? (
                     <p className="explore-empty">Henüz gösterilecek gönderi yok.</p>
                 ) : (
                     <div className="explore-grid">

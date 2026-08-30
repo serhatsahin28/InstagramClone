@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { API_BASE, api, profileImage } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import StoryViewersModal from "../components/StoryViewersModal";
+import Spinner from "../components/Spinner";
 import "./Story.css";
 
 const STORY_DURATION_MS = 15000;
@@ -138,7 +139,7 @@ export default function Story() {
         }
     }
 
-    if (!stories) return <div className="story-page" />;
+    if (!stories) return <div className="story-page"><Spinner /></div>;
     if (!current) return null;
 
     const isOwn = current.username === feed?.userName;

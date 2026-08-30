@@ -8,6 +8,7 @@ import EditProfileModal from "../components/EditProfileModal";
 import UserListModal from "../components/UserListModal";
 import PostModal from "../components/PostModal";
 import HighlightViewer from "../components/HighlightViewer";
+import Spinner from "../components/Spinner";
 import "./Profile.css";
 
 export default function Profile() {
@@ -114,8 +115,17 @@ export default function Profile() {
         await load();
     }
 
-    // Sadece ilk yüklemede boş ekran; sonraki tazelemelerde içerik korunur.
-    if (!data) return null;
+    // Sadece ilk yüklemede yükleniyor göstergesi; sonraki tazelemelerde içerik korunur.
+    if (!data) {
+        return (
+            <div className="home-layout">
+                <Sidebar />
+                <main className="profile-page">
+                    <Spinner />
+                </main>
+            </div>
+        );
+    }
 
     const target = data.result[0];
 

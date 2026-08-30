@@ -2,12 +2,22 @@ import { useAuth } from "../context/AuthContext";
 import Sidebar from "../components/Sidebar";
 import StoryBar from "../components/StoryBar";
 import PostCard from "../components/PostCard";
+import Spinner from "../components/Spinner";
 import "./Home.css";
 
 export default function Home() {
     const { feed } = useAuth();
 
-    if (!feed) return null;
+    if (!feed) {
+        return (
+            <div className="home-layout">
+                <Sidebar />
+                <main className="home-feed">
+                    <Spinner />
+                </main>
+            </div>
+        );
+    }
 
     const likedPostIds = new Set((feed.userLikePostUser || []).map((like) => String(like.post_id)));
     const savedPostIds = new Set(feed.savedPostIds || []);
